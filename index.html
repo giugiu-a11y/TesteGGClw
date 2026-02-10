@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Pokémon Adventures</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+
+        #gameContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            background: #1a1a2e;
+        }
+
+        canvas {
+            display: block;
+            border: none;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            background: #000;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .controls > * {
+            pointer-events: auto;
+        }
+
+        .dpad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 3px;
+            width: 120px;
+            height: 120px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 5px;
+        }
+
+        .dpad button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.1s;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            font-weight: bold;
+        }
+
+        .dpad button:active {
+            background: rgba(255, 100, 100, 0.6);
+            border-color: rgba(255, 100, 100, 0.8);
+        }
+
+        .dpad .up { grid-column: 2; grid-row: 1; }
+        .dpad .left { grid-column: 1; grid-row: 2; }
+        .dpad .down { grid-column: 2; grid-row: 3; }
+        .dpad .right { grid-column: 3; grid-row: 2; }
+        .dpad .center { grid-column: 2; grid-row: 2; display: none; }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            align-items: flex-end;
+            height: 140px;
+        }
+
+        .action-buttons button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.1s;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .action-buttons button:active {
+            background: rgba(100, 150, 255, 0.6);
+            border-color: rgba(100, 150, 255, 0.8);
+        }
+
+        .action-buttons .b-btn { background: rgba(255, 100, 100, 0.2); border-color: rgba(255, 100, 100, 0.4); }
+        .action-buttons .b-btn:active { background: rgba(255, 100, 100, 0.6); }
+
+        .action-buttons .a-btn { background: rgba(100, 200, 100, 0.2); border-color: rgba(100, 200, 100, 0.4); }
+        .action-buttons .a-btn:active { background: rgba(100, 200, 100, 0.6); }
+
+        .control-label {
+            position: fixed;
+            bottom: 180px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(26, 26, 46, 0.8);
+            border: 2px solid #FFDD00;
+            border-radius: 5px;
+            padding: 8px 12px;
+            color: #FFDD00;
+            font-size: 11px;
+            z-index: 500;
+            text-align: center;
+            font-family: monospace;
+            max-width: 90%;
+        }
+
+        .dialog-box {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: rgba(26, 26, 46, 0.95);
+            border: 3px solid #FF3333;
+            border-radius: 10px;
+            padding: 15px;
+            color: white;
+            font-size: 14px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 999;
+            display: none;
+            font-family: 'Press Start 2P', monospace;
+            line-height: 1.6;
+        }
+
+        .dialog-box.visible {
+            display: block;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .dialog-portrait {
+            float: left;
+            width: 80px;
+            height: 80px;
+            margin-right: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #FF3333;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        .dialog-speaker {
+            font-weight: bold;
+            color: #FFDD00;
+            margin-bottom: 5px;
+            clear: both;
+        }
+
+        .dialog-text {
+            font-size: 12px;
+            clear: both;
+        }
+
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 20px;
+            z-index: 2000;
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                bottom: 10px;
+                left: 10px;
+                right: 10px;
+                gap: 10px;
+            }
+            .dpad {
+                width: 100px;
+                height: 100px;
+            }
+            .action-buttons button {
+                width: 50px;
+                height: 50px;
+            }
+            .dialog-box {
+                font-size: 11px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas"></canvas>
+    </div>
+
+    <div class="controls">
+        <div class="dpad">
+            <button class="up" data-key="ArrowUp">▲</button>
+            <button class="left" data-key="ArrowLeft">◀</button>
+            <button class="center"></button>
+            <button class="right" data-key="ArrowRight">▶</button>
+            <button class="down" data-key="ArrowDown">▼</button>
+        </div>
+
+        <div></div>
+
+        <div class="action-buttons">
+            <button class="b-btn" data-key="KeyZ">B</button>
+            <button class="a-btn" data-key="KeyX">A</button>
+        </div>
+    </div>
+
+    <div id="dialogBox" class="dialog-box">
+        <div class="dialog-portrait" id="dialogPortrait">🧙</div>
+        <div class="dialog-speaker" id="dialogSpeaker">Oak</div>
+        <div class="dialog-text" id="dialogText">Bem-vindo ao mundo Pokémon!</div>
+    </div>
+
+    <div class="control-label">
+        ⬆️⬇️⬅️➡️ ou WASD = Mover | X = Confirmar (A 🟢) | Z = Cancelar (B 🔴)
+    </div>
+
+    <script>
+        // ==================== GAME ENGINE ====================
+
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        let gameRunning = true;
+
+        // Resize canvas
+        function resizeCanvas() {
+            const container = document.getElementById('gameContainer');
+            const maxWidth = window.innerWidth;
+            const maxHeight = window.innerHeight;
+            const gameAspect = 320 / 180; // 16:9
+
+            let width = maxWidth;
+            let height = width / gameAspect;
+
+            if (height > maxHeight) {
+                height = maxHeight;
+                width = height * gameAspect;
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+
+            return { width, height };
+        }
+
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // ==================== INPUT HANDLER ====================
+
+        const keys = {};
+        const buttons = {};
+
+        window.addEventListener('keydown', (e) => {
+            keys[e.code] = true;
+        });
+
+        window.addEventListener('keyup', (e) => {
+            keys[e.code] = false;
+        });
+
+        // Touch/virtual buttons
+        document.querySelectorAll('.dpad button, .action-buttons button').forEach(btn => {
+            btn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const keyCode = btn.dataset.key;
+                keys[keyCode] = true;
+                btn.style.opacity = '0.8';
+            });
+
+            btn.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                const keyCode = btn.dataset.key;
+                keys[keyCode] = false;
+                btn.style.opacity = '1';
+            });
+
+            btn.addEventListener('mousedown', () => {
+                const keyCode = btn.dataset.key;
+                keys[keyCode] = true;
+            });
+
+            btn.addEventListener('mouseup', () => {
+                const keyCode = btn.dataset.key;
+                keys[keyCode] = false;
+            });
+        });
+
+        // ==================== GAME STATE ====================
+
+        const gameState = {
+            currentScene: 'scene_oak_lab',
+            playerX: 160,
+            playerY: 120,
+            dialogIndex: 0,
+            isDialogActive: false,
+            mapTiles: [],
+            save: () => localStorage.setItem('pokemonGameState', JSON.stringify(gameState))
+        };
+
+        // ==================== SCENE MANAGER ====================
+
+        const scenes = {
+            'scene_oak_lab': {
+                bg: '#2d5016',
+                title: 'Laboratório de Oak',
+                dialogues: [
+                    { speaker: 'Oak', portrait: '🧙', text: 'Bem-vindo ao mundo Pokémon! Meu nome é Professor Oak.' },
+                    { speaker: 'Oak', portrait: '🧙', text: 'Este é um mundo fascinante... Existem criaturas incríveis chamadas Pokémon!' },
+                    { speaker: 'Oak', portrait: '🧙', text: 'Pokémons possuem poderes especiais, e nós humanos nos relacionamos com eles.' },
+                    { speaker: 'Oak', portrait: '🧙', text: 'Há 10 anos, temos feito descobertas espantosas sobre essas criaturas.' },
+                    { speaker: 'You', portrait: '👦', text: '...', duration: 800 },
+                    { speaker: 'Oak', portrait: '🧙', text: 'Ah, sim! Você veio! Perfeito! Tenho um presente para você.' },
+                    { speaker: 'Oak', portrait: '🧙', text: 'Aqui! Esta é a Pokédex. Um enciclopédia portátil de Pokémons!' },
+                    { speaker: 'You', portrait: '👦', text: '!', duration: 500 },
+                    { speaker: 'Oak', portrait: '🧙', text: 'Agora, escolha seu companheiro! Aqui estão os três iniciantes!' },
+                    { speaker: 'Oak', portrait: '🧙', text: '[Você recebe POLIWAG]', special: true }
+                ]
+            }
+        };
+
+        function showDialog(speaker, portrait, text, duration = null) {
+            const dialogBox = document.getElementById('dialogBox');
+            document.getElementById('dialogSpeaker').textContent = speaker;
+            document.getElementById('dialogPortrait').textContent = portrait;
+            document.getElementById('dialogText').textContent = text;
+            dialogBox.classList.add('visible');
+            gameState.isDialogActive = true;
+
+            if (duration) {
+                setTimeout(() => {
+                    dialogBox.classList.remove('visible');
+                    gameState.isDialogActive = false;
+                    gameState.dialogIndex++;
+                }, duration);
+            }
+        }
+
+        function hideDialog() {
+            document.getElementById('dialogBox').classList.remove('visible');
+            gameState.isDialogActive = false;
+        }
+
+        // ==================== RENDERING ====================
+
+        function drawBackground() {
+            ctx.fillStyle = scenes[gameState.currentScene].bg || '#2d5016';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function drawTile(x, y, char, color = '#33CC77') {
+            const tileSize = 20;
+            ctx.fillStyle = color;
+            ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+            ctx.fillStyle = '#000';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(char, x * tileSize + tileSize / 2, y * tileSize + tileSize / 2);
+        }
+
+        function drawMap() {
+            // Simple Pallet Town mockup
+            const map = [
+                '........................',
+                '.##########......#########',
+                '.#..........####.#........',
+                '.##########....#.########.',
+                '........................',
+                '........................'
+            ];
+
+            for (let y = 0; y < map.length; y++) {
+                for (let x = 0; x < map[y].length; x++) {
+                    if (map[y][x] === '#') {
+                        drawTile(x, y, ' ', '#AA6644'); // building
+                    } else if (map[y][x] === '.') {
+                        drawTile(x, y, '🌿', '#2d5016'); // grass
+                    }
+                }
+            }
+        }
+
+        function drawPlayer() {
+            const tileSize = 20;
+            ctx.fillStyle = '#FF3333';
+            ctx.fillRect(gameState.playerX * tileSize, gameState.playerY * tileSize, tileSize, tileSize);
+            ctx.fillStyle = '#000';
+            ctx.font = 'bold 14px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('👦', gameState.playerX * tileSize + tileSize / 2, gameState.playerY * tileSize + tileSize / 2);
+
+            // Draw direction arrow (subtle)
+            ctx.fillStyle = 'rgba(100, 200, 255, 0.5)';
+            ctx.font = '16px Arial';
+            ctx.fillText('→', gameState.playerX * tileSize + tileSize + 10, gameState.playerY * tileSize - 10);
+        }
+
+        function drawGameUI() {
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+            ctx.font = 'bold 12px Arial';
+            ctx.fillStyle = '#FFDD00';
+            ctx.textAlign = 'left';
+            ctx.fillText('📍 ' + scenes[gameState.currentScene].title, 10, 25);
+        }
+
+        // ==================== GAME LOOP ====================
+
+        function update() {
+            // Movement
+            if (keys['ArrowUp']) gameState.playerY = Math.max(0, gameState.playerY - 2);
+            if (keys['ArrowDown']) gameState.playerY = Math.min(5, gameState.playerY + 2);
+            if (keys['ArrowLeft']) gameState.playerX = Math.max(0, gameState.playerX - 2);
+            if (keys['ArrowRight']) gameState.playerX = Math.min(23, gameState.playerX + 2);
+
+            // A button (confirm dialog)
+            if (keys['KeyX']) {
+                if (gameState.isDialogActive) {
+                    hideDialog();
+                    keys['KeyX'] = false;
+
+                    // Next dialogue
+                    const scene = scenes[gameState.currentScene];
+                    if (scene.dialogues && gameState.dialogIndex < scene.dialogues.length) {
+                        const dialogData = scene.dialogues[gameState.dialogIndex];
+                        showDialog(dialogData.speaker, dialogData.portrait, dialogData.text, dialogData.duration);
+                    } else if (scene.dialogues && gameState.dialogIndex >= scene.dialogues.length) {
+                        // Scene finished
+                        gameState.dialogIndex = 0;
+                        gameState.currentScene = 'scene_oak_lab'; // Loop for now
+                        gameState.save();
+                    }
+                } else {
+                    // Interact with object at player position
+                    const scene = scenes[gameState.currentScene];
+                    if (scene.dialogues && gameState.dialogIndex < scene.dialogues.length) {
+                        const dialogData = scene.dialogues[gameState.dialogIndex];
+                        showDialog(dialogData.speaker, dialogData.portrait, dialogData.text, dialogData.duration);
+                    }
+                }
+            }
+        }
+
+        function render() {
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            drawBackground();
+            drawMap();
+            drawPlayer();
+            drawGameUI();
+        }
+
+        let lastTime = Date.now();
+        function gameLoop() {
+            const now = Date.now();
+            const dt = (now - lastTime) / 1000;
+            lastTime = now;
+
+            update();
+            render();
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        // Start game
+        window.addEventListener('load', () => {
+            // Trigger first dialogue
+            const scene = scenes[gameState.currentScene];
+            if (scene.dialogues && scene.dialogues.length > 0) {
+                const dialogData = scene.dialogues[0];
+                showDialog(dialogData.speaker, dialogData.portrait, dialogData.text, dialogData.duration);
+            }
+
+            gameLoop();
+        });
+
+        // Save on unload
+        window.addEventListener('beforeunload', () => {
+            gameState.save();
+        });
+    </script>
+</body>
+</html>
