@@ -141,38 +141,31 @@
 
         .dialog-box {
             position: fixed;
-            bottom: 100px;
-            left: 10px;
-            right: 10px;
-            background: linear-gradient(180deg, #1a1a2e 0%, #0d0d1a 100%);
-            border: 4px solid #FFD700;
-            border-radius: 15px;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: rgba(26, 26, 46, 0.95);
+            border: 3px solid #FF3333;
+            border-radius: 10px;
             padding: 15px;
             color: white;
             font-size: 14px;
-            max-height: 180px;
+            max-height: 200px;
             overflow-y: auto;
             z-index: 999;
             display: none;
-            font-family: 'Courier New', monospace;
-            line-height: 1.8;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3), inset 0 0 30px rgba(0,0,0,0.5);
+            font-family: 'Press Start 2P', monospace;
+            line-height: 1.6;
         }
 
         .dialog-box.visible {
             display: block;
-            animation: dialogAppear 0.3s ease-out;
+            animation: slideUp 0.3s ease-out;
         }
 
-        @keyframes dialogAppear {
-            from { 
-                transform: translateY(50px) scale(0.9); 
-                opacity: 0; 
-            }
-            to { 
-                transform: translateY(0) scale(1); 
-                opacity: 1; 
-            }
+        @keyframes slideUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .dialog-portrait {
@@ -199,95 +192,6 @@
         .dialog-text {
             font-size: 12px;
             clear: both;
-        }
-
-        /* ==================== SPRITES ==================== */
-
-        .sprite {
-            image-rendering: pixelated;
-            image-rendering: crisp-edges;
-        }
-
-        /* Player sprite */
-        .player-sprite {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(
-                to bottom,
-                #FFD700 0%, #FFD700 25%,      /* Cabelo amarelo */
-                #FFCCAA 25%, #FFCCAA 45%,     /* Rosto */
-                #FF0000 45%, #FF0000 70%,     /* Camisa vermelha */
-                #3366FF 70%, #3366FF 100%     /* Calça azul */
-            );
-            border-radius: 50% 50% 0 0;
-            position: relative;
-        }
-
-        /* Pikachu sprite */
-        .pikachu-sprite {
-            width: 24px;
-            height: 24px;
-            background: #FFD700;
-            border-radius: 50%;
-            position: relative;
-        }
-        .pikachu-sprite::before {
-            content: '';
-            position: absolute;
-            top: -8px;
-            left: 2px;
-            width: 8px;
-            height: 12px;
-            background: #FFD700;
-            border-radius: 50% 50% 0 0;
-            transform: rotate(-15deg);
-        }
-        .pikachu-sprite::after {
-            content: '';
-            position: absolute;
-            top: -8px;
-            right: 2px;
-            width: 8px;
-            height: 12px;
-            background: #FFD700;
-            border-radius: 50% 50% 0 0;
-            transform: rotate(15deg);
-        }
-
-        /* Portrait boxes */
-        .portrait-oak {
-            background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
-            border: 3px solid #FFD700;
-        }
-
-        .portrait-blue {
-            background: linear-gradient(135deg, #4169E1 0%, #1E90FF 100%);
-            border: 3px solid #FF6347;
-        }
-
-        .portrait-pikachu {
-            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-            border: 3px solid #FF0000;
-        }
-
-        /* Tiles */
-        .tile-grass {
-            background: linear-gradient(45deg, #228B22 25%, #32CD32 50%, #228B22 75%);
-        }
-
-        .tile-building {
-            background: linear-gradient(to bottom, #8B4513 0%, #A0522D 50%, #8B4513 100%);
-            border: 2px solid #5D3A1A;
-        }
-
-        .tile-water {
-            background: linear-gradient(45deg, #1E90FF 25%, #00BFFF 50%, #1E90FF 75%);
-            animation: water-flow 2s ease-in-out infinite;
-        }
-
-        @keyframes water-flow {
-            0%, 100% { background-position: 0 0; }
-            50% { background-position: 10px 10px; }
         }
 
         .loading {
@@ -320,172 +224,6 @@
                 padding: 10px;
             }
         }
-
-        /* ==================== BATTLE SYSTEM ==================== */
-
-        .battle-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, #87CEEB 0%, #98FB98 60%, #228B22 100%);
-            z-index: 2000;
-            flex-direction: column;
-        }
-
-        .battle-overlay.active {
-            display: flex;
-        }
-
-        .battle-scene {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            padding: 20px;
-        }
-
-        .opponent-side {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            padding-right: 20px;
-        }
-
-        .player-side {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            padding-left: 20px;
-        }
-
-        .pokemon-sprite {
-            width: 96px;
-            height: 96px;
-            image-rendering: pixelated;
-        }
-
-        .pokemon-sprite.opponent {
-            background: #9370DB;
-            border-radius: 50% 50% 40% 40%;
-            position: relative;
-        }
-
-        .pokemon-sprite.opponent::before {
-            content: '';
-            position: absolute;
-            top: 10px;
-            left: 15px;
-            width: 20px;
-            height: 30px;
-            background: #9370DB;
-            border-radius: 50% 50% 0 0;
-            transform: rotate(-20deg);
-        }
-
-        .pokemon-sprite.player {
-            background: #FFD700;
-            border-radius: 50%;
-            position: relative;
-        }
-
-        .pokemon-name {
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            font-size: 18px;
-            color: #1a1a1a;
-            text-shadow: 1px 1px 0 white;
-            margin: 5px 0;
-        }
-
-        .hp-bar-container {
-            width: 150px;
-            height: 12px;
-            background: #333;
-            border: 2px solid #FFD700;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-
-        .hp-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #00FF00 0%, #32CD32 100%);
-            width: 100%;
-            transition: width 0.5s ease-out;
-        }
-
-        .hp-bar.low {
-            background: linear-gradient(90deg, #FFD700 0%, #FFA500 100%);
-        }
-
-        .hp-bar.critical {
-            background: linear-gradient(90deg, #FF0000 0%, #FF6347 100%);
-            animation: hp-pulse 0.5s ease-in-out infinite;
-        }
-
-        @keyframes hp-pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        .battle-menu {
-            background: linear-gradient(180deg, #1a1a2e 0%, #0d0d1a 100%);
-            border-top: 4px solid #FFD700;
-            padding: 15px;
-            min-height: 180px;
-        }
-
-        .battle-text {
-            color: white;
-            font-family: 'Courier New', monospace;
-            font-size: 16px;
-            margin-bottom: 15px;
-            min-height: 40px;
-        }
-
-        .battle-options {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .battle-btn, .attack-btn {
-            padding: 15px;
-            font-size: 16px;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            background: linear-gradient(180deg, #4a4a6a 0%, #2a2a4a 100%);
-            border: 3px solid #FFD700;
-            border-radius: 10px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .battle-btn:active, .attack-btn:active {
-            transform: scale(0.95);
-            background: linear-gradient(180deg, #6a6a8a 0%, #4a4a6a 100%);
-        }
-
-        .attack-menu {
-            background: linear-gradient(180deg, #1a1a2e 0%, #0d0d1a 100%);
-            border-top: 4px solid #FFD700;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .attack-menu.hidden {
-            display: none;
-        }
-
-        .back-btn {
-            background: linear-gradient(180deg, #8B0000 0%, #4a0000 100%);
-            border-color: #FF6347;
-        }
     </style>
 </head>
 <body>
@@ -514,41 +252,6 @@
         <div class="dialog-portrait" id="dialogPortrait">🧙</div>
         <div class="dialog-speaker" id="dialogSpeaker">Oak</div>
         <div class="dialog-text" id="dialogText">Bem-vindo ao mundo Pokémon!</div>
-    </div>
-
-    <div id="battleOverlay" class="battle-overlay">
-        <div class="battle-scene">
-            <div class="opponent-side">
-                <div class="pokemon-name" id="opponentName">Rattata</div>
-                <div class="hp-bar-container">
-                    <div class="hp-bar" id="opponentHp"></div>
-                </div>
-                <div class="pokemon-sprite opponent" id="opponentSprite"></div>
-            </div>
-            <div class="player-side">
-                <div class="pokemon-sprite player" id="playerPokemonSprite"></div>
-                <div class="pokemon-name" id="playerPokemonName">Pikachu</div>
-                <div class="hp-bar-container">
-                    <div class="hp-bar" id="playerPokemonHp"></div>
-                </div>
-            </div>
-        </div>
-        <div class="battle-menu" id="battleMenu">
-            <div class="battle-text" id="battleText">O que Pikachu deve fazer?</div>
-            <div class="battle-options">
-                <button class="battle-btn" data-action="fight">⚔️ LUTAR</button>
-                <button class="battle-btn" data-action="bag">🎒 BOLSA</button>
-                <button class="battle-btn" data-action="pokemon">🔄 POKÉMON</button>
-                <button class="battle-btn" data-action="run">🏃 FUGIR</button>
-            </div>
-        </div>
-        <div class="attack-menu hidden" id="attackMenu">
-            <button class="attack-btn" data-move="thundershock">⚡ Thunder Shock</button>
-            <button class="attack-btn" data-move="quickattack">💨 Quick Attack</button>
-            <button class="attack-btn" data-move="growl">📢 Growl</button>
-            <button class="attack-btn" data-move="tailwhip">🔄 Tail Whip</button>
-            <button class="back-btn" data-action="back">← Voltar</button>
-        </div>
     </div>
 
     <div class="control-label">
@@ -634,7 +337,6 @@
             playerY: 120,
             dialogIndex: 0,
             isDialogActive: false,
-            hasPikachu: false,
             mapTiles: [],
             save: () => localStorage.setItem('pokemonGameState', JSON.stringify(gameState))
         };
@@ -651,12 +353,10 @@
                     { speaker: 'Oak', portrait: '🧙', text: 'Bem-vindo ao mundo Pokémon! Meu nome é Professor Oak.' },
                     { speaker: 'Oak', portrait: '🧙', text: 'Este é um mundo fascinante... Existem criaturas incríveis chamadas Pokémon!' },
                     { speaker: 'Oak', portrait: '🧙', text: 'Pokémons possuem poderes especiais, e nós humanos nos relacionamos com eles.' },
-                    { speaker: 'Oak', portrait: '🧙', text: 'Mas você precisa entender algo importante...' },
-                    { speaker: 'Oak', portrait: '🧙', text: 'Pokémons não são ferramentas. Eles sentem dor, têm sonhos e sentimentos.' },
                     { speaker: 'Oak', portrait: '🧙', text: 'Há 10 anos, temos feito descobertas espantosas sobre essas criaturas.' },
                     { speaker: 'You', portrait: '👦', text: '...', duration: 800 },
                     { speaker: 'Oak', portrait: '🧙', text: 'Ah, sim! Você veio! Perfeito! Tenho um presente para você.' },
-                    { speaker: 'Oak', portrait: '🧙', text: 'Aqui! Esta é a Pokédex. Uma enciclopédia portátil de Pokémons!' },
+                    { speaker: 'Oak', portrait: '🧙', text: 'Aqui! Esta é a Pokédex. Um enciclopédia portátil de Pokémons!' },
                     { speaker: 'You', portrait: '👦', text: '!', duration: 500 },
                     { speaker: 'Oak', portrait: '🧙', text: 'Agora, escolha seu companheiro! Aqui estão os três iniciantes!' },
                     { speaker: 'Blue', portrait: '👱', text: 'Hahahaha! Você acha que consegue vencer comigo?', next: 'scene_oak_lab_part2' }
@@ -761,14 +461,6 @@
             document.getElementById('dialogText').textContent = text;
             dialogBox.classList.add('visible');
             gameState.isDialogActive = true;
-            
-            AudioManager.dialogAdvance();
-
-            // Verificar eventos especiais
-            if (text.includes('[Você recebe PIKACHU]')) {
-                gameState.hasPikachu = true;
-                gameState.save();
-            }
 
             if (duration) {
                 setTimeout(() => {
@@ -806,152 +498,35 @@
             const scene = scenes[gameState.currentScene];
             const mapKey = scene.map || 'pallet_town';
             const map = maps[mapKey] || maps['pallet_town'];
-            const tileSize = Math.floor(canvas.width / 24);
 
             for (let y = 0; y < map.length; y++) {
                 for (let x = 0; x < map[y].length; x++) {
                     const char = map[y][x];
-                    const px = x * tileSize;
-                    const py = y * tileSize;
-
                     if (char === '#') {
-                        // Building
-                        const gradient = ctx.createLinearGradient(px, py, px, py + tileSize);
-                        gradient.addColorStop(0, '#8B4513');
-                        gradient.addColorStop(0.5, '#A0522D');
-                        gradient.addColorStop(1, '#8B4513');
-                        ctx.fillStyle = gradient;
-                        ctx.fillRect(px, py, tileSize, tileSize);
-                        ctx.strokeStyle = '#5D3A1A';
-                        ctx.lineWidth = 2;
-                        ctx.strokeRect(px, py, tileSize, tileSize);
+                        drawTile(x, y, ' ', '#AA6644'); // building
                     } else if (char === '.') {
-                        // Grass
-                        ctx.fillStyle = '#228B22';
-                        ctx.fillRect(px, py, tileSize, tileSize);
-                        ctx.fillStyle = '#32CD32';
-                        ctx.fillRect(px + 2, py + 2, 4, 4);
-                        ctx.fillRect(px + tileSize - 6, py + tileSize - 6, 4, 4);
-                    } else if (char === '~') {
-                        // Water
-                        const gradient = ctx.createLinearGradient(px, py, px + tileSize, py + tileSize);
-                        gradient.addColorStop(0, '#1E90FF');
-                        gradient.addColorStop(0.5, '#00BFFF');
-                        gradient.addColorStop(1, '#1E90FF');
-                        ctx.fillStyle = gradient;
-                        ctx.fillRect(px, py, tileSize, tileSize);
-                    } else if (char === 'T') {
-                        // Tree
-                        ctx.fillStyle = '#228B22';
-                        ctx.fillRect(px, py, tileSize, tileSize);
-                        ctx.fillStyle = '#006400';
-                        ctx.beginPath();
-                        ctx.arc(px + tileSize/2, py + tileSize/3, tileSize/3, 0, Math.PI * 2);
-                        ctx.fill();
-                        ctx.fillStyle = '#8B4513';
-                        ctx.fillRect(px + tileSize/2 - 3, py + tileSize/2, 6, tileSize/2);
+                        drawTile(x, y, ' ', '#2d5016'); // grass
                     } else {
-                        // Default grass
-                        ctx.fillStyle = '#2d5016';
-                        ctx.fillRect(px, py, tileSize, tileSize);
+                        drawTile(x, y, char, '#2d5016'); // emoji tiles
                     }
                 }
             }
         }
 
         function drawPlayer() {
-            const tileSize = Math.floor(canvas.width / 24);
-            const px = gameState.playerX * tileSize;
-            const py = gameState.playerY * tileSize;
+            const tileSize = 20;
+            ctx.fillStyle = '#FF3333';
+            ctx.fillRect(gameState.playerX * tileSize, gameState.playerY * tileSize, tileSize, tileSize);
+            ctx.fillStyle = '#000';
+            ctx.font = 'bold 14px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('👦', gameState.playerX * tileSize + tileSize / 2, gameState.playerY * tileSize + tileSize / 2);
 
-            // Sombra
-            ctx.fillStyle = 'rgba(0,0,0,0.3)';
-            ctx.beginPath();
-            ctx.ellipse(px + tileSize/2, py + tileSize - 2, tileSize/3, tileSize/6, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Corpo (Red)
-            // Calça azul
-            ctx.fillStyle = '#3366FF';
-            ctx.fillRect(px + 4, py + tileSize/2 + 4, tileSize - 8, tileSize/2 - 6);
-            
-            // Camisa vermelha
-            ctx.fillStyle = '#FF0000';
-            ctx.fillRect(px + 2, py + tileSize/4, tileSize - 4, tileSize/3);
-            
-            // Cabeça
-            ctx.fillStyle = '#FFCCAA';
-            ctx.beginPath();
-            ctx.arc(px + tileSize/2, py + tileSize/4, tileSize/4, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // Cabelo preto
-            ctx.fillStyle = '#1a1a1a';
-            ctx.beginPath();
-            ctx.arc(px + tileSize/2, py + tileSize/5, tileSize/4, Math.PI, Math.PI * 2);
-            ctx.fill();
-            
-            // Boné vermelho
-            ctx.fillStyle = '#FF0000';
-            ctx.fillRect(px + tileSize/4, py + 2, tileSize/2, tileSize/6);
-            ctx.fillRect(px + tileSize/2 - 2, py, tileSize/3, tileSize/8);
-
-            // Desenhar Pikachu se tiver
-            if (gameState.hasPikachu) {
-                drawPikachu(px - tileSize, py + 4);
-            }
-        }
-
-        function drawPikachu(x, y) {
-            const size = 20;
-            
-            // Corpo amarelo
-            ctx.fillStyle = '#FFD700';
-            ctx.beginPath();
-            ctx.ellipse(x + size/2, y + size/2, size/2, size/2.5, 0, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // Orelhas
-            ctx.beginPath();
-            ctx.moveTo(x + 4, y + 4);
-            ctx.lineTo(x + 2, y - 8);
-            ctx.lineTo(x + 10, y + 2);
-            ctx.fillStyle = '#FFD700';
-            ctx.fill();
-            
-            ctx.beginPath();
-            ctx.moveTo(x + size - 4, y + 4);
-            ctx.lineTo(x + size - 2, y - 8);
-            ctx.lineTo(x + size - 10, y + 2);
-            ctx.fill();
-            
-            // Pontas pretas das orelhas
-            ctx.fillStyle = '#1a1a1a';
-            ctx.beginPath();
-            ctx.moveTo(x + 2, y - 8);
-            ctx.lineTo(x + 4, y - 4);
-            ctx.lineTo(x + 6, y - 6);
-            ctx.fill();
-            
-            ctx.beginPath();
-            ctx.moveTo(x + size - 2, y - 8);
-            ctx.lineTo(x + size - 4, y - 4);
-            ctx.lineTo(x + size - 6, y - 6);
-            ctx.fill();
-            
-            // Bochechas vermelhas
-            ctx.fillStyle = '#FF6347';
-            ctx.beginPath();
-            ctx.arc(x + 4, y + size/2, 3, 0, Math.PI * 2);
-            ctx.arc(x + size - 4, y + size/2, 3, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // Olhos
-            ctx.fillStyle = '#1a1a1a';
-            ctx.beginPath();
-            ctx.arc(x + size/3, y + size/3, 2, 0, Math.PI * 2);
-            ctx.arc(x + size*2/3, y + size/3, 2, 0, Math.PI * 2);
-            ctx.fill();
+            // Draw direction arrow (subtle)
+            ctx.fillStyle = 'rgba(100, 200, 255, 0.5)';
+            ctx.font = '16px Arial';
+            ctx.fillText('→', gameState.playerX * tileSize + tileSize + 10, gameState.playerY * tileSize - 10);
         }
 
         function drawGameUI() {
@@ -987,12 +562,6 @@
             if (gameState.playerY >= 5 && gameState.currentScene === 'pewter') {
                 gameState.currentScene = 'viridian';
                 gameState.playerY = 1;
-            }
-
-            // Random encounter em Route 1
-            if (gameState.currentScene === 'route1' && !battleState.active && Math.random() < 0.01) {
-                const pokemon = Math.random() < 0.7 ? 'rattata' : 'pidgey';
-                startBattle(pokemon);
             }
 
             // A button (confirm dialog)
@@ -1060,167 +629,6 @@
 
             requestAnimationFrame(gameLoop);
         }
-
-        // ==================== AUDIO SYSTEM ====================
-
-        const AudioManager = {
-            context: null,
-            
-            init() {
-                if (!this.context) {
-                    this.context = new (window.AudioContext || window.webkitAudioContext)();
-                }
-            },
-            
-            playBeep(frequency = 440, duration = 0.1) {
-                this.init();
-                const osc = this.context.createOscillator();
-                const gain = this.context.createGain();
-                osc.connect(gain);
-                gain.connect(this.context.destination);
-                osc.frequency.value = frequency;
-                gain.gain.setValueAtTime(0.3, this.context.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, this.context.currentTime + duration);
-                osc.start(this.context.currentTime);
-                osc.stop(this.context.currentTime + duration);
-            },
-            
-            dialogAdvance() { this.playBeep(880, 0.05); },
-            menuSelect() { this.playBeep(660, 0.08); },
-            battleStart() { 
-                this.playBeep(440, 0.1);
-                setTimeout(() => this.playBeep(550, 0.1), 100);
-            }
-        };
-
-        document.addEventListener('click', () => AudioManager.init(), { once: true });
-        document.addEventListener('touchstart', () => AudioManager.init(), { once: true });
-
-        // ==================== BATTLE SYSTEM ====================
-
-        const battleState = {
-            active: false,
-            playerPokemon: {
-                name: 'Pikachu',
-                hp: 35,
-                maxHp: 35,
-                attack: 55
-            },
-            opponent: null
-        };
-
-        const wildPokemon = {
-            rattata: {
-                name: 'Rattata',
-                hp: 30,
-                maxHp: 30,
-                attack: 56
-            },
-            pidgey: {
-                name: 'Pidgey',
-                hp: 40,
-                maxHp: 40,
-                attack: 45
-            }
-        };
-
-        function startBattle(pokemonKey) {
-            battleState.active = true;
-            battleState.opponent = JSON.parse(JSON.stringify(wildPokemon[pokemonKey]));
-            battleState.playerPokemon.hp = battleState.playerPokemon.maxHp;
-            
-            document.getElementById('battleOverlay').classList.add('active');
-            document.getElementById('opponentName').textContent = battleState.opponent.name;
-            updateHpBars();
-            
-            AudioManager.battleStart();
-            showBattleText(`Um ${battleState.opponent.name} selvagem apareceu!`);
-        }
-
-        function endBattle(victory) {
-            battleState.active = false;
-            document.getElementById('battleOverlay').classList.remove('active');
-            
-            if (victory) {
-                showDialog('Sistema', '🎮', `Vitória! Pikachu ganhou experiência!`, 2000);
-            } else {
-                showDialog('Sistema', '🎮', `Você escapou!`, 1500);
-            }
-        }
-
-        function showBattleText(text) {
-            document.getElementById('battleText').textContent = text;
-        }
-
-        function updateHpBars() {
-            const playerPercent = (battleState.playerPokemon.hp / battleState.playerPokemon.maxHp) * 100;
-            const opponentPercent = (battleState.opponent.hp / battleState.opponent.maxHp) * 100;
-            
-            document.getElementById('playerPokemonHp').style.width = playerPercent + '%';
-            document.getElementById('opponentHp').style.width = opponentPercent + '%';
-        }
-
-        function playerAttack(moveName) {
-            const damage = Math.floor(Math.random() * 15) + 10;
-            battleState.opponent.hp = Math.max(0, battleState.opponent.hp - damage);
-            updateHpBars();
-            
-            showBattleText(`Pikachu usou ${moveName}! Causou ${damage} de dano!`);
-            
-            setTimeout(() => {
-                if (battleState.opponent.hp <= 0) {
-                    showBattleText(`${battleState.opponent.name} desmaiou!`);
-                    setTimeout(() => endBattle(true), 1500);
-                } else {
-                    opponentAttack();
-                }
-            }, 1500);
-        }
-
-        function opponentAttack() {
-            const damage = Math.floor(Math.random() * 12) + 8;
-            battleState.playerPokemon.hp = Math.max(0, battleState.playerPokemon.hp - damage);
-            updateHpBars();
-            
-            showBattleText(`${battleState.opponent.name} atacou! Causou ${damage} de dano!`);
-            
-            setTimeout(() => {
-                if (battleState.playerPokemon.hp <= 0) {
-                    showBattleText(`Pikachu desmaiou!`);
-                    setTimeout(() => endBattle(false), 1500);
-                } else {
-                    showBattleText('O que Pikachu deve fazer?');
-                }
-            }, 1500);
-        }
-
-        // Battle button listeners
-        document.querySelectorAll('.battle-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                AudioManager.menuSelect();
-                const action = btn.dataset.action;
-                if (action === 'fight') {
-                    document.getElementById('battleMenu').style.display = 'none';
-                    document.getElementById('attackMenu').classList.remove('hidden');
-                } else if (action === 'run') {
-                    endBattle(false);
-                }
-            });
-        });
-
-        document.querySelectorAll('.attack-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const moveName = btn.dataset.move.toUpperCase();
-                document.getElementById('attackMenu').classList.add('hidden');
-                document.getElementById('battleMenu').style.display = 'block';
-                playerAttack(moveName);
-            });
-        });
-
-        document.querySelector('.back-btn').addEventListener('click', () => {
-            document.getElementById('attackMenu').classList.add('hidden');
-            document.getElementById('battleMenu').style.display = 'block';
-        });
 
         // Start game
         window.addEventListener('load', () => {

@@ -20,4 +20,4 @@ echo ""
 echo "Press Ctrl+C to stop"
 echo ""
 
-python3 -m http.server 8000
+python3 -m http.server 8000 --bind 0.0.0.0
