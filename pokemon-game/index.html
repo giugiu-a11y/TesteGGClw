@@ -177,28 +177,41 @@
 
         .dialog-portrait {
             float: left;
-            width: 80px;
-            height: 80px;
-            margin-right: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid #FF3333;
-            border-radius: 5px;
+            width: 70px;
+            height: 70px;
+            margin-right: 15px;
+            background: linear-gradient(135deg, #2a2a4a 0%, #1a1a2e 100%);
+            border: 3px solid #FFD700;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 40px;
+            font-size: 36px;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3), inset 0 0 20px rgba(0,0,0,0.5);
         }
 
         .dialog-speaker {
             font-weight: bold;
-            color: #FFDD00;
-            margin-bottom: 5px;
-            clear: both;
+            color: #FFD700;
+            font-size: 16px;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            letter-spacing: 1px;
         }
 
+        .dialog-speaker.narrator { color: #87CEEB; }
+        .dialog-speaker.red { color: #FF4444; }
+        .dialog-speaker.blue { color: #4444FF; }
+        .dialog-speaker.oak { color: #8B4513; }
+        .dialog-speaker.pikachu { color: #FFD700; }
+        .dialog-speaker.enemy { color: #8B0000; }
+
         .dialog-text {
-            font-size: 12px;
+            font-size: 14px;
             clear: both;
+            line-height: 1.6;
+            color: #FFFFFF;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
 
         /* ==================== SPRITES ==================== */
@@ -670,7 +683,7 @@
         // ==================== GAME STATE ====================
 
         const gameState = {
-            currentScene: 'scene_oak_lab',
+            currentScene: 'scene_intro',
             playerX: 160,
             playerY: 120,
             dialogIndex: 0,
@@ -683,52 +696,104 @@
         // ==================== SCENE MANAGER ====================
 
         const scenes = {
-            'scene_oak_lab': {
-                bg: '#2d5016',
-                title: 'Laboratório de Oak',
+            'scene_intro': {
+                bg: '#1a2e1a',
+                title: 'Pallet Town - Início',
                 map: 'pallet_town',
                 startPos: {x: 12, y: 3},
                 dialogues: [
-                    { speaker: 'Oak', portrait: '🧙', text: 'Bem-vindo ao mundo Pokémon! Meu nome é Professor Oak.' },
-                    { speaker: 'Oak', portrait: '🧙', text: 'Este é um mundo fascinante... Existem criaturas incríveis chamadas Pokémon!' },
-                    { speaker: 'Oak', portrait: '🧙', text: 'Pokémons possuem poderes especiais, e nós humanos nos relacionamos com eles.' },
-                    { speaker: 'Oak', portrait: '🧙', text: 'Mas você precisa entender algo importante...' },
-                    { speaker: 'Oak', portrait: '🧙', text: 'Pokémons não são ferramentas. Eles sentem dor, têm sonhos e sentimentos.' },
-                    { speaker: 'Oak', portrait: '🧙', text: 'Há 10 anos, temos feito descobertas espantosas sobre essas criaturas.' },
-                    { speaker: 'You', portrait: '👦', text: '...', duration: 800 },
-                    { speaker: 'Oak', portrait: '🧙', text: 'Ah, sim! Você veio! Perfeito! Tenho um presente para você.' },
-                    { speaker: 'Oak', portrait: '🧙', text: 'Aqui! Esta é a Pokédex. Uma enciclopédia portátil de Pokémons!' },
-                    { speaker: 'You', portrait: '👦', text: '!', duration: 500 },
-                    { speaker: 'Oak', portrait: '🧙', text: 'Agora, escolha seu companheiro! Aqui estão os três iniciantes!' },
-                    { speaker: 'Blue', portrait: '👱', text: 'Hahahaha! Você acha que consegue vencer comigo?', next: 'scene_oak_lab_part2' }
+                    { speaker: 'Narrador', portrait: '📖', text: 'Este é um mundo habitado por criaturas chamadas Pokémon.', duration: 2000 },
+                    { speaker: 'Narrador', portrait: '📖', text: 'Alguns os usam para batalhas. Outros, para companhia.', duration: 2000 },
+                    { speaker: 'Narrador', portrait: '📖', text: 'Mas há aqueles que os veem apenas como... ferramentas.', duration: 2000 },
+                    { speaker: 'Narrador', portrait: '📖', text: 'Esta é a história de Red, um garoto de Pallet Town.', duration: 2000, next: 'scene_oak_lab' }
                 ]
             },
-            'scene_oak_lab_part2': {
-                bg: '#2d5016',
-                title: 'Laboratório de Oak',
+            'scene_oak_lab': {
+                bg: '#2d4a2d',
+                title: 'Laboratório do Prof. Oak',
                 map: 'pallet_town',
                 startPos: {x: 12, y: 3},
                 dialogues: [
-                    { speaker: 'Blue', portrait: '👱', text: 'Meu Eevee é muito mais forte que qualquer iniciante!' },
-                    { speaker: 'Blue', portrait: '👱', text: 'Você não tem chance!' },
-                    { speaker: 'You', portrait: '👦', text: '!', duration: 300 },
-                    { speaker: 'Blue', portrait: '👱', text: '[Blue rouba um Pokéball e sai correndo]', special: true, duration: 800 },
-                    { speaker: 'Oak', portrait: '🧙', text: 'Que menino irritante... Não se preocupe!' },
-                    { speaker: 'Oak', portrait: '🧙', text: 'Tenho algo especial para você. Algo muito raro...', next: 'scene_pikachu' }
+                    { speaker: 'Red', portrait: '🧢', text: '(Finalmente... o dia chegou. Vou me tornar um treinador!)' },
+                    { speaker: 'Oak', portrait: '👴', text: 'Ah, Red! Você veio. Eu estava te esperando.' },
+                    { speaker: 'Oak', portrait: '👴', text: 'Antes de começarmos... preciso te contar algo importante.' },
+                    { speaker: 'Oak', portrait: '👴', text: 'Pokémons não são brinquedos, Red. Eles sentem dor.' },
+                    { speaker: 'Oak', portrait: '👴', text: 'Eles sangram. Eles choram. Eles morrem.' },
+                    { speaker: 'Red', portrait: '🧢', text: '...!' },
+                    { speaker: 'Oak', portrait: '👴', text: 'Muitos treinadores esquecem isso. Tratam-nos como armas.' },
+                    { speaker: 'Oak', portrait: '👴', text: 'Eu vi coisas terríveis, Red. Pokémons torturados, abandonados...' },
+                    { speaker: 'Oak', portrait: '👴', text: 'Espero que você seja diferente.' },
+                    { speaker: 'Red', portrait: '🧢', text: 'Professor... eu prometo. Vou protegê-los.' },
+                    { speaker: 'Oak', portrait: '👴', text: 'Bom. Agora, deixe-me apresentar os iniciais—' },
+                    { speaker: '???', portrait: '😏', text: 'Não vai precisar, vovô.' },
+                    { speaker: 'Oak', portrait: '👴', text: 'Blue?! O que você está fazendo aqui?', next: 'scene_blue_arrives' }
+                ]
+            },
+            'scene_blue_arrives': {
+                bg: '#2d4a2d',
+                title: 'Laboratório do Prof. Oak',
+                map: 'pallet_town',
+                startPos: {x: 12, y: 3},
+                dialogues: [
+                    { speaker: 'Blue', portrait: '😏', text: 'Vim pegar meu Pokémon. Não vou esperar esse perdedor escolher primeiro.' },
+                    { speaker: 'Red', portrait: '🧢', text: 'Ei! Quem você está chamando de perdedor?!' },
+                    { speaker: 'Blue', portrait: '😏', text: 'Você. Acha que pode ser treinador? Patético.' },
+                    { speaker: 'Blue', portrait: '😏', text: 'Pokémons são ferramentas de batalha. Só os fortes sobrevivem.' },
+                    { speaker: 'Oak', portrait: '👴', text: 'Blue! Isso não é—' },
+                    { speaker: 'Blue', portrait: '😏', text: '[Blue pega uma Pokébola da mesa]' },
+                    { speaker: 'Blue', portrait: '😏', text: 'Eevee. O mais raro. Perfeito.' },
+                    { speaker: 'Blue', portrait: '😏', text: 'Nos vemos por aí, Red. Se você sobreviver.' },
+                    { speaker: 'Narrador', portrait: '📖', text: '[Blue sai do laboratório rindo]', duration: 1000 },
+                    { speaker: 'Oak', portrait: '👴', text: '...Aquele garoto. Ele vai se machucar um dia.' },
+                    { speaker: 'Oak', portrait: '👴', text: 'Red, venha comigo. Tenho algo... diferente para você.', next: 'scene_pikachu' }
                 ]
             },
             'scene_pikachu': {
-                bg: '#2d5016',
-                title: 'Laboratório de Oak - Sala Interna',
+                bg: '#3a3a2a',
+                title: 'Sala dos Fundos',
                 map: 'pallet_town',
                 startPos: {x: 12, y: 3},
                 dialogues: [
-                    { speaker: 'Oak', portrait: '🧙', text: 'Este Pikachu é muito especial. Ele foi abandonado por seus pais.' },
-                    { speaker: 'Oak', portrait: '🧙', text: 'Mas ele é forte e leal. Cuide bem dele.' },
-                    { speaker: 'Pikachu', portrait: '⚡', text: 'Pika pika!', duration: 500 },
-                    { speaker: 'You', portrait: '👦', text: '!', duration: 300 },
-                    { speaker: 'Oak', portrait: '🧙', text: '[Você recebe PIKACHU]', special: true, duration: 500 },
-                    { speaker: 'Oak', portrait: '🧙', text: 'Agora vá. Há um mundo inteiro te esperando!', next: 'route1' }
+                    { speaker: 'Oak', portrait: '👴', text: 'Este Pikachu... ele não é como os outros.' },
+                    { speaker: 'Red', portrait: '🧢', text: '(Um Pikachu? Mas ele parece... ferido?)' },
+                    { speaker: 'Oak', portrait: '👴', text: 'Encontrei-o na Viridian Forest há três semanas.' },
+                    { speaker: 'Oak', portrait: '👴', text: 'Ele estava quase morto. Queimaduras. Cicatrizes. Ossos quebrados.' },
+                    { speaker: 'Red', portrait: '🧢', text: 'Quem... quem fez isso com ele?!' },
+                    { speaker: 'Oak', portrait: '👴', text: 'Treinadores. Treinadores que o descartaram quando ele perdeu uma batalha.' },
+                    { speaker: 'Pikachu', portrait: '⚡', text: '...Pika.' },
+                    { speaker: 'Oak', portrait: '👴', text: 'Ele não confia em humanos, Red. Nem um pouco.' },
+                    { speaker: 'Oak', portrait: '👴', text: 'Já atacou três assistentes que tentaram se aproximar.' },
+                    { speaker: 'Red', portrait: '🧢', text: '...' },
+                    { speaker: 'Narrador', portrait: '📖', text: '[Red se ajoelha lentamente, estendendo a mão]', duration: 1500 },
+                    { speaker: 'Red', portrait: '🧢', text: 'Ei, pequeno. Eu sei que você sofreu.' },
+                    { speaker: 'Red', portrait: '🧢', text: 'Eu não vou te machucar. Prometo.' },
+                    { speaker: 'Pikachu', portrait: '⚡', text: '...Pika...?' },
+                    { speaker: 'Oak', portrait: '👴', text: '(Impressionante... ele não atacou.)' },
+                    { speaker: 'Narrador', portrait: '📖', text: '[Pikachu hesita, então toca a mão de Red]', duration: 1500 },
+                    { speaker: 'Pikachu', portrait: '⚡', text: 'Pika... pikachu.' },
+                    { speaker: 'Oak', portrait: '👴', text: 'Red... acho que ele escolheu você.' },
+                    { speaker: 'Oak', portrait: '👴', text: '[Você recebe PIKACHU]', special: true, duration: 1000 },
+                    { speaker: 'Oak', portrait: '👴', text: 'Cuide bem dele. Ele merece uma segunda chance.' },
+                    { speaker: 'Red', portrait: '🧢', text: 'Eu vou, Professor. Vamos, Pikachu. Juntos.', next: 'scene_departure' }
+                ]
+            },
+            'scene_departure': {
+                bg: '#4a6a4a',
+                title: 'Pallet Town - Saída',
+                map: 'pallet_town',
+                startPos: {x: 12, y: 3},
+                dialogues: [
+                    { speaker: 'Oak', portrait: '👴', text: 'Red, uma última coisa.' },
+                    { speaker: 'Oak', portrait: '👴', text: 'Há rumores de uma organização criminosa. Team Rocket.' },
+                    { speaker: 'Oak', portrait: '👴', text: 'Eles capturam Pokémons e os vendem. Ou pior.' },
+                    { speaker: 'Red', portrait: '🧢', text: 'Team Rocket...?' },
+                    { speaker: 'Oak', portrait: '👴', text: 'Se você encontrá-los... tenha cuidado. Eles são perigosos.' },
+                    { speaker: 'Oak', portrait: '👴', text: 'E lembre-se: a força de um treinador não está em vencer batalhas.' },
+                    { speaker: 'Oak', portrait: '👴', text: 'Está no vínculo com seus Pokémons.' },
+                    { speaker: 'Red', portrait: '🧢', text: 'Entendi, Professor. Obrigado por tudo.' },
+                    { speaker: 'Pikachu', portrait: '⚡', text: 'Pika!' },
+                    { speaker: 'Narrador', portrait: '📖', text: 'E assim, Red e Pikachu partem para sua jornada.', duration: 2000 },
+                    { speaker: 'Narrador', portrait: '📖', text: 'Uma jornada que mudará suas vidas para sempre.', duration: 2000, next: 'route1' }
                 ]
             },
             'route1': {
@@ -737,35 +802,85 @@
                 map: 'route1',
                 startPos: {x: 2, y: 3},
                 dialogues: [
-                    { speaker: 'Narrator', portrait: '📖', text: 'Você saiu pela Rota 1. Pokémons selvagens rodam por aí...', duration: 1500 },
+                    { speaker: 'Narrador', portrait: '📖', text: 'Rota 1 - A primeira etapa da jornada.', duration: 1500 },
+                    { speaker: 'Red', portrait: '🧢', text: 'Pikachu, como você está?' },
+                    { speaker: 'Pikachu', portrait: '⚡', text: 'Pika...' },
+                    { speaker: 'Red', portrait: '🧢', text: '(Ele ainda está desconfiado. Preciso ganhar sua confiança.)' },
+                    { speaker: 'Narrador', portrait: '📖', text: '[A grama alta se move. Pokémons selvagens espreitam.]', duration: 1500 },
+                    { speaker: 'Red', portrait: '🧢', text: 'Fique perto de mim, Pikachu. Vamos com cuidado.' },
                 ]
             },
             'viridian': {
                 bg: '#2d5016',
-                title: 'Cidade Viridian',
+                title: 'Viridian City',
                 map: 'viridian',
                 startPos: {x: 12, y: 8},
                 dialogues: [
-                    { speaker: 'Narrator', portrait: '📖', text: 'Você chegou à Cidade Viridian. Uma cidade calma e tranquila.', duration: 1500 },
+                    { speaker: 'Narrador', portrait: '📖', text: 'Viridian City - A cidade eternamente verde.', duration: 1500 },
+                    { speaker: '???', portrait: '👤', text: 'Ei, garoto!' },
+                    { speaker: 'Homem', portrait: '👤', text: 'Você é novo por aqui, não é? Tome cuidado.' },
+                    { speaker: 'Red', portrait: '🧢', text: 'Cuidado? Por quê?' },
+                    { speaker: 'Homem', portrait: '👤', text: 'Team Rocket foi visto na área. Eles roubam Pokémons.' },
+                    { speaker: 'Homem', portrait: '👤', text: 'Ouvi dizer que capturam os raros e... fazem experimentos neles.' },
+                    { speaker: 'Pikachu', portrait: '⚡', text: '...Pika!' },
+                    { speaker: 'Red', portrait: '🧢', text: '(Pikachu ficou tenso. Será que ele...?)' },
+                    { speaker: 'Red', portrait: '🧢', text: 'Obrigado pelo aviso. Vamos ficar atentos.' },
                 ]
             },
             'pewter': {
                 bg: '#4a4a3a',
-                title: 'Cidade Pewter',
+                title: 'Pewter City',
                 map: 'pewter',
                 startPos: {x: 12, y: 8},
                 dialogues: [
-                    { speaker: 'Narrator', portrait: '📖', text: 'Você chegou à Cidade Pewter. Conhecida por suas rochas e minerais.', duration: 1500 },
+                    { speaker: 'Narrador', portrait: '📖', text: 'Pewter City - A cidade das pedras.', duration: 1500 },
+                    { speaker: 'Narrador', portrait: '📖', text: 'Aqui está o primeiro Ginásio Pokémon. Líder: Brock.', duration: 1500 },
+                    { speaker: 'Red', portrait: '🧢', text: 'Um Ginásio... Pikachu, você está pronto?' },
+                    { speaker: 'Pikachu', portrait: '⚡', text: 'Pika... pika.' },
+                    { speaker: 'Red', portrait: '🧢', text: '(Ele ainda está hesitante. Não posso forçá-lo.)' },
+                    { speaker: 'Red', portrait: '🧢', text: 'Está tudo bem. Só lutamos quando você quiser.' },
+                    { speaker: 'Pikachu', portrait: '⚡', text: '...!' },
+                    { speaker: 'Narrador', portrait: '📖', text: '[Pikachu olha para Red com surpresa]', duration: 1000 },
+                    { speaker: 'Pikachu', portrait: '⚡', text: 'Pika... pikachu!' },
                 ]
             },
             'viridian_forest': {
-                bg: '#1a3a1a',
+                bg: '#0a1a0a',
                 title: 'Viridian Forest',
                 map: 'viridian_forest',
                 startPos: {x: 12, y: 8},
                 dialogues: [
-                    { speaker: 'Narrator', portrait: '📖', text: 'Você entrou na Viridian Forest. A floresta é densa e escura.', duration: 1500 },
-                    { speaker: 'Narrator', portrait: '📖', text: 'Pokémons selvagens se movem entre as árvores...', duration: 1500 },
+                    { speaker: 'Narrador', portrait: '📖', text: 'Viridian Forest - Uma floresta densa e misteriosa.', duration: 1500 },
+                    { speaker: 'Red', portrait: '🧢', text: 'É aqui... onde o Professor Oak encontrou você, Pikachu.' },
+                    { speaker: 'Pikachu', portrait: '⚡', text: '...' },
+                    { speaker: 'Narrador', portrait: '📖', text: '[Pikachu treme levemente]', duration: 1000 },
+                    { speaker: 'Red', portrait: '🧢', text: 'Ei... não precisa ter medo. Eu estou aqui.' },
+                    { speaker: 'Red', portrait: '🧢', text: 'Ninguém vai te machucar de novo. Eu prometo.' },
+                    { speaker: 'Pikachu', portrait: '⚡', text: 'Pika...' },
+                    { speaker: 'Narrador', portrait: '📖', text: '[Pela primeira vez, Pikachu se aproxima de Red voluntariamente]', duration: 1500 },
+                    { speaker: 'Pikachu', portrait: '⚡', text: 'Pikachu!' },
+                    { speaker: 'Red', portrait: '🧢', text: '(Finalmente... ele está começando a confiar em mim.)' },
+                ]
+            },
+            'scene_team_rocket': {
+                bg: '#1a0a1a',
+                title: 'Encontro Sombrio',
+                map: 'viridian_forest',
+                startPos: {x: 12, y: 4},
+                dialogues: [
+                    { speaker: '???', portrait: '🖤', text: 'Olha só o que temos aqui...' },
+                    { speaker: 'Red', portrait: '🧢', text: 'Quem está aí?!' },
+                    { speaker: 'Grunt', portrait: '🖤', text: 'Team Rocket, garoto. E esse Pikachu parece familiar...' },
+                    { speaker: 'Pikachu', portrait: '⚡', text: 'PIKA!!' },
+                    { speaker: 'Narrador', portrait: '📖', text: '[Pikachu solta faíscas de suas bochechas]', duration: 1000 },
+                    { speaker: 'Grunt', portrait: '🖤', text: 'Haha! Então é ESSE Pikachu! O que escapou do laboratório!' },
+                    { speaker: 'Red', portrait: '🧢', text: 'Laboratório?! Vocês fizeram isso com ele?!' },
+                    { speaker: 'Grunt', portrait: '🖤', text: 'Experimentos. Nada pessoal. Negócios são negócios.' },
+                    { speaker: 'Red', portrait: '🧢', text: 'Vocês são monstros!' },
+                    { speaker: 'Grunt', portrait: '🖤', text: 'Entrega o Pikachu e talvez a gente deixe você ir.' },
+                    { speaker: 'Red', portrait: '🧢', text: 'NUNCA!' },
+                    { speaker: 'Pikachu', portrait: '⚡', text: 'PIKACHU!!!' },
+                    { speaker: 'Narrador', portrait: '📖', text: '[Uma batalha está prestes a começar...]', duration: 2000 },
                 ]
             }
         };
