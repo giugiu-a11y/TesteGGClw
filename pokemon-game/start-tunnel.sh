@@ -6,6 +6,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PORT="${PORT:-8000}"
+TUNNEL_WAIT_SECONDS="${TUNNEL_WAIT_SECONDS:-25}"
 
 LOG_DIR="${ROOT_DIR}/.runtime"
 mkdir -p "${LOG_DIR}"
@@ -40,14 +41,25 @@ fi
 echo "[pokemon-game] Starting localtunnel for port ${PORT} (this requires network access)"
 echo "[pokemon-game] Tunnel log: ${TUNNEL_LOG}"
 
-# localtunnel prints the public URL to stdout.
-set +e
-TUNNEL_URL="$(npx --yes localtunnel --port "${PORT}" 2>>"${TUNNEL_LOG}" | head -n 1)"
-set -e
+# Start localtunnel in background, log everything, then scrape the URL from the log.
+rm -f "${TUNNEL_LOG}"
+nohup npx --yes localtunnel --port "${PORT}" >"${TUNNEL_LOG}" 2>&1 &
+TUNNEL_PID="$!"
+
+TUNNEL_URL=""
+deadline=$(( $(date +%s) + TUNNEL_WAIT_SECONDS ))
+while [[ -z "${TUNNEL_URL}" ]] && [[ "$(date +%s)" -lt "${deadline}" ]]; do
+  # localtunnel typically prints an URL like https://xxxxx.loca.lt
+  TUNNEL_URL="$(grep -aoE 'https://[a-z0-9-]+\\.loca\\.lt' "${TUNNEL_LOG}" 2>/dev/null | head -n 1 || true)"
+  sleep 0.5
+done
 
 if [[ -z "${TUNNEL_URL}" ]]; then
-  echo "[pokemon-game] ERROR: localtunnel did not return a URL. Last log lines:"
-  tail -n 50 "${TUNNEL_LOG}" || true
+  echo "[pokemon-game] ERROR: localtunnel did not print an URL within ${TUNNEL_WAIT_SECONDS}s."
+  echo "[pokemon-game] localtunnel is probably still running; check log:"
+  tail -n 80 "${TUNNEL_LOG}" || true
+  echo "[pokemon-game] If needed, run manually:"
+  echo "  npx --yes localtunnel --port ${PORT}"
   exit 1
 fi
 
@@ -68,5 +80,4 @@ else
 fi
 
 echo "[pokemon-game] Press Ctrl+C to stop."
-wait
-
+wait "${TUNNEL_PID}"
