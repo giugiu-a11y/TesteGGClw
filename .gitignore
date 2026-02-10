@@ -25,3 +25,4 @@ yarn-error.log*
 # Pokemon game backups
 pokemon-game/*.bak
 pokemon-game/*.bak*
+pokemon-game/.runtime/
