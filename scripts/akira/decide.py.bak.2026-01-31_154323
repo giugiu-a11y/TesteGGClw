@@ -1,0 +1,131 @@
+import sys
+import json
+import os
+import http.client
+import time
+import socket # For potential timeout errors from http.client
+
+# --- CONFIGURAÇÕES FIXAS ---
+GEMINI_API_HOST = "generativelanguage.googleapis.com"
+GEMINI_API_PATH = "/v1beta/models/gemini-2.5-flash:generateContent?key="
+MODEL_ID = "gemini-2.5-flash" # Explicitly use flash model
+MAX_OUTPUT_TOKENS = 600
+TEMPERATURE = 0.2
+NETWORK_TIMEOUT_SECONDS = 20
+MAX_RETRIES = 1 # Changed: Max 1 retry, so 2 total attempts
+RETRY_BACKOFF_SECONDS = 2 # Short backoff
+
+def call_gemini_api(prompt_content):
+    api_key = os.getenv("GOOGLE_API_KEY")
+    if not api_key:
+        print("Error: GOOGLE_API_KEY environment variable not set.", file=sys.stderr)
+        return {"error": "GOOGLE_API_KEY_MISSING"} # Return structured error for pipeline
+
+    headers = {
+        "Content-Type": "application/json"
+    }
+    
+    # The prompt_content is expected to be a JSON string from pipeline.py
+    prompt_data = json.loads(prompt_content)
+    clean_text = prompt_data.get("clean_text", "")
+    task = prompt_data.get("task", "decide actions and return short JSON")
+
+    # Construct the message for the Gemini API
+    model_input = {
+        "contents": [
+            {"role": "user", "parts": [
+                {"text": f"Context: {clean_text}\n\nTask: {task}. Your output MUST be a concise JSON object. No other text or explanation."}
+            ]},
+        ],
+        "generationConfig": {
+            "maxOutputTokens": MAX_OUTPUT_TOKENS,
+            "temperature": TEMPERATURE,
+            "topP": 0.95,
+            "topK": 40
+        }
+    }
+
+    payload = json.dumps(model_input, ensure_ascii=False).encode('utf-8')
+    
+    for attempt in range(MAX_RETRIES + 1): # This will run for attempt 0 and 1 (2 total attempts)
+        try:
+            conn = http.client.HTTPSConnection(GEMINI_API_HOST, timeout=NETWORK_TIMEOUT_SECONDS)
+            conn.request("POST", f"{GEMINI_API_PATH}{api_key}", payload, headers)
+            response = conn.getresponse()
+            
+            response_body = response.read().decode('utf-8')
+            conn.close()
+
+            if response.status >= 400:
+                error_msg = f"HTTP Error {response.status}: {response.reason} - {response_body[:500]}"
+                print(f"API Error (attempt {attempt+1}/{MAX_RETRIES+1}): {error_msg}", file=sys.stderr)
+                if attempt < MAX_RETRIES: # Check if this was not the last attempt
+                    time.sleep(RETRY_BACKOFF_SECONDS * (attempt + 1))
+                    continue
+                return {"error": "GEMINI_API_HTTP_FAILED", "status": response.status, "details": error_msg}
+
+            gemini_response = json.loads(response_body)
+            
+            candidates = gemini_response.get("candidates", [])
+            if candidates:
+                first_candidate = candidates[0]
+                parts = first_candidate.get("content", {}).get("parts", [])
+                if parts:
+                    text_content = parts[0].get("text", ").strip()
+                    try:
+                        return json.loads(text_content)
+                    except json.JSONDecodeError:
+                        print(f"LLM output was not valid JSON (attempt {attempt+1}/{MAX_RETRIES+1}): {text_content[:500]}", file=sys.stderr)
+                        if attempt < MAX_RETRIES:
+                            time.sleep(RETRY_BACKOFF_SECONDS * (attempt + 1))
+                            continue
+                        return {"error": "LLM_OUTPUT_NOT_VALID_JSON", "raw_output_start": text_content[:200]}
+            
+            print(f"No candidates in LLM response (attempt {attempt+1}/{MAX_RETRIES+1}): {response_body[:500]}", file=sys.stderr)
+            if attempt < MAX_RETRIES:
+                time.sleep(RETRY_BACKOFF_SECONDS * (attempt + 1))
+                continue
+            return {"error": "NO_CANDIDATES_IN_LLM_RESPONSE"}
+
+        except (http.client.HTTPException, socket.timeout, ConnectionError, OSError) as e:
+            error_msg = f"Network or HTTP client error (attempt {attempt+1}/{MAX_RETRIES+1}): {str(e)}"
+            print(error_msg, file=sys.stderr)
+            if attempt < MAX_RETRIES:
+                time.sleep(RETRY_BACKOFF_SECONDS * (attempt + 1))
+                continue
+            return {"error": "GEMINI_API_NETWORK_ERROR", "details": str(e)}
+        except json.JSONDecodeError as e:
+            error_msg = f"Failed to decode API response JSON (attempt {attempt+1}/{MAX_RETRIES+1}): {str(e)} - Raw: {response_body[:500] if 'response_body' in locals() else 'N/A'}"
+            print(error_msg, file=sys.stderr)
+            if attempt < MAX_RETRIES:
+                time.sleep(RETRY_BACKOFF_SECONDS * (attempt + 1))
+                continue
+            return {"error": "LLM_RESPONSE_NOT_VALID_JSON", "details": str(e), "raw_response_start": response_body[:200] if 'response_body' in locals() else 'N/A'}
+        except Exception as e:
+            error_msg = f"UNEXPECTED_ERROR (attempt {attempt+1}/{MAX_RETRIES+1}): {str(e)}"
+            print(error_msg, file=sys.stderr)
+            if attempt < MAX_RETRIES:
+                time.sleep(RETRY_BACKOFF_SECONDS * (attempt + 1))
+                continue
+            return {"error": "UNEXPECTED_ERROR", "details": str(e)}
+    
+    return {"error": "MAX_RETRIES_EXCEEDED"} # Should not be reached if MAX_RETRIES is handled above
+
+if __name__ == "__main__":
+    if sys.stdin.isatty():
+        print("Error: No input provided via stdin.", file=sys.stderr)
+        print(json.dumps({"error": "EMPTY_STDIN_INPUT"})) # Output minimal JSON to stdout
+        sys.exit(1)
+
+    input_data_str = sys.stdin.read()
+    
+    try:
+        result = call_gemini_api(input_data_str)
+        print(json.dumps(result, ensure_ascii=False)) # Output to stdout
+        if "error" in result:
+            sys.exit(1) # Exit with error code if result contains an error
+        sys.exit(0)
+    except Exception as e:
+        print(f"Fatal error in decide.py main block: {str(e)}", file=sys.stderr)
+        print(json.dumps({"error": f"FATAL_SCRIPT_ERROR", "details": str(e)})) # Output minimal JSON to stdout
+        sys.exit(1)

@@ -1,0 +1,155 @@
+🎮 POKÉMON ADVENTURES - SPRINT 1 TESTE AGORA
+==============================================================
+
+DATA: 10 FEV 2026 11:20 UTC
+SPRINT: 1 COMPLETO ✅
+
+==============================================================
+⬇️ COMO TESTAR
+==============================================================
+
+1️⃣ DESENVOLVIMENTO LOCAL (Mac/Linux)
+   $ cd /home/ubuntu/clawd/pokemon-game/
+   $ ./start-dev.sh
+   
+   Abre servidor em: http://localhost:8000
+
+2️⃣ NO iPad/iOS
+   Safari → http://SEU-IP:8000
+   Toque em "X" e "Z" para confirmar/cancelar
+   Use setas para mover
+
+3️⃣ KEYBOARD (Computador)
+   ⬆️⬇️⬅️➡️ ou WASD = Mover
+   X = Confirmar (A 🟢)
+   Z = Cancelar (B 🔴)
+
+==============================================================
+🎯 SEQUÊNCIA ESPERADA (Sprint 1)
+==============================================================
+
+FASE 1: Laboratório Oak (Inicial)
+→ Professor Oak fala sobre Pokémon (5 linhas)
+→ Oferece Pokédex
+→ Oferece escolher Pokémon
+
+FASE 2: Blue Rouba (Parte 2)
+→ Blue aparece: "Hahahaha! Você acha que consegue vencer comigo?"
+→ Ameaça com Eevee
+→ Rouba um Pokéball e sai
+→ Oak consola: "Que menino irritante..."
+
+FASE 3: Pikachu Especial (Climax)
+→ Oak: "Este Pikachu é muito especial..."
+→ Pikachu grita: "Pika pika!"
+→ ⚡ RECEBE PIKACHU
+→ "Há um mundo inteiro te esperando!"
+
+FASE 4: Exploração Livre
+→ Sai para Route 1 (diálogo automático)
+→ Use setas para mover
+
+FASE 5: Navegação Entre Cidades
+→ Route 1: Grassland selvagem (🌿🌿)
+→ Suba (↑) continuamente → Entra em VIRIDIAN CITY
+→ Suba (↑) continuamente → Entra em PEWTER CITY
+→ Desça (↓) → Volta para VIRIDIAN
+→ Desça (↓) → Volta para ROUTE 1
+
+==============================================================
+🐛 O QUE TESTAR
+==============================================================
+
+DIÁLOGOS:
+  ✓ Todos os textos aparecem?
+  ✓ Pronunciação mantém fidelidade mangá?
+  ✓ Blue está vilão o bastante? 😈
+  ✓ Pikachu gerou "impacto"?
+
+TRANSIÇÕES:
+  ✓ Ao pressionar X, próximo diálogo aparece?
+  ✓ Fim de diálogos → Scene muda automaticamente?
+  ✓ Posição do player reseta corretamente?
+
+MAPAS:
+  ✓ 4 mapas visuais aparecem (Pallet, Route1, Viridian, Pewter)?
+  ✓ Personagem se move livremente?
+  ✓ Seta direcional está discreta?
+
+WARPS:
+  ✓ Mover para norte (↑) entra nova cidade?
+  ✓ Mover para sul (↓) volta para cidade anterior?
+  ✓ Nome da cidade atualiza no topo?
+  ✓ Posição reseta ao mudar mapa?
+
+SAVE/LOAD:
+  ✓ Jogo salva automaticamente?
+  ✓ F5 (reload) mantém progresso?
+  ✓ localStorage preserva scene atual?
+
+PERFORMANCE:
+  ✓ Game roda suave a 60fps?
+  ✓ Transições são rápidas?
+  ✓ iPad não trava?
+
+==============================================================
+📊 ARQUIVO ATUAL
+==============================================================
+
+Nome: /home/ubuntu/clawd/pokemon-game/index.html
+Tamanho: ~35KB ✅ (alvo: <600KB)
+
+Conteúdo:
+  - 5 cenas (Oak Lab x2, Pikachu, Route1, Viridian, Pewter)
+  - 4 mapas dinâmicos
+  - Warp system (transições automáticas)
+  - 30+ diálogos totais
+  - Save/Load via localStorage
+
+==============================================================
+🐛 BUGS CONHECIDOS (se houver)
+==============================================================
+
+[NENHUM CONHECIDO ATUALMENTE]
+
+Se você encontrar:
+- Diálogo não avanço → Pressione X
+- Warp não funciona → Mova continuamente ↑
+- Mapa não renderiza → Reload página
+- Save não persiste → Verif localStorage browser
+
+==============================================================
+📝 FEEDBACK ESPERADO
+==============================================================
+
+Envie para Mestre:
+1. Funcionou sem erros?
+2. Fidelidade mangá está OK?
+3. Transições ficaram suaves?
+4. Quer mudar algo em diálogos?
+5. iPad performance OK?
+
+==============================================================
+⏭️ PRÓXIMO PASSO (Sprint 2)
+==============================================================
+
+Sprint 2 (Dias 4-5) vai adicionar:
+  🎯 Encontro com Pokémon selvagem (Rattata)
+  ⚔️ Sistema de batalha turn-based mínimo
+  🎮 Menu: [Lutar] [Pokémon] [Bag] [Fugir]
+  💭 Diálogo reflexivo sobre sofrimento Pokémon
+  🔴 Poké Ball capture system
+
+Exemplo de cena:
+  "...Você caminha por Route 1 quando uma silhueta aparece!"
+  "Um Rattata selvagem apareceu!"
+  [Menu de batalha]
+
+==============================================================
+🎮 BOM TESTE!
+==============================================================
+
+Qualquer problema, avisa no Telegram!
+Sprint 1 completo e aguardando seu feedback.
+
+🚀 GitHub push quando você confirmar que tá funcionando!

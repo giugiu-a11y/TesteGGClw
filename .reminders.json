@@ -1,0 +1,65 @@
+{
+  "lembretes": [
+    {
+      "id": "terreno-jundiai",
+      "nome": "Terreno Jundiaí",
+      "diaVencimento": 10,
+      "diasAntecedencia": 1,
+      "diaLembrete": 9,
+      "valor": null,
+      "prioridade": "alta",
+      "ativo": true
+    },
+    {
+      "id": "cartao-nubank",
+      "nome": "Cartão de Crédito Nubank",
+      "diaVencimento": 11,
+      "diasAntecedencia": 1,
+      "diaLembrete": 10,
+      "valor": null,
+      "prioridade": "alta",
+      "ativo": true
+    },
+    {
+      "id": "carro-santander",
+      "nome": "Carro Santander",
+      "diaVencimento": 11,
+      "diasAntecedencia": 1,
+      "diaLembrete": 10,
+      "valor": null,
+      "prioridade": "alta",
+      "ativo": true
+    },
+    {
+      "id": "condominio",
+      "nome": "Condomínio",
+      "diaVencimento": 15,
+      "diasAntecedencia": 1,
+      "diaLembrete": 14,
+      "valor": null,
+      "prioridade": "média",
+      "ativo": true
+    },
+    {
+      "id": "iptu-carne",
+      "nome": "IPTU carnê",
+      "diaVencimento": 21,
+      "diasAntecedencia": 1,
+      "diaLembrete": 20,
+      "valor": null,
+      "prioridade": "alta",
+      "ativo": true
+    },
+    {
+      "id": "financiamento-casa",
+      "nome": "Financiamento Casa",
+      "diaVencimento": 29,
+      "diasAntecedencia": 1,
+      "diaLembrete": 28,
+      "valor": null,
+      "prioridade": "alta",
+      "ativo": true
+    }
+  ],
+  "ultimaAtualizacao": "2026-01-28T02:33:00Z"
+}

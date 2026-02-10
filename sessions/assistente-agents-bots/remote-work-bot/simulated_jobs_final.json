@@ -1,0 +1,50 @@
+[
+  {
+    "titulo": "Gerente de Relacionamento com Concession\u00e1rias",
+    "empresa": "Axos Bank",
+    "pais": "Remoto",
+    "salario_usd_mes": 8333,
+    "requisitos": {
+      "ingles": "N\u00e3o informado",
+      "faculdade": "N\u00e3o informado",
+      "experiencia_anos": null,
+      "descricao": "Gerenciar relacionamento com concession\u00e1rias em CO/NM."
+    },
+    "official_link": "https://axosbank.com/careers",
+    "link": "https://axosbank.com/careers",
+    "aprovada": true,
+    "motivo_rejeicao": null
+  },
+  {
+    "titulo": "Representante de Vendas de Campo",
+    "empresa": "Fiserv",
+    "pais": "Remoto",
+    "salario_usd_mes": 5500,
+    "requisitos": {
+      "ingles": "N\u00e3o informado",
+      "faculdade": "N\u00e3o informado",
+      "experiencia_anos": null,
+      "descricao": "L\u00edder global em Fintech e pagamentos. Mova dinheiro e informa\u00e7\u00f5es."
+    },
+    "official_link": "https://fiserv.com/careers",
+    "link": "https://fiserv.com/careers",
+    "aprovada": true,
+    "motivo_rejeicao": null
+  },
+  {
+    "titulo": "Especialista em Conte\u00fado para Redes Sociais (Ingl\u00eas + Franc\u00eas)",
+    "empresa": "dentsu",
+    "pais": "Remoto",
+    "salario_usd_mes": 5500,
+    "requisitos": {
+      "ingles": "Fluente",
+      "faculdade": "N\u00e3o informado",
+      "experiencia_anos": null,
+      "descricao": "Expertise em redes sociais para marcas. Ingl\u00eas e Franc\u00eas."
+    },
+    "official_link": "https://dentsu.com/careers",
+    "link": "https://dentsu.com/careers",
+    "aprovada": true,
+    "motivo_rejeicao": null
+  }
+]

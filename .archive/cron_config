@@ -1,0 +1,3 @@
+# Briefings (cron) - example
+# 08:30 BRT (11:30 UTC) - Virais/Trends + Noticias + Mercado
+30 11 * * * /home/ubuntu/clawd/scripts/briefings/run_briefings_clawdbot.sh >> /tmp/briefings_cron.log 2>&1

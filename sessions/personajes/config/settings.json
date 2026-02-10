@@ -1,0 +1,44 @@
+{
+  "bot": {
+    "name": "Jesus Sincero",
+    "account": "@jesussemfiltro",
+    "platform": "Twitter"
+  },
+  "schedule": {
+    "posting_times": [
+      "09:00",
+      "12:00",
+      "15:00",
+      "18:00",
+      "21:00"
+    ],
+    "posting_timezone": "BRT (UTC-3)",
+    "posts_per_day": 5,
+    "posts_per_week": 35,
+    "batch_generation_day": "Monday",
+    "batch_generation_time": "23:00 BRT (02:00 UTC Tuesday)"
+  },
+  "cache": {
+    "posts_ttl_hours": 168,
+    "archive_retention_days": 90
+  },
+  "tokens": {
+    "batch_generation_tokens_per_call": 4000,
+    "calls_per_week": 1,
+    "tokens_per_week": 4000,
+    "tokens_per_day_average": 571,
+    "economy_vs_individual": "88% less tokens"
+  },
+  "posting": {
+    "method": "tweepy",
+    "oauth_version": "1.1",
+    "max_retries": 3,
+    "timeout_seconds": 30
+  },
+  "logs": {
+    "posting_log": "logs/posting.log",
+    "batch_generation_log": "logs/batch-generation.log",
+    "error_log": "logs/error.log",
+    "retention_days": 90
+  }
+}

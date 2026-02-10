@@ -1,0 +1,50 @@
+[
+  {
+    "title": "Simulated Job 1",
+    "company": "Mock Corp",
+    "country": "USA",
+    "sector": "tech",
+    "salario_usd_mes": 6000,
+    "salario_estimado": true,
+    "requisitos": {
+      "ingles": "fluente",
+      "faculdade": "sim",
+      "experiencia_anos": 2,
+      "descricao": "A great opportunity in tech."
+    },
+    "aprovada": true,
+    "motivo_rejeicao": null
+  },
+  {
+    "title": "Simulated Job 2",
+    "company": "Mock Corp",
+    "country": "USA",
+    "sector": "tech",
+    "salario_usd_mes": 6500,
+    "salario_estimado": true,
+    "requisitos": {
+      "ingles": "fluente",
+      "faculdade": "nao",
+      "experiencia_anos": 2,
+      "descricao": "A great opportunity in tech."
+    },
+    "aprovada": true,
+    "motivo_rejeicao": null
+  },
+  {
+    "title": "Simulated Job 3",
+    "company": "Mock Corp",
+    "country": "USA",
+    "sector": "tech",
+    "salario_usd_mes": 7000,
+    "salario_estimado": true,
+    "requisitos": {
+      "ingles": "fluente",
+      "faculdade": "sim",
+      "experiencia_anos": 0,
+      "descricao": "A great opportunity in tech."
+    },
+    "aprovada": true,
+    "motivo_rejeicao": null
+  }
+]

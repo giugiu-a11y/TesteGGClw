@@ -1,0 +1,50 @@
+[
+  {
+    "title": "Engineer remote - Role 1",
+    "company": "Company 1 LLC",
+    "country": "USA",
+    "language": "English",
+    "sector": "tech",
+    "link": "https://example.com/jobs/company-1-llc-engineer-remote---role-1"
+  },
+  {
+    "title": "Designer remote - Role 2",
+    "company": "Company 2 LLC",
+    "country": "Canada",
+    "language": "English",
+    "sector": "health",
+    "link": "https://example.com/jobs/company-2-llc-designer-remote---role-2"
+  },
+  {
+    "title": "Nurse remote - Role 3",
+    "company": "Company 3 LLC",
+    "country": "Germany",
+    "language": "English",
+    "sector": "business",
+    "link": "https://example.com/jobs/company-3-llc-nurse-remote---role-3"
+  },
+  {
+    "title": "Manager remote - Role 4",
+    "company": "Company 4 LLC",
+    "country": "UK",
+    "language": "English",
+    "sector": "design",
+    "link": "https://example.com/jobs/company-4-llc-manager-remote---role-4"
+  },
+  {
+    "title": "Accountant remote - Role 5",
+    "company": "Company 5 LLC",
+    "country": "Australia",
+    "language": "English",
+    "sector": "management",
+    "link": "https://example.com/jobs/company-5-llc-accountant-remote---role-5"
+  },
+  {
+    "title": "Accountant Remote",
+    "company": "Finance Masters",
+    "country": "USA",
+    "language": "English",
+    "sector": "finance",
+    "link": "https://example.com/jobs/finance-accountant"
+  }
+]

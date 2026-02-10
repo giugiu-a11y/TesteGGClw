@@ -1,0 +1,131 @@
+═══════════════════════════════════════════════════════════════════════════════
+🎮 POKÉMON ADVENTURES - GUIA RÁPIDO (5 MINUTOS)
+═══════════════════════════════════════════════════════════════════════════════
+
+PASSO 1: ABRA TERMINAL NO SEU MAC
+═══════════════════════════════════════════════════════════════════════════════
+
+Cole isto:
+  cd /home/ubuntu/clawd/pokemon-game/
+
+Depois cole isto:
+  ./start-dev.sh
+
+Vai aparecer algo assim:
+  🎮 Pokémon Adventures - Starting Dev Server
+  📁 Directory: /home/ubuntu/clawd/pokemon-game/
+  🌐 Local Server: http://localhost:8000
+  📱 iPad Access: http://192.168.X.X:8000    ← COPIE ESTE IP
+
+Deixa o terminal aberto (não fecha)
+
+
+PASSO 2: ABRA IPAD SAFARI
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Pega no iPad
+2. Abre Safari
+3. Na barra URL, cola: http://192.168.X.X:8000
+   (use o IP que apareceu no terminal acima)
+4. Aperta ENTER
+5. Espera 2-3 segundos
+6. JOGO CARREGA! 🎉
+
+
+PASSO 3: CONTROLE
+═══════════════════════════════════════════════════════════════════════════════
+
+NO MAC (se quiser testar com teclado):
+  ⬆️  = Seta para cima (mover)
+  ⬇️  = Seta para baixo
+  ⬅️  = Seta esquerda
+  ➡️  = Seta direita
+  
+  X = Confirmar / Avançar diálogo
+  Z = Cancelar
+
+NO IPAD (toque na tela):
+  D-Pad (esquerda) = Mover
+  Botão Verde (A, direita) = Confirmar
+  Botão Vermelho (B, direita) = Cancelar
+
+
+PASSO 4: JOGUE
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Personagem está no mapa
+2. Aperta setas para mover
+3. Vai até o prédio (laboratorio)
+4. Aperta X para falar com Oak
+5. Lê o diálogo
+6. Aperta X de novo para avançar
+7. Continua falando com Oak
+8. Recebe Pokédex
+9. Diálogo continua...
+
+
+POSSÍVEIS DÚVIDAS
+═══════════════════════════════════════════════════════════════════════════════
+
+P: "Não vejo os botões no iPad"
+R: Desliza a tela para baixo ou gira (landscape/portrait)
+
+P: "IP não funciona"
+R: Certifique que iPad e Mac estão no MESMO WiFi
+   Se tiver duas redes (2.4G e 5G), use mesma
+
+P: "Servidor não inicia"
+R: Tenta mudar porta:
+   python3 -m http.server 9000
+   Depois acessa http://localhost:9000
+
+P: "Movimento está lento"
+R: Personagem anda devagar (por design)
+   Quer mais rápido? Me reporta!
+
+P: "Diálogo desaparece muito rápido"
+R: Aperta X para avançar manualmente
+
+
+É SEGURO?
+═══════════════════════════════════════════════════════════════════════════════
+
+SIM! 100% SEGURO
+
+- Tudo roda localmente no seu Mac
+- Nada sai da sua rede WiFi
+- Sem internet, sem cloud, sem upload
+- Você controla tudo
+- Aperta Ctrl+C no terminal e desliga
+
+Confira: SEGURANCA_EXPLICADA.md (mais detalhes)
+
+
+PRÓXIMOS PASSOS DEPOIS DE TESTAR
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Me reporta feedback:
+   - Controles OK?
+   - Diálogos legíveis?
+   - Sem erros?
+   - Quer mudanças?
+
+2. Eu faço Sprint 1:
+   - Mais diálogos (Oak + Blue)
+   - Mais mapas
+   - Mais interações
+
+3. Planejado: ~12 dias até jogo pronto
+
+
+CONCLUSÃO
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Terminal: ./start-dev.sh
+2. iPad: Safari → http://192.168.X.X:8000
+3. Joga!
+4. Reporta feedback
+
+Isso é tudo! Simples! 🎮
+
+═══════════════════════════════════════════════════════════════════════════════

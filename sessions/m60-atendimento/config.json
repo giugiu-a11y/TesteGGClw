@@ -1,0 +1,7 @@
+{
+  "name": "m60-atendimento",
+  "model": "google/gemini-2.5-flash-lite",
+  "description": "Chatbot atendimento M60",
+  "telegram_bot": null,
+  "isolated": true
+}

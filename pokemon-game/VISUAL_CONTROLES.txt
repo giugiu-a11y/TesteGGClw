@@ -1,0 +1,97 @@
+═══════════════════════════════════════════════════════════════════════
+🎮 POKÉMON ADVENTURES - VISUAL DOS CONTROLES
+═══════════════════════════════════════════════════════════════════════
+
+TELA DO JOGO NO IPAD (Visão de cima):
+═══════════════════════════════════════════════════════════════════════
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                                                                       │
+│                                                                       │
+│                     [JOGO / MAPA / DIÁLOGOS]                         │
+│                                                                       │
+│                                                                       │
+│                                                                       │
+│                                                                       │
+│                                                                       │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  D-PAD (ESQUERDA)         │           BOTÕES A/B (DIREITA)          │
+│                            │                                         │
+│        ▲                    │            🔴 B (vermelho)             │
+│      ◀ ▼ ▶                │         🟢 A (verde)                    │
+│                            │                                         │
+│  Use estes para mover      │  A = X no teclado (confirmar)          │
+│  Ou aperta setas: ⬆⬇⬅➡     │  B = Z no teclado (cancelar)           │
+│                            │                                         │
+└─────────────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════
+
+TECLADO MAC:
+═══════════════════════════════════════════════════════════════════════
+
+Movimento (escolha uma):
+  ⬆️  Arrow Up      = Mover para CIMA
+  ⬇️  Arrow Down    = Mover para BAIXO
+  ⬅️  Arrow Left    = Mover para ESQUERDA
+  ➡️  Arrow Right   = Mover para DIREITA
+
+  OU
+
+  W = Cima
+  A = Esquerda
+  S = Baixo
+  D = Direita
+
+Ações:
+  X = Botão A (CONFIRMAR / ACEITAR / AVANÇAR DIÁLOGO)
+  Z = Botão B (CANCELAR / VOLTAR)
+
+═══════════════════════════════════════════════════════════════════════
+
+EXEMPLOS DE USO:
+═══════════════════════════════════════════════════════════════════════
+
+1️⃣ COMEÇAR A JOGAR:
+   → Aperta ⬆️ (seta para cima) 
+   → Seu personagem sobe na tela
+   → Aperta X para falar com NPCs
+
+2️⃣ AVANÇAR DIÁLOGO:
+   → NPC fala algo
+   → Aperta X (confirmar)
+   → Próxima frase aparece
+
+3️⃣ EXPLORAR MAPA:
+   → Aperta ⬆️⬇️⬅️➡️ para andar
+   → Seta discreta mostra onde ir
+   → Aperta X perto de NPC para falar
+
+═══════════════════════════════════════════════════════════════════════
+
+RESUMO RÁPIDO:
+═══════════════════════════════════════════════════════════════════════
+
+Mover:         ⬆️⬇️⬅️➡️ (setas) OU WASD
+Confirmar:     X (teclado) OU Botão Verde A (iPad)
+Cancelar:      Z (teclado) OU Botão Vermelho B (iPad)
+
+═══════════════════════════════════════════════════════════════════════
+
+ONDE ESTÃO OS BOTÕES NO IPAD?
+═══════════════════════════════════════════════════════════════════════
+
+Quando você abre o jogo no iPad, vai ver:
+
+[ESQUERDA]                          [DIREITA]
+D-Pad                               A/B Buttons
+(4 setas)                           (Botões circulares)
+
+Se não vê:
+→ Desliza para baixo/cima
+→ Ou gira o iPad (landscape/portrait)
+
+═══════════════════════════════════════════════════════════════════════
+
+É REALMENTE SIM! 🎮

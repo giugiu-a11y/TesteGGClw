@@ -1,0 +1,10 @@
+{
+  "pesquisas_comuns": {
+    "bolsas_eua": "timestamp_last_fetch",
+    "crypto_trends": "timestamp_last_fetch",
+    "competitors_m60": "timestamp_last_fetch",
+    "macro_economia": "timestamp_last_fetch"
+  },
+  "ttl_hours": 6,
+  "nota": "Checar antes de fazer web_search - evita chamadas desnecessárias"
+}

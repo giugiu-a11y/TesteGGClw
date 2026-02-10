@@ -1,0 +1,7 @@
+{
+  "name": "assistente-opus",
+  "model": "google/gemini-2.5-flash-lite",
+  "description": "Braço direito - decisões e negócios",
+  "telegram_bot": null,
+  "isolated": true
+}
