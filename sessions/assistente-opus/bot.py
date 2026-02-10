@@ -45,16 +45,37 @@ SYSTEM_PROMPT = (
     "Seja direto, estrategico, eficiente."
 )
 
+def _auth_ok(update: Update) -> bool:
+    return not ALLOWED_USER_ID or update.effective_user.id == ALLOWED_USER_ID
+
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if ALLOWED_USER_ID and update.effective_user.id != ALLOWED_USER_ID:
+    if not _auth_ok(update):
         await update.message.reply_text("Acesso restrito.")
         return
     await update.message.reply_text("Assistente ativo. Como posso ajudar?")
 
+async def pull_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not _auth_ok(update):
+        await update.message.reply_text("Acesso restrito.")
+        return
+    await update.message.reply_text(
+        "Cole e rode no AWS:\n"
+        "cd /home/ubuntu/clawd && git pull --rebase --autostash origin main"
+    )
+
+async def tunnel_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not _auth_ok(update):
+        await update.message.reply_text("Acesso restrito.")
+        return
+    await update.message.reply_text(
+        "Cole e rode no AWS:\n"
+        "cd /home/ubuntu/clawd/pokemon-game && ./start-tunnel.sh"
+    )
+
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if ALLOWED_USER_ID and update.effective_user.id != ALLOWED_USER_ID:
+    if not _auth_ok(update):
         await update.message.reply_text("Acesso restrito.")
         return
 
@@ -88,6 +109,8 @@ def main():
         .build()
     )
     app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("pull", pull_cmd))
+    app.add_handler(CommandHandler("tunnel", tunnel_cmd))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     app.run_polling()
 
