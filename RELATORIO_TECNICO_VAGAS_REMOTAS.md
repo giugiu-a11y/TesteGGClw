@@ -39,7 +39,7 @@ python3 main.py --dry-run --limit 5 --max-posts 3
   clawdbot --profile opus models status → Default: anthropic/claude-opus-4-5
   ```
 
-- **API Key:** `ANTHROPIC_API_KEY=sk-ant-api03-qavkIft...` ✅ (válida)
+- **API Key:** configurada via secret local (ex.: `.env` / Secrets Manager). **Nao versionar chave em Git.**
 
 ### Arquivo problemático
 - **Localização:** `/home/ubuntu/clawd/scripts/job-curator/job_analyzer.py`

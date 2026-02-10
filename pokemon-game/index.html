@@ -2,1384 +2,1386 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Pokémon Adventures</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pokémon Adventures - Red Chapter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { 
+            width: 100%; height: 100%; 
+            background: #000; 
+            overflow: hidden; 
+            font-family: 'Press Start 2P', monospace;
         }
-
-        html, body {
-            width: 100%;
-            height: 100%;
-            background: #000;
-            overflow: hidden;
-            font-family: 'Arial', sans-serif;
+        
+        #loadingScreen {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: #000; color: #fff;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            z-index: 9999; font-size: 12px;
         }
-
+        
+        #loadingScreen .progress {
+            width: 200px; height: 20px;
+            background: #333; border: 2px solid #fff;
+            margin-top: 20px;
+        }
+        
+        #loadingScreen .progress-fill {
+            height: 100%; background: #4ade80;
+            width: 0%; transition: width 0.3s;
+        }
+        
         #gameContainer {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100%;
-            background: #1a1a2e;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            width: 100%; height: 100%;
+            background: linear-gradient(180deg, #1a1a2e 0%, #0d1b2a 100%);
         }
-
+        
         canvas {
-            display: block;
-            border: none;
             image-rendering: pixelated;
             image-rendering: crisp-edges;
-            background: #000;
+            border: 4px solid #444;
+            border-radius: 4px;
         }
-
+        
         .controls {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 20px;
-            z-index: 1000;
-            pointer-events: none;
+            position: fixed; bottom: 10px; left: 0; right: 0;
+            display: flex; justify-content: space-between;
+            padding: 0 15px; z-index: 1000;
         }
-
-        .controls > * {
-            pointer-events: auto;
-        }
-
+        
         .dpad {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(3, 1fr);
-            gap: 3px;
-            width: 120px;
-            height: 120px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            padding: 5px;
+            grid-template: repeat(3, 36px) / repeat(3, 36px);
+            gap: 2px;
         }
-
+        
         .dpad button {
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            color: white;
-            font-size: 24px;
+            background: rgba(50, 50, 70, 0.9);
+            border: 2px solid #666;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 6px;
             cursor: pointer;
-            border-radius: 5px;
-            transition: all 0.1s;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
-            font-weight: bold;
         }
-
-        .dpad button:active {
-            background: rgba(255, 100, 100, 0.6);
-            border-color: rgba(255, 100, 100, 0.8);
-        }
-
+        
+        .dpad button:active { background: #e63946; }
         .dpad .up { grid-column: 2; grid-row: 1; }
         .dpad .left { grid-column: 1; grid-row: 2; }
-        .dpad .down { grid-column: 2; grid-row: 3; }
         .dpad .right { grid-column: 3; grid-row: 2; }
-        .dpad .center { grid-column: 2; grid-row: 2; display: none; }
-
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: flex-end;
-            align-items: flex-end;
-            height: 140px;
-        }
-
+        .dpad .down { grid-column: 2; grid-row: 3; }
+        
+        .action-buttons { display: flex; gap: 8px; align-items: flex-end; }
+        
         .action-buttons button {
-            width: 60px;
-            height: 60px;
+            width: 50px; height: 50px;
             border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
+            font-size: 12px; font-weight: bold;
+            border: 3px solid;
             cursor: pointer;
-            transition: all 0.1s;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
+            font-family: inherit;
         }
-
-        .action-buttons button:active {
-            background: rgba(100, 150, 255, 0.6);
-            border-color: rgba(100, 150, 255, 0.8);
-        }
-
-        .action-buttons .b-btn { background: rgba(255, 100, 100, 0.2); border-color: rgba(255, 100, 100, 0.4); }
-        .action-buttons .b-btn:active { background: rgba(255, 100, 100, 0.6); }
-
-        .action-buttons .a-btn { background: rgba(100, 200, 100, 0.2); border-color: rgba(100, 200, 100, 0.4); }
-        .action-buttons .a-btn:active { background: rgba(100, 200, 100, 0.6); }
-
-        .control-label {
+        
+        .btn-a { background: #e63946; border-color: #c1121f; color: white; }
+        .btn-b { background: #457b9d; border-color: #1d3557; color: white; }
+        
+        #dialogBox {
+            display: none;
             position: fixed;
-            bottom: 180px;
-            left: 50%;
+            bottom: 100px; left: 50%;
             transform: translateX(-50%);
-            background: rgba(26, 26, 46, 0.8);
-            border: 2px solid #FFDD00;
-            border-radius: 5px;
-            padding: 8px 12px;
-            color: #FFDD00;
+            width: 90%; max-width: 480px;
+            background: #fff;
+            border: 4px solid #333;
+            border-radius: 8px;
+            padding: 12px;
             font-size: 11px;
-            z-index: 500;
-            text-align: center;
-            font-family: monospace;
-            max-width: 90%;
-        }
-
-        .dialog-box {
-            position: fixed;
-            bottom: 100px;
-            left: 10px;
-            right: 10px;
-            background: linear-gradient(180deg, #1a1a2e 0%, #0d0d1a 100%);
-            border: 4px solid #FFD700;
-            border-radius: 15px;
-            padding: 15px;
-            color: white;
-            font-size: 14px;
-            max-height: 180px;
-            overflow-y: auto;
-            z-index: 999;
-            display: none;
-            font-family: 'Courier New', monospace;
             line-height: 1.8;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3), inset 0 0 30px rgba(0,0,0,0.5);
-        }
-
-        .dialog-box.visible {
-            display: block;
-            animation: dialogAppear 0.3s ease-out;
-        }
-
-        @keyframes dialogAppear {
-            from { 
-                transform: translateY(50px) scale(0.9); 
-                opacity: 0; 
-            }
-            to { 
-                transform: translateY(0) scale(1); 
-                opacity: 1; 
-            }
-        }
-
-        .dialog-portrait {
-            float: left;
-            width: 70px;
-            height: 70px;
-            margin-right: 15px;
-            background: linear-gradient(135deg, #2a2a4a 0%, #1a1a2e 100%);
-            border: 3px solid #FFD700;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 36px;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3), inset 0 0 20px rgba(0,0,0,0.5);
-        }
-
-        .dialog-speaker {
-            font-weight: bold;
-            color: #FFD700;
-            font-size: 16px;
-            margin-bottom: 8px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-            letter-spacing: 1px;
-        }
-
-        .dialog-speaker.narrator { color: #87CEEB; }
-        .dialog-speaker.red { color: #FF4444; }
-        .dialog-speaker.blue { color: #4444FF; }
-        .dialog-speaker.oak { color: #8B4513; }
-        .dialog-speaker.pikachu { color: #FFD700; }
-        .dialog-speaker.enemy { color: #8B0000; }
-
-        .dialog-text {
-            font-size: 14px;
-            clear: both;
-            line-height: 1.6;
-            color: #FFFFFF;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-        }
-
-        /* ==================== SPRITES ==================== */
-
-        .sprite {
-            image-rendering: pixelated;
-            image-rendering: crisp-edges;
-        }
-
-        /* Player sprite */
-        .player-sprite {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(
-                to bottom,
-                #FFD700 0%, #FFD700 25%,      /* Cabelo amarelo */
-                #FFCCAA 25%, #FFCCAA 45%,     /* Rosto */
-                #FF0000 45%, #FF0000 70%,     /* Camisa vermelha */
-                #3366FF 70%, #3366FF 100%     /* Calça azul */
-            );
-            border-radius: 50% 50% 0 0;
-            position: relative;
-        }
-
-        /* Pikachu sprite */
-        .pikachu-sprite {
-            width: 24px;
-            height: 24px;
-            background: #FFD700;
-            border-radius: 50%;
-            position: relative;
-        }
-        .pikachu-sprite::before {
-            content: '';
-            position: absolute;
-            top: -8px;
-            left: 2px;
-            width: 8px;
-            height: 12px;
-            background: #FFD700;
-            border-radius: 50% 50% 0 0;
-            transform: rotate(-15deg);
-        }
-        .pikachu-sprite::after {
-            content: '';
-            position: absolute;
-            top: -8px;
-            right: 2px;
-            width: 8px;
-            height: 12px;
-            background: #FFD700;
-            border-radius: 50% 50% 0 0;
-            transform: rotate(15deg);
-        }
-
-        /* Portrait boxes */
-        .portrait-oak {
-            background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
-            border: 3px solid #FFD700;
-        }
-
-        .portrait-blue {
-            background: linear-gradient(135deg, #4169E1 0%, #1E90FF 100%);
-            border: 3px solid #FF6347;
-        }
-
-        .portrait-pikachu {
-            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-            border: 3px solid #FF0000;
-        }
-
-        /* Tiles */
-        .tile-grass {
-            background: linear-gradient(45deg, #228B22 25%, #32CD32 50%, #228B22 75%);
-        }
-
-        .tile-building {
-            background: linear-gradient(to bottom, #8B4513 0%, #A0522D 50%, #8B4513 100%);
-            border: 2px solid #5D3A1A;
-        }
-
-        .tile-water {
-            background: linear-gradient(45deg, #1E90FF 25%, #00BFFF 50%, #1E90FF 75%);
-            animation: water-flow 2s ease-in-out infinite;
-        }
-
-        @keyframes water-flow {
-            0%, 100% { background-position: 0 0; }
-            50% { background-position: 10px 10px; }
-        }
-
-        .loading {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 20px;
             z-index: 2000;
         }
-
-        @media (max-width: 768px) {
-            .controls {
-                bottom: 10px;
-                left: 10px;
-                right: 10px;
-                gap: 10px;
-            }
-            .dpad {
-                width: 100px;
-                height: 100px;
-            }
-            .action-buttons button {
-                width: 50px;
-                height: 50px;
-            }
-            .dialog-box {
-                font-size: 11px;
-                padding: 10px;
-            }
+        
+        #dialogBox .speaker {
+            font-weight: bold; color: #c1121f;
+            margin-bottom: 6px; font-size: 10px;
         }
-
-        /* ==================== BATTLE SYSTEM ==================== */
-
-        .battle-overlay {
+        
+        #dialogBox .text { color: #333; }
+        #dialogBox .continue { 
+            text-align: right; font-size: 8px; 
+            color: #666; margin-top: 8px;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink { 50% { opacity: 0; } }
+        
+        #battleScreen {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, #87CEEB 0%, #98FB98 60%, #228B22 100%);
-            z-index: 2000;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(180deg, #87ceeb 0%, #98d8aa 100%);
+            z-index: 3000;
             flex-direction: column;
         }
-
-        .battle-overlay.active {
-            display: flex;
+        
+        .battle-field {
+            flex: 1; display: flex; flex-direction: column;
+            justify-content: space-around; padding: 15px;
         }
-
-        .battle-scene {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            padding: 20px;
+        
+        .pokemon-slot {
+            display: flex; align-items: center; gap: 15px;
         }
-
-        .opponent-side {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            padding-right: 20px;
-        }
-
-        .player-side {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            padding-left: 20px;
-        }
-
+        
+        .enemy-slot { justify-content: flex-end; }
+        .player-slot { justify-content: flex-start; }
+        
         .pokemon-sprite {
-            width: 96px;
-            height: 96px;
+            width: 80px; height: 80px;
             image-rendering: pixelated;
         }
-
-        .pokemon-sprite.opponent {
-            background: #9370DB;
-            border-radius: 50% 50% 40% 40%;
-            position: relative;
+        
+        .pokemon-info {
+            background: #fff;
+            border: 3px solid #333;
+            border-radius: 8px;
+            padding: 8px 12px;
+            min-width: 150px;
         }
-
-        .pokemon-sprite.opponent::before {
-            content: '';
-            position: absolute;
-            top: 10px;
-            left: 15px;
-            width: 20px;
-            height: 30px;
-            background: #9370DB;
-            border-radius: 50% 50% 0 0;
-            transform: rotate(-20deg);
-        }
-
-        .pokemon-sprite.player {
-            background: #FFD700;
-            border-radius: 50%;
-            position: relative;
-        }
-
-        .pokemon-name {
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            font-size: 18px;
-            color: #1a1a1a;
-            text-shadow: 1px 1px 0 white;
-            margin: 5px 0;
-        }
-
-        .hp-bar-container {
-            width: 150px;
-            height: 12px;
-            background: #333;
-            border: 2px solid #FFD700;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-
+        
+        .pokemon-name { font-size: 11px; font-weight: bold; }
+        .pokemon-level { font-size: 9px; color: #666; }
+        
         .hp-bar {
+            height: 6px; background: #333;
+            border-radius: 3px; margin-top: 4px;
+        }
+        
+        .hp-fill {
             height: 100%;
-            background: linear-gradient(90deg, #00FF00 0%, #32CD32 100%);
-            width: 100%;
-            transition: width 0.5s ease-out;
+            background: linear-gradient(90deg, #4ade80, #22c55e);
+            transition: width 0.3s;
+            border-radius: 3px;
         }
-
-        .hp-bar.low {
-            background: linear-gradient(90deg, #FFD700 0%, #FFA500 100%);
-        }
-
-        .hp-bar.critical {
-            background: linear-gradient(90deg, #FF0000 0%, #FF6347 100%);
-            animation: hp-pulse 0.5s ease-in-out infinite;
-        }
-
-        @keyframes hp-pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
+        
+        .hp-fill.low { background: linear-gradient(90deg, #fbbf24, #f59e0b); }
+        .hp-fill.critical { background: linear-gradient(90deg, #ef4444, #dc2626); }
+        
         .battle-menu {
-            background: linear-gradient(180deg, #1a1a2e 0%, #0d0d1a 100%);
-            border-top: 4px solid #FFD700;
-            padding: 15px;
-            min-height: 180px;
-        }
-
-        .battle-text {
-            color: white;
-            font-family: 'Courier New', monospace;
-            font-size: 16px;
-            margin-bottom: 15px;
-            min-height: 40px;
-        }
-
-        .battle-options {
+            background: #fff;
+            border-top: 4px solid #333;
+            padding: 12px;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .battle-btn, .attack-btn {
-            padding: 15px;
-            font-size: 16px;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            background: linear-gradient(180deg, #4a4a6a 0%, #2a2a4a 100%);
-            border: 3px solid #FFD700;
-            border-radius: 10px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .battle-btn:active, .attack-btn:active {
-            transform: scale(0.95);
-            background: linear-gradient(180deg, #6a6a8a 0%, #4a4a6a 100%);
-        }
-
-        .attack-menu {
-            background: linear-gradient(180deg, #1a1a2e 0%, #0d0d1a 100%);
-            border-top: 4px solid #FFD700;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
             gap: 8px;
         }
-
-        .attack-menu.hidden {
-            display: none;
+        
+        .battle-menu button {
+            padding: 12px;
+            font-size: 11px;
+            font-family: inherit;
+            border: 3px solid #333;
+            border-radius: 6px;
+            cursor: pointer;
         }
-
+        
+        .battle-menu .fight { background: #ef4444; color: white; }
+        .battle-menu .bag { background: #f59e0b; color: white; }
+        .battle-menu .pokemon { background: #22c55e; color: white; }
+        .battle-menu .run { background: #64748b; color: white; }
+        
+        .battle-log {
+            background: #f8fafc;
+            border-top: 2px solid #e2e8f0;
+            padding: 8px 12px;
+            font-size: 10px;
+            min-height: 40px;
+        }
+        
+        .moves-menu { display: none; background: #fff; border-top: 4px solid #333; padding: 12px; }
+        .moves-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        
+        .move-btn {
+            padding: 10px; font-size: 10px;
+            font-family: inherit; border: 3px solid #333;
+            border-radius: 6px; cursor: pointer; text-align: left;
+        }
+        
+        .move-btn .move-name { font-weight: bold; }
+        .move-btn .move-pp { font-size: 8px; color: #333; }
+        
+        .type-normal { background: #a8a878; color: white; }
+        .type-electric { background: #f8d030; color: #333; }
+        .type-water { background: #6890f0; color: white; }
+        .type-psychic { background: #f85888; color: white; }
+        .type-grass { background: #78c850; color: white; }
+        .type-fire { background: #f08030; color: white; }
+        .type-poison { background: #a040a0; color: white; }
+        
         .back-btn {
-            background: linear-gradient(180deg, #8B0000 0%, #4a0000 100%);
-            border-color: #FF6347;
+            margin-top: 8px; padding: 8px; width: 100%;
+            background: #64748b; color: white;
+            border: 2px solid #333; border-radius: 4px;
+            cursor: pointer; font-family: inherit; font-size: 10px;
         }
+        
+        #titleScreen {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(180deg, #1e3a5f 0%, #0d1b2a 100%);
+            display: none; flex-direction: column;
+            justify-content: center; align-items: center;
+            z-index: 5000; color: white;
+        }
+        
+        #titleScreen h1 { font-size: 20px; margin-bottom: 8px; text-shadow: 2px 2px #000; color: #ffd700; }
+        #titleScreen h2 { font-size: 11px; margin-bottom: 30px; color: #87ceeb; }
+        
+        #titleScreen button {
+            padding: 12px 30px; font-size: 12px;
+            font-family: inherit; background: #e63946; color: white;
+            border: 3px solid #fff; border-radius: 8px;
+            cursor: pointer; margin: 8px;
+        }
+        
+        #titleScreen button:hover { background: #c1121f; }
+        
+        .title-pokemon { width: 96px; height: 96px; margin-bottom: 15px; image-rendering: pixelated; }
     </style>
 </head>
 <body>
+    <div id="loadingScreen">
+        <div>Loading sprites...</div>
+        <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+        <div id="loadingText" style="margin-top: 10px; font-size: 10px;"></div>
+    </div>
+    
+    <div id="titleScreen">
+        <img class="title-pokemon" id="titlePokemon" src="" alt="Poliwhirl">
+        <h1>POKÉMON</h1>
+        <h2>ADVENTURES - RED CHAPTER</h2>
+        <button onclick="startNewGame()">NEW GAME</button>
+        <button onclick="loadGame()">CONTINUE</button>
+    </div>
+    
     <div id="gameContainer">
         <canvas id="gameCanvas"></canvas>
     </div>
-
+    
     <div class="controls">
         <div class="dpad">
-            <button class="up" data-key="ArrowUp">▲</button>
-            <button class="left" data-key="ArrowLeft">◀</button>
-            <button class="center"></button>
-            <button class="right" data-key="ArrowRight">▶</button>
-            <button class="down" data-key="ArrowDown">▼</button>
+            <button class="up" ontouchstart="startMove('up')" ontouchend="stopMove()" onmousedown="startMove('up')" onmouseup="stopMove()">▲</button>
+            <button class="left" ontouchstart="startMove('left')" ontouchend="stopMove()" onmousedown="startMove('left')" onmouseup="stopMove()">◄</button>
+            <button class="right" ontouchstart="startMove('right')" ontouchend="stopMove()" onmousedown="startMove('right')" onmouseup="stopMove()">►</button>
+            <button class="down" ontouchstart="startMove('down')" ontouchend="stopMove()" onmousedown="startMove('down')" onmouseup="stopMove()">▼</button>
         </div>
-
-        <div></div>
-
         <div class="action-buttons">
-            <button class="b-btn" data-key="KeyZ">B</button>
-            <button class="a-btn" data-key="KeyX">A</button>
+            <button class="btn-b" onclick="handleB()">B</button>
+            <button class="btn-a" onclick="handleA()">A</button>
         </div>
     </div>
-
-    <div id="dialogBox" class="dialog-box">
-        <div class="dialog-portrait" id="dialogPortrait">🧙</div>
-        <div class="dialog-speaker" id="dialogSpeaker">Oak</div>
-        <div class="dialog-text" id="dialogText">Bem-vindo ao mundo Pokémon!</div>
+    
+    <div id="dialogBox">
+        <div class="speaker"></div>
+        <div class="text"></div>
+        <div class="continue">▼ Press A</div>
     </div>
-
-    <div id="battleOverlay" class="battle-overlay">
-        <div class="battle-scene">
-            <div class="opponent-side">
-                <div class="pokemon-name" id="opponentName">Rattata</div>
-                <div class="hp-bar-container">
-                    <div class="hp-bar" id="opponentHp"></div>
+    
+    <div id="battleScreen">
+        <div class="battle-field">
+            <div class="pokemon-slot enemy-slot">
+                <div class="pokemon-info">
+                    <div class="pokemon-name" id="enemyName">RATTATA</div>
+                    <div class="pokemon-level" id="enemyLevel">Lv. 3</div>
+                    <div class="hp-bar"><div class="hp-fill" id="enemyHp"></div></div>
                 </div>
-                <div class="pokemon-sprite opponent" id="opponentSprite"></div>
+                <img class="pokemon-sprite" id="enemySprite" src="">
             </div>
-            <div class="player-side">
-                <div class="pokemon-sprite player" id="playerPokemonSprite"></div>
-                <div class="pokemon-name" id="playerPokemonName">Pikachu</div>
-                <div class="hp-bar-container">
-                    <div class="hp-bar" id="playerPokemonHp"></div>
+            <div class="pokemon-slot player-slot">
+                <img class="pokemon-sprite" id="playerSprite" src="">
+                <div class="pokemon-info">
+                    <div class="pokemon-name" id="playerName">PIKACHU</div>
+                    <div class="pokemon-level" id="playerLevel">Lv. 5</div>
+                    <div class="hp-bar"><div class="hp-fill" id="playerHp"></div></div>
+                    <div style="font-size: 8px; margin-top: 3px;"><span id="playerCurrentHp">20</span>/<span id="playerMaxHp">20</span></div>
                 </div>
             </div>
         </div>
+        <div class="battle-log" id="battleLog">Wild RATTATA appeared!</div>
         <div class="battle-menu" id="battleMenu">
-            <div class="battle-text" id="battleText">O que Pikachu deve fazer?</div>
-            <div class="battle-options">
-                <button class="battle-btn" data-action="fight">⚔️ LUTAR</button>
-                <button class="battle-btn" data-action="bag">🎒 BOLSA</button>
-                <button class="battle-btn" data-action="pokemon">🔄 POKÉMON</button>
-                <button class="battle-btn" data-action="run">🏃 FUGIR</button>
-            </div>
+            <button class="fight" onclick="showMoves()">FIGHT</button>
+            <button class="bag" onclick="useBag()">BAG</button>
+            <button class="pokemon" onclick="showPokemon()">POKéMON</button>
+            <button class="run" onclick="tryRun()">RUN</button>
         </div>
-        <div class="attack-menu hidden" id="attackMenu">
-            <button class="attack-btn" data-move="thundershock">⚡ Thunder Shock</button>
-            <button class="attack-btn" data-move="quickattack">💨 Quick Attack</button>
-            <button class="attack-btn" data-move="growl">📢 Growl</button>
-            <button class="attack-btn" data-move="tailwhip">🔄 Tail Whip</button>
-            <button class="back-btn" data-action="back">← Voltar</button>
+        <div class="moves-menu" id="movesMenu">
+            <div class="moves-grid" id="movesGrid"></div>
+            <button class="back-btn" onclick="hideMoves()">BACK</button>
         </div>
-    </div>
-
-    <div class="control-label">
-        ⬆️⬇️⬅️➡️ ou WASD = Mover | X = Confirmar (A 🟢) | Z = Cancelar (B 🔴)
     </div>
 
     <script>
-        // ==================== AUDIO SYSTEM ====================
+    // ==================== CONFIG ====================
+    const TILE = 16;
+    const SCALE = 2;
+    const ST = TILE * SCALE; // Scaled tile
+    const VW = 15; // View width in tiles
+    const VH = 11; // View height in tiles
+    
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = VW * ST;
+    canvas.height = VH * ST;
+    
+    // ==================== SPRITE SOURCES ====================
+    const GITHUB_BASE = 'https://raw.githubusercontent.com/pret/pokefirered/master/';
+    
+    const SPRITE_URLS = {
+        // Direct links from Spriters Resource (FireRed style)
+        palletTownTiles: 'https://www.spriters-resource.com/media/assets/4/3862.png',
+        route1Tiles: 'https://www.spriters-resource.com/media/assets/4/3863.png',
+        
+        // Player & NPCs (16x32 sprite sheets with walk animations)
+        red: GITHUB_BASE + 'graphics/object_events/pics/people/red_normal.png',
+        blue: GITHUB_BASE + 'graphics/object_events/pics/people/blue.png',
+        oak: GITHUB_BASE + 'graphics/object_events/pics/people/prof_oak.png',
+        mom: GITHUB_BASE + 'graphics/object_events/pics/people/mom.png',
+        girl: GITHUB_BASE + 'graphics/object_events/pics/people/lass.png',
+        green: GITHUB_BASE + 'graphics/object_events/pics/people/green.png',
+        
+        // Pokemon overworld sprites
+        pikachuOW: GITHUB_BASE + 'graphics/object_events/pics/pokemon/pikachu.png',
+        
+        // Battle sprites (from Showdown - already colored)
+        pikachuBattle: 'https://play.pokemonshowdown.com/sprites/gen3frlg/pikachu.png',
+        pikachuBack: 'https://play.pokemonshowdown.com/sprites/gen3-back/pikachu.png',
+        rattata: 'https://play.pokemonshowdown.com/sprites/gen3frlg/rattata.png',
+        pidgey: 'https://play.pokemonshowdown.com/sprites/gen3frlg/pidgey.png',
+        
+        // MANGA KEY POKEMON - Red's Team
+        poliwhirl: 'https://play.pokemonshowdown.com/sprites/gen3frlg/poliwhirl.png',
+        poliwhirlBack: 'https://play.pokemonshowdown.com/sprites/gen3-back/poliwhirl.png',
+        poliwrath: 'https://play.pokemonshowdown.com/sprites/gen3frlg/poliwrath.png',
+        poliwrathBack: 'https://play.pokemonshowdown.com/sprites/gen3-back/poliwrath.png',
+        bulbasaur: 'https://play.pokemonshowdown.com/sprites/gen3frlg/bulbasaur.png',
+        bulbasaurBack: 'https://play.pokemonshowdown.com/sprites/gen3-back/bulbasaur.png',
+        ivysaur: 'https://play.pokemonshowdown.com/sprites/gen3frlg/ivysaur.png',
+        venusaur: 'https://play.pokemonshowdown.com/sprites/gen3frlg/venusaur.png',
+        snorlax: 'https://play.pokemonshowdown.com/sprites/gen3frlg/snorlax.png',
+        gyarados: 'https://play.pokemonshowdown.com/sprites/gen3frlg/gyarados.png',
+        
+        // Blue's Pokemon
+        charmander: 'https://play.pokemonshowdown.com/sprites/gen3frlg/charmander.png',
+        charmeleon: 'https://play.pokemonshowdown.com/sprites/gen3frlg/charmeleon.png',
+        charizard: 'https://play.pokemonshowdown.com/sprites/gen3frlg/charizard.png',
+        
+        // Green's Pokemon (thief girl)
+        squirtle: 'https://play.pokemonshowdown.com/sprites/gen3frlg/squirtle.png',
+        wartortle: 'https://play.pokemonshowdown.com/sprites/gen3frlg/wartortle.png',
+        
+        // Legendary & Story Pokemon
+        mew: 'https://play.pokemonshowdown.com/sprites/gen3frlg/mew.png',
+        kangaskhan: 'https://play.pokemonshowdown.com/sprites/gen3frlg/kangaskhan.png',
+        
+        // Team Rocket Pokemon
+        nidoking: 'https://play.pokemonshowdown.com/sprites/gen3frlg/nidoking.png',
+        koffing: 'https://play.pokemonshowdown.com/sprites/gen3frlg/koffing.png',
+        ekans: 'https://play.pokemonshowdown.com/sprites/gen3frlg/ekans.png',
+        arbok: 'https://play.pokemonshowdown.com/sprites/gen3frlg/arbok.png',
 
-        const AudioManager = {
-            context: null,
-            
-            init() {
-                this.context = new (window.AudioContext || window.webkitAudioContext)();
-            },
-            
-            playBeep(frequency = 440, duration = 0.1, type = 'square') {
-                if (!this.context) this.init();
-                
-                try {
-                    const oscillator = this.context.createOscillator();
-                    const gainNode = this.context.createGain();
-                    
-                    oscillator.connect(gainNode);
-                    gainNode.connect(this.context.destination);
-                    
-                    oscillator.frequency.value = frequency;
-                    oscillator.type = type;
-                    
-                    gainNode.gain.setValueAtTime(0.3, this.context.currentTime);
-                    gainNode.gain.exponentialRampToValueAtTime(0.01, this.context.currentTime + duration);
-                    
-                    oscillator.start(this.context.currentTime);
-                    oscillator.stop(this.context.currentTime + duration);
-                } catch(e) {}
-            },
-            
-            dialogAdvance() { this.playBeep(880, 0.05); },
-            menuSelect() { this.playBeep(660, 0.08); },
-            battleStart() { 
-                this.playBeep(440, 0.1);
-                setTimeout(() => this.playBeep(550, 0.1), 100);
-            }
-        };
-
-        document.addEventListener('touchstart', () => AudioManager.init(), { once: true });
-        document.addEventListener('click', () => AudioManager.init(), { once: true });
-
-        // ==================== GAME ENGINE ====================
-
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        let gameRunning = true;
-
-        // Resize canvas
-        function resizeCanvas() {
-            const container = document.getElementById('gameContainer');
-            const maxWidth = window.innerWidth;
-            const maxHeight = window.innerHeight;
-            const gameAspect = 320 / 180; // 16:9
-
-            let width = maxWidth;
-            let height = width / gameAspect;
-
-            if (height > maxHeight) {
-                height = maxHeight;
-                width = height * gameAspect;
-            }
-
-            canvas.width = width;
-            canvas.height = height;
-
-            return { width, height };
-        }
-
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        // ==================== INPUT HANDLER ====================
-
-        const keys = {};
-        const buttons = {};
-
-        window.addEventListener('keydown', (e) => {
-            keys[e.code] = true;
-        });
-
-        window.addEventListener('keyup', (e) => {
-            keys[e.code] = false;
-        });
-
-        // Touch/virtual buttons
-        document.querySelectorAll('.dpad button, .action-buttons button').forEach(btn => {
-            btn.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                const keyCode = btn.dataset.key;
-                keys[keyCode] = true;
-                btn.style.opacity = '0.8';
-            });
-
-            btn.addEventListener('touchend', (e) => {
-                e.preventDefault();
-                const keyCode = btn.dataset.key;
-                keys[keyCode] = false;
-                btn.style.opacity = '1';
-            });
-
-            btn.addEventListener('mousedown', () => {
-                const keyCode = btn.dataset.key;
-                keys[keyCode] = true;
-            });
-
-            btn.addEventListener('mouseup', () => {
-                const keyCode = btn.dataset.key;
-                keys[keyCode] = false;
-            });
-        });
-
-        // ==================== GAME STATE ====================
-
-        const gameState = {
-            currentScene: 'scene_intro',
-            playerX: 160,
-            playerY: 120,
-            dialogIndex: 0,
-            isDialogActive: false,
-            hasPikachu: false,
-            mapTiles: [],
-            save: () => localStorage.setItem('pokemonGameState', JSON.stringify(gameState))
-        };
-
-        // ==================== SCENE MANAGER ====================
-
-        const scenes = {
-            'scene_intro': {
-                bg: '#1a2e1a',
-                title: 'Pallet Town - Início',
-                map: 'pallet_town',
-                startPos: {x: 12, y: 3},
-                dialogues: [
-                    { speaker: 'Narrador', portrait: '📖', text: 'Este é um mundo habitado por criaturas chamadas Pokémon.', duration: 2000 },
-                    { speaker: 'Narrador', portrait: '📖', text: 'Alguns os usam para batalhas. Outros, para companhia.', duration: 2000 },
-                    { speaker: 'Narrador', portrait: '📖', text: 'Mas há aqueles que os veem apenas como... ferramentas.', duration: 2000 },
-                    { speaker: 'Narrador', portrait: '📖', text: 'Esta é a história de Red, um garoto de Pallet Town.', duration: 2000, next: 'scene_oak_lab' }
-                ]
-            },
-            'scene_oak_lab': {
-                bg: '#2d4a2d',
-                title: 'Laboratório do Prof. Oak',
-                map: 'pallet_town',
-                startPos: {x: 12, y: 3},
-                dialogues: [
-                    { speaker: 'Red', portrait: '🧢', text: '(Finalmente... o dia chegou. Vou me tornar um treinador!)' },
-                    { speaker: 'Oak', portrait: '👴', text: 'Ah, Red! Você veio. Eu estava te esperando.' },
-                    { speaker: 'Oak', portrait: '👴', text: 'Antes de começarmos... preciso te contar algo importante.' },
-                    { speaker: 'Oak', portrait: '👴', text: 'Pokémons não são brinquedos, Red. Eles sentem dor.' },
-                    { speaker: 'Oak', portrait: '👴', text: 'Eles sangram. Eles choram. Eles morrem.' },
-                    { speaker: 'Red', portrait: '🧢', text: '...!' },
-                    { speaker: 'Oak', portrait: '👴', text: 'Muitos treinadores esquecem isso. Tratam-nos como armas.' },
-                    { speaker: 'Oak', portrait: '👴', text: 'Eu vi coisas terríveis, Red. Pokémons torturados, abandonados...' },
-                    { speaker: 'Oak', portrait: '👴', text: 'Espero que você seja diferente.' },
-                    { speaker: 'Red', portrait: '🧢', text: 'Professor... eu prometo. Vou protegê-los.' },
-                    { speaker: 'Oak', portrait: '👴', text: 'Bom. Agora, deixe-me apresentar os iniciais—' },
-                    { speaker: '???', portrait: '😏', text: 'Não vai precisar, vovô.' },
-                    { speaker: 'Oak', portrait: '👴', text: 'Blue?! O que você está fazendo aqui?', next: 'scene_blue_arrives' }
-                ]
-            },
-            'scene_blue_arrives': {
-                bg: '#2d4a2d',
-                title: 'Laboratório do Prof. Oak',
-                map: 'pallet_town',
-                startPos: {x: 12, y: 3},
-                dialogues: [
-                    { speaker: 'Blue', portrait: '😏', text: 'Vim pegar meu Pokémon. Não vou esperar esse perdedor escolher primeiro.' },
-                    { speaker: 'Red', portrait: '🧢', text: 'Ei! Quem você está chamando de perdedor?!' },
-                    { speaker: 'Blue', portrait: '😏', text: 'Você. Acha que pode ser treinador? Patético.' },
-                    { speaker: 'Blue', portrait: '😏', text: 'Pokémons são ferramentas de batalha. Só os fortes sobrevivem.' },
-                    { speaker: 'Oak', portrait: '👴', text: 'Blue! Isso não é—' },
-                    { speaker: 'Blue', portrait: '😏', text: '[Blue pega uma Pokébola da mesa]' },
-                    { speaker: 'Blue', portrait: '😏', text: 'Eevee. O mais raro. Perfeito.' },
-                    { speaker: 'Blue', portrait: '😏', text: 'Nos vemos por aí, Red. Se você sobreviver.' },
-                    { speaker: 'Narrador', portrait: '📖', text: '[Blue sai do laboratório rindo]', duration: 1000 },
-                    { speaker: 'Oak', portrait: '👴', text: '...Aquele garoto. Ele vai se machucar um dia.' },
-                    { speaker: 'Oak', portrait: '👴', text: 'Red, venha comigo. Tenho algo... diferente para você.', next: 'scene_pikachu' }
-                ]
-            },
-            'scene_pikachu': {
-                bg: '#3a3a2a',
-                title: 'Sala dos Fundos',
-                map: 'pallet_town',
-                startPos: {x: 12, y: 3},
-                dialogues: [
-                    { speaker: 'Oak', portrait: '👴', text: 'Este Pikachu... ele não é como os outros.' },
-                    { speaker: 'Red', portrait: '🧢', text: '(Um Pikachu? Mas ele parece... ferido?)' },
-                    { speaker: 'Oak', portrait: '👴', text: 'Encontrei-o na Viridian Forest há três semanas.' },
-                    { speaker: 'Oak', portrait: '👴', text: 'Ele estava quase morto. Queimaduras. Cicatrizes. Ossos quebrados.' },
-                    { speaker: 'Red', portrait: '🧢', text: 'Quem... quem fez isso com ele?!' },
-                    { speaker: 'Oak', portrait: '👴', text: 'Treinadores. Treinadores que o descartaram quando ele perdeu uma batalha.' },
-                    { speaker: 'Pikachu', portrait: '⚡', text: '...Pika.' },
-                    { speaker: 'Oak', portrait: '👴', text: 'Ele não confia em humanos, Red. Nem um pouco.' },
-                    { speaker: 'Oak', portrait: '👴', text: 'Já atacou três assistentes que tentaram se aproximar.' },
-                    { speaker: 'Red', portrait: '🧢', text: '...' },
-                    { speaker: 'Narrador', portrait: '📖', text: '[Red se ajoelha lentamente, estendendo a mão]', duration: 1500 },
-                    { speaker: 'Red', portrait: '🧢', text: 'Ei, pequeno. Eu sei que você sofreu.' },
-                    { speaker: 'Red', portrait: '🧢', text: 'Eu não vou te machucar. Prometo.' },
-                    { speaker: 'Pikachu', portrait: '⚡', text: '...Pika...?' },
-                    { speaker: 'Oak', portrait: '👴', text: '(Impressionante... ele não atacou.)' },
-                    { speaker: 'Narrador', portrait: '📖', text: '[Pikachu hesita, então toca a mão de Red]', duration: 1500 },
-                    { speaker: 'Pikachu', portrait: '⚡', text: 'Pika... pikachu.' },
-                    { speaker: 'Oak', portrait: '👴', text: 'Red... acho que ele escolheu você.' },
-                    { speaker: 'Oak', portrait: '👴', text: '[Você recebe PIKACHU]', special: true, duration: 1000 },
-                    { speaker: 'Oak', portrait: '👴', text: 'Cuide bem dele. Ele merece uma segunda chance.' },
-                    { speaker: 'Red', portrait: '🧢', text: 'Eu vou, Professor. Vamos, Pikachu. Juntos.', next: 'scene_departure' }
-                ]
-            },
-            'scene_departure': {
-                bg: '#4a6a4a',
-                title: 'Pallet Town - Saída',
-                map: 'pallet_town',
-                startPos: {x: 12, y: 3},
-                dialogues: [
-                    { speaker: 'Oak', portrait: '👴', text: 'Red, uma última coisa.' },
-                    { speaker: 'Oak', portrait: '👴', text: 'Há rumores de uma organização criminosa. Team Rocket.' },
-                    { speaker: 'Oak', portrait: '👴', text: 'Eles capturam Pokémons e os vendem. Ou pior.' },
-                    { speaker: 'Red', portrait: '🧢', text: 'Team Rocket...?' },
-                    { speaker: 'Oak', portrait: '👴', text: 'Se você encontrá-los... tenha cuidado. Eles são perigosos.' },
-                    { speaker: 'Oak', portrait: '👴', text: 'E lembre-se: a força de um treinador não está em vencer batalhas.' },
-                    { speaker: 'Oak', portrait: '👴', text: 'Está no vínculo com seus Pokémons.' },
-                    { speaker: 'Red', portrait: '🧢', text: 'Entendi, Professor. Obrigado por tudo.' },
-                    { speaker: 'Pikachu', portrait: '⚡', text: 'Pika!' },
-                    { speaker: 'Narrador', portrait: '📖', text: 'E assim, Red e Pikachu partem para sua jornada.', duration: 2000 },
-                    { speaker: 'Narrador', portrait: '📖', text: 'Uma jornada que mudará suas vidas para sempre.', duration: 2000, next: 'route1' }
-                ]
-            },
-            'route1': {
-                bg: '#3d6b1f',
-                title: 'Rota 1',
-                map: 'route1',
-                startPos: {x: 2, y: 3},
-                dialogues: [
-                    { speaker: 'Narrador', portrait: '📖', text: 'Rota 1 - A primeira etapa da jornada.', duration: 1500 },
-                    { speaker: 'Red', portrait: '🧢', text: 'Pikachu, como você está?' },
-                    { speaker: 'Pikachu', portrait: '⚡', text: 'Pika...' },
-                    { speaker: 'Red', portrait: '🧢', text: '(Ele ainda está desconfiado. Preciso ganhar sua confiança.)' },
-                    { speaker: 'Narrador', portrait: '📖', text: '[A grama alta se move. Pokémons selvagens espreitam.]', duration: 1500 },
-                    { speaker: 'Red', portrait: '🧢', text: 'Fique perto de mim, Pikachu. Vamos com cuidado.' },
-                ]
-            },
-            'viridian': {
-                bg: '#2d5016',
-                title: 'Viridian City',
-                map: 'viridian',
-                startPos: {x: 12, y: 8},
-                dialogues: [
-                    { speaker: 'Narrador', portrait: '📖', text: 'Viridian City - A cidade eternamente verde.', duration: 1500 },
-                    { speaker: '???', portrait: '👤', text: 'Ei, garoto!' },
-                    { speaker: 'Homem', portrait: '👤', text: 'Você é novo por aqui, não é? Tome cuidado.' },
-                    { speaker: 'Red', portrait: '🧢', text: 'Cuidado? Por quê?' },
-                    { speaker: 'Homem', portrait: '👤', text: 'Team Rocket foi visto na área. Eles roubam Pokémons.' },
-                    { speaker: 'Homem', portrait: '👤', text: 'Ouvi dizer que capturam os raros e... fazem experimentos neles.' },
-                    { speaker: 'Pikachu', portrait: '⚡', text: '...Pika!' },
-                    { speaker: 'Red', portrait: '🧢', text: '(Pikachu ficou tenso. Será que ele...?)' },
-                    { speaker: 'Red', portrait: '🧢', text: 'Obrigado pelo aviso. Vamos ficar atentos.' },
-                ]
-            },
-            'pewter': {
-                bg: '#4a4a3a',
-                title: 'Pewter City',
-                map: 'pewter',
-                startPos: {x: 12, y: 8},
-                dialogues: [
-                    { speaker: 'Narrador', portrait: '📖', text: 'Pewter City - A cidade das pedras.', duration: 1500 },
-                    { speaker: 'Narrador', portrait: '📖', text: 'Aqui está o primeiro Ginásio Pokémon. Líder: Brock.', duration: 1500 },
-                    { speaker: 'Red', portrait: '🧢', text: 'Um Ginásio... Pikachu, você está pronto?' },
-                    { speaker: 'Pikachu', portrait: '⚡', text: 'Pika... pika.' },
-                    { speaker: 'Red', portrait: '🧢', text: '(Ele ainda está hesitante. Não posso forçá-lo.)' },
-                    { speaker: 'Red', portrait: '🧢', text: 'Está tudo bem. Só lutamos quando você quiser.' },
-                    { speaker: 'Pikachu', portrait: '⚡', text: '...!' },
-                    { speaker: 'Narrador', portrait: '📖', text: '[Pikachu olha para Red com surpresa]', duration: 1000 },
-                    { speaker: 'Pikachu', portrait: '⚡', text: 'Pika... pikachu!' },
-                ]
-            },
-            'viridian_forest': {
-                bg: '#0a1a0a',
-                title: 'Viridian Forest',
-                map: 'viridian_forest',
-                startPos: {x: 12, y: 8},
-                dialogues: [
-                    { speaker: 'Narrador', portrait: '📖', text: 'Viridian Forest - Uma floresta densa e misteriosa.', duration: 1500 },
-                    { speaker: 'Red', portrait: '🧢', text: 'É aqui... onde o Professor Oak encontrou você, Pikachu.' },
-                    { speaker: 'Pikachu', portrait: '⚡', text: '...' },
-                    { speaker: 'Narrador', portrait: '📖', text: '[Pikachu treme levemente]', duration: 1000 },
-                    { speaker: 'Red', portrait: '🧢', text: 'Ei... não precisa ter medo. Eu estou aqui.' },
-                    { speaker: 'Red', portrait: '🧢', text: 'Ninguém vai te machucar de novo. Eu prometo.' },
-                    { speaker: 'Pikachu', portrait: '⚡', text: 'Pika...' },
-                    { speaker: 'Narrador', portrait: '📖', text: '[Pela primeira vez, Pikachu se aproxima de Red voluntariamente]', duration: 1500 },
-                    { speaker: 'Pikachu', portrait: '⚡', text: 'Pikachu!' },
-                    { speaker: 'Red', portrait: '🧢', text: '(Finalmente... ele está começando a confiar em mim.)' },
-                ]
-            },
-            'scene_team_rocket': {
-                bg: '#1a0a1a',
-                title: 'Encontro Sombrio',
-                map: 'viridian_forest',
-                startPos: {x: 12, y: 4},
-                dialogues: [
-                    { speaker: '???', portrait: '🖤', text: 'Olha só o que temos aqui...' },
-                    { speaker: 'Red', portrait: '🧢', text: 'Quem está aí?!' },
-                    { speaker: 'Grunt', portrait: '🖤', text: 'Team Rocket, garoto. E esse Pikachu parece familiar...' },
-                    { speaker: 'Pikachu', portrait: '⚡', text: 'PIKA!!' },
-                    { speaker: 'Narrador', portrait: '📖', text: '[Pikachu solta faíscas de suas bochechas]', duration: 1000 },
-                    { speaker: 'Grunt', portrait: '🖤', text: 'Haha! Então é ESSE Pikachu! O que escapou do laboratório!' },
-                    { speaker: 'Red', portrait: '🧢', text: 'Laboratório?! Vocês fizeram isso com ele?!' },
-                    { speaker: 'Grunt', portrait: '🖤', text: 'Experimentos. Nada pessoal. Negócios são negócios.' },
-                    { speaker: 'Red', portrait: '🧢', text: 'Vocês são monstros!' },
-                    { speaker: 'Grunt', portrait: '🖤', text: 'Entrega o Pikachu e talvez a gente deixe você ir.' },
-                    { speaker: 'Red', portrait: '🧢', text: 'NUNCA!' },
-                    { speaker: 'Pikachu', portrait: '⚡', text: 'PIKACHU!!!' },
-                    { speaker: 'Narrador', portrait: '📖', text: '[Uma batalha está prestes a começar...]', duration: 2000 },
-                ]
-            }
-        };
-
-        const maps = {
-            'pallet_town': [
-                '........................',
-                '.##########......#########',
-                '.#..........####.#........',
-                '.##########....#.########.',
-                '........................',
-                '........................'
+        // Tilesets (fallback / optional)
+        generalTiles: GITHUB_BASE + 'data/tilesets/primary/general/tiles.png',
+        buildingTiles: GITHUB_BASE + 'data/tilesets/primary/building/tiles.png'
+    };
+    
+    // Loaded images
+    const sprites = {};
+    let loadedCount = 0;
+    const totalSprites = Object.keys(SPRITE_URLS).length;
+    
+    // ==================== COLORS (for tiles without images) ====================
+    const C = {
+        grass: '#90EE90', grassDark: '#7CCD7C',
+        path: '#DEB887', pathDark: '#D2B48C',
+        water: '#6495ED', waterDark: '#4169E1',
+        tree: '#228B22', treeTrunk: '#8B4513',
+        roof: '#CD5C5C', wall: '#F5F5DC',
+        flower: '#FFB6C1'
+    };
+    
+    // ==================== TILE TYPES ====================
+    const T = {
+        GRASS: 0, PATH: 1, WATER: 2, TREE: 3,
+        HOUSE_RED: 4, HOUSE_BLUE: 5, LAB: 6,
+        FENCE: 7, SIGN: 8, TALL_GRASS: 9,
+        FLOWER: 10, LEDGE: 11, WARP: 13, NPC: 14
+    };
+    
+    const SOLID = [T.WATER, T.TREE, T.HOUSE_RED, T.HOUSE_BLUE, T.LAB, T.FENCE, T.NPC];
+    
+    // ==================== MAPS ====================
+    const MAPS = {
+        pallet_town: {
+            w: 20, h: 18,
+            data: [
+                3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+                3,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,3,
+                3,0,10,0,0,0,0,0,0,1,1,0,0,0,0,10,0,0,0,3,
+                3,0,0,0,4,4,4,0,0,1,1,0,0,5,5,5,0,0,0,3,
+                3,0,0,0,4,4,4,0,0,1,1,0,0,5,5,5,0,0,0,3,
+                3,0,0,0,0,13,0,0,0,1,1,0,0,0,13,0,0,0,0,3,
+                3,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,3,
+                3,7,7,7,7,7,7,0,0,1,1,0,0,7,7,7,7,7,7,3,
+                3,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,3,
+                3,0,0,6,6,6,6,6,0,1,1,0,8,0,0,0,0,0,0,3,
+                3,0,0,6,6,6,6,6,0,1,1,0,0,0,0,0,0,0,0,3,
+                3,0,0,6,6,6,6,6,0,1,1,0,0,0,0,0,14,0,0,3,
+                3,0,0,0,0,13,0,0,0,1,1,0,0,0,0,0,0,0,0,3,
+                3,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,3,
+                3,0,10,0,0,0,0,0,0,1,1,0,0,0,0,0,10,0,0,3,
+                3,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,3,
+                3,3,3,3,3,3,3,3,3,1,1,3,3,3,3,3,3,3,3,3,
+                9,9,9,9,9,9,9,9,9,13,13,9,9,9,9,9,9,9,9,9
             ],
-            'route1': [
-                '🌿🌿🌿🌿🌿.......🌿🌿🌿.🌿🌿🌿',
-                '🌿.......🌿....🌿.......🌿..',
-                '...🌿.🌿.....🌿...🌿.....🌿',
-                '🌿....🌿.🌿........🌿.🌿....',
-                '..🌿......🌿.🌿.......🌿🌿..',
-                '🌿.🌿.🌿....🌿🌿.🌿......🌿.'
+            warps: [
+                {x:5,y:5,to:'player_house',tx:3,ty:6},
+                {x:14,y:5,to:'rival_house',tx:3,ty:6},
+                {x:5,y:12,to:'oak_lab',tx:5,ty:10},
+                {x:9,y:17,to:'route1',tx:9,ty:0},
+                {x:10,y:17,to:'route1',tx:10,ty:0},
+                // Warp to Viridian Forest (South exit of Pallet Town)
+                {x:9, y:17, to: 'viridian_forest', tx: 9, ty: 24},
+                {x:10, y:17, to: 'viridian_forest', tx: 10, ty: 24}
             ],
-            'viridian': [
-                '........###########.......',
-                '......##.............##....',
-                '....##...###...###....##...',
-                '..##...##.....##...##...##..',
-                '.#...##.........##...##...#.',
-                '#..................##..##.#'
+            npcs: [
+                {x:16,y:11,name:'Girl',sprite:'girl',dialog:[
+                    'Welcome to PALLET TOWN!',
+                    'Did you hear? People say they saw a strange light in the forest!',
+                    'Professor OAK has been researching it in his lab!'
+                ]},
+                {x:12,y:6,name:'Blue',sprite:'blue',dialog:[
+                    '...Oh, it\'s you. RED.',
+                    'Gramps said something about a rare POKéMON sighting.',
+                    'Don\'t think you\'ll catch it before me!',
+                    'I\'m always one step ahead. Smell ya later!'
+                ]}
             ],
-            'pewter': [
-                '##########.......##########',
-                '#......#.....#.....#......#',
-                '#......#.###...###.#......#',
-                '#..##..#.#.....#...#..##..#',
-                '#.#..#.#.#.....#...#.#..#.#',
-                '##....##.#######...##....##'
-            ],
-            'viridian_forest': [
-                'TTTTTTTTTTTTTTTTTTTTTTTT',
-                'T..🌿..T....T..🌿🌿....T',
-                'T.🌿🌿.T....T.🌿🌿🌿...T',
-                'T......T....T..........T',
-                'T..TTTTTTTTTTTTTTTT....T',
-                'T..T................T..T',
-                'T..T..🌿🌿🌿🌿🌿🌿..T..T',
-                'T.....🌿🌿🌿🌿🌿🌿.....T',
-                'TTTTTTTTTT....TTTTTTTTTT'
-            ]
-        };
-
-        function showDialog(speaker, portrait, text, duration = null) {
-            const dialogBox = document.getElementById('dialogBox');
-            document.getElementById('dialogSpeaker').textContent = speaker;
-            document.getElementById('dialogPortrait').textContent = portrait;
-            document.getElementById('dialogText').textContent = text;
-            dialogBox.classList.add('visible');
-            gameState.isDialogActive = true;
-            
-            AudioManager.dialogAdvance();
-
-            // Verificar eventos especiais
-            if (text.includes('[Você recebe PIKACHU]')) {
-                gameState.hasPikachu = true;
-                gameState.save();
-            }
-
-            if (duration) {
-                setTimeout(() => {
-                    dialogBox.classList.remove('visible');
-                    gameState.isDialogActive = false;
-                    gameState.dialogIndex++;
-                }, duration);
-            }
-        }
-
-        function hideDialog() {
-            document.getElementById('dialogBox').classList.remove('visible');
-            gameState.isDialogActive = false;
-        }
-
-        // ==================== RENDERING ====================
-
-        function drawBackground() {
-            ctx.fillStyle = scenes[gameState.currentScene].bg || '#2d5016';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-        }
-
-        function drawTile(x, y, char, color = '#33CC77') {
-            const tileSize = 20;
-            ctx.fillStyle = color;
-            ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
-            ctx.fillStyle = '#000';
-            ctx.font = '12px Arial';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(char, x * tileSize + tileSize / 2, y * tileSize + tileSize / 2);
-        }
-
-        function drawMap() {
-            const scene = scenes[gameState.currentScene];
-            const mapKey = scene.map || 'pallet_town';
-            const map = maps[mapKey] || maps['pallet_town'];
-            const tileSize = Math.floor(canvas.width / 24);
-
-            for (let y = 0; y < map.length; y++) {
-                for (let x = 0; x < map[y].length; x++) {
-                    const char = map[y][x];
-                    const px = x * tileSize;
-                    const py = y * tileSize;
-
-                    if (char === '#') {
-                        // Building
-                        const gradient = ctx.createLinearGradient(px, py, px, py + tileSize);
-                        gradient.addColorStop(0, '#8B4513');
-                        gradient.addColorStop(0.5, '#A0522D');
-                        gradient.addColorStop(1, '#8B4513');
-                        ctx.fillStyle = gradient;
-                        ctx.fillRect(px, py, tileSize, tileSize);
-                        ctx.strokeStyle = '#5D3A1A';
-                        ctx.lineWidth = 2;
-                        ctx.strokeRect(px, py, tileSize, tileSize);
-                    } else if (char === '.') {
-                        // Grass
-                        ctx.fillStyle = '#228B22';
-                        ctx.fillRect(px, py, tileSize, tileSize);
-                        ctx.fillStyle = '#32CD32';
-                        ctx.fillRect(px + 2, py + 2, 4, 4);
-                        ctx.fillRect(px + tileSize - 6, py + tileSize - 6, 4, 4);
-                    } else if (char === '~') {
-                        // Water
-                        const gradient = ctx.createLinearGradient(px, py, px + tileSize, py + tileSize);
-                        gradient.addColorStop(0, '#1E90FF');
-                        gradient.addColorStop(0.5, '#00BFFF');
-                        gradient.addColorStop(1, '#1E90FF');
-                        ctx.fillStyle = gradient;
-                        ctx.fillRect(px, py, tileSize, tileSize);
-                    } else if (char === 'T') {
-                        // Tree
-                        ctx.fillStyle = '#228B22';
-                        ctx.fillRect(px, py, tileSize, tileSize);
-                        ctx.fillStyle = '#006400';
-                        ctx.beginPath();
-                        ctx.arc(px + tileSize/2, py + tileSize/3, tileSize/3, 0, Math.PI * 2);
-                        ctx.fill();
-                        ctx.fillStyle = '#8B4513';
-                        ctx.fillRect(px + tileSize/2 - 3, py + tileSize/2, 6, tileSize/2);
-                    } else {
-                        // Default grass
-                        ctx.fillStyle = '#2d5016';
-                        ctx.fillRect(px, py, tileSize, tileSize);
+            enc: null
+        },
+        
+        route1: {
+            w: 20, h: 25,
+            data: (() => {
+                let m = [];
+                for (let y = 0; y < 25; y++) {
+                    for (let x = 0; x < 20; x++) {
+                        if (x === 0 || x === 19) m.push(T.TREE);
+                        else if (y === 24 && (x === 9 || x === 10)) m.push(T.WARP);
+                        else if (y === 0 && (x === 9 || x === 10)) m.push(T.WARP);
+                        else if (x === 9 || x === 10) m.push(T.PATH);
+                        else if (Math.random() < 0.4) m.push(T.TALL_GRASS);
+                        else m.push(T.GRASS);
                     }
                 }
+                return m;
+            })(),
+            warps: [
+                {x:9,y:0,to:'viridian',tx:9,ty:23},
+                {x:10,y:0,to:'viridian',tx:10,ty:23},
+                {x:9,y:24,to:'pallet_town',tx:9,ty:16},
+                {x:10,y:24,to:'pallet_town',tx:10,ty:16}
+            ],
+            npcs: [],
+            enc: {pokemon:[{name:'RATTATA',spr:'rattata',lv:[2,4],rate:55},{name:'PIDGEY',spr:'pidgey',lv:[2,5],rate:45}],rate:12}
+        },
+        
+        viridian_forest: {
+            w: 20,
+            h: 25,
+            data: (() => {
+                let m = [];
+                for (let y = 0; y < 25; y++) {
+                    for (let x = 0; x < 20; x++) {
+                        // Map boundaries: trees
+                        if (x === 0 || x === 19) m.push(T.TREE);
+                        // Exits: warp to Pallet Town
+                        else if (y === 0 && (x === 9 || x === 10)) m.push(T.WARP); // Exit north
+                        else if (y === 24 && (x === 9 || x === 10)) m.push(T.WARP); // Exit south (back to Pallet)
+                        // Paths and grass
+                        else if (x === 9 || x === 10) m.push(T.PATH); // Main path
+                        else if (Math.random() < 0.7) m.push(T.TALL_GRASS); // Lots of tall grass!
+                        else m.push(T.GRASS);
+                    }
+                }
+                return m;
+            })(),
+            warps: [
+                {x:9, y:0, to: 'route1', tx: 9, ty: 16}, // Exit North to Route 1 (Viridian City)
+                {x:10, y:0, to: 'route1', tx: 10, ty: 16}, // Exit North to Route 1 (Viridian City)
+                {x:9, y:24, to: 'pallet_town', tx: 9, ty: 17}, // Exit South to Pallet Town (from Route 1)
+                {x:10, y:24, to: 'pallet_town', tx: 10, ty: 17}  // Exit South to Pallet Town (from Route 1)
+            ],
+            npcs: [], // No NPCs initially in Viridian Forest for chapter 2
+            // Encounters for Chapter 2: VS Bulbasaur
+            enc: {
+                pokemon: [
+                    {name: 'RATTATA', spr: 'rattata', lv: [2, 4], rate: 40},
+                    {name: 'PIDGEY', spr: 'pidgey', lv: [2, 5], rate: 40},
+                    {name: 'BULBASAUR', spr: 'bulbasaur', lv: [5, 7], rate: 20} // Rare encounter for the story
+                ],
+                rate: 10 // Chance of encounter per step
             }
+        },
+        player_house: {
+            w: 8, h: 8,
+            data: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,13,1,1,1,1,1,1,1,1,1,1,1,1],
+            warps: [{x:3,y:6,to:'pallet_town',tx:5,ty:6}],
+            npcs: [{x:5,y:3,name:'Mom',sprite:'mom',dialog:['RED! Go see Professor OAK!','He has something for you!']}],
+            enc: null
+        },
+        
+        rival_house: {
+            w: 8, h: 8,
+            data: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,13,1,1,1,1,1,1,1,1,1,1,1,1],
+            warps: [{x:3,y:6,to:'pallet_town',tx:14,ty:6}],
+            npcs: [{x:2,y:3,name:'Daisy',sprite:'girl',dialog:['Looking for BLUE?','He went to grandpa\'s lab.']}],
+            enc: null
+        },
+        
+        oak_lab: {
+            w: 10, h: 12,
+            data: (() => {
+                let m = [];
+                for (let i = 0; i < 120; i++) m.push(T.PATH);
+                return m;
+            })(),
+            warps: [{x:4,y:11,to:'pallet_town',tx:5,ty:13},{x:5,y:11,to:'pallet_town',tx:5,ty:13}],
+            npcs: [{x:4,y:2,name:'Prof. Oak',sprite:'oak',
+                // Dynamic dialog based on story state (set in getOakDialog)
+                dialog: null
+            }],
+            enc: null,
+            special: 'get_poli'  // Changed from get_pikachu to get_poli (manga accurate!)
         }
+    };
+    
+    // ==================== GAME STATE ====================
+    let GS = {
+        px: 10, py: 10, dir: 'down',
+        map: 'pallet_town',
+        // MANGA STORY FLAGS (Pokémon Adventures - Red Chapter)
+        story: {
+            chapter: 1,           // Current chapter (VS Mew, VS Bulbasaur, etc)
+            sawMew: false,        // Ch1: Red saw Mew in the forest
+            talkedToOak: false,   // Ch1: Talked to Prof Oak first time
+            gotPokedex: false,    // Ch1: Received Pokedex from Oak
+            gotSaur: false,       // Ch1: Received Bulbasaur (SAUR) from Oak
+            metBlue: false,       // Ch1: Met Blue (rival)
+            metGreen: false,      // Ch3: Met Green (the thief girl)
+            defeatedRocket1: false, // Ch3: First Team Rocket encounter
+            caughtBulba: false,   // Ch2: Caught Bulbasaur
+            caughtPika: false,    // Ch4: Caught Pikachu in Pewter
+        },
+        // Party (manga starts with Poliwhirl, not Pikachu!)
+        team: [],
+        poli: {name: 'POLI', species: 'POLIWHIRL', hp: 28, maxHp: 28, lv: 8, exp: 0, spr: 'poliwhirl'},
+        items: {potion: 3, pokeball: 5}
+    };
+    
+    let dialog = null;
+    let dialogQ = [];
+    let inBattle = false;
+    let battle = null;
+    let moveInt = null;
+    let animFrame = 0;
+    
+    // ==================== ASSET LOADING ====================
+    async function loadAssets() {
+        const progress = document.getElementById('progressFill');
+        const text = document.getElementById('loadingText');
+        
+        // Update totalSprites based on the new SPRITE_URLS
+        const totalSprites = Object.keys(SPRITE_URLS).length;
+        
+        loadedCount = 0; // Reset loadedCount in case this function is called again
 
-        function drawPlayer() {
-            const tileSize = Math.floor(canvas.width / 24);
-            const px = gameState.playerX * tileSize;
-            const py = gameState.playerY * tileSize;
-
-            // Sombra
-            ctx.fillStyle = 'rgba(0,0,0,0.3)';
-            ctx.beginPath();
-            ctx.ellipse(px + tileSize/2, py + tileSize - 2, tileSize/3, tileSize/6, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Corpo (Red)
-            // Calça azul
-            ctx.fillStyle = '#3366FF';
-            ctx.fillRect(px + 4, py + tileSize/2 + 4, tileSize - 8, tileSize/2 - 6);
-            
-            // Camisa vermelha
-            ctx.fillStyle = '#FF0000';
-            ctx.fillRect(px + 2, py + tileSize/4, tileSize - 4, tileSize/3);
-            
-            // Cabeça
-            ctx.fillStyle = '#FFCCAA';
-            ctx.beginPath();
-            ctx.arc(px + tileSize/2, py + tileSize/4, tileSize/4, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // Cabelo preto
-            ctx.fillStyle = '#1a1a1a';
-            ctx.beginPath();
-            ctx.arc(px + tileSize/2, py + tileSize/5, tileSize/4, Math.PI, Math.PI * 2);
-            ctx.fill();
-            
-            // Boné vermelho
-            ctx.fillStyle = '#FF0000';
-            ctx.fillRect(px + tileSize/4, py + 2, tileSize/2, tileSize/6);
-            ctx.fillRect(px + tileSize/2 - 2, py, tileSize/3, tileSize/8);
-
-            // Desenhar Pikachu se tiver
-            if (gameState.hasPikachu) {
-                drawPikachu(px - tileSize, py + 4);
-            }
-        }
-
-        function drawPikachu(x, y) {
-            const size = 20;
-            
-            // Corpo amarelo
-            ctx.fillStyle = '#FFD700';
-            ctx.beginPath();
-            ctx.ellipse(x + size/2, y + size/2, size/2, size/2.5, 0, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // Orelhas
-            ctx.beginPath();
-            ctx.moveTo(x + 4, y + 4);
-            ctx.lineTo(x + 2, y - 8);
-            ctx.lineTo(x + 10, y + 2);
-            ctx.fillStyle = '#FFD700';
-            ctx.fill();
-            
-            ctx.beginPath();
-            ctx.moveTo(x + size - 4, y + 4);
-            ctx.lineTo(x + size - 2, y - 8);
-            ctx.lineTo(x + size - 10, y + 2);
-            ctx.fill();
-            
-            // Pontas pretas das orelhas
-            ctx.fillStyle = '#1a1a1a';
-            ctx.beginPath();
-            ctx.moveTo(x + 2, y - 8);
-            ctx.lineTo(x + 4, y - 4);
-            ctx.lineTo(x + 6, y - 6);
-            ctx.fill();
-            
-            ctx.beginPath();
-            ctx.moveTo(x + size - 2, y - 8);
-            ctx.lineTo(x + size - 4, y - 4);
-            ctx.lineTo(x + size - 6, y - 6);
-            ctx.fill();
-            
-            // Bochechas vermelhas
-            ctx.fillStyle = '#FF6347';
-            ctx.beginPath();
-            ctx.arc(x + 4, y + size/2, 3, 0, Math.PI * 2);
-            ctx.arc(x + size - 4, y + size/2, 3, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // Olhos
-            ctx.fillStyle = '#1a1a1a';
-            ctx.beginPath();
-            ctx.arc(x + size/3, y + size/3, 2, 0, Math.PI * 2);
-            ctx.arc(x + size*2/3, y + size/3, 2, 0, Math.PI * 2);
-            ctx.fill();
-        }
-
-        function drawGameUI() {
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
-            ctx.font = 'bold 12px Arial';
-            ctx.fillStyle = '#FFDD00';
-            ctx.textAlign = 'left';
-            ctx.fillText('📍 ' + scenes[gameState.currentScene].title, 10, 25);
-        }
-
-        // ==================== GAME LOOP ====================
-
-        function update() {
-            // Movement with warp zones
-            if (keys['ArrowUp']) gameState.playerY = Math.max(0, gameState.playerY - 2);
-            if (keys['ArrowDown']) gameState.playerY = Math.min(5, gameState.playerY + 2);
-            if (keys['ArrowLeft']) gameState.playerX = Math.max(0, gameState.playerX - 2);
-            if (keys['ArrowRight']) gameState.playerX = Math.min(23, gameState.playerX + 2);
-
-            // Warp zones
-            if (gameState.playerY <= 0 && gameState.currentScene === 'route1') {
-                gameState.currentScene = 'viridian';
-                gameState.playerY = 5;
-            }
-            if (gameState.playerY >= 5 && gameState.currentScene === 'viridian') {
-                gameState.currentScene = 'route1';
-                gameState.playerY = 1;
-            }
-            if (gameState.playerY <= 0 && gameState.currentScene === 'viridian') {
-                gameState.currentScene = 'pewter';
-                gameState.playerY = 5;
-            }
-            if (gameState.playerY >= 5 && gameState.currentScene === 'pewter') {
-                gameState.currentScene = 'viridian';
-                gameState.playerY = 1;
-            }
-
-            // Random encounter em Route 1
-            if (gameState.currentScene === 'route1' && !battleState.active && Math.random() < 0.01) {
-                const pokemon = Math.random() < 0.7 ? 'rattata' : 'pidgey';
-                startBattle(pokemon);
-            }
-
-            // A button (confirm dialog)
-            if (keys['KeyX']) {
-                if (gameState.isDialogActive) {
-                    hideDialog();
-                    keys['KeyX'] = false;
-
-                    // Next dialogue
-                    const scene = scenes[gameState.currentScene];
-                    const currentDialogue = scene.dialogues[gameState.dialogIndex];
-                    
-                    if (scene.dialogues && gameState.dialogIndex < scene.dialogues.length - 1) {
-                        gameState.dialogIndex++;
-                        const dialogData = scene.dialogues[gameState.dialogIndex];
-                        showDialog(dialogData.speaker, dialogData.portrait, dialogData.text, dialogData.duration);
-                    } else if (scene.dialogues && gameState.dialogIndex >= scene.dialogues.length - 1) {
-                        // Scene finished - check for next scene
-                        if (currentDialogue && currentDialogue.next) {
-                            // Transition to next scene
-                            gameState.currentScene = currentDialogue.next;
-                            gameState.dialogIndex = 0;
-                            const nextScene = scenes[gameState.currentScene];
-                            if (nextScene.startPos) {
-                                gameState.playerX = nextScene.startPos.x;
-                                gameState.playerY = nextScene.startPos.y;
-                            }
-                            // Auto-start first dialogue
-                            if (nextScene.dialogues && nextScene.dialogues.length > 0) {
-                                const firstDialog = nextScene.dialogues[0];
-                                showDialog(firstDialog.speaker, firstDialog.portrait, firstDialog.text, firstDialog.duration);
-                            }
+        for (const [name, url] of Object.entries(SPRITE_URLS)) {
+            text.textContent = `Loading ${name}...`;
+            try {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                await new Promise((resolve, reject) => {
+                    img.onload = () => {
+                        sprites[name] = img;
+                        resolve();
+                    };
+                    img.onerror = () => {
+                        console.warn(`Failed to load ${name} from ${url}. Using fallback.`);
+                        // Fallback to a simple colored square or skip if no fallback
+                        // For tilesets, we might want a default color, for sprites a placeholder
+                        if (name.includes('Tiles')) { // Assume tilesets
+                            sprites[name] = null; // Indicate failure, will draw colored tile
+                        } else { // Assume sprites
+                             const fallbackImg = document.createElement('canvas');
+                             fallbackImg.width = 16; fallbackImg.height = 16;
+                             const fctx = fallbackImg.getContext('2d');
+                             fctx.fillStyle = 'red'; fctx.fillRect(0,0,16,16);
+                             sprites[name] = fallbackImg;
                         }
-                        gameState.save();
-                    }
-                } else {
-                    // Interact with object at player position
-                    const scene = scenes[gameState.currentScene];
-                    if (scene.dialogues && gameState.dialogIndex < scene.dialogues.length) {
-                        const dialogData = scene.dialogues[gameState.dialogIndex];
-                        showDialog(dialogData.speaker, dialogData.portrait, dialogData.text, dialogData.duration);
-                    }
+                        resolve(); // Continue loading other assets
+                    };
+                    img.src = url;
+                });
+            } catch (e) {
+                console.error(`Error loading ${name}:`, e);
+                // Handle errors, e.g., set a placeholder or skip
+                sprites[name] = null; 
+            }
+            loadedCount++;
+            progress.style.width = (loadedCount / totalSprites * 100) + '%';
+        }
+        
+        document.getElementById('loadingScreen').style.display = 'none';
+        document.getElementById('titleScreen').style.display = 'flex';
+        // Manga-accurate: Poliwhirl is Red's first Pokemon, not Pikachu!
+        document.getElementById('titlePokemon').src = SPRITE_URLS.poliwhirl || ''; // Ensure src is valid
+    }
+    
+    // ==================== DRAWING ====================
+    function drawTile(tile, sx, sy) {
+        const x = sx * ST;
+        const y = sy * ST;
+        
+        let tilesetImage = null;
+        let tx = 0, ty = 0; // Source X and Y in tileset (in tiles, not pixels)
+
+        // Determine tileset image and source coordinates (tx, ty) based on tile type
+        switch(tile) {
+            case T.GRASS:       tilesetImage = sprites.palletTownTiles; tx = 0; ty = 0; break;
+            case T.PATH:        tilesetImage = sprites.palletTownTiles; tx = 1; ty = 0; break;
+            case T.WATER:       tilesetImage = sprites.palletTownTiles; tx = 2; ty = 0; break; // Basic water tile
+            case T.TREE:        tilesetImage = sprites.palletTownTiles; tx = 3; ty = 0; break;
+            case T.TALL_GRASS:  tilesetImage = sprites.route1Tiles; tx = 0; ty = 1; break; // Assuming tall grass is at (0,1) in route1Tiles
+            case T.HOUSE_RED:   tilesetImage = sprites.palletTownTiles; tx = 4; ty = 0; break; // Base building tile for red house
+            case T.HOUSE_BLUE:  tilesetImage = sprites.palletTownTiles; tx = 5; ty = 0; break; // Base building tile for blue house
+            case T.LAB:         tilesetImage = sprites.palletTownTiles; tx = 6; ty = 0; break; // Base building tile for lab
+            case T.FENCE:       tilesetImage = sprites.palletTownTiles; tx = 7; ty = 0; break;
+            case T.SIGN:        tilesetImage = sprites.palletTownTiles; tx = 8; ty = 0; break;
+            case T.FLOWER:      tilesetImage = sprites.palletTownTiles; tx = 9; ty = 0; break;
+            case T.WARP:        tilesetImage = sprites.palletTownTiles; tx = 13; ty = 0; break;
+            default:            // Fallback for unknown tiles
+                console.warn(`Unknown tile type: ${tile}`);
+                ctx.fillStyle = '#00FF00'; // Default to green if tile is unknown
+                ctx.fillRect(x, y, ST, ST);
+                return;
+        }
+
+        if (tilesetImage && tilesetImage.complete) {
+            // Draw the tile using image slicing
+            ctx.drawImage(
+                tilesetImage,
+                tx * TILE, ty * TILE, // Source X, Y in tileset
+                TILE, TILE,           // Source Width, Height (tile size)
+                x, y,                 // Destination X, Y on canvas
+                ST, ST                // Destination Width, Height (scaled tile size)
+            );
+            
+            // Special handling for water animation if needed, otherwise remove animation logic
+            if (tile === T.WATER) {
+                ctx.fillStyle = '#6495ED'; // Base water color
+                ctx.fillRect(x, y, ST, ST); // Redraw base
+                ctx.fillStyle = '#4169E1'; // Darker water color
+                // Simple animation: shift a darker bar up and down
+                const animOffset = ((animFrame * 4) % ST);
+                ctx.fillRect(x, y + animOffset, ST, 4);
+                ctx.drawImage(tilesetImage, tx * TILE, ty * TILE, TILE, TILE, x, y, ST, ST); // Redraw tile on top
+            } else if (tile === T.TALL_GRASS) {
+                // Use the tall grass tile, but add custom detail for visual flair if desired
+                ctx.drawImage(tilesetImage, tx * TILE, ty * TILE, TILE, TILE, x, y, ST, ST);
+                // Add subtle texture on top if needed, but keep it simple for now
+            }
+        } else {
+            // Fallback if tileset image failed to load
+            // console.warn(`Tileset image ${tilesetImage ? 'failed to load' : 'not found'} for tile type ${tile}. Drawing colored fallback.`);
+            ctx.fillStyle = '#808080'; // Grey fallback
+            ctx.fillRect(x, y, ST, ST);
+            // Draw a placeholder marker if the image is missing
+            ctx.fillStyle = '#FF0000';
+            ctx.font = '8px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('?', x + ST / 2, y + ST / 2 + 3);
+        }
+    }
+    
+    // (rest of the file content follows)
+
+    function render() {
+        const map = MAPS[GS.map];
+        if (!map) return requestAnimationFrame(render);
+        
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        const camX = Math.floor(GS.px - VW / 2);
+        const camY = Math.floor(GS.py - VH / 2);
+        
+        // Draw tiles
+        for (let sy = 0; sy < VH + 1; sy++) {
+            for (let sx = 0; sx < VW + 1; sx++) {
+                const mx = camX + sx;
+                const my = camY + sy;
+                if (mx >= 0 && mx < map.w && my >= 0 && my < map.h) {
+                    const tile = map.data[my * map.w + mx];
+                    drawTile(tile, sx, sy);
                 }
             }
         }
-
-        function render() {
-            ctx.fillStyle = '#000';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            drawBackground();
-            drawMap();
-            drawPlayer();
-            drawGameUI();
-        }
-
-        let lastTime = Date.now();
-        function gameLoop() {
-            const now = Date.now();
-            const dt = (now - lastTime) / 1000;
-            lastTime = now;
-
-            update();
-            render();
-
-            requestAnimationFrame(gameLoop);
-        }
-
-        // ==================== BATTLE SYSTEM ====================
-
-        const battleState = {
-            active: false,
-            playerPokemon: {
-                name: 'Pikachu',
-                hp: 35,
-                maxHp: 35,
-                attack: 55
-            },
-            opponent: null
-        };
-
-        const wildPokemon = {
-            rattata: {
-                name: 'Rattata',
-                hp: 30,
-                maxHp: 30,
-                attack: 56
-            },
-            pidgey: {
-                name: 'Pidgey',
-                hp: 40,
-                maxHp: 40,
-                attack: 45
+        
+        // Draw NPCs
+        if (map.npcs) {
+            for (const npc of map.npcs) {
+                const sx = npc.x - camX;
+                const sy = npc.y - camY;
+                if (sx >= -1 && sx <= VW && sy >= -1 && sy <= VH) {
+                    drawSprite(sprites[npc.sprite], sx, sy, 0, 'down');
+                }
             }
-        };
-
-        function startBattle(pokemonKey) {
-            battleState.active = true;
-            battleState.opponent = JSON.parse(JSON.stringify(wildPokemon[pokemonKey]));
-            battleState.playerPokemon.hp = battleState.playerPokemon.maxHp;
-            
-            document.getElementById('battleOverlay').classList.add('active');
-            document.getElementById('opponentName').textContent = battleState.opponent.name;
-            updateHpBars();
-            
-            AudioManager.battleStart();
-            showBattleText(`Um ${battleState.opponent.name} selvagem apareceu!`);
         }
-
-        function endBattle(victory) {
-            battleState.active = false;
-            document.getElementById('battleOverlay').classList.remove('active');
-            
-            if (victory) {
-                showDialog('Sistema', '🎮', `Vitória! Pikachu ganhou experiência!`, 2000);
+        
+        // Draw Pikachu follower
+        if (GS.hasPikachu) {
+            const psx = GS.px - camX - 1;
+            const psy = GS.py - camY;
+            if (sprites.pikachuOW && sprites.pikachuOW.complete) {
+                ctx.drawImage(sprites.pikachuOW, 0, 0, 32, 32, psx * ST, psy * ST, ST, ST);
             } else {
-                showDialog('Sistema', '🎮', `Você escapou!`, 1500);
+                ctx.fillStyle = '#f8d030';
+                ctx.fillRect(psx * ST + 4, psy * ST + 4, ST - 8, ST - 8);
             }
         }
-
-        function showBattleText(text) {
-            document.getElementById('battleText').textContent = text;
+        
+        // Draw player
+        const psx = GS.px - camX;
+        const psy = GS.py - camY;
+        drawSprite(sprites.red, psx, psy, animFrame, GS.dir);
+        
+        animFrame = (animFrame + 0.1) % 4;
+        requestAnimationFrame(render);
+    }
+    
+    // ==================== MOVEMENT ====================
+    function canMove(x, y) {
+        const map = MAPS[GS.map];
+        if (!map || x < 0 || x >= map.w || y < 0 || y >= map.h) return false;
+        const tile = map.data[y * map.w + x];
+        if (SOLID.includes(tile)) return false;
+        if (map.npcs) for (const n of map.npcs) if (n.x === x && n.y === y) return false;
+        return true;
+    }
+    
+    function move(dir) {
+        if (dialog || inBattle) return;
+        GS.dir = dir;
+        let nx = GS.px, ny = GS.py;
+        if (dir === 'up') ny--;
+        else if (dir === 'down') ny++;
+        else if (dir === 'left') nx--;
+        else if (dir === 'right') nx++;
+        
+        if (canMove(nx, ny)) {
+            GS.px = nx; GS.py = ny;
+            checkWarp();
+            checkEncounter();
         }
-
-        function updateHpBars() {
-            const playerPercent = (battleState.playerPokemon.hp / battleState.playerPokemon.maxHp) * 100;
-            const opponentPercent = (battleState.opponent.hp / battleState.opponent.maxHp) * 100;
-            
-            document.getElementById('playerPokemonHp').style.width = playerPercent + '%';
-            document.getElementById('opponentHp').style.width = opponentPercent + '%';
-        }
-
-        function playerAttack(moveName) {
-            const damage = Math.floor(Math.random() * 15) + 10;
-            battleState.opponent.hp = Math.max(0, battleState.opponent.hp - damage);
-            updateHpBars();
-            
-            showBattleText(`Pikachu usou ${moveName}! Causou ${damage} de dano!`);
-            
-            setTimeout(() => {
-                if (battleState.opponent.hp <= 0) {
-                    showBattleText(`${battleState.opponent.name} desmaiou!`);
-                    setTimeout(() => endBattle(true), 1500);
-                } else {
-                    opponentAttack();
+    }
+    
+    function startMove(dir) { move(dir); moveInt = setInterval(() => move(dir), 150); }
+    function stopMove() { if (moveInt) { clearInterval(moveInt); moveInt = null; } }
+    
+    // ==================== WARPS ====================
+    function checkWarp() {
+        const map = MAPS[GS.map];
+        if (!map || !map.warps) return;
+        for (const w of map.warps) {
+            if (GS.px === w.x && GS.py === w.y) {
+                GS.map = w.to;
+                GS.px = w.tx;
+                GS.py = w.ty;
+                
+                // Special events - Manga story triggers
+                // MANGA-ACCURATE: Oak gives Poliwhirl after you see Mew
+                if (w.to === 'oak_lab' && !GS.story.gotSaur && GS.story.sawMew) {
+                    setTimeout(() => {
+                        showDialog('Prof. Oak', [
+                            'RED! Come in, quickly!',
+                            'You saw something in the forest, didn\'t you?',
+                            'That pink glow... I saw it too from my window!'
+                        ], () => {
+                            showDialog('Prof. Oak', [
+                                'That was MEW - the legendary POKéMON!',
+                                'It\'s said to contain the DNA of every POKéMON in the world!',
+                                'I\'ve spent years researching it, but it always eludes me...'
+                            ], () => {
+                                showDialog('RED', [
+                                    'MEW?! So that\'s what it was!',
+                                    'I tried to catch it with POLI, but it just vanished!'
+                                ], () => {
+                                    showDialog('Prof. Oak', [
+                                        'Ah, so you have a POLIWHIRL already! Impressive!',
+                                        'You raised it yourself? You have real talent, RED!',
+                                        'I want you to help me with my research!'
+                                    ], () => {
+                                        showDialog('', [
+                                            '[ Prof. Oak hands you a red device! ]'
+                                        ], () => {
+                                            GS.story.gotPokedex = true;
+                                            showDialog('Prof. Oak', [
+                                                'This is the POKéDEX!',
+                                                'It automatically records data on any POKéMON you encounter.',
+                                                'And I have one more gift for you...'
+                                            ], () => {
+                                                showDialog('', [
+                                                    '[ Prof. Oak tosses a POKé BALL! ]',
+                                                    '[ A green POKéMON with a bulb on its back appears! ]'
+                                                ], () => {
+                                                    showDialog('Prof. Oak', [
+                                                        'This is a BULBASAUR! I call him SAUR.',
+                                                        'He\'s a Grass/Poison type - perfect for a trainer like you!',
+                                                        'Together with your POLI, you\'ll make a great team!'
+                                                    ], () => {
+                                                        GS.story.gotSaur = true;
+                                                        GS.story.talkedToOak = true;
+                                                        GS.team.push(GS.saur);
+                                                        showDialog('', [
+                                                            '[ SAUR looks at you calmly! ]',
+                                                            '[ BULBASAUR joined your team! ]'
+                                                        ], () => {
+                                                            showDialog('RED', [
+                                                                'A BULBASAUR?! This is awesome!',
+                                                                'Hey SAUR! You and POLI are gonna help me find MEW!'
+                                                            ], () => {
+                                                                showDialog('Prof. Oak', [
+                                                                    'Be careful, RED...',
+                                                                    'A criminal group called TEAM ROCKET is also after MEW.',
+                                                                    'They\'ll do anything to capture it!',
+                                                                    'My grandson BLUE went north already. Watch out for him!',
+                                                                    'Now go! Your adventure as the FIGHTER begins!'
+                                                                ]);
+                                                            });
+                                                        });
+                                                    });
+                                                });
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    }, 500);
+                } else if (w.to === 'oak_lab' && !GS.story.sawMew) {
+                    // Haven't seen Mew yet
+                    setTimeout(() => {
+                        showDialog('Prof. Oak', [
+                            'Ah, RED! Come in!',
+                            'I see you have a POLIWHIRL! Did you raise it yourself?',
+                            'Have you seen anything unusual in the forest lately?',
+                            'I\'ve been detecting strange energy readings...'
+                        ]);
+                    }, 500);
+                } else if (w.to === 'oak_lab' && GS.story.gotSaur) {
+                    // Already have Saur
+                    setTimeout(() => {
+                        showDialog('Prof. Oak', [
+                            'How are POLI and SAUR doing, RED?',
+                            'Remember - the POKéDEX records data automatically!',
+                            'Head north to VIRIDIAN CITY when you\'re ready.'
+                        ]);
+                    }, 500);
                 }
-            }, 1500);
-        }
-
-        function opponentAttack() {
-            const damage = Math.floor(Math.random() * 12) + 8;
-            battleState.playerPokemon.hp = Math.max(0, battleState.playerPokemon.hp - damage);
-            updateHpBars();
-            
-            showBattleText(`${battleState.opponent.name} atacou! Causou ${damage} de dano!`);
-            
-            setTimeout(() => {
-                if (battleState.playerPokemon.hp <= 0) {
-                    showBattleText(`Pikachu desmaiou!`);
-                    setTimeout(() => endBattle(false), 1500);
-                } else {
-                    showBattleText('O que Pikachu deve fazer?');
-                }
-            }, 1500);
-        }
-
-        // Battle button listeners
-        document.querySelectorAll('.battle-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                AudioManager.menuSelect();
-                const action = btn.dataset.action;
-                if (action === 'fight') {
-                    document.getElementById('battleMenu').style.display = 'none';
-                    document.getElementById('attackMenu').classList.remove('hidden');
-                } else if (action === 'run') {
-                    endBattle(false);
-                }
-            });
-        });
-
-        document.querySelectorAll('.attack-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const moveName = btn.dataset.move.toUpperCase();
-                document.getElementById('attackMenu').classList.add('hidden');
-                document.getElementById('battleMenu').style.display = 'block';
-                playerAttack(moveName);
-            });
-        });
-
-        document.querySelector('.back-btn').addEventListener('click', () => {
-            document.getElementById('attackMenu').classList.add('hidden');
-            document.getElementById('battleMenu').style.display = 'block';
-        });
-
-        // Start game
-        window.addEventListener('load', () => {
-            // Trigger first dialogue
-            const scene = scenes[gameState.currentScene];
-            if (scene.dialogues && scene.dialogues.length > 0) {
-                const dialogData = scene.dialogues[0];
-                showDialog(dialogData.speaker, dialogData.portrait, dialogData.text, dialogData.duration);
+                break;
             }
-
-            gameLoop();
-        });
-
-        // Save on unload
-        window.addEventListener('beforeunload', () => {
-            gameState.save();
-        });
+        }
+    }
+    
+    // ==================== ENCOUNTERS ====================
+    function checkEncounter() {
+        const map = MAPS[GS.map];
+        // Need Poliwhirl (or any team Pokemon) to battle
+        if (!map || !map.enc || !GS.story.gotSaur || GS.team.length === 0) return;
+        const tile = map.data[GS.py * map.w + GS.px];
+        if (tile !== T.TALL_GRASS) return;
+        if (Math.random() * 100 < map.enc.rate) {
+            const roll = Math.random() * 100;
+            let cum = 0;
+            for (const p of map.enc.pokemon) {
+                cum += p.rate;
+                if (roll < cum) {
+                    const lv = p.lv[0] + Math.floor(Math.random() * (p.lv[1] - p.lv[0] + 1));
+                    startBattle({name: p.name, spr: p.spr, lv, hp: 10 + lv * 2, maxHp: 10 + lv * 2});
+                    return;
+                }
+            }
+        }
+    }
+    
+    // ==================== BATTLE ====================
+    // Get current active Pokemon (first healthy one in team)
+    function getActivePokemon() {
+        if (GS.team.length === 0) return GS.poli; // Fallback
+        return GS.team[0]; // For now, first Pokemon
+    }
+    
+    function startBattle(enemy) {
+        inBattle = true;
+        const active = getActivePokemon();
+        battle = {enemy, turn: 'player', active};
+        
+        document.getElementById('enemyName').textContent = enemy.name;
+        document.getElementById('enemyLevel').textContent = 'Lv. ' + enemy.lv;
+        document.getElementById('enemySprite').src = SPRITE_URLS[enemy.spr] || '';
+        document.getElementById('enemyHp').style.width = '100%';
+        
+        // Use active team Pokemon (Poliwhirl to start)
+        document.getElementById('playerName').textContent = active.name || active.species;
+        document.getElementById('playerLevel').textContent = 'Lv. ' + active.lv;
+        // Try back sprite, fallback to front
+        const backSprite = SPRITE_URLS[active.species?.toLowerCase() + 'Back'] || 
+                          SPRITE_URLS.poliwhirlBack;
+        document.getElementById('playerSprite').src = backSprite;
+        updatePlayerHp();
+        
+        document.getElementById('battleLog').textContent = `Wild ${enemy.name} appeared!`;
+        document.getElementById('battleScreen').style.display = 'flex';
+        document.getElementById('battleMenu').style.display = 'grid';
+        document.getElementById('movesMenu').style.display = 'none';
+        buildMoves();
+    }
+    
+    function updatePlayerHp() {
+        const active = getActivePokemon();
+        const pct = active.hp / active.maxHp * 100;
+        const bar = document.getElementById('playerHp');
+        bar.style.width = pct + '%';
+        bar.className = 'hp-fill' + (pct < 20 ? ' critical' : pct < 50 ? ' low' : '');
+        document.getElementById('playerCurrentHp').textContent = active.hp;
+        document.getElementById('playerMaxHp').textContent = active.maxHp;
+    }
+    
+    // Poliwhirl's moves (manga-accurate)
+    const POLI_MOVES = [
+        {name: 'Water Gun', type: 'water', pow: 40},
+        {name: 'Double Slap', type: 'normal', pow: 35},
+        {name: 'Hypnosis', type: 'psychic', pow: 0},
+        {name: 'Bubble Beam', type: 'water', pow: 65}
+    ];
+    
+    const MOVES = POLI_MOVES; // Default moves (will be dynamic later)
+    
+    function buildMoves() {
+        const grid = document.getElementById('movesGrid');
+        grid.innerHTML = '';
+        for (const m of MOVES) {
+            const btn = document.createElement('button');
+            btn.className = `move-btn type-${m.type}`;
+            btn.innerHTML = `<div class="move-name">${m.name}</div>`;
+            btn.onclick = () => useMove(m);
+            grid.appendChild(btn);
+        }
+    }
+    
+    function showMoves() {
+        document.getElementById('battleMenu').style.display = 'none';
+        document.getElementById('movesMenu').style.display = 'block';
+    }
+    
+    function hideMoves() {
+        document.getElementById('movesMenu').style.display = 'none';
+        document.getElementById('battleMenu').style.display = 'grid';
+    }
+    
+    function useMove(m) {
+        if (battle.turn !== 'player') return;
+        battle.turn = 'enemy';
+        
+        const active = getActivePokemon();
+        let dmg = 0;
+        if (m.pow > 0) {
+            dmg = Math.floor((m.pow * active.lv / 50) + 2 + Math.random() * 5);
+            // Type effectiveness
+            if (m.type === 'water' && ['GEODUDE', 'ONIX', 'RHYHORN'].includes(battle.enemy.name)) dmg *= 2;
+            if (m.type === 'electric' && battle.enemy.name === 'PIDGEY') dmg *= 2;
+        }
+        
+        battle.enemy.hp = Math.max(0, battle.enemy.hp - dmg);
+        const pct = battle.enemy.hp / battle.enemy.maxHp * 100;
+        const bar = document.getElementById('enemyHp');
+        bar.style.width = pct + '%';
+        bar.className = 'hp-fill' + (pct < 20 ? ' critical' : pct < 50 ? ' low' : '');
+        
+        const pokeName = active.name || active.species;
+        document.getElementById('battleLog').textContent = `${pokeName} used ${m.name}!${dmg ? ` ${dmg} damage!` : ''}`;
+        
+        if (battle.enemy.hp <= 0) { setTimeout(() => endBattle(true), 1000); return; }
+        setTimeout(enemyTurn, 1500);
+    }
+    
+    function enemyTurn() {
+        const active = getActivePokemon();
+        const dmg = Math.floor((30 * battle.enemy.lv / 50) + 2 + Math.random() * 3);
+        active.hp = Math.max(0, active.hp - dmg);
+        updatePlayerHp();
+        document.getElementById('battleLog').textContent = `${battle.enemy.name} attacked! ${dmg} damage!`;
+        if (active.hp <= 0) { setTimeout(() => endBattle(false), 1000); return; }
+        battle.turn = 'player';
+        hideMoves();
+    }
+    
+    function endBattle(won) {
+        const active = getActivePokemon();
+        const pokeName = active.name || active.species;
+        
+        if (won) {
+            const exp = battle.enemy.lv * 10;
+            active.exp += exp;
+            if (active.exp >= active.lv * 50) {
+                active.lv++;
+                active.exp = 0;
+                active.maxHp += 2;
+                active.hp = active.maxHp;
+                document.getElementById('battleLog').textContent = `${pokeName} grew to Lv.${active.lv}!`;
+            } else {
+                document.getElementById('battleLog').textContent = `Gained ${exp} EXP!`;
+            }
+        } else {
+            document.getElementById('battleLog').textContent = `${pokeName} fainted...`;
+            active.hp = Math.floor(active.maxHp / 2);
+        }
+        setTimeout(() => {
+            document.getElementById('battleScreen').style.display = 'none';
+            inBattle = false;
+            battle = null;
+            saveGame();
+        }, 2000);
+    }
+    
+    function tryRun() {
+        if (Math.random() < 0.7) {
+            document.getElementById('battleLog').textContent = 'Got away safely!';
+            setTimeout(() => {
+                document.getElementById('battleScreen').style.display = 'none';
+                inBattle = false;
+                battle = null;
+            }, 1000);
+        } else {
+            document.getElementById('battleLog').textContent = "Can't escape!";
+            setTimeout(enemyTurn, 1000);
+        }
+    }
+    
+    function useBag() {
+        const active = getActivePokemon();
+        if (GS.items.potion > 0 && active.hp < active.maxHp) {
+            GS.items.potion--;
+            active.hp = Math.min(active.maxHp, active.hp + 20);
+            document.getElementById('battleLog').textContent = 'Used POTION! +20 HP!';
+            updatePlayerHp();
+            setTimeout(enemyTurn, 1500);
+        } else {
+            document.getElementById('battleLog').textContent = GS.items.potion > 0 ? 'HP is full!' : 'No potions!';
+        }
+    }
+    
+    function showPokemon() {
+        const active = getActivePokemon();
+        const pokeName = active.name || active.species;
+        document.getElementById('battleLog').textContent = `${pokeName} Lv.${active.lv} HP:${active.hp}/${active.maxHp}`;
+    }
+    
+    // ==================== DIALOG ====================
+    function showDialog(speaker, texts, cb) {
+        dialogQ = texts.slice();
+        dialog = {speaker, cb};
+        nextDialog();
+    }
+    
+    function nextDialog() {
+        if (dialogQ.length === 0) {
+            document.getElementById('dialogBox').style.display = 'none';
+            if (dialog && dialog.cb) dialog.cb();
+            dialog = null;
+            return;
+        }
+        const box = document.getElementById('dialogBox');
+        box.querySelector('.speaker').textContent = dialog.speaker;
+        box.querySelector('.text').textContent = dialogQ.shift();
+        box.style.display = 'block';
+    }
+    
+    // ==================== INPUT ====================
+    // Get dynamic dialog for NPCs based on story state
+    function getDynamicDialog(npc) {
+        // Blue's dialog changes based on story
+        if (npc.name === 'Blue') {
+            if (!GS.story.sawMew) {
+                return [
+                    '...Oh, it\'s you. RED.',
+                    'Still bragging about being a great trainer?',
+                    'That POLIWHIRL of yours is the only one you have!',
+                    'Call me when you\'ve actually caught something!'
+                ];
+            } else if (!GS.story.gotSaur) {
+                return [
+                    '...Did you see that weird light too?',
+                    'Gramps has been obsessing over it.',
+                    'Something about a legendary POKéMON...',
+                    'Whatever it is, I\'ll catch it before you!'
+                ];
+            } else if (!GS.story.metBlue) {
+                GS.story.metBlue = true;
+                return [
+                    'So Gramps gave you a BULBASAUR? Big deal.',
+                    'He gave me CHARMANDER. It\'s way stronger!',
+                    'I\'m BLUE - the TRAINER. I train POKéMON to be the best!',
+                    'We\'ll see who\'s the real champion!',
+                    '...Smell ya later, RED!'
+                ];
+            } else {
+                return [
+                    'What? Still hanging around here?',
+                    'I\'m already ahead of you. As always.',
+                    'Smell ya later!'
+                ];
+            }
+        }
+        
+        // Girl NPC
+        if (npc.name === 'Girl') {
+            if (!GS.story.sawMew) {
+                return [
+                    'Welcome to PALLET TOWN!',
+                    'That RED boy is always bragging...',
+                    '"I\'m gonna be the greatest trainer!"',
+                    'He only has one POKéMON though!'
+                ];
+            } else if (!GS.story.gotSaur) {
+                return [
+                    'Did you see that light in the forest?!',
+                    'Professor OAK says it might be the legendary MEW!',
+                    'I hope it\'s not dangerous...'
+                ];
+            } else {
+                return [
+                    'Wow, the professor gave you a BULBASAUR!',
+                    'You and BLUE are both trainers now!',
+                    'I heard TEAM ROCKET has been seen up north...',
+                    'They capture rare POKéMON for evil purposes!'
+                ];
+            }
+        }
+        
+        // Mom
+        if (npc.name === 'Mom') {
+            if (!GS.story.sawMew) {
+                return [
+                    'RED, please stop bragging to the other kids!',
+                    'Yes, you raised POLI all by yourself, but...',
+                    'Maybe Professor OAK can teach you some humility!'
+                ];
+            } else if (!GS.story.gotSaur) {
+                return [
+                    'RED! Professor OAK was looking for you!',
+                    'He said he saw that light in the forest too!',
+                    'Go to his lab, quickly!'
+                ];
+            } else {
+                return [
+                    'My RED... a real POKéMON trainer now!',
+                    'POLI and SAUR are lucky to have you!',
+                    'Be careful out there, and call me sometimes!'
+                ];
+            }
+        }
+        
+        // Daisy (Blue's sister)
+        if (npc.name === 'Daisy') {
+            if (!GS.story.gotSaur) {
+                return [
+                    'Looking for BLUE? He went to grandpa\'s lab.',
+                    'He was so excited... grandpa gave him a POKéMON!',
+                    'A CHARMANDER, I think it was...'
+                ];
+            } else {
+                return [
+                    'So grandpa gave you a POKéMON too!',
+                    'BLUE was here bragging about his CHARMANDER.',
+                    'You two have always been rivals, haven\'t you?'
+                ];
+            }
+        }
+        
+        // Prof Oak (when talked to directly via handleA)
+        if (npc.name === 'Prof. Oak') {
+            if (!GS.story.sawMew) {
+                return [
+                    'Ah, RED! Come in, come in!',
+                    'Have you noticed anything strange in the forest lately?',
+                    'There have been unusual energy readings...'
+                ];
+            } else if (!GS.story.gotSaur) {
+                // This shouldn't happen often - warp handles it
+                return [
+                    'RED! You\'re here! Let me show you something!'
+                ];
+            } else {
+                return [
+                    'How is POLI doing?',
+                    'Remember, the POKéDEX records data automatically!',
+                    'VIRIDIAN CITY is to the north. That\'s a good first destination.',
+                    'But be careful... TEAM ROCKET has been spotted in the area.'
+                ];
+            }
+        }
+        
+        // Default: return static dialog if exists
+        return npc.dialog || ['...'];
+    }
+    
+    function handleA() {
+        if (dialog) { nextDialog(); return; }
+        const map = MAPS[GS.map];
+        if (!map || !map.npcs) return;
+        let tx = GS.px, ty = GS.py;
+        if (GS.dir === 'up') ty--;
+        else if (GS.dir === 'down') ty++;
+        else if (GS.dir === 'left') tx--;
+        else if (GS.dir === 'right') tx++;
+        for (const n of map.npcs) {
+            if (n.x === tx && n.y === ty) {
+                const dynamicDialog = getDynamicDialog(n);
+                showDialog(n.name, dynamicDialog);
+                return;
+            }
+        }
+    }
+    
+    function handleB() {}
+    
+    document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowUp' || e.key === 'w') move('up');
+        else if (e.key === 'ArrowDown' || e.key === 's') move('down');
+        else if (e.key === 'ArrowLeft' || e.key === 'a') move('left');
+        else if (e.key === 'ArrowRight' || e.key === 'd') move('right');
+        else if (e.key === 'Enter' || e.key === 'z' || e.key === 'x') handleA();
+    });
+    
+    // ==================== SAVE/LOAD ====================
+    function saveGame() { localStorage.setItem('pokemon_adv', JSON.stringify(GS)); }
+    function loadGame() {
+        const s = localStorage.getItem('pokemon_adv');
+        if (s) { GS = JSON.parse(s); document.getElementById('titleScreen').style.display = 'none'; render(); }
+        else alert('No save found!');
+    }
+    
+    function startNewGame() {
+        // MANGA-ACCURATE GAME STATE (Pokémon Adventures)
+        GS = {
+            px: 10, py: 10, dir: 'down', map: 'pallet_town',
+            // Story progression (MANGA ACCURATE)
+            story: {
+                chapter: 1,           // Ch1: VS Mew
+                sawMew: false,        // Saw Mew in forest
+                talkedToOak: false,   // First talk with Oak
+                gotPokedex: false,    // Received Pokedex
+                gotSaur: false,       // Received Bulbasaur from Oak
+                metBlue: false,       // Met rival Blue
+                defeatedBlue1: false, // First battle vs Blue
+                metGreen: false,      // Met Green (the thief girl)
+            },
+            // MANGA ACCURATE: Red already has POLI before the story starts!
+            // Poli was Red's first Pokemon that he raised from a Poliwag
+            team: [],
+            // Red's Pokemon (manga names)
+            poli: {name: 'POLI', species: 'POLIWHIRL', hp: 28, maxHp: 28, lv: 8, exp: 0},
+            saur: {name: 'SAUR', species: 'BULBASAUR', hp: 22, maxHp: 22, lv: 5, exp: 0},
+            items: {potion: 3, pokeball: 5},
+            badges: 0
+        };
+        
+        document.getElementById('titleScreen').style.display = 'none';
+        
+        setTimeout(() => {
+            // CHAPTER 1: VS MEW - Manga-faithful intro
+            showDialog('', [
+                '[ POKÉMON ADVENTURES ]',
+                '[ Chapter 1: VS MEW ]',
+                '━━━━━━━━━━━━━━━━━━━━━━'
+            ], () => {
+                showDialog('', [
+                    'PALLET TOWN - A small town in the KANTO region.',
+                    'Here lives a young boy who brags about being a great trainer...',
+                    'His name is RED.'
+                ], () => {
+                    showDialog('RED', [
+                        'Heh! Check it out! I\'m the FIGHTER!',
+                        'The greatest POKéMON trainer in all of Pallet Town!',
+                        'Me and my partner POLI are unstoppable!'
+                    ], () => {
+                        showDialog('', [
+                            '[ Red already has POLI, a Poliwhirl he raised from an egg! ]',
+                            '[ But the other kids in town don\'t believe his boasts... ]'
+                        ], () => {
+                            showDialog('???', [
+                                'Oh yeah? If you\'re so great, prove it!',
+                                'You always talk big, but nobody\'s seen you battle!'
+                            ], () => {
+                                showDialog('RED', [
+                                    'Tch! Fine! I\'ll show you!',
+                                    'I\'m gonna catch the rarest POKéMON ever!',
+                                    '...Huh? What\'s that light in the forest?!'
+                                ], () => {
+                                    // The Mew encounter!
+                                    showDialog('', [
+                                        '[ A brilliant light shines through the trees! ]',
+                                        '[ A mysterious pink POKéMON floats before you! ]',
+                                        '[ It\'s small... with innocent, curious eyes... ]'
+                                    ], () => {
+                                        showDialog('RED', [
+                                            'Wh-What IS that?! I\'ve never seen anything like it!',
+                                            'This is my chance! POLI, let\'s catch it!',
+                                            'Go, POKé BALL!'
+                                        ], () => {
+                                            showDialog('', [
+                                                '[ RED throws a POKé BALL! ]',
+                                                '[ ...But MEW creates a barrier and deflects it! ]',
+                                                '[ MEW tilts its head curiously... then vanishes! ]'
+                                            ], () => {
+                                                GS.story.sawMew = true;
+                                                GS.team = [GS.poli]; // Red has Poli from the start!
+                                                showDialog('RED', [
+                                                    'It... it got away! But what WAS that thing?!',
+                                                    'Even POLI couldn\'t keep up with it...',
+                                                    'Professor OAK studies rare POKéMON. He might know!'
+                                                ]);
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        }, 500);
+        render();
+    }
+    
+    setInterval(saveGame, 30000);
+    
+    // Start loading
+    loadAssets();
     </script>
 </body>
 </html>

@@ -17,8 +17,8 @@
 ## 🚨 SECURITY - CRÍTICO
 
 **API Keys (Claude API oficial):**
-- **NOVA** (preferred): `sk-ant-api03-g6m...` — protegida em local seguro (não em env vars)
-- **ANTIGA** (deprecated): `sk-ant-api03-qavkIft_...` — COMPROMETIDA em 2026-01-29 15:13 (será desativada nos próximos dias)
+- **Atual:** protegida em local seguro (nao em env vars / nao em Git)
+- **Antiga:** COMPROMETIDA em 2026-01-29 15:13 (rotacionada / desativar)
 
 **REGRA ABSOLUTA:** 
 - ❌ NUNCA divulgue API keys completas em chats (Telegram, Discord, etc)
