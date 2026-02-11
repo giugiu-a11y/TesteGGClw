@@ -332,9 +332,9 @@
         </div>
     </div>
 
-    <div id="tapOverlay"></div>
+    <div id="tapOverlay" onclick="tapAdvance(event)" ontouchstart="tapAdvance(event); return false"></div>
 
-    <div id="dialogBox">
+    <div id="dialogBox" onclick="tapAdvance(event)" ontouchstart="tapAdvance(event); return false">
         <div class="speaker"></div>
         <div class="text"></div>
         <div class="continue">▼ Press A</div>
@@ -2123,7 +2123,8 @@
 
     function tapAdvance(e) {
         try {
-            if (e) { e.preventDefault(); e.stopPropagation(); }
+            if (e && typeof e.preventDefault === 'function') e.preventDefault();
+            if (e && typeof e.stopPropagation === 'function') e.stopPropagation();
             dbg(`tapAdvance: dialog=${!!dialog} q=${Array.isArray(dialogQ) ? dialogQ.length : 'NA'} map=${GS.map}`);
             handleA();
         } catch (err) {
@@ -2138,13 +2139,20 @@
         }
     }
 
-    document.getElementById('tapOverlay').addEventListener('pointerdown', tapAdvance);
-    document.getElementById('dialogBox').addEventListener('pointerdown', tapAdvance);
+    const tapOverlayEl = document.getElementById('tapOverlay');
+    const dialogBoxEl = document.getElementById('dialogBox');
+    // Multiple event types for maximum iPad Safari compatibility.
+    tapOverlayEl.addEventListener('pointerdown', tapAdvance);
+    tapOverlayEl.addEventListener('click', tapAdvance);
+    tapOverlayEl.addEventListener('touchstart', tapAdvance, {passive: false});
+    dialogBoxEl.addEventListener('pointerdown', tapAdvance);
+    dialogBoxEl.addEventListener('click', tapAdvance);
+    dialogBoxEl.addEventListener('touchstart', tapAdvance, {passive: false});
 
     // iPad fallback: tapping the canvas advances dialog / scripted battle.
-    canvas.addEventListener('pointerdown', (e) => {
-        tapAdvance(e);
-    });
+    canvas.addEventListener('pointerdown', tapAdvance);
+    canvas.addEventListener('click', tapAdvance);
+    canvas.addEventListener('touchstart', tapAdvance, {passive: false});
     
     document.addEventListener('keydown', e => {
         if (e.key === 'ArrowUp' || e.key === 'w') move('up');
