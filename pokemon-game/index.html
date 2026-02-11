@@ -305,7 +305,7 @@
         </div>
     </div>
     
-    <div id="dialogBox">
+    <div id="dialogBox" onclick="handleA()">
         <div class="speaker"></div>
         <div class="text"></div>
         <div class="continue">▼ Press A</div>
@@ -758,10 +758,10 @@
     
     // ==================== ASSET LOADING ====================
     function createTilesetCanvas() {
-        // Tile atlas: 8 columns x 3 rows. Each tile is 16x16.
+        // Tile atlas: 8 columns x 4 rows. Each tile is 16x16.
         // Original pixel art tiles inspired by the FRLG feel (no ripped assets).
         const cols = 8;
-        const rows = 3;
+        const rows = 4;
         const ts = document.createElement('canvas');
         ts.width = cols * TILE;
         ts.height = rows * TILE;
@@ -858,6 +858,10 @@
             px(x0 + 7, y0 + 7, 2, 2, '#9ca3af');
         });
 
+        // Row 2+: variants to break repetition (deterministic noise picks)
+        tile(1, 2, (x0, y0) => { dither(x0, y0, C.grass2, C.grass); speckle(x0, y0, C.grass3, 26); }); // GRASS_ALT
+        tile(2, 2, (x0, y0) => { dither(x0, y0, C.path2, C.path); speckle(x0, y0, C.path3, 22); });     // PATH_ALT
+
         return ts;
     }
 
@@ -926,6 +930,17 @@
         );
     }
 
+    function noise01(mapId, x, y) {
+        // Cheap deterministic hash -> [0,1)
+        let h = 2166136261 >>> 0;
+        const s = `${mapId}|${x}|${y}`;
+        for (let i = 0; i < s.length; i++) {
+            h ^= s.charCodeAt(i);
+            h = Math.imul(h, 16777619) >>> 0;
+        }
+        return (h % 1000) / 1000;
+    }
+
     function sameTile(map, x, y, tile) {
         if (!map) return false;
         if (x < 0 || y < 0 || x >= map.w || y >= map.h) return false;
@@ -959,9 +974,16 @@
             return;
         }
 
-        if (tile === T.GRASS) { drawFromAtlas(0, 0, sx, sy); return; }
+        if (tile === T.GRASS) {
+            const n = noise01(GS.map, mx, my);
+            if (n < 0.22) drawFromAtlas(1, 2, sx, sy); // GRASS_ALT
+            else drawFromAtlas(0, 0, sx, sy);
+            return;
+        }
         if (tile === T.PATH) {
-            drawFromAtlas(1, 0, sx, sy);
+            const n = noise01(GS.map, mx, my);
+            if (n < 0.18) drawFromAtlas(2, 2, sx, sy); // PATH_ALT
+            else drawFromAtlas(1, 0, sx, sy);
             // Add subtle border where PATH touches GRASS (cheap autotile, FRLG-like).
             const edges = {
                 t: !sameTile(map, mx, my - 1, T.PATH) && !sameTile(map, mx, my - 1, T.WARP),
@@ -1845,6 +1867,12 @@
     }
     
     function handleB() {}
+
+    // iPad fallback: tapping the canvas advances dialog / scripted battle.
+    canvas.addEventListener('pointerdown', (e) => {
+        if (inBattle && battle && battle.pending) { battleOk(); return; }
+        if (dialog) { handleA(); }
+    });
     
     document.addEventListener('keydown', e => {
         if (e.key === 'ArrowUp' || e.key === 'w') move('up');
