@@ -813,6 +813,7 @@
         // Party (manga starts with Poliwhirl, not Pikachu!)
         team: [],
         poli: {name: 'POLI', species: 'POLIWHIRL', hp: 28, maxHp: 28, lv: 8, exp: 0, spr: 'poliwhirl'},
+        pika: {name: 'PIKA', species: 'PIKACHU', hp: 20, maxHp: 20, lv: 6, exp: 0, spr: 'pikachuBattle'},
         items: {potion: 3, pokeball: 5}
     };
     
@@ -871,6 +872,7 @@
         for (const id of want) {
             if (id === 'poli') next.push(GS.poli);
             if (id === 'saur') next.push(GS.saur);
+            if (id === 'pika') next.push(GS.pika);
         }
         if (next.length) GS.team = next;
     }
@@ -2128,10 +2130,12 @@
         if (typeof gs.story.beat !== 'string') gs.story.beat = 'ch1_intro';
         if (typeof gs.story.visitedViridian !== 'boolean') gs.story.visitedViridian = false;
         if (typeof gs.story.visitedPewter !== 'boolean') gs.story.visitedPewter = false;
+        if (typeof gs.story.caughtPika !== 'boolean') gs.story.caughtPika = false;
         if (!Array.isArray(gs.team)) gs.team = [];
         if (!gs.items) gs.items = {potion: 0, pokeball: 0};
         if (!gs.poli) gs.poli = {name: 'POLI', species: 'POLIWHIRL', hp: 28, maxHp: 28, lv: 8, exp: 0};
         if (!gs.saur) gs.saur = {name: 'SAUR', species: 'BULBASAUR', hp: 22, maxHp: 22, lv: 5, exp: 0};
+        if (!gs.pika) gs.pika = {name: 'PIKA', species: 'PIKACHU', hp: 20, maxHp: 20, lv: 6, exp: 0};
         return gs;
     }
     function loadGame() {
@@ -2168,6 +2172,7 @@
             // Red's Pokemon (manga names)
             poli: {name: 'POLI', species: 'POLIWHIRL', hp: 28, maxHp: 28, lv: 8, exp: 0},
             saur: {name: 'SAUR', species: 'BULBASAUR', hp: 22, maxHp: 22, lv: 5, exp: 0},
+            pika: {name: 'PIKA', species: 'PIKACHU', hp: 20, maxHp: 20, lv: 6, exp: 0},
             items: {potion: 3, pokeball: 5},
             badges: 0
         };

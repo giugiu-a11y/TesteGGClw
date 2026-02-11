@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$ROOT_DIR"
+
+echo "[ci-check] JSON story..."
+python3 -m json.tool story/season1.ptbr.json >/dev/null
+
+echo "[ci-check] JSON tileset..."
+python3 -m json.tool assets/tilesets/punyworld.tileset.json >/dev/null
+
+echo "[ci-check] JS syntax from index.html <script>..."
+awk 'BEGIN{p=0} /<script>/{p=1;next} /<\/script>/{p=0} p{print}' index.html > /tmp/pokemon_game_script_ci.js
+node --check /tmp/pokemon_game_script_ci.js
+
+echo "[ci-check] OK"

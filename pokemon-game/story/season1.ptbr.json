@@ -115,7 +115,29 @@
       "actions": [
         {"kind": "dialog", "speaker": "", "lines": ["[ PEWTER CITY ]", "Rocha, poeira... e um silencio estranho.", "Rumores sobre ataques a POKeMON circulam pelas ruas."]},
         {"kind": "dialog", "speaker": "RED", "lines": ["TEAM ROCKET...", "Se eles estao mesmo aqui, eu vou derrubar um por um."]},
-        {"kind": "set", "path": "story.pewterHook", "value": true}
+        {"kind": "dialog", "speaker": "", "lines": ["[ Um membro da TEAM ROCKET surge em um beco. ]", "[ Um PIKACHU ferido tenta fugir do cativeiro. ]"]},
+        {
+          "kind": "battle",
+          "enemy": {"name": "EKANS", "spr": "ekans", "lv": 7, "hp": 24, "maxHp": 24},
+          "options": {
+            "scripted": true,
+            "onEnd": "only_if_win",
+            "scriptSteps": [
+              {"type": "log", "text": "ROCKET GRUNT enviou EKANS!"},
+              {"type": "enemyMove", "move": "Wrap", "damage": 5},
+              {"type": "playerMove", "move": "Bubble Beam", "damage": 11},
+              {"type": "enemyMove", "move": "Poison Sting", "damage": 4},
+              {"type": "playerMove", "move": "Water Gun", "damage": 999},
+              {"type": "end", "won": true}
+            ]
+          }
+        },
+        {"kind": "dialog", "speaker": "PIKACHU", "lines": ["Pika... pika!"]},
+        {"kind": "dialog", "speaker": "RED", "lines": ["Calma. Agora voce esta seguro.", "Se quiser, pode vir comigo."]},
+        {"kind": "set", "path": "story.pewterHook", "value": true},
+        {"kind": "set", "path": "story.caughtPika", "value": true},
+        {"kind": "ensureTeam", "value": ["poli", "saur", "pika"]},
+        {"kind": "dialog", "speaker": "", "lines": ["[ PIKACHU entrou para o time! ]"]}
       ]
     },
     {

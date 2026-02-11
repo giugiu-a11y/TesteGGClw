@@ -18,6 +18,7 @@
 3. Sempre testar sintaxe antes de commit:
    - `node --check` no script extraido de `index.html`
    - `python3 -m json.tool` nos JSON alterados
+   - `bash pokemon-game/ci-check.sh` (igual ao Nightly QA workflow)
 4. Nao commitar lixo de ambiente (`sessions/**`, `__pycache__`, venv).
 
 ## Contrato de Qualidade
