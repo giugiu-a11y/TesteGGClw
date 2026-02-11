@@ -47,6 +47,7 @@
         {"kind": "dialog", "speaker": "RED", "lines": ["O-O que e isso?! Eu nunca vi nada assim!", "Essa e a minha chance! POLI, vamos capturar!", "Vai, POKe BALL!"]},
         {"kind": "dialog", "speaker": "", "lines": ["[ RED arremessa uma POKe BALL! ]", "[ ...Mas MEW cria uma barreira e desvia! ]", "[ MEW inclina a cabeca... e desaparece! ]"]},
         {"kind": "set", "path": "story.sawMew", "value": true},
+        {"kind": "set", "path": "story.beat", "value": "ch1_oak_mew_explain"},
         {"kind": "ensureTeam", "value": ["poli"]},
         {"kind": "dialog", "speaker": "RED", "lines": ["E... escapou! Mas o que ERA aquilo?!", "Nem o POLI conseguiu acompanhar...", "O Professor OAK estuda POKeMON raros. Ele deve saber!"]}
       ]
@@ -70,6 +71,14 @@
         {"kind": "dialog", "speaker": "", "lines": ["[ SAUR olha para voce com calma. ]", "[ BULBASAUR entrou no seu time! ]"]},
         {"kind": "dialog", "speaker": "RED", "lines": ["Um BULBASAUR?! Incrivel!", "SAUR! Voce e o POLI vao me ajudar a encontrar o MEW!"]},
         {"kind": "dialog", "speaker": "Prof. Oak", "lines": ["Tome cuidado, RED...", "Um grupo criminoso chamado TEAM ROCKET tambem esta atras do MEW.", "Eles vao fazer qualquer coisa para captura-lo.", "Meu neto BLUE ja seguiu para o norte. Fique atento.", "Agora va. Sua aventura comeca."]}
+      ]
+    },
+    {
+      "id": "s1_outline_next",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "outline",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ TODO: Beat list Season 1 ]", "Viridian / Forest / Rocket / Pewter / Pikachu / Brock ..."]}
       ]
     }
   ]

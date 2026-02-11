@@ -1364,6 +1364,19 @@
     function onMapEnter(mapId) {
         // Lightweight, non-breaking story hooks. Real season script will live in beats/flags.
         if (!GS.story) GS.story = {};
+        // Prefer script-driven beats when available.
+        if (mapId === 'oak_lab' && GS.story.sawMew && !GS.story.gotSaur) {
+            // When player reaches Oak after seeing Mew, run the scripted beat (manga-first).
+            const want = GS.story.beat || 'ch1_oak_mew_explain';
+            if (want === 'ch1_oak_mew_explain' && getBeat('ch1_oak_mew_explain')) {
+                setTimeout(() => {
+                    // Guard against replay if user re-enters rapidly
+                    if (GS.story.gotSaur) return;
+                    playBeat('ch1_oak_mew_explain');
+                }, 350);
+                return;
+            }
+        }
         if (mapId === 'viridian' && !GS.story.visitedViridian) {
             GS.story.visitedViridian = true;
             setTimeout(() => {
@@ -2054,6 +2067,7 @@
         if (!Array.isArray(gs.team)) gs.team = [];
         if (!gs.items) gs.items = {potion: 0, pokeball: 0};
         if (!gs.poli) gs.poli = {name: 'POLI', species: 'POLIWHIRL', hp: 28, maxHp: 28, lv: 8, exp: 0};
+        if (!gs.saur) gs.saur = {name: 'SAUR', species: 'BULBASAUR', hp: 22, maxHp: 22, lv: 5, exp: 0};
         return gs;
     }
     function loadGame() {
