@@ -12,9 +12,9 @@
 
 ## Prioridade 3 - Story Season 1
 1. Expandir beats em `story/season1.ptbr.json`:
-   - Rocket setup (proximo bloco)
-   - Pikachu capture beat
-   - Brock beat (confronto inicial)
+   - Mt. Moon setup
+   - Green (ladra) encounter beat
+   - Rocket escalation beat (apos Pewter)
 2. Ligar cada beat a trigger claro (`onMapEnter`, fala NPC, batalha scriptada).
 3. Manter `sourceRef` por beat para rastreabilidade de fidelidade.
 

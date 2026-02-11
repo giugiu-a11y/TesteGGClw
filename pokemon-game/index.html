@@ -398,6 +398,7 @@
         // Player & NPCs (16x32 sprite sheets with walk animations)
         red: GITHUB_BASE + 'graphics/object_events/pics/people/red_normal.png',
         blue: GITHUB_BASE + 'graphics/object_events/pics/people/blue.png',
+        brock: GITHUB_BASE + 'graphics/object_events/pics/people/brock.png',
         oak: GITHUB_BASE + 'graphics/object_events/pics/people/prof_oak.png',
         mom: GITHUB_BASE + 'graphics/object_events/pics/people/mom.png',
         girl: GITHUB_BASE + 'graphics/object_events/pics/people/lass.png',
@@ -442,6 +443,8 @@
         koffing: 'https://play.pokemonshowdown.com/sprites/gen3frlg/koffing.png',
         ekans: 'https://play.pokemonshowdown.com/sprites/gen3frlg/ekans.png',
         arbok: 'https://play.pokemonshowdown.com/sprites/gen3frlg/arbok.png',
+        geodude: 'https://play.pokemonshowdown.com/sprites/gen3frlg/geodude.png',
+        onix: 'https://play.pokemonshowdown.com/sprites/gen3frlg/onix.png',
 
         // Optional remote tilesets (not used by default; we generate our own tiles for stability/style control)
         generalTiles: GITHUB_BASE + 'data/tilesets/primary/general/tiles.png',
@@ -670,6 +673,9 @@
                     m[y * w + 10] = T.PATH;
                 }
                 for (let y = 6; y <= 11; y++) for (let x = 6; x <= 13; x++) m[y * w + x] = T.PATH;
+                // Pewter Gym
+                for (let y = 3; y <= 5; y++) for (let x = 8; x <= 11; x++) m[y * w + x] = T.LAB;
+                m[6 * w + 9] = T.WARP;
                 // Warps (south back to route2)
                 m[(h - 1) * w + 9] = T.WARP; m[(h - 1) * w + 10] = T.WARP;
                 // Sign near center
@@ -679,6 +685,7 @@
             warps: [
                 {x:9,y:17,to:'route2',tx:9,ty:1},
                 {x:10,y:17,to:'route2',tx:10,ty:1},
+                {x:9,y:6,to:'pewter_gym',tx:5,ty:9}
             ],
             npcs: [
                 {x:10,y:9,name:'Girl',sprite:'girl',dialog:[
@@ -687,6 +694,30 @@
                     '...E dizem que ha um POKeMON estranho por aqui.'
                 ]},
             ],
+            enc: null
+        },
+
+        pewter_gym: {
+            w: 12, h: 10,
+            data: (() => {
+                const w = 12, h = 10;
+                const m = new Array(w * h).fill(T.FLOOR_IN);
+                for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+                    if (x === 0 || y === 0 || x === w - 1 || y === h - 1) m[y * w + x] = T.WALL_IN;
+                }
+                // Exit
+                m[9 * w + 5] = T.WARP;
+                // Rock-like props / arena
+                m[3 * w + 3] = T.TABLE;
+                m[3 * w + 8] = T.TABLE;
+                m[5 * w + 2] = T.TABLE;
+                m[5 * w + 9] = T.TABLE;
+                m[1 * w + 2] = T.SHELF;
+                m[1 * w + 9] = T.SHELF;
+                return m;
+            })(),
+            warps: [{x:5,y:9,to:'pewter',tx:9,ty:7}],
+            npcs: [{x:5,y:2,name:'Brock',sprite:'brock',dialog:['...']}],
             enc: null
         },
         
@@ -809,6 +840,7 @@
             defeatedRocket1: false, // Ch3: First Team Rocket encounter
             caughtBulba: false,   // Ch2: Caught Bulbasaur
             caughtPika: false,    // Ch4: Caught Pikachu in Pewter
+            brockBattleDone: false, // Ch4: First clash with Brock
         },
         // Party (manga starts with Poliwhirl, not Pikachu!)
         team: [],
@@ -1473,6 +1505,15 @@
                 }
             }, 400);
         }
+        if (mapId === 'pewter_gym' && GS.story.caughtPika && !GS.story.brockBattleDone) {
+            setTimeout(() => {
+                showDialog('', [
+                    '[ PEWTER GYM ]',
+                    'BROCK observa em silencio do outro lado da arena.',
+                    'A luta comeca quando voce falar com ele.'
+                ]);
+            }, 320);
+        }
     }
     
     // ==================== ENCOUNTERS ====================
@@ -1986,6 +2027,27 @@
                 ];
             }
         }
+
+        if (npc.name === 'Brock') {
+            if (!GS.story.caughtPika) {
+                return [
+                    'Voce parece ter pressa, RED.',
+                    'Antes de pensar em desafios maiores...',
+                    'Proteja os POKeMON desta cidade.'
+                ];
+            }
+            if (!GS.story.brockBattleDone) {
+                return [
+                    'Entao foi voce quem enfrentou a TEAM ROCKET.',
+                    'Mostre sua determinacao no campo.',
+                    'Eu, BROCK, vou testar sua base de treinador.'
+                ];
+            }
+            return [
+                'Seu elo com POLI, SAUR e PIKA esta mais forte.',
+                'Continue. A jornada em KANTO so comecou.'
+            ];
+        }
         
         // Default: return static dialog if exists
         return npc.dialog || ['...'];
@@ -2014,6 +2076,9 @@
         if (!map.npcs) return;
         for (const n of map.npcs) {
             if (n.x === tx && n.y === ty) {
+                if (n.name === 'Brock' && GS.story.caughtPika && !GS.story.brockBattleDone) {
+                    if (playBeat('ch1_brock_intro')) return;
+                }
                 const dynamicDialog = getDynamicDialog(n);
                 showDialog(n.name, dynamicDialog);
                 return;
@@ -2131,6 +2196,7 @@
         if (typeof gs.story.visitedViridian !== 'boolean') gs.story.visitedViridian = false;
         if (typeof gs.story.visitedPewter !== 'boolean') gs.story.visitedPewter = false;
         if (typeof gs.story.caughtPika !== 'boolean') gs.story.caughtPika = false;
+        if (typeof gs.story.brockBattleDone !== 'boolean') gs.story.brockBattleDone = false;
         if (!Array.isArray(gs.team)) gs.team = [];
         if (!gs.items) gs.items = {potion: 0, pokeball: 0};
         if (!gs.poli) gs.poli = {name: 'POLI', species: 'POLIWHIRL', hp: 28, maxHp: 28, lv: 8, exp: 0};
@@ -2165,6 +2231,8 @@
                 metBlue: false,       // Met rival Blue
                 defeatedBlue1: false, // First battle vs Blue
                 metGreen: false,      // Met Green (the thief girl)
+                caughtPika: false,    // Pewter rescue arc
+                brockBattleDone: false,
             },
             // MANGA ACCURATE: Red already has POLI before the story starts!
             // Poli was Red's first Pokemon that he raised from a Poliwag

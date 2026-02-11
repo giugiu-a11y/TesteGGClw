@@ -141,11 +141,37 @@
       ]
     },
     {
+      "id": "ch1_brock_intro",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "Brock", "lines": ["Entao e voce, RED.", "Ouvi que protegeu um PIKACHU da TEAM ROCKET.", "Coragem sem tecnica nao basta. Mostre seu nivel."]},
+        {
+          "kind": "battle",
+          "enemy": {"name": "GEODUDE", "spr": "geodude", "lv": 10, "hp": 32, "maxHp": 32},
+          "options": {
+            "scripted": true,
+            "onEnd": "only_if_win",
+            "scriptSteps": [
+              {"type": "log", "text": "BROCK enviou GEODUDE!"},
+              {"type": "enemyMove", "move": "Tackle", "damage": 4},
+              {"type": "playerMove", "move": "Water Gun", "damage": 15},
+              {"type": "enemyMove", "move": "Rock Throw", "damage": 5},
+              {"type": "playerMove", "move": "Bubble Beam", "damage": 999},
+              {"type": "end", "won": true}
+            ]
+          }
+        },
+        {"kind": "dialog", "speaker": "Brock", "lines": ["Bom controle.", "Seu estilo e agressivo, mas seus POKeMON confiam em voce.", "Nao vou te parar aqui. Continue avancando em KANTO."]},
+        {"kind": "set", "path": "story.brockBattleDone", "value": true}
+      ]
+    },
+    {
       "id": "s1_outline_next",
       "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
       "type": "outline",
       "actions": [
-        {"kind": "dialog", "speaker": "", "lines": ["[ TODO: Beat list Season 1 ]", "Rocket em Pewter / captura de Pikachu / arco de Brock / avancar capitulo por capitulo."]}
+        {"kind": "dialog", "speaker": "", "lines": ["[ TODO: Beat list Season 1 ]", "Rocket em Pewter / captura de Pikachu / Brock (feito) / proximo: Mt. Moon e Green."]}
       ]
     }
   ]
