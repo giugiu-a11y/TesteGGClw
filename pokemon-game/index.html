@@ -106,7 +106,18 @@
             z-index: 2000;
             box-shadow: 0 10px 0 rgba(0,0,0,0.35);
         }
-        
+
+        /* Captures taps anywhere to advance dialog on iPad */
+        #tapOverlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1500;
+            background: transparent;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
         #dialogBox .speaker {
             font-weight: bold; color: #1f2a44;
             margin-bottom: 6px; font-size: 10px;
@@ -304,7 +315,9 @@
             <button class="btn-a" onclick="handleA()">A</button>
         </div>
     </div>
-    
+
+    <div id="tapOverlay" onclick="handleA()" ontouchstart="handleA(); return false"></div>
+
     <div id="dialogBox" onclick="handleA()">
         <div class="speaker"></div>
         <div class="text"></div>
@@ -1672,6 +1685,7 @@
     function nextDialog() {
         if (dialogQ.length === 0) {
             document.getElementById('dialogBox').style.display = 'none';
+            document.getElementById('tapOverlay').style.display = 'none';
             if (dialog && dialog.cb) dialog.cb();
             dialog = null;
             return;
@@ -1680,6 +1694,7 @@
         box.querySelector('.speaker').textContent = dialog.speaker;
         box.querySelector('.text').textContent = dialogQ.shift();
         box.style.display = 'block';
+        document.getElementById('tapOverlay').style.display = 'block';
     }
     
     // ==================== INPUT ====================
