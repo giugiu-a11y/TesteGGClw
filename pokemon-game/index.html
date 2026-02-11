@@ -1015,6 +1015,37 @@
         return ts;
     }
 
+    function qs(name, dflt = '') {
+        try { return (new URLSearchParams(location.search)).get(name) || dflt; }
+        catch { return dflt; }
+    }
+
+    async function tryLoadExternalTileset() {
+        if (qs('tileset', '') !== 'external') return false;
+
+        // Expected files:
+        // - ./assets/tilesets/user.png
+        // - ./assets/tilesets/user.tileset.json
+        try {
+            const cfgRes = await fetch('./assets/tilesets/user.tileset.json', {cache: 'no-store'});
+            if (!cfgRes.ok) return false;
+            const cfg = await cfgRes.json();
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            await new Promise((resolve, reject) => {
+                img.onload = resolve;
+                img.onerror = reject;
+                img.src = './assets/tilesets/user.png';
+            });
+            sprites.tileset = img;
+            sprites.tilesetCfg = cfg;
+            return true;
+        } catch (e) {
+            console.warn('External tileset load failed; using procedural.', e);
+            return false;
+        }
+    }
+
     async function loadAssets() {
         const progress = document.getElementById('progressFill');
         const text = document.getElementById('loadingText');
@@ -1024,8 +1055,14 @@
         
         loadedCount = 0; // Reset loadedCount in case this function is called again
 
-        // Generate tileset locally (more stable + consistent style).
-        sprites.tileset = createTilesetCanvas();
+        // Tileset:
+        // - default is procedural (stable + safe)
+        // - optional external pack via ?tileset=external
+        const loadedExternal = await tryLoadExternalTileset();
+        if (!loadedExternal) {
+            sprites.tileset = createTilesetCanvas();
+            sprites.tilesetCfg = null;
+        }
 
         // Load story in parallel; do not block asset loading.
         loadStory();
@@ -1083,6 +1120,14 @@
         );
     }
 
+    function atlasFor(key, fallbackAx, fallbackAy) {
+        const cfg = sprites.tilesetCfg;
+        if (!cfg || !cfg.map) return {ax: fallbackAx, ay: fallbackAy};
+        const v = cfg.map[key];
+        if (!v || typeof v.ax !== 'number' || typeof v.ay !== 'number') return {ax: fallbackAx, ay: fallbackAy};
+        return {ax: v.ax, ay: v.ay};
+    }
+
     function noise01(mapId, x, y) {
         // Cheap deterministic hash -> [0,1)
         let h = 2166136261 >>> 0;
@@ -1129,14 +1174,18 @@
 
         if (tile === T.GRASS) {
             const n = noise01(GS.map, mx, my);
-            if (n < 0.22) drawFromAtlas(1, 2, sx, sy); // GRASS_ALT
-            else drawFromAtlas(0, 0, sx, sy);
+            const a = atlasFor('GRASS', 0, 0);
+            const a2 = atlasFor('GRASS_ALT', 1, 2);
+            if (n < 0.22) drawFromAtlas(a2.ax, a2.ay, sx, sy);
+            else drawFromAtlas(a.ax, a.ay, sx, sy);
             return;
         }
         if (tile === T.PATH) {
             const n = noise01(GS.map, mx, my);
-            if (n < 0.18) drawFromAtlas(2, 2, sx, sy); // PATH_ALT
-            else drawFromAtlas(1, 0, sx, sy);
+            const a = atlasFor('PATH', 1, 0);
+            const a2 = atlasFor('PATH_ALT', 2, 2);
+            if (n < 0.18) drawFromAtlas(a2.ax, a2.ay, sx, sy);
+            else drawFromAtlas(a.ax, a.ay, sx, sy);
             // Add subtle border where PATH touches GRASS (cheap autotile, FRLG-like).
             const edges = {
                 t: !sameTile(map, mx, my - 1, T.PATH) && !sameTile(map, mx, my - 1, T.WARP),
@@ -1148,7 +1197,8 @@
             return;
         }
         if (tile === T.WATER) {
-            drawFromAtlas(2, 0, sx, sy);
+            const a = atlasFor('WATER', 2, 0);
+            drawFromAtlas(a.ax, a.ay, sx, sy);
             // Shoreline hint when WATER touches non-water.
             const edges = {
                 t: !sameTile(map, mx, my - 1, T.WATER),
@@ -1159,17 +1209,17 @@
             drawEdgeLines(sx, sy, 'rgba(215,191,138,0.55)', 1.0, edges); // sand-ish
             return;
         }
-        if (tile === T.TALL_GRASS) { drawFromAtlas(3, 0, sx, sy); return; }
-        if (tile === T.TREE) { drawFromAtlas(4, 0, sx, sy); return; }
-        if (tile === T.FENCE) { drawFromAtlas(5, 0, sx, sy); return; }
-        if (tile === T.SIGN) { drawFromAtlas(6, 0, sx, sy); return; }
-        if (tile === T.FLOWER) { drawFromAtlas(7, 0, sx, sy); return; }
-        if (tile === T.WARP) { drawFromAtlas(0, 2, sx, sy); return; }
+        if (tile === T.TALL_GRASS) { const a = atlasFor('TALL_GRASS', 3, 0); drawFromAtlas(a.ax, a.ay, sx, sy); return; }
+        if (tile === T.TREE) { const a = atlasFor('TREE', 4, 0); drawFromAtlas(a.ax, a.ay, sx, sy); return; }
+        if (tile === T.FENCE) { const a = atlasFor('FENCE', 5, 0); drawFromAtlas(a.ax, a.ay, sx, sy); return; }
+        if (tile === T.SIGN) { const a = atlasFor('SIGN', 6, 0); drawFromAtlas(a.ax, a.ay, sx, sy); return; }
+        if (tile === T.FLOWER) { const a = atlasFor('FLOWER', 7, 0); drawFromAtlas(a.ax, a.ay, sx, sy); return; }
+        if (tile === T.WARP) { const a = atlasFor('WARP', 0, 2); drawFromAtlas(a.ax, a.ay, sx, sy); return; }
         if (tile === T.NPC) { drawFromAtlas(0, 0, sx, sy); return; } // map marker only
-        if (tile === T.FLOOR_IN) { drawFromAtlas(6, 1, sx, sy); return; }
-        if (tile === T.WALL_IN) { drawFromAtlas(7, 1, sx, sy); return; }
-        if (tile === T.TABLE) { drawFromAtlas(0, 3, sx, sy); return; }
-        if (tile === T.SHELF) { drawFromAtlas(1, 3, sx, sy); return; }
+        if (tile === T.FLOOR_IN) { const a = atlasFor('FLOOR_IN', 6, 1); drawFromAtlas(a.ax, a.ay, sx, sy); return; }
+        if (tile === T.WALL_IN) { const a = atlasFor('WALL_IN', 7, 1); drawFromAtlas(a.ax, a.ay, sx, sy); return; }
+        if (tile === T.TABLE) { const a = atlasFor('TABLE', 0, 3); drawFromAtlas(a.ax, a.ay, sx, sy); return; }
+        if (tile === T.SHELF) { const a = atlasFor('SHELF', 1, 3); drawFromAtlas(a.ax, a.ay, sx, sy); return; }
 
         if (isBuildingTile(tile)) {
             const same = (x, y) => {
@@ -1181,9 +1231,10 @@
             const leftEdge = !same(mx - 1, my);
             const rightEdge = !same(mx + 1, my);
 
-            const roofAx = (tile === T.HOUSE_RED) ? 0 : (tile === T.HOUSE_BLUE) ? 1 : 2;
+            const roofKey = (tile === T.HOUSE_RED) ? 'ROOF_RED' : (tile === T.HOUSE_BLUE) ? 'ROOF_BLUE' : 'ROOF_LAB';
+            const roofAxAy = atlasFor(roofKey, (tile === T.HOUSE_RED) ? 0 : (tile === T.HOUSE_BLUE) ? 1 : 2, 1);
             if (top) {
-                drawFromAtlas(roofAx, 1, sx, sy);
+                drawFromAtlas(roofAxAy.ax, roofAxAy.ay, sx, sy);
                 // subtle roof edge shade
                 ctx.fillStyle = 'rgba(0,0,0,0.10)';
                 if (leftEdge) ctx.fillRect(sx * ST, sy * ST, 3, ST);
@@ -1192,17 +1243,25 @@
             }
 
             // base wall
-            drawFromAtlas(3, 1, sx, sy);
+            const wallAxAy = atlasFor('WALL', 3, 1);
+            drawFromAtlas(wallAxAy.ax, wallAxAy.ay, sx, sy);
 
             // door on bottom row, center-ish
             if (bottom) {
                 const doorCandidate = same(mx - 1, my) && same(mx + 1, my);
-                if (doorCandidate) { drawFromAtlas(4, 1, sx, sy); return; }
+                if (doorCandidate) {
+                    const doorAxAy = atlasFor('DOOR', 4, 1);
+                    drawFromAtlas(doorAxAy.ax, doorAxAy.ay, sx, sy);
+                    return;
+                }
             }
 
             // window on mid walls
             if (!leftEdge && !rightEdge && !bottom) {
-                if (((mx + my) % 4) === 0) drawFromAtlas(5, 1, sx, sy);
+                if (((mx + my) % 4) === 0) {
+                    const winAxAy = atlasFor('WINDOW', 5, 1);
+                    drawFromAtlas(winAxAy.ax, winAxAy.ay, sx, sy);
+                }
             }
             return;
         }
