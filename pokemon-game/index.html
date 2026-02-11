@@ -475,10 +475,10 @@
         HOUSE_RED: 4, HOUSE_BLUE: 5, LAB: 6,
         FENCE: 7, SIGN: 8, TALL_GRASS: 9,
         FLOWER: 10, LEDGE: 11, WARP: 13, NPC: 14
-        , FLOOR_IN: 15, WALL_IN: 16
+        , FLOOR_IN: 15, WALL_IN: 16, TABLE: 17, SHELF: 18
     };
     
-    const SOLID = [T.WATER, T.TREE, T.HOUSE_RED, T.HOUSE_BLUE, T.LAB, T.FENCE, T.NPC, T.WALL_IN];
+    const SOLID = [T.WATER, T.TREE, T.HOUSE_RED, T.HOUSE_BLUE, T.LAB, T.FENCE, T.NPC, T.WALL_IN, T.TABLE, T.SHELF];
     
     // ==================== MAPS ====================
     const MAPS = {
@@ -706,11 +706,14 @@
             w: 8, h: 8,
             data: (() => {
                 const w = 8, h = 8;
-                const m = new Array(w * h).fill(T.PATH);
+                const m = new Array(w * h).fill(T.FLOOR_IN);
                 for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
-                    if (x === 0 || y === 0 || x === w - 1 || y === h - 1) m[y * w + x] = T.FENCE;
+                    if (x === 0 || y === 0 || x === w - 1 || y === h - 1) m[y * w + x] = T.WALL_IN;
                 }
                 m[6 * w + 3] = T.WARP; // door
+                // Simple furniture
+                m[3 * w + 3] = T.TABLE;
+                m[2 * w + 6] = T.SHELF;
                 return m;
             })(),
             warps: [{x:3,y:6,to:'pallet_town',tx:5,ty:6}],
@@ -722,11 +725,13 @@
             w: 8, h: 8,
             data: (() => {
                 const w = 8, h = 8;
-                const m = new Array(w * h).fill(T.PATH);
+                const m = new Array(w * h).fill(T.FLOOR_IN);
                 for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
-                    if (x === 0 || y === 0 || x === w - 1 || y === h - 1) m[y * w + x] = T.FENCE;
+                    if (x === 0 || y === 0 || x === w - 1 || y === h - 1) m[y * w + x] = T.WALL_IN;
                 }
                 m[6 * w + 3] = T.WARP; // door
+                m[3 * w + 3] = T.TABLE;
+                m[2 * w + 6] = T.SHELF;
                 return m;
             })(),
             warps: [{x:3,y:6,to:'pallet_town',tx:14,ty:6}],
@@ -738,12 +743,15 @@
             w: 10, h: 12,
             data: (() => {
                 const w = 10, h = 12;
-                const m = new Array(w * h).fill(T.PATH);
+                const m = new Array(w * h).fill(T.FLOOR_IN);
                 for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
-                    if (x === 0 || y === 0 || x === w - 1 || y === h - 1) m[y * w + x] = T.FENCE;
+                    if (x === 0 || y === 0 || x === w - 1 || y === h - 1) m[y * w + x] = T.WALL_IN;
                 }
                 m[11 * w + 4] = T.WARP;
                 m[11 * w + 5] = T.WARP;
+                // Lab props
+                m[4 * w + 4] = T.TABLE;
+                m[2 * w + 8] = T.SHELF;
                 return m;
             })(),
             warps: [{x:4,y:11,to:'pallet_town',tx:5,ty:13},{x:5,y:11,to:'pallet_town',tx:5,ty:13}],
@@ -943,7 +951,7 @@
         });
         tile(7, 0, (x0, y0) => { dither(x0, y0, C.grass, C.grass2); px(x0 + 7, y0 + 7, 2, 2, C.flower); px(x0 + 6, y0 + 8, 1, 1, '#fff'); px(x0 + 9, y0 + 6, 1, 1, '#fff'); }); // FLOWER
 
-        // Row 1: building palette (roof/wall/door/window)
+        // Row 1: building palette (roof/wall/door/window + interiors)
         tile(0, 1, (x0, y0) => { dither(x0, y0, C.roofR, C.roofR2); }); // ROOF_RED
         tile(1, 1, (x0, y0) => { dither(x0, y0, C.roofB, C.roofB2); }); // ROOF_BLUE
         tile(2, 1, (x0, y0) => { dither(x0, y0, C.roofG, C.roofG2); }); // ROOF_LAB
@@ -962,6 +970,15 @@
             px(x0 + 4, y0 + 4, 1, 6, C.shadow);
             px(x0 + 11, y0 + 4, 1, 6, C.shadow);
         });
+        tile(6, 1, (x0, y0) => { // FLOOR_IN
+            dither(x0, y0, '#d9c39a', '#cfb487');
+            speckle(x0, y0, '#b99563', 10);
+        });
+        tile(7, 1, (x0, y0) => { // WALL_IN
+            px(x0, y0, TILE, TILE, '#c6b18a');
+            px(x0, y0, TILE, 2, '#ad976e');
+            px(x0, y0 + 2, TILE, 1, '#bda57a');
+        });
 
         // Row 2: WARP marker (subtle)
         tile(0, 2, (x0, y0) => {
@@ -974,6 +991,26 @@
         // Row 2+: variants to break repetition (deterministic noise picks)
         tile(1, 2, (x0, y0) => { dither(x0, y0, C.grass2, C.grass); speckle(x0, y0, C.grass3, 26); }); // GRASS_ALT
         tile(2, 2, (x0, y0) => { dither(x0, y0, C.path2, C.path); speckle(x0, y0, C.path3, 22); });     // PATH_ALT
+
+        // Row 3: simple interior props (original)
+        tile(0, 3, (x0, y0) => { // TABLE
+            px(x0, y0, TILE, TILE, '#d9c39a');
+            px(x0 + 2, y0 + 4, 12, 8, '#8b5a2b');
+            px(x0 + 3, y0 + 5, 10, 6, '#a0672f');
+            px(x0 + 3, y0 + 12, 2, 3, '#6b3f1a');
+            px(x0 + 11, y0 + 12, 2, 3, '#6b3f1a');
+        });
+        tile(1, 3, (x0, y0) => { // SHELF
+            px(x0, y0, TILE, TILE, '#d9c39a');
+            px(x0 + 2, y0 + 2, 12, 12, '#7b4b1b');
+            px(x0 + 3, y0 + 3, 10, 2, '#925b22');
+            px(x0 + 3, y0 + 7, 10, 2, '#925b22');
+            px(x0 + 3, y0 + 11, 10, 2, '#925b22');
+            // books
+            px(x0 + 4, y0 + 4, 1, 2, '#ef4444');
+            px(x0 + 6, y0 + 4, 1, 2, '#3b82f6');
+            px(x0 + 8, y0 + 4, 1, 2, '#22c55e');
+        });
 
         return ts;
     }
@@ -1129,6 +1166,10 @@
         if (tile === T.FLOWER) { drawFromAtlas(7, 0, sx, sy); return; }
         if (tile === T.WARP) { drawFromAtlas(0, 2, sx, sy); return; }
         if (tile === T.NPC) { drawFromAtlas(0, 0, sx, sy); return; } // map marker only
+        if (tile === T.FLOOR_IN) { drawFromAtlas(6, 1, sx, sy); return; }
+        if (tile === T.WALL_IN) { drawFromAtlas(7, 1, sx, sy); return; }
+        if (tile === T.TABLE) { drawFromAtlas(0, 3, sx, sy); return; }
+        if (tile === T.SHELF) { drawFromAtlas(1, 3, sx, sy); return; }
 
         if (isBuildingTile(tile)) {
             const same = (x, y) => {
