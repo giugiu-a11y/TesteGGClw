@@ -1,0 +1,36 @@
+{
+  "tileSize": 16,
+  "atlasCols": 27,
+  "map": {
+    "GRASS": {"ax": 0, "ay": 0},
+    "GRASS_ALT": {"ax": 1, "ay": 0},
+    "TALL_GRASS": {"ax": 2, "ay": 0},
+    "FLOWER": {"ax": 3, "ay": 0},
+
+    "TREE": {"ax": 0, "ay": 8},
+
+    "PATH": {"ax": 17, "ay": 3},
+    "PATH_ALT": {"ax": 17, "ay": 2},
+
+    "WATER": {"ax": 0, "ay": 12},
+
+    "FENCE": {"ax": 0, "ay": 6},
+    "SIGN": {"ax": 6, "ay": 6},
+
+    "ROOF_RED": {"ax": 12, "ay": 31},
+    "ROOF_BLUE": {"ax": 12, "ay": 31},
+    "ROOF_LAB": {"ax": 12, "ay": 31},
+    "WALL": {"ax": 11, "ay": 31},
+    "DOOR": {"ax": 11, "ay": 33},
+    "WINDOW": {"ax": 22, "ay": 13},
+
+    "WARP": {"ax": 10, "ay": 4},
+
+    "FLOOR_IN": {"ax": 11, "ay": 31},
+    "WALL_IN": {"ax": 11, "ay": 31},
+
+    "TABLE": {"ax": 15, "ay": 34},
+    "SHELF": {"ax": 16, "ay": 34}
+  }
+}
+

@@ -1021,13 +1021,20 @@
     }
 
     async function tryLoadExternalTileset() {
-        if (qs('tileset', '') !== 'external') return false;
+        const which = qs('tileset', '');
+        if (!which) return false;
 
-        // Expected files:
-        // - ./assets/tilesets/user.png
-        // - ./assets/tilesets/user.tileset.json
+        let png = './assets/tilesets/user.png';
+        let json = './assets/tilesets/user.tileset.json';
+        if (which === 'punyworld') {
+            png = './assets/tilesets/punyworld.png';
+            json = './assets/tilesets/punyworld.tileset.json';
+        } else if (which !== 'external') {
+            return false;
+        }
+
         try {
-            const cfgRes = await fetch('./assets/tilesets/user.tileset.json', {cache: 'no-store'});
+            const cfgRes = await fetch(json, {cache: 'no-store'});
             if (!cfgRes.ok) return false;
             const cfg = await cfgRes.json();
             const img = new Image();
@@ -1035,7 +1042,7 @@
             await new Promise((resolve, reject) => {
                 img.onload = resolve;
                 img.onerror = reject;
-                img.src = './assets/tilesets/user.png';
+                img.src = png;
             });
             sprites.tileset = img;
             sprites.tilesetCfg = cfg;
