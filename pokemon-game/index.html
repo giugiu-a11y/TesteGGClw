@@ -1136,6 +1136,8 @@
         GS.story.beat = id;
         runActions(beat.actions, 0, () => {
             if (activeBeatId === id) activeBeatId = null;
+            // Continue chaining story automatically when multiple beats belong to the same area.
+            setTimeout(() => { tryAutoStoryBeat(); }, 220);
         });
         return true;
     }
@@ -1639,106 +1641,80 @@
         }
     }
 
-    function onMapEnter(mapId) {
-        // Lightweight, non-breaking story hooks. Real season script will live in beats/flags.
-        if (!GS.story) GS.story = {};
-        // Prefer script-driven beats when available.
+    function tryAutoStoryBeat() {
+        if (!GS.story) return false;
+        if (activeBeatId || dialog || inBattle) return false;
+        const mapId = GS.map;
+
         if (mapId === 'oak_lab' && GS.story.sawMew && !GS.story.gotSaur) {
-            // When player reaches Oak after seeing Mew, run the scripted beat (manga-first).
-            const want = GS.story.beat || 'ch1_oak_mew_explain';
-            if (want === 'ch1_oak_mew_explain' && getBeat('ch1_oak_mew_explain')) {
-                setTimeout(() => {
-                    // Guard against replay if user re-enters rapidly
-                    if (GS.story.gotSaur) return;
-                    playBeat('ch1_oak_mew_explain');
-                }, 350);
-                return;
-            }
+            return playBeat('ch1_oak_mew_explain');
         }
         if (mapId === 'viridian' && !GS.story.visitedViridian) {
             GS.story.visitedViridian = true;
-            setTimeout(() => {
-                if (!playBeat('ch1_viridian_arrival')) {
-                    showDialog('', [
-                        '[ VIRIDIAN CITY ]',
-                        'A atmosfera aqui e diferente.',
-                        'Voce sente que algo grande esta por vir...'
-                    ]);
-                }
-            }, 400);
+            return playBeat('ch1_viridian_arrival');
         }
         if (mapId === 'viridian_forest' && GS.story.gotSaur && !GS.story.forestBeat1) {
             GS.story.forestBeat1 = true;
-            setTimeout(() => {
-                if (!playBeat('ch1_viridian_forest_first')) {
-                    showDialog('', [
-                        '[ VIRIDIAN FOREST ]',
-                        'A grama alta se move, como se o lugar estivesse vivo.',
-                        'POLI fica alerta.'
-                    ]);
-                }
-            }, 400);
+            return playBeat('ch1_viridian_forest_first');
         }
         if (mapId === 'pewter' && !GS.story.visitedPewter) {
             GS.story.visitedPewter = true;
-            setTimeout(() => {
-                if (!playBeat('ch1_pewter_arrival')) {
-                    showDialog('', [
-                        '[ PEWTER CITY ]',
-                        'Rocha, poeira... e um silencio estranho.',
-                        'Algo observa voce das sombras.'
-                    ]);
-                }
-            }, 400);
+            return playBeat('ch1_pewter_arrival');
         }
         if (mapId === 'pewter' && GS.story.brockBattleDone && !GS.story.block_02_done) {
-            setTimeout(() => { playBeat('ch2_depart_pewter'); }, 320);
+            return playBeat('ch2_depart_pewter');
         }
         if (mapId === 'route2' && GS.story.block_02_done && !GS.story.block_03_done) {
-            setTimeout(() => { playBeat('ch2_mtmoon_entry'); }, 320);
+            return playBeat('ch2_mtmoon_entry');
         }
         if (mapId === 'mt_moon' && GS.story.block_03_done && !GS.story.block_04_done) {
-            setTimeout(() => { playBeat('ch2_green_first_contact'); }, 320);
+            return playBeat('ch2_green_first_contact');
         }
         if (mapId === 'mt_moon' && GS.story.block_04_done && !GS.story.block_05_done) {
-            setTimeout(() => { playBeat('ch2_rocket_grunt_cave'); }, 320);
+            return playBeat('ch2_rocket_grunt_cave');
         }
         if (mapId === 'mt_moon' && GS.story.block_05_done && !GS.story.block_06_done) {
-            setTimeout(() => { playBeat('ch2_fossil_rumor'); }, 320);
+            return playBeat('ch2_fossil_rumor');
         }
         if (mapId === 'cerulean' && GS.story.block_06_done && !GS.story.block_07_done) {
-            setTimeout(() => { playBeat('ch3_cerulean_arrival'); }, 320);
+            return playBeat('ch3_cerulean_arrival');
         }
         if (mapId === 'cerulean' && GS.story.block_07_done && !GS.story.block_08_done) {
-            setTimeout(() => { playBeat('ch3_misty_clash'); }, 320);
+            return playBeat('ch3_misty_clash');
         }
         if (mapId === 'cerulean' && GS.story.block_08_done && !GS.story.block_09_done) {
-            setTimeout(() => { playBeat('ch3_bill_event'); }, 320);
+            return playBeat('ch3_bill_event');
         }
         if (mapId === 'vermilion' && GS.story.block_09_done && !GS.story.block_10_done) {
-            setTimeout(() => { playBeat('ch4_vermilion_setup'); }, 320);
+            return playBeat('ch4_vermilion_setup');
         }
         if (mapId === 'vermilion' && GS.story.block_10_done && !GS.story.block_11_done) {
-            setTimeout(() => { playBeat('ch4_ssanne_rocket'); }, 320);
+            return playBeat('ch4_ssanne_rocket');
         }
         if (mapId === 'vermilion' && GS.story.block_11_done && !GS.story.block_12_done) {
-            setTimeout(() => { playBeat('ch5_surge_pressure'); }, 320);
+            return playBeat('ch5_surge_pressure');
         }
         if (mapId === 'lavender' && GS.story.block_12_done && !GS.story.block_13_done) {
-            setTimeout(() => { playBeat('ch6_lavender_shadow'); }, 320);
+            return playBeat('ch6_lavender_shadow');
         }
         if (mapId === 'silph_lobby' && GS.story.block_13_done && !GS.story.block_14_done) {
-            setTimeout(() => { playBeat('ch7_silph_infiltration'); }, 320);
+            return playBeat('ch7_silph_infiltration');
         }
         if (mapId === 'saffron' && GS.story.block_14_done && !GS.story.block_15_done) {
-            setTimeout(() => { playBeat('ch8_saffron_psychic'); }, 320);
+            return playBeat('ch8_saffron_psychic');
         }
         if (mapId === 'silph_lobby' && GS.story.block_15_done && !GS.story.block_16_done) {
-            setTimeout(() => { playBeat('ch9_final_island_setup'); }, 320);
+            return playBeat('ch9_final_island_setup');
         }
         if (mapId === 'silph_lobby' && GS.story.block_16_done && !GS.story.block_17_done) {
-            setTimeout(() => { playBeat('ch10_mewtwo_confront'); }, 320);
+            return playBeat('ch10_mewtwo_confront');
         }
+        return false;
+    }
+
+    function onMapEnter(mapId) {
+        // Lightweight, non-breaking story hooks. Real season script will live in beats/flags.
+        if (!GS.story) GS.story = {};
         if (mapId === 'pewter_gym' && GS.story.caughtPika && !GS.story.brockBattleDone) {
             setTimeout(() => {
                 showDialog('', [
@@ -1748,6 +1724,7 @@
                 ]);
             }, 320);
         }
+        setTimeout(() => { tryAutoStoryBeat(); }, 260);
     }
     
     // ==================== ENCOUNTERS ====================
