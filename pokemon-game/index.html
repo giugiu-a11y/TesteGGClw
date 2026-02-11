@@ -118,6 +118,22 @@
             touch-action: manipulation;
         }
 
+        /* Debug (enable with ?debug=1) */
+        #debugBar {
+            display: none;
+            position: fixed;
+            top: 6px;
+            left: 6px;
+            z-index: 9000;
+            background: rgba(0,0,0,0.75);
+            color: #fff;
+            padding: 6px 8px;
+            border-radius: 6px;
+            font-size: 9px;
+            line-height: 1.35;
+            max-width: 90vw;
+            word-break: break-word;
+        }
         #dialogBox .speaker {
             font-weight: bold; color: #1f2a44;
             margin-bottom: 6px; font-size: 10px;
@@ -316,13 +332,15 @@
         </div>
     </div>
 
-    <div id="tapOverlay" onclick="handleA()" ontouchstart="handleA(); return false"></div>
+    <div id="tapOverlay"></div>
 
-    <div id="dialogBox" onclick="handleA()">
+    <div id="dialogBox">
         <div class="speaker"></div>
         <div class="text"></div>
         <div class="continue">▼ Press A</div>
     </div>
+
+    <div id="debugBar"></div>
     
     <div id="battleScreen">
         <div class="battle-field">
@@ -1883,10 +1901,51 @@
     
     function handleB() {}
 
+    function dbg(msg) {
+        const bar = document.getElementById('debugBar');
+        if (!bar) return;
+        if (bar.style.display !== 'block') return;
+        bar.textContent = String(msg || '');
+    }
+
+    function enableDebugIfNeeded() {
+        const bar = document.getElementById('debugBar');
+        if (!bar) return;
+        const enabled = (new URLSearchParams(location.search)).get('debug') === '1';
+        if (enabled) bar.style.display = 'block';
+    }
+
+    enableDebugIfNeeded();
+    window.addEventListener('error', (e) => {
+        dbg(`ERROR: ${e.message || e.type || 'unknown'} @ ${e.filename || ''}:${e.lineno || ''}`);
+    });
+    window.addEventListener('unhandledrejection', (e) => {
+        dbg(`PROMISE: ${e.reason ? (e.reason.message || String(e.reason)) : 'unknown'}`);
+    });
+
+    function tapAdvance(e) {
+        try {
+            if (e) { e.preventDefault(); e.stopPropagation(); }
+            dbg(`tapAdvance: dialog=${!!dialog} q=${Array.isArray(dialogQ) ? dialogQ.length : 'NA'} map=${GS.map}`);
+            handleA();
+        } catch (err) {
+            dbg(`tapAdvance threw: ${err && err.message ? err.message : String(err)}`);
+            // Fail open: clear dialog state so the game doesn't brick.
+            dialog = null;
+            dialogQ = [];
+            const box = document.getElementById('dialogBox');
+            if (box) box.style.display = 'none';
+            const ov = document.getElementById('tapOverlay');
+            if (ov) ov.style.display = 'none';
+        }
+    }
+
+    document.getElementById('tapOverlay').addEventListener('pointerdown', tapAdvance);
+    document.getElementById('dialogBox').addEventListener('pointerdown', tapAdvance);
+
     // iPad fallback: tapping the canvas advances dialog / scripted battle.
     canvas.addEventListener('pointerdown', (e) => {
-        if (inBattle && battle && battle.pending) { battleOk(); return; }
-        if (dialog) { handleA(); }
+        tapAdvance(e);
     });
     
     document.addEventListener('keydown', e => {
