@@ -362,10 +362,6 @@
     const GITHUB_BASE = 'https://raw.githubusercontent.com/pret/pokefirered/master/';
     
     const SPRITE_URLS = {
-        // Direct links from Spriters Resource (FireRed style)
-        palletTownTiles: 'https://www.spriters-resource.com/media/assets/4/3862.png',
-        route1Tiles: 'https://www.spriters-resource.com/media/assets/4/3863.png',
-        
         // Player & NPCs (16x32 sprite sheets with walk animations)
         red: GITHUB_BASE + 'graphics/object_events/pics/people/red_normal.png',
         blue: GITHUB_BASE + 'graphics/object_events/pics/people/blue.png',
@@ -414,7 +410,7 @@
         ekans: 'https://play.pokemonshowdown.com/sprites/gen3frlg/ekans.png',
         arbok: 'https://play.pokemonshowdown.com/sprites/gen3frlg/arbok.png',
 
-        // Tilesets (fallback / optional)
+        // Optional remote tilesets (not used by default; we generate our own tiles for stability/style control)
         generalTiles: GITHUB_BASE + 'data/tilesets/primary/general/tiles.png',
         buildingTiles: GITHUB_BASE + 'data/tilesets/primary/building/tiles.png'
     };
@@ -424,14 +420,20 @@
     let loadedCount = 0;
     const totalSprites = Object.keys(SPRITE_URLS).length;
     
-    // ==================== COLORS (for tiles without images) ====================
+    // ==================== COLORS (FRLG-ish, but original) ====================
     const C = {
-        grass: '#90EE90', grassDark: '#7CCD7C',
-        path: '#DEB887', pathDark: '#D2B48C',
-        water: '#6495ED', waterDark: '#4169E1',
-        tree: '#228B22', treeTrunk: '#8B4513',
-        roof: '#CD5C5C', wall: '#F5F5DC',
-        flower: '#FFB6C1'
+        grass: '#6fbf4a', grass2: '#5aa83a', grass3: '#4f9533',
+        path: '#d7bf8a', path2: '#c9ad71', path3: '#b7975f',
+        water: '#4a87c9', water2: '#3974b6', water3: '#2f619c',
+        tree: '#2b7f3a', tree2: '#256d33', trunk: '#8a5a2b',
+        roofR: '#c23d3d', roofR2: '#a62e2e',
+        roofB: '#2f6db6', roofB2: '#255a96',
+        roofG: '#2f9b6b', roofG2: '#237b55',
+        wall: '#efe4c7', wall2: '#e2d4b2',
+        fence: '#caa46b', fence2: '#b99258',
+        sign: '#a46a2c',
+        shadow: '#1b1b1b',
+        flower: '#e46aa3'
     };
     
     // ==================== TILE TYPES ====================
@@ -668,7 +670,15 @@
         },
         player_house: {
             w: 8, h: 8,
-            data: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,13,1,1,1,1,1,1,1,1,1,1,1,1],
+            data: (() => {
+                const w = 8, h = 8;
+                const m = new Array(w * h).fill(T.PATH);
+                for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+                    if (x === 0 || y === 0 || x === w - 1 || y === h - 1) m[y * w + x] = T.FENCE;
+                }
+                m[6 * w + 3] = T.WARP; // door
+                return m;
+            })(),
             warps: [{x:3,y:6,to:'pallet_town',tx:5,ty:6}],
             npcs: [{x:5,y:3,name:'Mom',sprite:'mom',dialog:['RED! Go see Professor OAK!','He has something for you!']}],
             enc: null
@@ -676,7 +686,15 @@
         
         rival_house: {
             w: 8, h: 8,
-            data: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,13,1,1,1,1,1,1,1,1,1,1,1,1],
+            data: (() => {
+                const w = 8, h = 8;
+                const m = new Array(w * h).fill(T.PATH);
+                for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+                    if (x === 0 || y === 0 || x === w - 1 || y === h - 1) m[y * w + x] = T.FENCE;
+                }
+                m[6 * w + 3] = T.WARP; // door
+                return m;
+            })(),
             warps: [{x:3,y:6,to:'pallet_town',tx:14,ty:6}],
             npcs: [{x:2,y:3,name:'Daisy',sprite:'girl',dialog:['Looking for BLUE?','He went to grandpa\'s lab.']}],
             enc: null
@@ -685,8 +703,13 @@
         oak_lab: {
             w: 10, h: 12,
             data: (() => {
-                let m = [];
-                for (let i = 0; i < 120; i++) m.push(T.PATH);
+                const w = 10, h = 12;
+                const m = new Array(w * h).fill(T.PATH);
+                for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+                    if (x === 0 || y === 0 || x === w - 1 || y === h - 1) m[y * w + x] = T.FENCE;
+                }
+                m[11 * w + 4] = T.WARP;
+                m[11 * w + 5] = T.WARP;
                 return m;
             })(),
             warps: [{x:4,y:11,to:'pallet_town',tx:5,ty:13},{x:5,y:11,to:'pallet_town',tx:5,ty:13}],
@@ -732,6 +755,110 @@
     let animFrame = 0;
     
     // ==================== ASSET LOADING ====================
+    function createTilesetCanvas() {
+        // Tile atlas: 8 columns x 3 rows. Each tile is 16x16.
+        // Original pixel art tiles inspired by the FRLG feel (no ripped assets).
+        const cols = 8;
+        const rows = 3;
+        const ts = document.createElement('canvas');
+        ts.width = cols * TILE;
+        ts.height = rows * TILE;
+        const tctx = ts.getContext('2d');
+
+        function px(x, y, w, h, color) {
+            tctx.fillStyle = color;
+            tctx.fillRect(x, y, w, h);
+        }
+
+        function dither(x0, y0, a, b) {
+            for (let y = 0; y < TILE; y++) {
+                for (let x = 0; x < TILE; x++) {
+                    tctx.fillStyle = ((x + y) % 2 === 0) ? a : b;
+                    tctx.fillRect(x0 + x, y0 + y, 1, 1);
+                }
+            }
+        }
+
+        function speckle(x0, y0, color, n) {
+            tctx.fillStyle = color;
+            for (let i = 0; i < n; i++) {
+                const x = x0 + ((i * 7) % TILE);
+                const y = y0 + ((i * 11) % TILE);
+                tctx.fillRect(x, y, 1, 1);
+            }
+        }
+
+        function tile(ax, ay, drawFn) {
+            const x0 = ax * TILE;
+            const y0 = ay * TILE;
+            drawFn(x0, y0);
+        }
+
+        // Row 0: ground
+        tile(0, 0, (x0, y0) => { dither(x0, y0, C.grass, C.grass2); speckle(x0, y0, C.grass3, 18); }); // GRASS
+        tile(1, 0, (x0, y0) => { dither(x0, y0, C.path, C.path2); speckle(x0, y0, C.path3, 14); });     // PATH
+        tile(2, 0, (x0, y0) => { // WATER
+            px(x0, y0, TILE, TILE, C.water);
+            for (let y = 2; y < TILE; y += 4) {
+                for (let x = 0; x < TILE; x++) {
+                    const c = (x % 6 < 3) ? C.water2 : C.water3;
+                    tctx.fillStyle = c;
+                    tctx.fillRect(x0 + x, y0 + y, 1, 1);
+                }
+            }
+        });
+        tile(3, 0, (x0, y0) => { dither(x0, y0, C.grass2, C.grass3); for (let x = 1; x < TILE; x += 3) px(x0 + x, y0 + 2, 1, 12, C.grass); }); // TALL_GRASS
+        tile(4, 0, (x0, y0) => { // TREE
+            px(x0, y0, TILE, TILE, C.tree2);
+            px(x0 + 1, y0 + 1, TILE - 2, TILE - 2, C.tree);
+            px(x0 + 7, y0 + 11, 2, 4, C.trunk);
+            px(x0 + 3, y0 + 3, 2, 2, C.grass);
+        });
+        tile(5, 0, (x0, y0) => { // FENCE
+            dither(x0, y0, C.fence, C.fence2);
+            px(x0 + 1, y0 + 5, TILE - 2, 1, C.shadow);
+            px(x0 + 1, y0 + 10, TILE - 2, 1, C.shadow);
+            for (let x = 2; x < TILE; x += 4) px(x0 + x, y0 + 2, 1, 12, C.shadow);
+        });
+        tile(6, 0, (x0, y0) => { // SIGN
+            dither(x0, y0, C.grass, C.grass2);
+            px(x0 + 3, y0 + 3, 10, 6, C.wall);
+            px(x0 + 4, y0 + 4, 8, 4, C.wall2);
+            px(x0 + 7, y0 + 9, 2, 6, C.sign);
+        });
+        tile(7, 0, (x0, y0) => { dither(x0, y0, C.grass, C.grass2); px(x0 + 7, y0 + 7, 2, 2, C.flower); px(x0 + 6, y0 + 8, 1, 1, '#fff'); px(x0 + 9, y0 + 6, 1, 1, '#fff'); }); // FLOWER
+
+        // Row 1: building palette (roof/wall/door/window)
+        tile(0, 1, (x0, y0) => { dither(x0, y0, C.roofR, C.roofR2); }); // ROOF_RED
+        tile(1, 1, (x0, y0) => { dither(x0, y0, C.roofB, C.roofB2); }); // ROOF_BLUE
+        tile(2, 1, (x0, y0) => { dither(x0, y0, C.roofG, C.roofG2); }); // ROOF_LAB
+        tile(3, 1, (x0, y0) => { dither(x0, y0, C.wall, C.wall2); });   // WALL
+        tile(4, 1, (x0, y0) => { // DOOR
+            dither(x0, y0, C.wall, C.wall2);
+            px(x0 + 5, y0 + 4, 6, 10, '#7b4b1b');
+            px(x0 + 6, y0 + 5, 4, 8, '#925b22');
+            px(x0 + 9, y0 + 9, 1, 1, '#f6e05e');
+        });
+        tile(5, 1, (x0, y0) => { // WINDOW
+            dither(x0, y0, C.wall, C.wall2);
+            px(x0 + 4, y0 + 4, 8, 6, '#9bd6ff');
+            px(x0 + 4, y0 + 4, 8, 1, C.shadow);
+            px(x0 + 4, y0 + 9, 8, 1, C.shadow);
+            px(x0 + 4, y0 + 4, 1, 6, C.shadow);
+            px(x0 + 11, y0 + 4, 1, 6, C.shadow);
+        });
+
+        // Row 2: WARP marker (subtle)
+        tile(0, 2, (x0, y0) => {
+            dither(x0, y0, C.path, C.path2);
+            px(x0 + 4, y0 + 4, 8, 8, '#111827');
+            px(x0 + 5, y0 + 5, 6, 6, '#1f2937');
+            px(x0 + 7, y0 + 7, 2, 2, '#9ca3af');
+        });
+
+        return ts;
+    }
+
     async function loadAssets() {
         const progress = document.getElementById('progressFill');
         const text = document.getElementById('loadingText');
@@ -740,6 +867,9 @@
         const totalSprites = Object.keys(SPRITE_URLS).length;
         
         loadedCount = 0; // Reset loadedCount in case this function is called again
+
+        // Generate tileset locally (more stable + consistent style).
+        sprites.tileset = createTilesetCanvas();
 
         for (const [name, url] of Object.entries(SPRITE_URLS)) {
             text.textContent = `Loading ${name}...`;
@@ -784,72 +914,78 @@
     }
     
     // ==================== DRAWING ====================
-    function drawTile(tile, sx, sy) {
-        const x = sx * ST;
-        const y = sy * ST;
-        
-        let tilesetImage = null;
-        let tx = 0, ty = 0; // Source X and Y in tileset (in tiles, not pixels)
-
-        // Determine tileset image and source coordinates (tx, ty) based on tile type
-        switch(tile) {
-            case T.GRASS:       tilesetImage = sprites.palletTownTiles; tx = 0; ty = 0; break;
-            case T.PATH:        tilesetImage = sprites.palletTownTiles; tx = 1; ty = 0; break;
-            case T.WATER:       tilesetImage = sprites.palletTownTiles; tx = 2; ty = 0; break; // Basic water tile
-            case T.TREE:        tilesetImage = sprites.palletTownTiles; tx = 3; ty = 0; break;
-            case T.TALL_GRASS:  tilesetImage = sprites.route1Tiles; tx = 0; ty = 1; break; // Assuming tall grass is at (0,1) in route1Tiles
-            case T.HOUSE_RED:   tilesetImage = sprites.palletTownTiles; tx = 4; ty = 0; break; // Base building tile for red house
-            case T.HOUSE_BLUE:  tilesetImage = sprites.palletTownTiles; tx = 5; ty = 0; break; // Base building tile for blue house
-            case T.LAB:         tilesetImage = sprites.palletTownTiles; tx = 6; ty = 0; break; // Base building tile for lab
-            case T.FENCE:       tilesetImage = sprites.palletTownTiles; tx = 7; ty = 0; break;
-            case T.SIGN:        tilesetImage = sprites.palletTownTiles; tx = 8; ty = 0; break;
-            case T.FLOWER:      tilesetImage = sprites.palletTownTiles; tx = 9; ty = 0; break;
-            case T.WARP:        tilesetImage = sprites.palletTownTiles; tx = 13; ty = 0; break;
-            default:            // Fallback for unknown tiles
-                console.warn(`Unknown tile type: ${tile}`);
-                ctx.fillStyle = '#00FF00'; // Default to green if tile is unknown
-                ctx.fillRect(x, y, ST, ST);
-                return;
-        }
-
-        if (tilesetImage && tilesetImage.complete) {
-            // Draw the tile using image slicing
-            ctx.drawImage(
-                tilesetImage,
-                tx * TILE, ty * TILE, // Source X, Y in tileset
-                TILE, TILE,           // Source Width, Height (tile size)
-                x, y,                 // Destination X, Y on canvas
-                ST, ST                // Destination Width, Height (scaled tile size)
-            );
-            
-            // Special handling for water animation if needed, otherwise remove animation logic
-            if (tile === T.WATER) {
-                ctx.fillStyle = '#6495ED'; // Base water color
-                ctx.fillRect(x, y, ST, ST); // Redraw base
-                ctx.fillStyle = '#4169E1'; // Darker water color
-                // Simple animation: shift a darker bar up and down
-                const animOffset = ((animFrame * 4) % ST);
-                ctx.fillRect(x, y + animOffset, ST, 4);
-                ctx.drawImage(tilesetImage, tx * TILE, ty * TILE, TILE, TILE, x, y, ST, ST); // Redraw tile on top
-            } else if (tile === T.TALL_GRASS) {
-                // Use the tall grass tile, but add custom detail for visual flair if desired
-                ctx.drawImage(tilesetImage, tx * TILE, ty * TILE, TILE, TILE, x, y, ST, ST);
-                // Add subtle texture on top if needed, but keep it simple for now
-            }
-        } else {
-            // Fallback if tileset image failed to load
-            // console.warn(`Tileset image ${tilesetImage ? 'failed to load' : 'not found'} for tile type ${tile}. Drawing colored fallback.`);
-            ctx.fillStyle = '#808080'; // Grey fallback
-            ctx.fillRect(x, y, ST, ST);
-            // Draw a placeholder marker if the image is missing
-            ctx.fillStyle = '#FF0000';
-            ctx.font = '8px Arial';
-            ctx.textAlign = 'center';
-            ctx.fillText('?', x + ST / 2, y + ST / 2 + 3);
-        }
+    function drawFromAtlas(ax, ay, sx, sy) {
+        ctx.drawImage(
+            sprites.tileset,
+            ax * TILE, ay * TILE,
+            TILE, TILE,
+            sx * ST, sy * ST,
+            ST, ST
+        );
     }
-    
-    // (rest of the file content follows)
+
+    function isBuildingTile(t) {
+        return t === T.HOUSE_RED || t === T.HOUSE_BLUE || t === T.LAB;
+    }
+
+    function drawTile(tile, sx, sy, mx, my, map) {
+        if (!sprites.tileset) {
+            ctx.fillStyle = '#000';
+            ctx.fillRect(sx * ST, sy * ST, ST, ST);
+            return;
+        }
+
+        if (tile === T.GRASS) { drawFromAtlas(0, 0, sx, sy); return; }
+        if (tile === T.PATH) { drawFromAtlas(1, 0, sx, sy); return; }
+        if (tile === T.WATER) { drawFromAtlas(2, 0, sx, sy); return; }
+        if (tile === T.TALL_GRASS) { drawFromAtlas(3, 0, sx, sy); return; }
+        if (tile === T.TREE) { drawFromAtlas(4, 0, sx, sy); return; }
+        if (tile === T.FENCE) { drawFromAtlas(5, 0, sx, sy); return; }
+        if (tile === T.SIGN) { drawFromAtlas(6, 0, sx, sy); return; }
+        if (tile === T.FLOWER) { drawFromAtlas(7, 0, sx, sy); return; }
+        if (tile === T.WARP) { drawFromAtlas(0, 2, sx, sy); return; }
+        if (tile === T.NPC) { drawFromAtlas(0, 0, sx, sy); return; } // map marker only
+
+        if (isBuildingTile(tile)) {
+            const same = (x, y) => {
+                if (x < 0 || y < 0 || x >= map.w || y >= map.h) return false;
+                return map.data[y * map.w + x] === tile;
+            };
+            const top = !same(mx, my - 1);
+            const bottom = !same(mx, my + 1);
+            const leftEdge = !same(mx - 1, my);
+            const rightEdge = !same(mx + 1, my);
+
+            const roofAx = (tile === T.HOUSE_RED) ? 0 : (tile === T.HOUSE_BLUE) ? 1 : 2;
+            if (top) {
+                drawFromAtlas(roofAx, 1, sx, sy);
+                // subtle roof edge shade
+                ctx.fillStyle = 'rgba(0,0,0,0.10)';
+                if (leftEdge) ctx.fillRect(sx * ST, sy * ST, 3, ST);
+                if (rightEdge) ctx.fillRect(sx * ST + ST - 3, sy * ST, 3, ST);
+                return;
+            }
+
+            // base wall
+            drawFromAtlas(3, 1, sx, sy);
+
+            // door on bottom row, center-ish
+            if (bottom) {
+                const doorCandidate = same(mx - 1, my) && same(mx + 1, my);
+                if (doorCandidate) { drawFromAtlas(4, 1, sx, sy); return; }
+            }
+
+            // window on mid walls
+            if (!leftEdge && !rightEdge && !bottom) {
+                if (((mx + my) % 4) === 0) drawFromAtlas(5, 1, sx, sy);
+            }
+            return;
+        }
+
+        // fallback
+        ctx.fillStyle = '#000';
+        ctx.fillRect(sx * ST, sy * ST, ST, ST);
+    }
 
     function render() {
         const map = MAPS[GS.map];
@@ -868,7 +1004,7 @@
                 const my = camY + sy;
                 if (mx >= 0 && mx < map.w && my >= 0 && my < map.h) {
                     const tile = map.data[my * map.w + mx];
-                    drawTile(tile, sx, sy);
+                    drawTile(tile, sx, sy, mx, my, map);
                 }
             }
         }
@@ -1611,12 +1747,23 @@
         if (inBattle && battle && battle.pending) { battleOk(); return; }
         if (dialog) { nextDialog(); return; }
         const map = MAPS[GS.map];
-        if (!map || !map.npcs) return;
+        if (!map) return;
         let tx = GS.px, ty = GS.py;
         if (GS.dir === 'up') ty--;
         else if (GS.dir === 'down') ty++;
         else if (GS.dir === 'left') tx--;
         else if (GS.dir === 'right') tx++;
+
+        // Sign interaction (tile-based)
+        if (tx >= 0 && ty >= 0 && tx < map.w && ty < map.h) {
+            const t = map.data[ty * map.w + tx];
+            if (t === T.SIGN) {
+                handleSign(GS.map, tx, ty);
+                return;
+            }
+        }
+
+        if (!map.npcs) return;
         for (const n of map.npcs) {
             if (n.x === tx && n.y === ty) {
                 const dynamicDialog = getDynamicDialog(n);
@@ -1624,6 +1771,31 @@
                 return;
             }
         }
+    }
+
+    function handleSign(mapId, x, y) {
+        if (mapId === 'pallet_town') {
+            showDialog('', [
+                'PALLET TOWN',
+                'Uma cidade pequena, mas cheia de sonhos.'
+            ]);
+            return;
+        }
+        if (mapId === 'viridian') {
+            showDialog('', [
+                'VIRIDIAN CITY',
+                'O GINASIO esta fechado.'
+            ]);
+            return;
+        }
+        if (mapId === 'pewter') {
+            showDialog('', [
+                'PEWTER CITY',
+                'A cidade das rochas.'
+            ]);
+            return;
+        }
+        showDialog('', ['...']);
     }
     
     function handleB() {}
