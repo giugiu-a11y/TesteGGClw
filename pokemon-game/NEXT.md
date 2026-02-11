@@ -1,20 +1,18 @@
 # NEXT (Execucao)
 
 ## Prioridade 1 - Fechar Base Jogavel
-1. Validar no iPad que o intro completo avanca sem travar (ch1_intro inteiro).
-2. Validar entrada/saida de casas + Oak Lab com novo layout de Pallet.
-3. Ajustar colisao/warps se algum tile de porta ficar desalinhado.
+1. Testar no iPad o fluxo completo ate `ch17_season1_epilogue` (sem freeze e sem replay indevido).
+2. Validar cadeia de mapas nova: `saffron -> fuchsia -> cinnabar -> indigo_plateau`.
+3. Revisar warps de retorno (`indigo_plateau <-> viridian_gym <-> saffron`) para evitar soft-lock.
 
 ## Prioridade 2 - Visual FireRed-like (sem retrabalho)
 1. Refinar `assets/tilesets/punyworld.tileset.json` com coordenadas finais.
-2. Revisar tiles de interior (`FLOOR_IN`, `WALL_IN`, `TABLE`, `SHELF`) para nao parecer placeholder.
+2. Revisar blocos de predio (telhado/parede/porta/janela) para reduzir efeito "placeholder".
 3. Padronizar paleta de UI (dialog/battle) para combinar melhor com overworld.
 
 ## Prioridade 3 - Story Season 1
-1. Expandir beats em `story/season1.ptbr.json`:
-   - Integrar no mapa os blocos 04-17 (Green, Rocket, Cerulean, Vermilion, Lavender, Silph, Mewtwo)
-   - Trocar placeholders de sprites faltantes (ex.: Staryu) por assets corretos
-   - Encadear progressao por capitulo (flags + warps) sem replay indevido
+1. Consolidar beats 01-24 com revisao de texto/cena para elevar fidelidade percebida.
+2. Trocar placeholders de sprites faltantes por assets corretos.
 2. Ligar cada beat a trigger claro (`onMapEnter`, fala NPC, batalha scriptada).
 3. Manter `sourceRef` por beat para rastreabilidade de fidelidade.
 
