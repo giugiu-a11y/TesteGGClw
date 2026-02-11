@@ -10,7 +10,7 @@ set -euo pipefail
 # Note: requires outbound network access from this machine.
 
 CHAT_ID="${TELEGRAM_CHAT_ID:-881840168}"
-URL="https://giugiu-a11y.github.io/TesteGGClw/"
+URL="https://giugiu-a11y.github.io/TesteGGClw/?tileset=punyworld"
 MSG="Link do jogo (GitHub Pages): ${URL}
 
 Se nao abrir ainda, espera 2-5 min e tenta de novo (Actions pode estar deployando)."
@@ -57,4 +57,3 @@ curl -fsS \
   >/dev/null
 
 echo "SENT"
-

@@ -1286,7 +1286,8 @@
     }
 
     async function tryLoadExternalTileset() {
-        const which = qs('tileset', '');
+        // Default to punyworld so the public link always opens with the intended style.
+        const which = qs('tileset', 'punyworld');
         if (!which) return false;
 
         let png = './assets/tilesets/user.png';
@@ -1382,6 +1383,37 @@
     }
     
     // ==================== DRAWING ====================
+    function drawSprite(sprite, tx, ty, frame = 0, dir = 'down') {
+        const dx = tx * ST;
+        const dy = ty * ST;
+        if (!sprite) {
+            ctx.fillStyle = '#ef4444';
+            ctx.fillRect(dx + 6, dy + 4, ST - 12, ST - 8);
+            return;
+        }
+
+        // FRLG/NPC sheets are usually 16x32 (single frame), while player sheets can be 64x128 (4x4).
+        const sw = sprite.naturalWidth || sprite.width || 0;
+        const sh = sprite.naturalHeight || sprite.height || 0;
+        if (sw <= 0 || sh <= 0) {
+            ctx.fillStyle = '#ef4444';
+            ctx.fillRect(dx + 6, dy + 4, ST - 12, ST - 8);
+            return;
+        }
+
+        const dirIdx = {down: 0, left: 1, right: 2, up: 3}[dir] ?? 0;
+        const isSheet = (sw >= 64 && sh >= 128);
+        if (isSheet) {
+            const f = Math.floor(frame) % 4;
+            ctx.drawImage(sprite, f * 16, dirIdx * 32, 16, 32, dx, dy - (ST / 2), ST, ST * 1.5);
+            return;
+        }
+
+        // Static NPC fallback (16x32 or single sprite).
+        const srcH = (sh >= 32) ? 32 : sh;
+        ctx.drawImage(sprite, 0, 0, Math.min(16, sw), srcH, dx, dy - (ST / 2), ST, ST * 1.5);
+    }
+
     function drawFromAtlas(ax, ay, sx, sy) {
         ctx.drawImage(
             sprites.tileset,
@@ -2419,6 +2451,18 @@
         const s = localStorage.getItem('pokemon_adv');
         if (s) {
             GS = migrateSave(JSON.parse(s));
+            // Defensive reset for stale runtime flags from previous sessions.
+            dialog = null;
+            dialogQ = [];
+            inBattle = false;
+            battle = null;
+            activeBeatId = null;
+            const dialogBox = document.getElementById('dialogBox');
+            const tapOverlay = document.getElementById('tapOverlay');
+            const battleScreen = document.getElementById('battleScreen');
+            if (dialogBox) dialogBox.style.display = 'none';
+            if (tapOverlay) tapOverlay.style.display = 'none';
+            if (battleScreen) battleScreen.style.display = 'none';
             document.getElementById('titleScreen').style.display = 'none';
             onMapEnter(GS.map);
             render();
@@ -2427,6 +2471,19 @@
     }
     
     function startNewGame() {
+        // Hard reset runtime state to avoid post-cutscene soft-locks.
+        dialog = null;
+        dialogQ = [];
+        inBattle = false;
+        battle = null;
+        activeBeatId = null;
+        const dialogBox = document.getElementById('dialogBox');
+        const tapOverlay = document.getElementById('tapOverlay');
+        const battleScreen = document.getElementById('battleScreen');
+        if (dialogBox) dialogBox.style.display = 'none';
+        if (tapOverlay) tapOverlay.style.display = 'none';
+        if (battleScreen) battleScreen.style.display = 'none';
+
         // MANGA-ACCURATE GAME STATE (Pokémon Adventures)
         GS = {
             px: 10, py: 10, dir: 'down', map: 'pallet_town',
