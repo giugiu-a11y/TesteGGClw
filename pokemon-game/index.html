@@ -1034,6 +1034,7 @@
 
     // ==================== STORY SCRIPT ====================
     let STORY = null;
+    let activeBeatId = null;
 
     async function loadStory() {
         try {
@@ -1085,23 +1086,26 @@
         if (next.length) GS.team = next;
     }
 
-    function runActions(actions, idx = 0) {
+    function runActions(actions, idx = 0, onDone = null) {
         const list = Array.isArray(actions) ? actions : [];
-        if (idx >= list.length) return;
+        if (idx >= list.length) {
+            if (typeof onDone === 'function') onDone();
+            return;
+        }
         const a = list[idx];
-        if (!a || typeof a !== 'object') return runActions(list, idx + 1);
+        if (!a || typeof a !== 'object') return runActions(list, idx + 1, onDone);
 
         if (a.kind === 'dialog') {
-            showDialog(a.speaker || '', Array.isArray(a.lines) ? a.lines : ['...'], () => runActions(list, idx + 1));
+            showDialog(a.speaker || '', Array.isArray(a.lines) ? a.lines : ['...'], () => runActions(list, idx + 1, onDone));
             return;
         }
         if (a.kind === 'set') {
             setByPath(GS, a.path, a.value);
-            return runActions(list, idx + 1);
+            return runActions(list, idx + 1, onDone);
         }
         if (a.kind === 'ensureTeam') {
             ensureTeam(a.value);
-            return runActions(list, idx + 1);
+            return runActions(list, idx + 1, onDone);
         }
         if (a.kind === 'battle') {
             const enemy = a.enemy && typeof a.enemy === 'object'
@@ -1114,19 +1118,25 @@
                 scripted: opts.scripted !== false,
                 onEnd: (won) => {
                     if (nextOnEnd === 'only_if_win' && !won) return;
-                    runActions(list, idx + 1);
+                    runActions(list, idx + 1, onDone);
                 }
             });
             return;
         }
         // Unknown action: skip
-        runActions(list, idx + 1);
+        runActions(list, idx + 1, onDone);
     }
 
     function playBeat(id) {
+        if (activeBeatId === id) return true;
+        if (activeBeatId && activeBeatId !== id) return false;
         const beat = getBeat(id);
         if (!beat) return false;
-        runActions(beat.actions, 0);
+        activeBeatId = id;
+        GS.story.beat = id;
+        runActions(beat.actions, 0, () => {
+            if (activeBeatId === id) activeBeatId = null;
+        });
         return true;
     }
     
