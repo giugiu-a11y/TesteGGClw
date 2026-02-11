@@ -844,7 +844,8 @@
       "sourceRef": "Pokemon Adventures RGB Arc (chapter-mapped adaptation, Vol.1-3) - scene aligned",
       "type": "outline",
       "actions": [
-        {"kind": "dialog", "speaker": "", "lines": ["[ STATUS ]", "49 blocos narrativos estruturados para fechamento do arco RGB com cobertura ampliada.", "Proximo passo: refinamento visual final (tiles/layout) e polimento de cenas."]}
+        {"kind": "dialog", "speaker": "", "lines": ["[ STATUS ]", "49 blocos narrativos estruturados para fechamento do arco RGB com cobertura ampliada.", "Proximo passo: refinamento visual final (tiles/layout) e polimento de cenas."]},
+        {"kind": "set", "path": "story.block_50_done", "value": true}
       ]
     }
   ]

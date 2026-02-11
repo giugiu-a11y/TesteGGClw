@@ -1,23 +1,23 @@
 # NEXT (Execucao)
 
-## Prioridade 1 - Fechar Base Jogavel
-1. Testar no iPad o fluxo completo ate `ch17_season1_epilogue` (sem freeze e sem replay indevido).
-2. Validar cadeia de mapas nova: `saffron -> fuchsia -> cinnabar -> indigo_plateau`.
-3. Revisar warps de retorno (`indigo_plateau <-> viridian_gym <-> saffron`) para evitar soft-lock.
+## Prioridade 1 - Teste de Aceite Final
+1. Rodar no iPad com `?reset=1` e confirmar: intro -> spawn -> movimento -> progresso de beats sem freeze.
+2. Validar links de tileset:
+   - default (`external`)
+   - `?tileset=punyworld`
+   - `?tileset=remote&tilesetPng=...&tilesetJson=...`
+3. Confirmar warps principais sem soft-lock (Pallet, Lab, Viridian, Pewter, Indigo).
 
-## Prioridade 2 - Visual FireRed-like (sem retrabalho)
-1. Refinar `assets/tilesets/punyworld.tileset.json` com coordenadas finais.
-2. Revisar blocos de predio (telhado/parede/porta/janela) para reduzir efeito "placeholder".
-3. Padronizar paleta de UI (dialog/battle) para combinar melhor com overworld.
+## Prioridade 2 - Visual FireRed-like
+1. Refinar `assets/tilesets/user.tileset.json` para fechamento de bordas/transicoes finas.
+2. Ajustar UI de dialogo/batalha para paleta mais proxima FRLG usando os assets em `assets/tilesets/manual_ui` e `assets/tilesets/ui`.
+3. Revisar sprites de player/NPC para consistencia de escala e anchor.
 
-## Prioridade 3 - Story Season 1
-1. Story fidelity do arco RGB: CONCLUIDO (checklist 49/49 coberto).
-2. Trocar placeholders de sprites faltantes por assets corretos.
-2. Ligar cada beat a trigger claro (`onMapEnter`, fala NPC, batalha scriptada).
-3. Manter `sourceRef` por beat para rastreabilidade de fidelidade.
-4. Manter `MANGA_FIDELITY_CHECKLIST.md` como gate de regressao (nao reabrir `parcial` sem motivo).
+## Prioridade 3 - Story Fidelity
+1. Manter script atual como baseline (55 beats).
+2. Melhorar os 3 capitulos ainda nao cobertos explicitamente no auditor quantitativo.
+3. Enriquecer dialogos principais mantendo jogabilidade fluida (sem quebrar storyLock).
 
-## Regras Operacionais
-- Nao voltar a logica de cutscene dentro de `checkWarp()`.
-- Nao quebrar `storyLock` (sem grind manual).
-- Mudanca grande = atualizar `STATUS.md` + este arquivo no mesmo commit.
+## Operacao
+- Qualquer alteracao grande deve passar `bash ci-check.sh` antes de commit.
+- Atualizar `MANGA_AUDIT_REPORT_2026-02-11.md` sempre que mexer em cobertura narrativa.

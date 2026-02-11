@@ -1473,8 +1473,8 @@
     }
 
     async function tryLoadExternalTileset() {
-        // Default to punyworld so the public link always opens with the intended style.
-        const which = qs('tileset', 'punyworld');
+        // Default to local user pack so uploads in assets/tilesets apply without query params.
+        const which = qs('tileset', 'external');
         if (!which) return false;
 
         let png = './assets/tilesets/user.png';
@@ -2112,6 +2112,9 @@
         }
         if (mapId === 'indigo_plateau' && GS.story.block_48_done && !GS.story.block_49_done) {
             return playBeat('ch42_rgb_full_closure');
+        }
+        if (mapId === 'indigo_plateau' && GS.story.block_49_done && !GS.story.block_50_done) {
+            return playBeat('s1_outline_next');
         }
         return false;
     }

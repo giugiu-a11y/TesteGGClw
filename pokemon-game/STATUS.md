@@ -3,50 +3,38 @@
 Data: 2026-02-11
 
 ## Estado Atual
-- Plataforma: `index.html` standalone + deploy via GitHub Pages.
-- Modo de jogo: `storyLock=true` (manga-first, sem grind RNG).
-- Fluxo de batalha: confirm-only (OK/A), com passos roteirizados.
-- Story script externo: `story/season1.ptbr.json` (34 blocos ativos, encadeados).
-- Auditoria de fidelidade: `MANGA_FIDELITY_CHECKLIST.md` (capitulo/cena com status real).
+- Plataforma: `index.html` standalone + deploy em GitHub Pages.
+- Modo: `storyLock=true` (manga-first, sem grind manual).
+- Fluxo: batalha confirm-only com dano/eventos roteirizados.
+- Story script: `story/season1.ptbr.json` com **55 beats** (`ch1..ch42` + fechamento).
+- Encadeamento: runner em `index.html` cobre todos os beats (incluindo `s1_outline_next`).
 
-## Corrigido Hoje
-- Auditoria de fidelidade estruturada:
-  - checklist por capitulo/cena criado com mapeamento beat->cena.
-  - status objetivo por item: `coberto`, `parcial`, `faltando`.
-  - checklist fechado: 49 `coberto`, 0 `parcial`, 0 `faltando`.
-- Soft-lock de spawn/colisao corrigido:
-  - player agora sempre nasce/reposiciona em tile caminhavel (`ensureWalkablePlayerPosition`).
-  - spawn inicial de Pallet ajustado para area valida.
-  - suporte `?reset=1` para limpar save antigo/corrompido no boot.
-- Travamento de dialogo (iPad/Pallet) resolvido:
-  - em `nextDialog()`, limpeza de estado agora ocorre antes do callback.
-- Fluxo duplicado de cutscene removido:
-  - `checkWarp()` nao dispara mais roteiro legado de Oak Lab.
-  - Gatilhos de historia centralizados em `onMapEnter()` e nos beats JSON.
-- Layout revisado:
-  - `pallet_town` redesenhado (estrada central, casas, lab, entradas).
-  - `oak_lab` com corredor central e props laterais.
-- Visual tileset:
-  - `punyworld.tileset.json` com mapeamento de telhado/parede/porta atualizado.
-- Story modular:
-  - `onMapEnter()` agora prioriza beats JSON para Viridian/Forest/Pewter.
-  - `runActions()` ganhou `kind: "battle"` para batalhas scriptadas em JSON.
-  - Novos beats em `story/season1.ptbr.json`: chegada em Viridian, primeiro evento da floresta (com batalha), chegada em Pewter.
-  - Acrescentado: arco inicial de Brock (mapa `pewter_gym`, NPC Brock, battle beat `ch1_brock_intro`).
-  - Escala de conteudo: `story/season1.ptbr.json` expandido para 34 blocos narrativos.
-  - Novos mapas integrados no fluxo: `fuchsia`, `cinnabar`, `viridian_gym`, `indigo_plateau`.
-  - Novos beats integrados: `ch11_aftershock_recovery` ate `ch17_season1_epilogue`.
+## Finalizado Nesta Rodada
+- Corrigido beat sem trigger no final:
+  - `s1_outline_next` agora dispara em `indigo_plateau` apos `block_49_done`.
+  - beat final marca `story.block_50_done` para evitar replay infinito.
+- Tileset default alterado para `external`:
+  - jogo passa a usar `assets/tilesets/user.png` + `assets/tilesets/user.tileset.json` por padrao.
+  - `?tileset=punyworld` e `?tileset=remote` continuam disponiveis.
+- Integracao de assets externos mantida:
+  - sprites/NPC/Pokemon via `assets/sprites/user.sprites.json`.
+  - mapeamentos de tiles e sprites validados com `json.tool`.
 
-## Riscos Abertos
-- Mapeamento do Puny World ainda e aproximado (precisa refinamento fino por tile).
-- Temporada 1 fechada no formato de adaptacao chapter-mapped (nao transcricao literal).
-- Rede do servidor esta instavel para `git push` (DNS intermitente).
+## Qualidade / Validacoes
+- `bash ci-check.sh`: OK.
+- JSON story/tiles/sprites: OK.
+- JS syntax (`index.html` script): OK.
+- Auditoria de fidelidade: `MANGA_AUDIT_REPORT_2026-02-11.md` (>=75% atingido no criterio definido).
 
-## Como Testar
-- Pages:
-  - `https://giugiu-a11y.github.io/TesteGGClw/`
-  - `https://giugiu-a11y.github.io/TesteGGClw/?tileset=punyworld`
-  - `https://giugiu-a11y.github.io/TesteGGClw/?tileset=punyworld&debug=1`
+## Links de Teste
+- Pages (pack local por padrao):
+  - `https://giugiu-a11y.github.io/TesteGGClw/?reset=1`
+- Forcar punyworld:
+  - `https://giugiu-a11y.github.io/TesteGGClw/?tileset=punyworld&reset=1`
+- Debug:
+  - `https://giugiu-a11y.github.io/TesteGGClw/?debug=1&reset=1`
 
-## Regra de Ouro (para 2 IAs)
-- Qualquer alteracao de fluxo/historia/input deve atualizar este arquivo e `NEXT.md` no mesmo commit.
+## Regra de Coordenacao (2 IAs)
+- Mudou fluxo/gameplay/story/tiles -> atualizar `STATUS.md` + `NEXT.md` no mesmo commit.
+- Nao recolocar cutscene legada em `checkWarp()`.
+- Nao quebrar `storyLock`.

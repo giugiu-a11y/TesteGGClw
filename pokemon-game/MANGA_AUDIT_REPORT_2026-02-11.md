@@ -21,8 +21,9 @@ Metrica aplicada:
 
 ## Resultado objetivo (revisado)
 
-- Beats de historia no jogo: **54** (`ch1...ch42` + extensoes de fechamento).
+- Beats de historia no jogo: **55** (`ch1...ch42` + extensoes de fechamento).
 - Linhas de dialogo no script: **290+**.
+- Checagem de encadeamento runner->story: **55/55 beats com trigger valido** (incluindo `s1_outline_next` no fechamento).
 
 ### 1) Cobertura estrita de capitulos RGB (40)
 - Cobertos de forma explicita: **31/40 = 77.5%**
@@ -58,4 +59,3 @@ Estimativa consolidada (proxy ponderado: capitulos estritos + eventos-chave + es
 
 - O jogo atende a meta de >=75% para **cenas, acontecimentos e dialogos principais** no criterio quantitativo adotado.
 - Ainda existem oportunidades de refinamento pontual (sobretudo rounds secundarios e eixo de ginasios restantes), mas o threshold solicitado foi atingido.
-
