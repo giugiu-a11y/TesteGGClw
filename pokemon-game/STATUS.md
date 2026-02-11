@@ -6,9 +6,13 @@ Data: 2026-02-11
 - Plataforma: `index.html` standalone + deploy via GitHub Pages.
 - Modo de jogo: `storyLock=true` (manga-first, sem grind RNG).
 - Fluxo de batalha: confirm-only (OK/A), com passos roteirizados.
-- Story script externo: `story/season1.ptbr.json` (24 blocos ativos, encadeados).
+- Story script externo: `story/season1.ptbr.json` (34 blocos ativos, encadeados).
+- Auditoria de fidelidade: `MANGA_FIDELITY_CHECKLIST.md` (capitulo/cena com status real).
 
 ## Corrigido Hoje
+- Auditoria de fidelidade estruturada:
+  - checklist por capitulo/cena criado com mapeamento beat->cena.
+  - status objetivo por item: `coberto`, `parcial`, `faltando`.
 - Soft-lock de spawn/colisao corrigido:
   - player agora sempre nasce/reposiciona em tile caminhavel (`ensureWalkablePlayerPosition`).
   - spawn inicial de Pallet ajustado para area valida.
@@ -28,7 +32,7 @@ Data: 2026-02-11
   - `runActions()` ganhou `kind: "battle"` para batalhas scriptadas em JSON.
   - Novos beats em `story/season1.ptbr.json`: chegada em Viridian, primeiro evento da floresta (com batalha), chegada em Pewter.
   - Acrescentado: arco inicial de Brock (mapa `pewter_gym`, NPC Brock, battle beat `ch1_brock_intro`).
-  - Escala de conteudo: `story/season1.ptbr.json` expandido para 24 blocos narrativos.
+  - Escala de conteudo: `story/season1.ptbr.json` expandido para 34 blocos narrativos.
   - Novos mapas integrados no fluxo: `fuchsia`, `cinnabar`, `viridian_gym`, `indigo_plateau`.
   - Novos beats integrados: `ch11_aftershock_recovery` ate `ch17_season1_epilogue`.
 
