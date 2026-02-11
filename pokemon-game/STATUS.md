@@ -13,6 +13,7 @@ Data: 2026-02-11
 - Auditoria de fidelidade estruturada:
   - checklist por capitulo/cena criado com mapeamento beat->cena.
   - status objetivo por item: `coberto`, `parcial`, `faltando`.
+  - checklist fechado: 49 `coberto`, 0 `parcial`, 0 `faltando`.
 - Soft-lock de spawn/colisao corrigido:
   - player agora sempre nasce/reposiciona em tile caminhavel (`ensureWalkablePlayerPosition`).
   - spawn inicial de Pallet ajustado para area valida.
@@ -38,7 +39,7 @@ Data: 2026-02-11
 
 ## Riscos Abertos
 - Mapeamento do Puny World ainda e aproximado (precisa refinamento fino por tile).
-- Temporada 1 ainda e adaptacao (nao transcricao literal 1:1 do manga completo).
+- Temporada 1 fechada no formato de adaptacao chapter-mapped (nao transcricao literal).
 - Rede do servidor esta instavel para `git push` (DNS intermitente).
 
 ## Como Testar
