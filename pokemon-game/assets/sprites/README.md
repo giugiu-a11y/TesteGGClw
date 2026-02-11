@@ -23,6 +23,21 @@ Voce pode colocar:
 - apenas as chaves que quer trocar (override parcial), ou
 - todas as chaves para controle total.
 
+Tambem e aceito formato de catalogo por especie:
+
+```json
+{
+  "pokemonBase": "./assets/tilesets/pokemon_sprites/",
+  "sprites": {
+    "pikachu": {"front": "pikachu_front.png", "back": "pikachu_back.png"},
+    "bulbasaur": {"front": "bulbasaur_front.png", "back": "bulbasaur_back.png"}
+  }
+}
+```
+
+Nesse formato, o loader converte automaticamente para as chaves usadas no jogo
+(`pikachuBattle`, `pikachuBack`, `bulbasaur`, `bulbasaurBack`, etc.).
+
 ## Como ativar
 
 1. Override local (padrao):

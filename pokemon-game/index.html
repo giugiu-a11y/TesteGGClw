@@ -1428,10 +1428,42 @@
             const incoming = cfg && typeof cfg === 'object' ? (cfg.sprites || cfg) : {};
             if (!incoming || typeof incoming !== 'object') return {};
 
+            function withBase(v) {
+                if (typeof v !== 'string' || !v.trim()) return '';
+                const raw = v.trim();
+                // Absolute URL/path-like values are normalized directly.
+                if (/^(https?:)?\/\//i.test(raw) || raw.startsWith('/') || raw.startsWith('./') || raw.startsWith('../')) {
+                    return normalizeUrl(raw);
+                }
+                const base = (cfg && typeof cfg.pokemonBase === 'string' && cfg.pokemonBase.trim()) ? cfg.pokemonBase.trim() : '';
+                if (!base) return normalizeUrl(raw);
+                const sep = base.endsWith('/') ? '' : '/';
+                return normalizeUrl(`${base}${sep}${raw}`);
+            }
+
+            function fromSpeciesObject(speciesObj, wantBack) {
+                if (!speciesObj || typeof speciesObj !== 'object') return '';
+                if (wantBack && typeof speciesObj.back === 'string') return withBase(speciesObj.back);
+                if (!wantBack && typeof speciesObj.front === 'string') return withBase(speciesObj.front);
+                if (typeof speciesObj.file === 'string') return withBase(speciesObj.file);
+                return '';
+            }
+
             const out = {};
             for (const key of Object.keys(DEFAULT_SPRITE_URLS)) {
                 const v = incoming[key];
-                if (typeof v === 'string' && v.trim()) out[key] = normalizeUrl(v.trim());
+                if (typeof v === 'string' && v.trim()) {
+                    out[key] = withBase(v);
+                    continue;
+                }
+
+                // Support catalog style by species key, e.g.:
+                // "pikachu": {"front":"025_front.png","back":"025_back.png"}
+                const baseKey = key.replace(/Back$/, '').replace(/Battle$/, '');
+                const wantBack = /Back$/.test(key);
+                const sv = incoming[baseKey];
+                const resolved = fromSpeciesObject(sv, wantBack);
+                if (resolved) out[key] = resolved;
             }
             return out;
         } catch (e) {
