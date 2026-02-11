@@ -201,7 +201,26 @@
             font-size: 10px;
             min-height: 40px;
         }
-        
+
+        .battle-ok {
+            background: #fff;
+            border-top: 4px solid #333;
+            padding: 12px;
+            display: none;
+        }
+
+        .battle-ok button {
+            width: 100%;
+            padding: 14px 12px;
+            font-size: 12px;
+            font-family: inherit;
+            border: 3px solid #333;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #111827;
+            color: #fff;
+        }
+
         .moves-menu { display: none; background: #fff; border-top: 4px solid #333; padding: 12px; }
         .moves-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
         
@@ -310,7 +329,10 @@
                 </div>
             </div>
         </div>
-        <div class="battle-log" id="battleLog">Wild RATTATA appeared!</div>
+        <div class="battle-log" id="battleLog">Um POKeMON selvagem apareceu!</div>
+        <div class="battle-ok" id="battleOk">
+            <button id="battleOkBtn" onclick="battleOk()">OK</button>
+        </div>
         <div class="battle-menu" id="battleMenu">
             <button class="fight" onclick="showMoves()">FIGHT</button>
             <button class="bag" onclick="useBag()">BAG</button>
@@ -450,23 +472,20 @@
                 {x:5,y:5,to:'player_house',tx:3,ty:6},
                 {x:14,y:5,to:'rival_house',tx:3,ty:6},
                 {x:5,y:12,to:'oak_lab',tx:5,ty:10},
-                {x:9,y:17,to:'route1',tx:9,ty:0},
-                {x:10,y:17,to:'route1',tx:10,ty:0},
-                // Warp to Viridian Forest (South exit of Pallet Town)
-                {x:9, y:17, to: 'viridian_forest', tx: 9, ty: 24},
-                {x:10, y:17, to: 'viridian_forest', tx: 10, ty: 24}
+                {x:9,y:17,to:'route1',tx:9,ty:23},
+                {x:10,y:17,to:'route1',tx:10,ty:23}
             ],
             npcs: [
                 {x:16,y:11,name:'Girl',sprite:'girl',dialog:[
-                    'Welcome to PALLET TOWN!',
-                    'Did you hear? People say they saw a strange light in the forest!',
-                    'Professor OAK has been researching it in his lab!'
+                    'Bem-vindo a PALLET TOWN!',
+                    'Ouviu o boato? Dizem que viram uma luz estranha na floresta!',
+                    'O Professor OAK esta investigando isso no laboratorio...'
                 ]},
                 {x:12,y:6,name:'Blue',sprite:'blue',dialog:[
-                    '...Oh, it\'s you. RED.',
-                    'Gramps said something about a rare POKéMON sighting.',
-                    'Don\'t think you\'ll catch it before me!',
-                    'I\'m always one step ahead. Smell ya later!'
+                    '...Ah. Voce, RED.',
+                    'O velho falou de um POKeMON raro avistado por aqui.',
+                    'Nao ache que vai chegar antes de mim.',
+                    'Eu sempre estou um passo a frente. Ate mais.'
                 ]}
             ],
             enc: null
@@ -482,20 +501,134 @@
                         else if (y === 24 && (x === 9 || x === 10)) m.push(T.WARP);
                         else if (y === 0 && (x === 9 || x === 10)) m.push(T.WARP);
                         else if (x === 9 || x === 10) m.push(T.PATH);
-                        else if (Math.random() < 0.4) m.push(T.TALL_GRASS);
+                        else if ((y >= 4 && y <= 9 && (x <= 6 || x >= 13)) || (y >= 14 && y <= 18 && (x <= 5 || x >= 14))) m.push(T.TALL_GRASS);
                         else m.push(T.GRASS);
                     }
                 }
                 return m;
             })(),
             warps: [
-                {x:9,y:0,to:'viridian',tx:9,ty:23},
-                {x:10,y:0,to:'viridian',tx:10,ty:23},
+                {x:9,y:0,to:'viridian',tx:9,ty:16},
+                {x:10,y:0,to:'viridian',tx:10,ty:16},
                 {x:9,y:24,to:'pallet_town',tx:9,ty:16},
                 {x:10,y:24,to:'pallet_town',tx:10,ty:16}
             ],
             npcs: [],
             enc: {pokemon:[{name:'RATTATA',spr:'rattata',lv:[2,4],rate:55},{name:'PIDGEY',spr:'pidgey',lv:[2,5],rate:45}],rate:12}
+        },
+
+        // Minimal Viridian City (static layout, story-first; no RNG required)
+        viridian: {
+            w: 20, h: 18,
+            data: (() => {
+                const w = 20, h = 18;
+                const m = new Array(w * h).fill(T.GRASS);
+                for (let y = 0; y < h; y++) {
+                    for (let x = 0; x < w; x++) {
+                        if (x === 0 || x === w - 1 || y === 0 || y === h - 1) m[y * w + x] = T.TREE;
+                    }
+                }
+                // Main road (south <-> north)
+                for (let y = 1; y < h - 1; y++) {
+                    m[y * w + 9] = T.PATH;
+                    m[y * w + 10] = T.PATH;
+                }
+                // Plaza
+                for (let y = 6; y <= 9; y++) for (let x = 6; x <= 13; x++) m[y * w + x] = T.PATH;
+                // WARP tiles
+                m[0 * w + 9] = T.WARP; m[0 * w + 10] = T.WARP;
+                m[(h - 1) * w + 9] = T.WARP; m[(h - 1) * w + 10] = T.WARP;
+                // Forest gate (east)
+                m[8 * w + (w - 1)] = T.WARP;
+                // Simple sign
+                m[10 * w + 8] = T.SIGN;
+                return m;
+            })(),
+            warps: [
+                {x:9,y:17,to:'route1',tx:9,ty:1},
+                {x:10,y:17,to:'route1',tx:10,ty:1},
+                {x:9,y:0,to:'route2',tx:9,ty:23},
+                {x:10,y:0,to:'route2',tx:10,ty:23},
+                {x:19,y:8,to:'viridian_forest',tx:2,ty:12},
+            ],
+            npcs: [
+                {x:10,y:8,name:'Girl',sprite:'girl',dialog:[
+                    'VIRIDIAN CITY...',
+                    'Dizem que o GINASIO esta fechado.',
+                    'E que a floresta esta... estranha.'
+                ]},
+            ],
+            enc: null
+        },
+
+        // Route 2: Viridian -> Pewter (no RNG when storyLock=true)
+        route2: {
+            w: 20, h: 25,
+            data: (() => {
+                const w = 20, h = 25;
+                const m = new Array(w * h).fill(T.GRASS);
+                for (let y = 0; y < h; y++) {
+                    for (let x = 0; x < w; x++) {
+                        if (x === 0 || x === w - 1) m[y * w + x] = T.TREE;
+                        else if (y === 0 || y === h - 1) m[y * w + x] = T.TREE;
+                    }
+                }
+                // Path
+                for (let y = 1; y < h - 1; y++) {
+                    m[y * w + 9] = T.PATH;
+                    m[y * w + 10] = T.PATH;
+                }
+                // Tall grass patches
+                for (let y = 6; y <= 10; y++) for (let x = 3; x <= 6; x++) m[y * w + x] = T.TALL_GRASS;
+                for (let y = 13; y <= 17; y++) for (let x = 13; x <= 16; x++) m[y * w + x] = T.TALL_GRASS;
+
+                // Warps
+                m[(h - 1) * w + 9] = T.WARP; m[(h - 1) * w + 10] = T.WARP;
+                m[0 * w + 9] = T.WARP; m[0 * w + 10] = T.WARP;
+                return m;
+            })(),
+            warps: [
+                {x:9,y:24,to:'viridian',tx:9,ty:1},
+                {x:10,y:24,to:'viridian',tx:10,ty:1},
+                {x:9,y:0,to:'pewter',tx:9,ty:16},
+                {x:10,y:0,to:'pewter',tx:10,ty:16},
+            ],
+            npcs: [],
+            enc: {pokemon:[{name:'RATTATA',spr:'rattata',lv:[3,5],rate:50},{name:'PIDGEY',spr:'pidgey',lv:[3,6],rate:50}],rate:10}
+        },
+
+        // Pewter City (minimal; Pikachu arc will be triggered here)
+        pewter: {
+            w: 20, h: 18,
+            data: (() => {
+                const w = 20, h = 18;
+                const m = new Array(w * h).fill(T.GRASS);
+                for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+                    if (x === 0 || x === w - 1 || y === 0 || y === h - 1) m[y * w + x] = T.TREE;
+                }
+                for (let y = 1; y < h - 1; y++) {
+                    m[y * w + 9] = T.PATH;
+                    m[y * w + 10] = T.PATH;
+                }
+                for (let y = 6; y <= 11; y++) for (let x = 6; x <= 13; x++) m[y * w + x] = T.PATH;
+                // Warps (south back to route2)
+                m[(h - 1) * w + 9] = T.WARP; m[(h - 1) * w + 10] = T.WARP;
+                // Sign near center
+                m[11 * w + 8] = T.SIGN;
+                return m;
+            })(),
+            warps: [
+                {x:9,y:17,to:'route2',tx:9,ty:1},
+                {x:10,y:17,to:'route2',tx:10,ty:1},
+            ],
+            npcs: [
+                {x:10,y:9,name:'Girl',sprite:'girl',dialog:[
+                    'PEWTER CITY.',
+                    'A cidade das rochas.',
+                    '...E dizem que ha um POKeMON estranho por aqui.'
+                ]},
+            ],
+            enc: null
         },
         
         viridian_forest: {
@@ -505,24 +638,22 @@
                 let m = [];
                 for (let y = 0; y < 25; y++) {
                     for (let x = 0; x < 20; x++) {
-                        // Map boundaries: trees
-                        if (x === 0 || x === 19) m.push(T.TREE);
-                        // Exits: warp to Pallet Town
-                        else if (y === 0 && (x === 9 || x === 10)) m.push(T.WARP); // Exit north
-                        else if (y === 24 && (x === 9 || x === 10)) m.push(T.WARP); // Exit south (back to Pallet)
+                        // Map boundaries: trees (with a gate back to Viridian)
+                        if (x === 1 && y === 12) m.push(T.WARP); // Gate tile to Viridian
+                        else if (x === 0 || x === 19) m.push(T.TREE);
+                        // Exit south (back towards Pallet via Route 1)
+                        else if (y === 24 && (x === 9 || x === 10)) m.push(T.WARP);
                         // Paths and grass
                         else if (x === 9 || x === 10) m.push(T.PATH); // Main path
-                        else if (Math.random() < 0.7) m.push(T.TALL_GRASS); // Lots of tall grass!
-                        else m.push(T.GRASS);
+                        else m.push(T.TALL_GRASS); // Lots of tall grass (deterministic)
                     }
                 }
                 return m;
             })(),
             warps: [
-                {x:9, y:0, to: 'route1', tx: 9, ty: 16}, // Exit North to Route 1 (Viridian City)
-                {x:10, y:0, to: 'route1', tx: 10, ty: 16}, // Exit North to Route 1 (Viridian City)
-                {x:9, y:24, to: 'pallet_town', tx: 9, ty: 17}, // Exit South to Pallet Town (from Route 1)
-                {x:10, y:24, to: 'pallet_town', tx: 10, ty: 17}  // Exit South to Pallet Town (from Route 1)
+                {x:1, y:12, to: 'viridian', tx: 18, ty: 8},       // Gate back to Viridian
+                {x:9, y:24, to: 'route1', tx: 9, ty: 16},         // Back towards Pallet
+                {x:10, y:24, to: 'route1', tx: 10, ty: 16}
             ],
             npcs: [], // No NPCs initially in Viridian Forest for chapter 2
             // Encounters for Chapter 2: VS Bulbasaur
@@ -574,6 +705,8 @@
         map: 'pallet_town',
         // MANGA STORY FLAGS (Pokémon Adventures - Red Chapter)
         story: {
+            season: 1,
+            beat: 'ch1_intro',
             chapter: 1,           // Current chapter (VS Mew, VS Bulbasaur, etc)
             sawMew: false,        // Ch1: Red saw Mew in the forest
             talkedToOak: false,   // Ch1: Talked to Prof Oak first time
@@ -810,47 +943,49 @@
                 GS.map = w.to;
                 GS.px = w.tx;
                 GS.py = w.ty;
+
+                onMapEnter(GS.map);
                 
                 // Special events - Manga story triggers
                 // MANGA-ACCURATE: Oak gives Poliwhirl after you see Mew
                 if (w.to === 'oak_lab' && !GS.story.gotSaur && GS.story.sawMew) {
                     setTimeout(() => {
                         showDialog('Prof. Oak', [
-                            'RED! Come in, quickly!',
-                            'You saw something in the forest, didn\'t you?',
-                            'That pink glow... I saw it too from my window!'
+                            'RED! Entre, rapido!',
+                            'Voce viu algo na floresta, nao viu?',
+                            'Aquele brilho rosa... eu vi tambem, da janela!'
                         ], () => {
                             showDialog('Prof. Oak', [
-                                'That was MEW - the legendary POKéMON!',
-                                'It\'s said to contain the DNA of every POKéMON in the world!',
-                                'I\'ve spent years researching it, but it always eludes me...'
+                                'Aquilo era o MEW... um POKeMON lendario!',
+                                'Dizem que ele carrega o DNA de todos os POKeMON do mundo.',
+                                'Passei anos pesquisando, mas ele sempre escapa...'
                             ], () => {
                                 showDialog('RED', [
-                                    'MEW?! So that\'s what it was!',
-                                    'I tried to catch it with POLI, but it just vanished!'
+                                    'MEW?! Entao era isso!',
+                                    'Eu tentei capturar com o POLI... mas sumiu!'
                                 ], () => {
                                     showDialog('Prof. Oak', [
-                                        'Ah, so you have a POLIWHIRL already! Impressive!',
-                                        'You raised it yourself? You have real talent, RED!',
-                                        'I want you to help me with my research!'
+                                        'Entao voce ja tem um POLIWHIRL... impressionante.',
+                                        'Voce criou ele sozinho? Voce tem talento, RED.',
+                                        'Eu quero que voce me ajude na minha pesquisa.'
                                     ], () => {
                                         showDialog('', [
                                             '[ Prof. Oak hands you a red device! ]'
                                         ], () => {
                                             GS.story.gotPokedex = true;
                                             showDialog('Prof. Oak', [
-                                                'This is the POKéDEX!',
-                                                'It automatically records data on any POKéMON you encounter.',
-                                                'And I have one more gift for you...'
+                                                'Isto e a POKeDEX!',
+                                                'Ela registra dados automaticamente quando voce encontra POKeMON.',
+                                                'E eu tenho mais um presente pra voce...'
                                             ], () => {
                                                 showDialog('', [
                                                     '[ Prof. Oak tosses a POKé BALL! ]',
                                                     '[ A green POKéMON with a bulb on its back appears! ]'
                                                 ], () => {
                                                     showDialog('Prof. Oak', [
-                                                        'This is a BULBASAUR! I call him SAUR.',
-                                                        'He\'s a Grass/Poison type - perfect for a trainer like you!',
-                                                        'Together with your POLI, you\'ll make a great team!'
+                                                        'Este e um BULBASAUR. Eu chamo ele de SAUR.',
+                                                        'Tipo Grama/Veneno... uma boa combinacao pro seu jeito de lutar.',
+                                                        'Com o POLI, voces vao formar um time excelente.'
                                                     ], () => {
                                                         GS.story.gotSaur = true;
                                                         GS.story.talkedToOak = true;
@@ -860,15 +995,15 @@
                                                             '[ BULBASAUR joined your team! ]'
                                                         ], () => {
                                                             showDialog('RED', [
-                                                                'A BULBASAUR?! This is awesome!',
-                                                                'Hey SAUR! You and POLI are gonna help me find MEW!'
+                                                                'Um BULBASAUR?! Incrivel!',
+                                                                'SAUR! Voce e o POLI vao me ajudar a encontrar o MEW!'
                                                             ], () => {
                                                                 showDialog('Prof. Oak', [
-                                                                    'Be careful, RED...',
-                                                                    'A criminal group called TEAM ROCKET is also after MEW.',
-                                                                    'They\'ll do anything to capture it!',
-                                                                    'My grandson BLUE went north already. Watch out for him!',
-                                                                    'Now go! Your adventure as the FIGHTER begins!'
+                                                                    'Tome cuidado, RED...',
+                                                                    'Um grupo criminoso chamado TEAM ROCKET tambem esta atras do MEW.',
+                                                                    'Eles vao fazer qualquer coisa para captura-lo.',
+                                                                    'Meu neto BLUE ja seguiu para o norte. Fique atento.',
+                                                                    'Agora va. Sua aventura comeca.'
                                                                 ]);
                                                             });
                                                         });
@@ -885,19 +1020,19 @@
                     // Haven't seen Mew yet
                     setTimeout(() => {
                         showDialog('Prof. Oak', [
-                            'Ah, RED! Come in!',
-                            'I see you have a POLIWHIRL! Did you raise it yourself?',
-                            'Have you seen anything unusual in the forest lately?',
-                            'I\'ve been detecting strange energy readings...'
+                            'Ah, RED! Entre!',
+                            'Vejo que voce tem um POLIWHIRL. Foi voce que criou?',
+                            'Voce viu algo incomum na floresta ultimamente?',
+                            'Tenho detectado leituras de energia... estranhas.'
                         ]);
                     }, 500);
                 } else if (w.to === 'oak_lab' && GS.story.gotSaur) {
                     // Already have Saur
                     setTimeout(() => {
                         showDialog('Prof. Oak', [
-                            'How are POLI and SAUR doing, RED?',
-                            'Remember - the POKéDEX records data automatically!',
-                            'Head north to VIRIDIAN CITY when you\'re ready.'
+                            'Como POLI e SAUR estao, RED?',
+                            'Lembre: a POKeDEX registra dados automaticamente.',
+                            'Quando estiver pronto, siga para VIRIDIAN CITY ao norte.'
                         ]);
                     }, 500);
                 }
@@ -905,12 +1040,79 @@
             }
         }
     }
+
+    function onMapEnter(mapId) {
+        // Lightweight, non-breaking story hooks. Real season script will live in beats/flags.
+        if (!GS.story) GS.story = {};
+        if (mapId === 'viridian' && !GS.story.visitedViridian) {
+            GS.story.visitedViridian = true;
+            setTimeout(() => {
+                showDialog('', [
+                    '[ VIRIDIAN CITY ]',
+                    'A atmosfera aqui e diferente.',
+                    'Voce sente que algo grande esta por vir...'
+                ]);
+            }, 400);
+        }
+        if (mapId === 'viridian_forest' && GS.story.gotSaur && !GS.story.forestBeat1) {
+            GS.story.forestBeat1 = true;
+            setTimeout(() => {
+                showDialog('', [
+                    '[ VIRIDIAN FOREST ]',
+                    'A grama alta se move, como se o lugar estivesse vivo.',
+                    'POLI fica alerta.'
+                ], () => {
+                    // Scripted battle demo (manga-first: player only confirms).
+                    startBattle(
+                        {name: 'PIDGEY', spr: 'pidgey', lv: 4, hp: 18, maxHp: 18},
+                        {
+                            scripted: true,
+                            scriptSteps: [
+                                {type: 'log', text: 'Um PIDGEY selvagem apareceu!'},
+                                {type: 'playerMove', move: 'Water Gun', damage: 7},
+                                {type: 'enemyMove', move: 'Tackle', damage: 3},
+                                {type: 'playerMove', move: 'Water Gun', damage: 999},
+                                {type: 'end', won: true},
+                            ],
+                            onEnd: (won) => {
+                                if (!won) return;
+                                showDialog('', [
+                                    'O silencio volta por um instante...',
+                                    'Mas a floresta ainda observa.'
+                                ]);
+                            }
+                        }
+                    );
+                });
+            }, 400);
+        }
+        if (mapId === 'pewter' && !GS.story.visitedPewter) {
+            GS.story.visitedPewter = true;
+            setTimeout(() => {
+                showDialog('', [
+                    '[ PEWTER CITY ]',
+                    'Rocha, poeira... e um silencio estranho.',
+                    'Algo observa voce das sombras.'
+                ]);
+            }, 400);
+        }
+    }
     
     // ==================== ENCOUNTERS ====================
+    const GAME_MODE = {
+        // When true: encounters/battles/captures/evolutions are driven by story beats (manga).
+        // Random encounters are disabled to avoid grind and keep narrative control.
+        storyLock: true,
+        // When true and storyLock is false, allow tall grass RNG encounters.
+        randomEncounters: true,
+    };
+
     function checkEncounter() {
         const map = MAPS[GS.map];
         // Need Poliwhirl (or any team Pokemon) to battle
         if (!map || !map.enc || !GS.story.gotSaur || GS.team.length === 0) return;
+        if (GAME_MODE.storyLock) return; // manga-driven only
+        if (!GAME_MODE.randomEncounters) return;
         const tile = map.data[GS.py * map.w + GS.px];
         if (tile !== T.TALL_GRASS) return;
         if (Math.random() * 100 < map.enc.rate) {
@@ -933,11 +1135,135 @@
         if (GS.team.length === 0) return GS.poli; // Fallback
         return GS.team[0]; // For now, first Pokemon
     }
+
+    function setBattleLog(text) {
+        document.getElementById('battleLog').textContent = text;
+    }
+
+    function showBattleOk(label = 'OK') {
+        const btn = document.getElementById('battleOkBtn');
+        btn.textContent = label;
+        document.getElementById('battleOk').style.display = 'block';
+    }
+
+    function hideBattleOk() {
+        document.getElementById('battleOk').style.display = 'none';
+    }
+
+    // Manga-first UX: battles are scripted, player only confirms (A/OK) to proceed.
+    function battleWaitOk(label, fn) {
+        battle.pending = fn;
+        showBattleOk(label);
+    }
+
+    function battleOk() {
+        if (!inBattle || !battle) return;
+        if (!battle.pending) return;
+        const fn = battle.pending;
+        battle.pending = null;
+        hideBattleOk();
+        fn();
+    }
+
+    function battleScriptedStep() {
+        if (!battle || !battle.scripted) return;
+        const steps = battle.scriptSteps || [];
+        if (battle.scriptIndex >= steps.length) {
+            endBattle(true);
+            return;
+        }
+        const step = steps[battle.scriptIndex++];
+
+        if (step.type === 'log') {
+            setBattleLog(step.text || '...');
+            battleWaitOk('OK', () => battleScriptedStep());
+            return;
+        }
+
+        if (step.type === 'playerMove') {
+            const active = getActivePokemon();
+            const moveName = step.move || 'Attack';
+            const dmg = Math.max(0, step.damage ?? 0);
+            setBattleLog(`${active.name || active.species} vai usar ${moveName}.`);
+            battleWaitOk('OK', () => {
+                // Apply
+                battle.enemy.hp = Math.max(0, battle.enemy.hp - dmg);
+                const pct = battle.enemy.hp / battle.enemy.maxHp * 100;
+                const bar = document.getElementById('enemyHp');
+                bar.style.width = pct + '%';
+                bar.className = 'hp-fill' + (pct < 20 ? ' critical' : pct < 50 ? ' low' : '');
+                setBattleLog(`${active.name || active.species} usou ${moveName}! ${dmg ? `${dmg} de dano!` : ''}`.trim());
+                if (battle.enemy.hp <= 0) { setTimeout(() => endBattle(true), 700); return; }
+                setTimeout(() => battleScriptedStep(), 500);
+            });
+            return;
+        }
+
+        if (step.type === 'enemyMove') {
+            const active = getActivePokemon();
+            const moveName = step.move || 'Attack';
+            const dmg = Math.max(0, step.damage ?? 0);
+            setBattleLog(`${battle.enemy.name} vai atacar.`);
+            battleWaitOk('OK', () => {
+                active.hp = Math.max(0, active.hp - dmg);
+                updatePlayerHp();
+                setBattleLog(`${battle.enemy.name} usou ${moveName}! ${dmg ? `${dmg} de dano!` : ''}`.trim());
+                if (active.hp <= 0) { setTimeout(() => endBattle(false), 700); return; }
+                setTimeout(() => battleScriptedStep(), 500);
+            });
+            return;
+        }
+
+        if (step.type === 'usePotion') {
+            const active = getActivePokemon();
+            const heal = Math.max(0, step.heal ?? 20);
+            setBattleLog(`Usar POTION em ${active.name || active.species}?`);
+            battleWaitOk('OK', () => {
+                if (GS.items.potion > 0) GS.items.potion--;
+                active.hp = Math.min(active.maxHp, active.hp + heal);
+                updatePlayerHp();
+                setBattleLog(`POTION! +${heal} HP.`);
+                setTimeout(() => battleScriptedStep(), 500);
+            });
+            return;
+        }
+
+        if (step.type === 'capture') {
+            // Capture is story-driven. We only show it and advance.
+            const who = step.who || battle.enemy.name;
+            setBattleLog(`Tentar capturar ${who}.`);
+            battleWaitOk('OK', () => {
+                setBattleLog(`${who} foi capturado!`);
+                // Hook: caller can set flags/team in onCapture
+                if (battle.onCapture) battle.onCapture(who);
+                setTimeout(() => battleScriptedStep(), 500);
+            });
+            return;
+        }
+
+        if (step.type === 'end') {
+            endBattle(!!step.won);
+            return;
+        }
+
+        // Unknown step: skip safely
+        battleScriptedStep();
+    }
     
-    function startBattle(enemy) {
+    function startBattle(enemy, opts = {}) {
         inBattle = true;
         const active = getActivePokemon();
-        battle = {enemy, turn: 'player', active};
+        battle = {
+            enemy,
+            turn: 'player',
+            active,
+            scripted: !!opts.scripted || (GAME_MODE.storyLock && opts.scripted !== false),
+            scriptSteps: Array.isArray(opts.scriptSteps) ? opts.scriptSteps : null,
+            scriptIndex: 0,
+            pending: null,
+            onEnd: typeof opts.onEnd === 'function' ? opts.onEnd : null,
+            onCapture: typeof opts.onCapture === 'function' ? opts.onCapture : null,
+        };
         
         document.getElementById('enemyName').textContent = enemy.name;
         document.getElementById('enemyLevel').textContent = 'Lv. ' + enemy.lv;
@@ -953,11 +1279,30 @@
         document.getElementById('playerSprite').src = backSprite;
         updatePlayerHp();
         
-        document.getElementById('battleLog').textContent = `Wild ${enemy.name} appeared!`;
+        setBattleLog(`Wild ${enemy.name} appeared!`);
         document.getElementById('battleScreen').style.display = 'flex';
-        document.getElementById('battleMenu').style.display = 'grid';
         document.getElementById('movesMenu').style.display = 'none';
-        buildMoves();
+        hideBattleOk();
+
+        if (battle.scripted) {
+            // In manga-first mode, hide menus and run the script.
+            document.getElementById('battleMenu').style.display = 'none';
+            // Default scripted flow if caller didn't pass steps (safe minimal fight).
+            if (!battle.scriptSteps) {
+                battle.scriptSteps = [
+                    {type: 'log', text: `Um ${enemy.name} selvagem apareceu!`},
+                    {type: 'playerMove', move: 'Water Gun', damage: 6},
+                    {type: 'enemyMove', move: 'Tackle', damage: 3},
+                    {type: 'playerMove', move: 'Water Gun', damage: 999},
+                    {type: 'end', won: true},
+                ];
+            }
+            battle.scriptIndex = 0;
+            battleScriptedStep();
+        } else {
+            document.getElementById('battleMenu').style.display = 'grid';
+            buildMoves();
+        }
     }
     
     function updatePlayerHp() {
@@ -1044,16 +1389,21 @@
         const pokeName = active.name || active.species;
         
         if (won) {
-            const exp = battle.enemy.lv * 10;
-            active.exp += exp;
-            if (active.exp >= active.lv * 50) {
-                active.lv++;
-                active.exp = 0;
-                active.maxHp += 2;
-                active.hp = active.maxHp;
-                document.getElementById('battleLog').textContent = `${pokeName} grew to Lv.${active.lv}!`;
+            if (!GAME_MODE.storyLock) {
+                const exp = battle.enemy.lv * 10;
+                active.exp += exp;
+                if (active.exp >= active.lv * 50) {
+                    active.lv++;
+                    active.exp = 0;
+                    active.maxHp += 2;
+                    active.hp = active.maxHp;
+                    document.getElementById('battleLog').textContent = `${pokeName} grew to Lv.${active.lv}!`;
+                } else {
+                    document.getElementById('battleLog').textContent = `Gained ${exp} EXP!`;
+                }
             } else {
-                document.getElementById('battleLog').textContent = `Gained ${exp} EXP!`;
+                // In storyLock mode, leveling is cosmetic and scripted by story beats.
+                document.getElementById('battleLog').textContent = `Victory!`;
             }
         } else {
             document.getElementById('battleLog').textContent = `${pokeName} fainted...`;
@@ -1062,12 +1412,20 @@
         setTimeout(() => {
             document.getElementById('battleScreen').style.display = 'none';
             inBattle = false;
+            const onEnd = battle && battle.onEnd ? battle.onEnd : null;
+            const wonFinal = won;
             battle = null;
             saveGame();
+            if (onEnd) onEnd(wonFinal);
         }, 2000);
     }
     
     function tryRun() {
+        if (GAME_MODE.storyLock) {
+            document.getElementById('battleLog').textContent = "Can't escape!";
+            setTimeout(enemyTurn, 1000);
+            return;
+        }
         if (Math.random() < 0.7) {
             document.getElementById('battleLog').textContent = 'Got away safely!';
             setTimeout(() => {
@@ -1127,32 +1485,32 @@
         if (npc.name === 'Blue') {
             if (!GS.story.sawMew) {
                 return [
-                    '...Oh, it\'s you. RED.',
-                    'Still bragging about being a great trainer?',
-                    'That POLIWHIRL of yours is the only one you have!',
-                    'Call me when you\'ve actually caught something!'
+                    '...Ah. Voce, RED.',
+                    'Ainda se gabando de ser um grande treinador?',
+                    'Esse seu POLIWHIRL e a unica coisa que voce tem.',
+                    'Me chama quando conseguir capturar algo de verdade.'
                 ];
             } else if (!GS.story.gotSaur) {
                 return [
-                    '...Did you see that weird light too?',
-                    'Gramps has been obsessing over it.',
-                    'Something about a legendary POKéMON...',
-                    'Whatever it is, I\'ll catch it before you!'
+                    '...Voce viu aquela luz estranha tambem?',
+                    'O velho esta obcecado com isso.',
+                    'Um papo de POKeMON lendario...',
+                    'Seja o que for, eu vou capturar antes de voce.'
                 ];
             } else if (!GS.story.metBlue) {
                 GS.story.metBlue = true;
                 return [
-                    'So Gramps gave you a BULBASAUR? Big deal.',
-                    'He gave me CHARMANDER. It\'s way stronger!',
-                    'I\'m BLUE - the TRAINER. I train POKéMON to be the best!',
-                    'We\'ll see who\'s the real champion!',
-                    '...Smell ya later, RED!'
+                    'Entao o velho te deu um BULBASAUR? Grande coisa.',
+                    'Ele me deu um CHARMANDER. Muito mais forte.',
+                    'Eu sou o BLUE. Eu treino POKeMON para vencer.',
+                    'Vamos ver quem e o verdadeiro melhor.',
+                    '...Ate mais, RED.'
                 ];
             } else {
                 return [
-                    'What? Still hanging around here?',
-                    'I\'m already ahead of you. As always.',
-                    'Smell ya later!'
+                    'O que foi agora? Ainda por aqui?',
+                    'Eu ja estou na frente. Como sempre.',
+                    'Ate mais.'
                 ];
             }
         }
@@ -1161,23 +1519,23 @@
         if (npc.name === 'Girl') {
             if (!GS.story.sawMew) {
                 return [
-                    'Welcome to PALLET TOWN!',
-                    'That RED boy is always bragging...',
-                    '"I\'m gonna be the greatest trainer!"',
-                    'He only has one POKéMON though!'
+                    'Bem-vindo a PALLET TOWN!',
+                    'Esse RED vive se gabando...',
+                    '"Vou ser o maior treinador!"',
+                    'Mas ele so tem um POKeMON!'
                 ];
             } else if (!GS.story.gotSaur) {
                 return [
-                    'Did you see that light in the forest?!',
-                    'Professor OAK says it might be the legendary MEW!',
-                    'I hope it\'s not dangerous...'
+                    'Voce viu aquela luz na floresta?!',
+                    'O Professor OAK disse que pode ser o MEW!',
+                    'Tomara que nao seja perigoso...'
                 ];
             } else {
                 return [
-                    'Wow, the professor gave you a BULBASAUR!',
-                    'You and BLUE are both trainers now!',
-                    'I heard TEAM ROCKET has been seen up north...',
-                    'They capture rare POKéMON for evil purposes!'
+                    'Uau, o professor te deu um BULBASAUR!',
+                    'Voce e o BLUE agora sao treinadores!',
+                    'Ouvi dizer que a TEAM ROCKET foi vista ao norte...',
+                    'Eles capturam POKeMON raros para coisas horriveis!'
                 ];
             }
         }
@@ -1186,21 +1544,21 @@
         if (npc.name === 'Mom') {
             if (!GS.story.sawMew) {
                 return [
-                    'RED, please stop bragging to the other kids!',
-                    'Yes, you raised POLI all by yourself, but...',
-                    'Maybe Professor OAK can teach you some humility!'
+                    'RED, pare de se gabar para as outras criancas!',
+                    'Eu sei que voce criou o POLI sozinho, mas...',
+                    'Talvez o Professor OAK te ensine um pouco de humildade.'
                 ];
             } else if (!GS.story.gotSaur) {
                 return [
-                    'RED! Professor OAK was looking for you!',
-                    'He said he saw that light in the forest too!',
-                    'Go to his lab, quickly!'
+                    'RED! O Professor OAK estava te procurando!',
+                    'Ele disse que viu aquela luz na floresta tambem!',
+                    'Vá ao laboratorio, rapido!'
                 ];
             } else {
                 return [
-                    'My RED... a real POKéMON trainer now!',
-                    'POLI and SAUR are lucky to have you!',
-                    'Be careful out there, and call me sometimes!'
+                    'Meu RED... agora um treinador de POKeMON de verdade.',
+                    'POLI e SAUR tem sorte de ter voce.',
+                    'Tome cuidado la fora... e apareca de vez em quando.'
                 ];
             }
         }
@@ -1209,15 +1567,15 @@
         if (npc.name === 'Daisy') {
             if (!GS.story.gotSaur) {
                 return [
-                    'Looking for BLUE? He went to grandpa\'s lab.',
-                    'He was so excited... grandpa gave him a POKéMON!',
-                    'A CHARMANDER, I think it was...'
+                    'Procurando o BLUE? Ele foi ao laboratorio do vovo.',
+                    'Ele estava todo animado... o vovo deu um POKeMON a ele.',
+                    'Um CHARMANDER, eu acho...'
                 ];
             } else {
                 return [
-                    'So grandpa gave you a POKéMON too!',
-                    'BLUE was here bragging about his CHARMANDER.',
-                    'You two have always been rivals, haven\'t you?'
+                    'Entao o vovo te deu um POKeMON tambem!',
+                    'O BLUE passou aqui se gabando do CHARMANDER.',
+                    'Voces dois sempre foram rivais, ne?'
                 ];
             }
         }
@@ -1226,21 +1584,21 @@
         if (npc.name === 'Prof. Oak') {
             if (!GS.story.sawMew) {
                 return [
-                    'Ah, RED! Come in, come in!',
-                    'Have you noticed anything strange in the forest lately?',
-                    'There have been unusual energy readings...'
+                    'Ah, RED! Entre, entre!',
+                    'Voce notou algo estranho na floresta ultimamente?',
+                    'Tenho registrado leituras de energia... incomuns.'
                 ];
             } else if (!GS.story.gotSaur) {
                 // This shouldn't happen often - warp handles it
                 return [
-                    'RED! You\'re here! Let me show you something!'
+                    'RED! Ainda bem que veio. Preciso te mostrar algo!'
                 ];
             } else {
                 return [
-                    'How is POLI doing?',
-                    'Remember, the POKéDEX records data automatically!',
-                    'VIRIDIAN CITY is to the north. That\'s a good first destination.',
-                    'But be careful... TEAM ROCKET has been spotted in the area.'
+                    'Como o POLI esta?',
+                    'Lembre: a POKeDEX registra dados automaticamente.',
+                    'VIRIDIAN CITY fica ao norte. E um bom primeiro destino.',
+                    'Mas tenha cuidado... ja vi sinais da TEAM ROCKET pela area.'
                 ];
             }
         }
@@ -1250,6 +1608,7 @@
     }
     
     function handleA() {
+        if (inBattle && battle && battle.pending) { battleOk(); return; }
         if (dialog) { nextDialog(); return; }
         const map = MAPS[GS.map];
         if (!map || !map.npcs) return;
@@ -1279,9 +1638,27 @@
     
     // ==================== SAVE/LOAD ====================
     function saveGame() { localStorage.setItem('pokemon_adv', JSON.stringify(GS)); }
+    function migrateSave(gs) {
+        if (!gs || typeof gs !== 'object') return gs;
+        if (!gs.story || typeof gs.story !== 'object') gs.story = {};
+        if (typeof gs.story.chapter !== 'number') gs.story.chapter = 1;
+        if (typeof gs.story.season !== 'number') gs.story.season = 1;
+        if (typeof gs.story.beat !== 'string') gs.story.beat = 'ch1_intro';
+        if (typeof gs.story.visitedViridian !== 'boolean') gs.story.visitedViridian = false;
+        if (typeof gs.story.visitedPewter !== 'boolean') gs.story.visitedPewter = false;
+        if (!Array.isArray(gs.team)) gs.team = [];
+        if (!gs.items) gs.items = {potion: 0, pokeball: 0};
+        if (!gs.poli) gs.poli = {name: 'POLI', species: 'POLIWHIRL', hp: 28, maxHp: 28, lv: 8, exp: 0};
+        return gs;
+    }
     function loadGame() {
         const s = localStorage.getItem('pokemon_adv');
-        if (s) { GS = JSON.parse(s); document.getElementById('titleScreen').style.display = 'none'; render(); }
+        if (s) {
+            GS = migrateSave(JSON.parse(s));
+            document.getElementById('titleScreen').style.display = 'none';
+            onMapEnter(GS.map);
+            render();
+        }
         else alert('No save found!');
     }
     
@@ -1291,6 +1668,8 @@
             px: 10, py: 10, dir: 'down', map: 'pallet_town',
             // Story progression (MANGA ACCURATE)
             story: {
+                season: 1,
+                beat: 'ch1_intro',
                 chapter: 1,           // Ch1: VS Mew
                 sawMew: false,        // Saw Mew in forest
                 talkedToOak: false,   // First talk with Oak
@@ -1320,50 +1699,50 @@
                 '━━━━━━━━━━━━━━━━━━━━━━'
             ], () => {
                 showDialog('', [
-                    'PALLET TOWN - A small town in the KANTO region.',
-                    'Here lives a young boy who brags about being a great trainer...',
-                    'His name is RED.'
+                    'PALLET TOWN - Uma pequena cidade na regiao de KANTO.',
+                    'Aqui vive um garoto que vive se gabando de ser um grande treinador...',
+                    'O nome dele e RED.'
                 ], () => {
                     showDialog('RED', [
-                        'Heh! Check it out! I\'m the FIGHTER!',
-                        'The greatest POKéMON trainer in all of Pallet Town!',
-                        'Me and my partner POLI are unstoppable!'
+                        'Heh! Olha so!',
+                        'Eu vou ser o maior treinador de POKeMON de PALLET TOWN!',
+                        'Eu e meu parceiro POLI somos imparaveis!'
                     ], () => {
                         showDialog('', [
-                            '[ Red already has POLI, a Poliwhirl he raised from an egg! ]',
-                            '[ But the other kids in town don\'t believe his boasts... ]'
+                            '[ RED ja tem o POLI, um Poliwhirl que ele criou desde pequeno. ]',
+                            '[ Mas as outras criancas nao acreditam nas suas bravatas... ]'
                         ], () => {
                             showDialog('???', [
-                                'Oh yeah? If you\'re so great, prove it!',
-                                'You always talk big, but nobody\'s seen you battle!'
+                                'Ah e? Entao prova!',
+                                'Voce fala, fala... mas ninguem nunca te viu lutar de verdade!'
                             ], () => {
                                 showDialog('RED', [
-                                    'Tch! Fine! I\'ll show you!',
-                                    'I\'m gonna catch the rarest POKéMON ever!',
-                                    '...Huh? What\'s that light in the forest?!'
+                                    'Tch! Ta bom! Eu vou mostrar!',
+                                    'Eu vou capturar o POKeMON mais raro de todos!',
+                                    '...Huh? Que luz e essa na floresta?!'
                                 ], () => {
                                     // The Mew encounter!
                                     showDialog('', [
-                                        '[ A brilliant light shines through the trees! ]',
-                                        '[ A mysterious pink POKéMON floats before you! ]',
-                                        '[ It\'s small... with innocent, curious eyes... ]'
+                                        '[ Uma luz brilhante atravessa as arvores! ]',
+                                        '[ Um POKeMON rosa misterioso flutua diante de voce! ]',
+                                        '[ Pequeno... com um olhar curioso e inocente... ]'
                                     ], () => {
                                         showDialog('RED', [
-                                            'Wh-What IS that?! I\'ve never seen anything like it!',
-                                            'This is my chance! POLI, let\'s catch it!',
-                                            'Go, POKé BALL!'
+                                            'O-O que e isso?! Eu nunca vi nada assim!',
+                                            'Essa e a minha chance! POLI, vamos capturar!',
+                                            'Vai, POKe BALL!'
                                         ], () => {
                                             showDialog('', [
-                                                '[ RED throws a POKé BALL! ]',
-                                                '[ ...But MEW creates a barrier and deflects it! ]',
-                                                '[ MEW tilts its head curiously... then vanishes! ]'
+                                                '[ RED arremessa uma POKe BALL! ]',
+                                                '[ ...Mas MEW cria uma barreira e desvia! ]',
+                                                '[ MEW inclina a cabeca... e desaparece! ]'
                                             ], () => {
                                                 GS.story.sawMew = true;
                                                 GS.team = [GS.poli]; // Red has Poli from the start!
                                                 showDialog('RED', [
-                                                    'It... it got away! But what WAS that thing?!',
-                                                    'Even POLI couldn\'t keep up with it...',
-                                                    'Professor OAK studies rare POKéMON. He might know!'
+                                                    'E... escapou! Mas o que ERA aquilo?!',
+                                                    'Nem o POLI conseguiu acompanhar...',
+                                                    'O Professor OAK estuda POKeMON raros. Ele deve saber!'
                                                 ]);
                                             });
                                         });
