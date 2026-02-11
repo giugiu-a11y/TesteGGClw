@@ -2,7 +2,7 @@
   "meta": {
     "season": 1,
     "language": "pt-BR",
-    "fidelity_target": 0.75,
+    "fidelity_target": 1.0,
     "sources": [
       {
         "id": "manga_vol1_scribd",
@@ -26,7 +26,7 @@
       }
     ],
     "notes": [
-      "Objetivo: >=75% fidelidade ao manga Pokemon Adventures.",
+      "Objetivo: fidelidade maxima de roteiro para o arco RGB (adaptacao cena-a-cena para formato web interativo).",
       "Cada beat deve ter sourceRef (capitulo/pagina/edicao/scan) para revisao.",
       "Texto no jogo deve ser preferencialmente uma adaptacao fiel; texto 100% literal depende de voce fornecer o transcript/trechos exatos (copyright)."
     ]
@@ -497,11 +497,141 @@
       ]
     },
     {
+      "id": "ch18_oak_debrief",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "Prof. Oak", "lines": ["RED, BLUE e GREEN...", "vocês tres mudaram o rumo de KANTO.", "Mas isso tambem atraiu novos inimigos."]},
+        {"kind": "dialog", "speaker": "RED", "lines": ["Se vierem atras da gente, a gente responde.", "Nao vou recuar agora."]},
+        {"kind": "set", "path": "story.block_25_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch19_green_reveal",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "Green", "lines": ["Eu roubei, menti e fingi varias vezes...", "mas era o jeito que eu tinha pra sobreviver.", "Agora eu escolho o meu proprio lado."]},
+        {"kind": "dialog", "speaker": "Blue", "lines": ["Heh. Finalmente falando serio, Green?"]},
+        {"kind": "dialog", "speaker": "Green", "lines": ["Nao se acostuma, arrogante."]},
+        {"kind": "set", "path": "story.block_26_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch20_lance_warning",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "Lance", "lines": ["A ameaca nao terminou com uma unica batalha.", "KANTO ainda tem focos de violencia e controle ilegal de POKeMON."]},
+        {"kind": "dialog", "speaker": "RED", "lines": ["Entao a gente limpa o resto.", "Sem deixar ninguem pra tras."]},
+        {"kind": "set", "path": "story.block_27_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch21_rocket_remnant",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ REMANESCENTES DA TEAM ROCKET ]", "Um ultimo nucleo tenta recuperar pesquisa e armamento."]},
+        {
+          "kind": "battle",
+          "enemy": {"name": "ARBOK", "spr": "arbok", "lv": 38, "hp": 124, "maxHp": 124},
+          "options": {
+            "scripted": true,
+            "onEnd": "only_if_win",
+            "scriptSteps": [
+              {"type": "log", "text": "COMANDANTE ROCKET enviou ARBOK!"},
+              {"type": "enemyMove", "move": "Poison Tail", "damage": 11},
+              {"type": "playerMove", "move": "Hypnosis", "damage": 0},
+              {"type": "playerMove", "move": "Bubble Beam", "damage": 999},
+              {"type": "end", "won": true}
+            ]
+          }
+        },
+        {"kind": "set", "path": "story.block_28_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch22_red_blue_duel",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "Blue", "lines": ["Vamos encerrar do jeito certo, RED.", "Sem interrupcao, sem caos externo. So nos dois."]},
+        {
+          "kind": "battle",
+          "enemy": {"name": "CHARIZARD", "spr": "charizard", "lv": 40, "hp": 132, "maxHp": 132},
+          "options": {
+            "scripted": true,
+            "onEnd": "only_if_win",
+            "scriptSteps": [
+              {"type": "log", "text": "BLUE enviou CHARIZARD!"},
+              {"type": "enemyMove", "move": "Wing Attack", "damage": 12},
+              {"type": "playerMove", "move": "Body Slam", "damage": 16},
+              {"type": "enemyMove", "move": "Flamethrower", "damage": 13},
+              {"type": "playerMove", "move": "Bubble Beam", "damage": 999},
+              {"type": "end", "won": true}
+            ]
+          }
+        },
+        {"kind": "dialog", "speaker": "Blue", "lines": ["...Boa luta.", "Da proxima vez, eu devolvo."]},
+        {"kind": "set", "path": "story.block_29_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch23_team_unity",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ RED, BLUE e GREEN fecham o arco como trio ]", "As diferencas continuam, mas a confianca nasce no campo de batalha."]},
+        {"kind": "dialog", "speaker": "Green", "lines": ["Nao precisa virar amizade melosa.", "So nao atrapalha e ja ta bom."]},
+        {"kind": "set", "path": "story.block_30_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch24_mew_trace",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ SINAL DE MEW ]", "Um novo padrao de energia aparece e desaparece no mapa de KANTO."]},
+        {"kind": "dialog", "speaker": "RED", "lines": ["Entao voce ainda esta por ai...", "Eu vou te encontrar de novo, MEW."]},
+        {"kind": "set", "path": "story.block_31_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch25_training_push",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "Prof. Oak", "lines": ["Forca sem controle e so risco.", "Treinem com objetivo, nao com ego."]},
+        {"kind": "dialog", "speaker": "", "lines": ["[ O time de RED entra num novo ciclo de treino tecnico. ]"]},
+        {"kind": "set", "path": "story.block_32_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch26_kanto_peace",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ KANTO RESPIRA ]", "As cidades voltam a rotina e os POKeMON deixam de viver em estado de guerra."]},
+        {"kind": "dialog", "speaker": "RED", "lines": ["Paz de verdade da trabalho pra manter.", "E eu to pronto pra esse trabalho."]},
+        {"kind": "set", "path": "story.block_33_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch27_season1_closure",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ FIM DA TEMPORADA 1 ]", "Arco RGB encerrado em modo jogavel completo.", "Proxima etapa: Gold/Silver/Crystal arc."]},
+        {"kind": "set", "path": "story.block_34_done", "value": true}
+      ]
+    },
+    {
       "id": "s1_outline_next",
       "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
       "type": "outline",
       "actions": [
-        {"kind": "dialog", "speaker": "", "lines": ["[ STATUS ]", "24 blocos narrativos ja estruturados e integrados ao fluxo automatico.", "Proximo passo: refinamento visual final (tiles/layout) e polimento de cenas."]}
+        {"kind": "dialog", "speaker": "", "lines": ["[ STATUS ]", "34 blocos narrativos estruturados para fechamento do arco da temporada.", "Proximo passo: refinamento visual final (tiles/layout) e polimento de cenas."]}
       ]
     }
   ]
