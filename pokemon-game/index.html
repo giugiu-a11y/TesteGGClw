@@ -90,27 +90,29 @@
         .btn-a { background: #e63946; border-color: #c1121f; color: white; }
         .btn-b { background: #457b9d; border-color: #1d3557; color: white; }
         
+        /* FRLG-ish message box */
         #dialogBox {
             display: none;
             position: fixed;
             bottom: 100px; left: 50%;
             transform: translateX(-50%);
             width: 90%; max-width: 480px;
-            background: #fff;
-            border: 4px solid #333;
+            background: #f7f3e8;
+            border: 4px solid #1f2a44;
             border-radius: 8px;
             padding: 12px;
             font-size: 11px;
             line-height: 1.8;
             z-index: 2000;
+            box-shadow: 0 10px 0 rgba(0,0,0,0.35);
         }
         
         #dialogBox .speaker {
-            font-weight: bold; color: #c1121f;
+            font-weight: bold; color: #1f2a44;
             margin-bottom: 6px; font-size: 10px;
         }
         
-        #dialogBox .text { color: #333; }
+        #dialogBox .text { color: #1b1b1b; }
         #dialogBox .continue { 
             text-align: right; font-size: 8px; 
             color: #666; margin-top: 8px;
@@ -924,6 +926,28 @@
         );
     }
 
+    function sameTile(map, x, y, tile) {
+        if (!map) return false;
+        if (x < 0 || y < 0 || x >= map.w || y >= map.h) return false;
+        return map.data[y * map.w + x] === tile;
+    }
+
+    function drawEdgeLines(sx, sy, color, a, edgeMask) {
+        // edgeMask: {t,b,l,r} booleans
+        const x0 = sx * ST;
+        const y0 = sy * ST;
+        ctx.save();
+        ctx.globalAlpha = a;
+        ctx.fillStyle = color;
+        const w = ST, h = ST;
+        const t = 3; // thickness in pixels (scaled-space)
+        if (edgeMask.t) ctx.fillRect(x0, y0, w, t);
+        if (edgeMask.b) ctx.fillRect(x0, y0 + h - t, w, t);
+        if (edgeMask.l) ctx.fillRect(x0, y0, t, h);
+        if (edgeMask.r) ctx.fillRect(x0 + w - t, y0, t, h);
+        ctx.restore();
+    }
+
     function isBuildingTile(t) {
         return t === T.HOUSE_RED || t === T.HOUSE_BLUE || t === T.LAB;
     }
@@ -936,8 +960,30 @@
         }
 
         if (tile === T.GRASS) { drawFromAtlas(0, 0, sx, sy); return; }
-        if (tile === T.PATH) { drawFromAtlas(1, 0, sx, sy); return; }
-        if (tile === T.WATER) { drawFromAtlas(2, 0, sx, sy); return; }
+        if (tile === T.PATH) {
+            drawFromAtlas(1, 0, sx, sy);
+            // Add subtle border where PATH touches GRASS (cheap autotile, FRLG-like).
+            const edges = {
+                t: !sameTile(map, mx, my - 1, T.PATH) && !sameTile(map, mx, my - 1, T.WARP),
+                b: !sameTile(map, mx, my + 1, T.PATH) && !sameTile(map, mx, my + 1, T.WARP),
+                l: !sameTile(map, mx - 1, my, T.PATH) && !sameTile(map, mx - 1, my, T.WARP),
+                r: !sameTile(map, mx + 1, my, T.PATH) && !sameTile(map, mx + 1, my, T.WARP),
+            };
+            drawEdgeLines(sx, sy, 'rgba(0,0,0,0.22)', 1.0, edges);
+            return;
+        }
+        if (tile === T.WATER) {
+            drawFromAtlas(2, 0, sx, sy);
+            // Shoreline hint when WATER touches non-water.
+            const edges = {
+                t: !sameTile(map, mx, my - 1, T.WATER),
+                b: !sameTile(map, mx, my + 1, T.WATER),
+                l: !sameTile(map, mx - 1, my, T.WATER),
+                r: !sameTile(map, mx + 1, my, T.WATER),
+            };
+            drawEdgeLines(sx, sy, 'rgba(215,191,138,0.55)', 1.0, edges); // sand-ish
+            return;
+        }
         if (tile === T.TALL_GRASS) { drawFromAtlas(3, 0, sx, sy); return; }
         if (tile === T.TREE) { drawFromAtlas(4, 0, sx, sy); return; }
         if (tile === T.FENCE) { drawFromAtlas(5, 0, sx, sy); return; }
