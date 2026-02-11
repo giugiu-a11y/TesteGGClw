@@ -642,11 +642,209 @@
       ]
     },
     {
+      "id": "ch28_vs_nidorino",
+      "sourceRef": "Pokemon Adventures RGB Arc (chapter-mapped adaptation, Vol.1-3) - scene aligned",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "RED revisita os primeiros confrontos que moldaram seu estilo de batalha."]},
+        {
+          "kind": "battle",
+          "enemy": {"name": "NIDOKING", "spr": "nidoking", "lv": 32, "hp": 102, "maxHp": 102},
+          "options": {
+            "scripted": true,
+            "onEnd": "only_if_win",
+            "scriptSteps": [
+              {"type": "log", "text": "NIDORINO evoluido (NIDOKING) desafia RED!"},
+              {"type": "enemyMove", "move": "Horn Attack", "damage": 10},
+              {"type": "playerMove", "move": "Bubble Beam", "damage": 999},
+              {"type": "end", "won": true}
+            ]
+          }
+        },
+        {"kind": "set", "path": "story.block_35_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch29_vs_fearow",
+      "sourceRef": "Pokemon Adventures RGB Arc (chapter-mapped adaptation, Vol.1-3) - scene aligned",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "Um FEAROW mergulha em alta velocidade, repetindo o caos dos primeiros arcos."]},
+        {
+          "kind": "battle",
+          "enemy": {"name": "PIDGEY", "spr": "pidgey", "lv": 28, "hp": 92, "maxHp": 92},
+          "options": {
+            "scripted": true,
+            "onEnd": "only_if_win",
+            "scriptSteps": [
+              {"type": "log", "text": "FEAROW (proxy visual) ataca pelo ceu!"},
+              {"type": "enemyMove", "move": "Drill Peck", "damage": 9},
+              {"type": "playerMove", "move": "Body Slam", "damage": 14},
+              {"type": "playerMove", "move": "Bubble Beam", "damage": 999},
+              {"type": "end", "won": true}
+            ]
+          }
+        },
+        {"kind": "set", "path": "story.block_36_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch30_vs_snorlax",
+      "sourceRef": "Pokemon Adventures RGB Arc (chapter-mapped adaptation, Vol.1-3) - scene aligned",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "O caminho e bloqueado por um SNORLAX agressivo e exausto."]},
+        {
+          "kind": "battle",
+          "enemy": {"name": "SNORLAX", "spr": "snorlax", "lv": 30, "hp": 120, "maxHp": 120},
+          "options": {
+            "scripted": true,
+            "onEnd": "only_if_win",
+            "scriptSteps": [
+              {"type": "log", "text": "SNORLAX bloqueia a rota!"},
+              {"type": "enemyMove", "move": "Body Slam", "damage": 11},
+              {"type": "playerMove", "move": "Hypnosis", "damage": 0},
+              {"type": "playerMove", "move": "Bubble Beam", "damage": 999},
+              {"type": "end", "won": true}
+            ]
+          }
+        },
+        {"kind": "set", "path": "story.block_37_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch31_vs_exeggutor",
+      "sourceRef": "Pokemon Adventures RGB Arc (chapter-mapped adaptation, Vol.1-3) - scene aligned",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "Um EXEGGUTOR fora de controle surge durante uma evacuacao local."]},
+        {"kind": "dialog", "speaker": "RED", "lines": ["Sem ferir civis. Controle primeiro, forca depois."]},
+        {"kind": "set", "path": "story.block_38_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch32_vs_gyarados",
+      "sourceRef": "Pokemon Adventures RGB Arc (chapter-mapped adaptation, Vol.1-3) - scene aligned",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "battle",
+          "enemy": {"name": "GYARADOS", "spr": "gyarados", "lv": 34, "hp": 110, "maxHp": 110},
+          "options": {
+            "scripted": true,
+            "onEnd": "only_if_win",
+            "scriptSteps": [
+              {"type": "log", "text": "GYARADOS entra em furia no litoral!"},
+              {"type": "enemyMove", "move": "Hydro Pump", "damage": 12},
+              {"type": "playerMove", "move": "Body Slam", "damage": 16},
+              {"type": "playerMove", "move": "Bubble Beam", "damage": 999},
+              {"type": "end", "won": true}
+            ]
+          }
+        },
+        {"kind": "set", "path": "story.block_39_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch33_vs_porygon",
+      "sourceRef": "Pokemon Adventures RGB Arc (chapter-mapped adaptation, Vol.1-3) - scene aligned",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "A equipe intercepta um incidente digital envolvendo PORYGON e dados da Silph."]},
+        {"kind": "dialog", "speaker": "Green", "lines": ["Entrar em sistema fechado e meu tipo de trabalho.", "Segura o lado de fora que eu cuido da brecha."]},
+        {"kind": "set", "path": "story.block_40_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch34_vs_hitmonlee",
+      "sourceRef": "Pokemon Adventures RGB Arc (chapter-mapped adaptation, Vol.1-3) - scene aligned",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "No dojo de SAFFRON, um HITMONLEE testa reflexos e controle tecnico de RED."]},
+        {"kind": "set", "path": "story.block_41_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch35_vs_hypno",
+      "sourceRef": "Pokemon Adventures RGB Arc (chapter-mapped adaptation, Vol.1-3) - scene aligned",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "HYPNO manipula civis em transe para abrir passagem da Rocket."]},
+        {"kind": "dialog", "speaker": "RED", "lines": ["Sem atacar pessoas controladas.", "A gente desmonta isso com precisao."]},
+        {"kind": "set", "path": "story.block_42_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch36_vs_gengar",
+      "sourceRef": "Pokemon Adventures RGB Arc (chapter-mapped adaptation, Vol.1-3) - scene aligned",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "GENGAR surge entre sombras para cobrir retirada da operacao inimiga."]},
+        {"kind": "set", "path": "story.block_43_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch37_vs_alakazam",
+      "sourceRef": "Pokemon Adventures RGB Arc (chapter-mapped adaptation, Vol.1-3) - scene aligned",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "ALAKAZAM domina o campo com leitura antecipada de movimentos."]},
+        {"kind": "dialog", "speaker": "Blue", "lines": ["Nao tenta vencer no grito.", "Quebra o ritmo mental dele primeiro."]},
+        {"kind": "set", "path": "story.block_44_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch38_vs_machamp",
+      "sourceRef": "Pokemon Adventures RGB Arc (chapter-mapped adaptation, Vol.1-3) - scene aligned",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "MACHAMP impõe combate de forca bruta em corredor fechado."]},
+        {"kind": "set", "path": "story.block_45_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch39_vs_dugtrio",
+      "sourceRef": "Pokemon Adventures RGB Arc (chapter-mapped adaptation, Vol.1-3) - scene aligned",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "DUGTRIO colapsa o terreno para isolar o trio em setores diferentes."]},
+        {"kind": "dialog", "speaker": "Green", "lines": ["Sem panico. Reagrupa pelo corredor leste.", "A gente vira isso em dois minutos."]},
+        {"kind": "set", "path": "story.block_46_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch40_vs_rhydon",
+      "sourceRef": "Pokemon Adventures RGB Arc (chapter-mapped adaptation, Vol.1-3) - scene aligned",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "RHYDON abre caminho como arma de cerco da Rocket."]},
+        {"kind": "set", "path": "story.block_47_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch41_vs_dragonair",
+      "sourceRef": "Pokemon Adventures RGB Arc (chapter-mapped adaptation, Vol.1-3) - scene aligned",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "DRAGONAIR aparece como ultimo filtro antes do encerramento total do conflito."]},
+        {"kind": "set", "path": "story.block_48_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch42_rgb_full_closure",
+      "sourceRef": "Pokemon Adventures RGB Arc (chapter-mapped adaptation, Vol.1-3) - scene aligned",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ RGB ARC - FECHAMENTO COMPLETO ]", "Principais rounds, confrontos e marcos centrais foram incorporados no fluxo jogavel.", "A campanha encerra com KANTO estabilizada e gancho ativo para a proxima fase."]},
+        {"kind": "set", "path": "story.block_49_done", "value": true}
+      ]
+    },
+    {
       "id": "s1_outline_next",
       "sourceRef": "Pokemon Adventures RGB Arc (chapter-mapped adaptation, Vol.1-3) - scene aligned",
       "type": "outline",
       "actions": [
-        {"kind": "dialog", "speaker": "", "lines": ["[ STATUS ]", "34 blocos narrativos estruturados para fechamento do arco da temporada.", "Proximo passo: refinamento visual final (tiles/layout) e polimento de cenas."]}
+        {"kind": "dialog", "speaker": "", "lines": ["[ STATUS ]", "49 blocos narrativos estruturados para fechamento do arco RGB com cobertura ampliada.", "Proximo passo: refinamento visual final (tiles/layout) e polimento de cenas."]}
       ]
     }
   ]
