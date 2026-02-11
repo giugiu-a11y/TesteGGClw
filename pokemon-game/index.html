@@ -412,6 +412,7 @@
         pikachuBack: 'https://play.pokemonshowdown.com/sprites/gen3-back/pikachu.png',
         rattata: 'https://play.pokemonshowdown.com/sprites/gen3frlg/rattata.png',
         pidgey: 'https://play.pokemonshowdown.com/sprites/gen3frlg/pidgey.png',
+        staryu: 'https://play.pokemonshowdown.com/sprites/gen3frlg/staryu.png',
         
         // MANGA KEY POKEMON - Red's Team
         poliwhirl: 'https://play.pokemonshowdown.com/sprites/gen3frlg/poliwhirl.png',
@@ -676,6 +677,8 @@
                 // Pewter Gym
                 for (let y = 3; y <= 5; y++) for (let x = 8; x <= 11; x++) m[y * w + x] = T.LAB;
                 m[6 * w + 9] = T.WARP;
+                // North exit to Route 3
+                m[0 * w + 9] = T.WARP; m[0 * w + 10] = T.WARP;
                 // Warps (south back to route2)
                 m[(h - 1) * w + 9] = T.WARP; m[(h - 1) * w + 10] = T.WARP;
                 // Sign near center
@@ -685,7 +688,9 @@
             warps: [
                 {x:9,y:17,to:'route2',tx:9,ty:1},
                 {x:10,y:17,to:'route2',tx:10,ty:1},
-                {x:9,y:6,to:'pewter_gym',tx:5,ty:9}
+                {x:9,y:6,to:'pewter_gym',tx:5,ty:9},
+                {x:9,y:0,to:'route3',tx:1,ty:8},
+                {x:10,y:0,to:'route3',tx:1,ty:9}
             ],
             npcs: [
                 {x:10,y:9,name:'Girl',sprite:'girl',dialog:[
@@ -694,6 +699,177 @@
                     '...E dizem que ha um POKeMON estranho por aqui.'
                 ]},
             ],
+            enc: null
+        },
+
+        route3: {
+            w: 20, h: 16,
+            data: (() => {
+                const w = 20, h = 16;
+                const m = new Array(w * h).fill(T.GRASS);
+                for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+                    if (x === 0 || x === w - 1 || y === 0 || y === h - 1) m[y * w + x] = T.TREE;
+                }
+                for (let x = 1; x < w - 1; x++) {
+                    m[8 * w + x] = T.PATH;
+                    m[9 * w + x] = T.PATH;
+                }
+                for (let y = 3; y <= 5; y++) for (let x = 4; x <= 7; x++) m[y * w + x] = T.TALL_GRASS;
+                for (let y = 10; y <= 12; y++) for (let x = 12; x <= 15; x++) m[y * w + x] = T.TALL_GRASS;
+                m[8 * w + 0] = T.WARP; m[9 * w + 0] = T.WARP;
+                m[8 * w + (w - 1)] = T.WARP; m[9 * w + (w - 1)] = T.WARP;
+                return m;
+            })(),
+            warps: [
+                {x:0,y:8,to:'pewter',tx:9,ty:1},
+                {x:0,y:9,to:'pewter',tx:10,ty:1},
+                {x:19,y:8,to:'mt_moon',tx:1,ty:8},
+                {x:19,y:9,to:'mt_moon',tx:1,ty:9}
+            ],
+            npcs: [],
+            enc: {pokemon:[{name:'RATTATA',spr:'rattata',lv:[6,8],rate:50},{name:'PIDGEY',spr:'pidgey',lv:[6,8],rate:50}],rate:10}
+        },
+
+        mt_moon: {
+            w: 24, h: 16,
+            data: (() => {
+                const w = 24, h = 16;
+                const m = new Array(w * h).fill(T.FLOOR_IN);
+                for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+                    if (x === 0 || x === w - 1 || y === 0 || y === h - 1) m[y * w + x] = T.WALL_IN;
+                }
+                m[8 * w + 0] = T.WARP; m[9 * w + 0] = T.WARP;
+                m[8 * w + (w - 1)] = T.WARP; m[9 * w + (w - 1)] = T.WARP;
+                m[4 * w + 6] = T.TABLE; m[4 * w + 17] = T.TABLE;
+                m[10 * w + 9] = T.TABLE; m[10 * w + 14] = T.TABLE;
+                m[2 * w + 11] = T.SHELF;
+                return m;
+            })(),
+            warps: [
+                {x:0,y:8,to:'route3',tx:18,ty:8},
+                {x:0,y:9,to:'route3',tx:18,ty:9},
+                {x:23,y:8,to:'cerulean',tx:1,ty:10},
+                {x:23,y:9,to:'cerulean',tx:1,ty:11}
+            ],
+            npcs: [],
+            enc: null
+        },
+
+        cerulean: {
+            w: 22, h: 18,
+            data: (() => {
+                const w = 22, h = 18;
+                const m = new Array(w * h).fill(T.GRASS);
+                for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+                    if (x === 0 || x === w - 1 || y === 0 || y === h - 1) m[y * w + x] = T.TREE;
+                }
+                for (let y = 1; y < h - 1; y++) { m[y * w + 10] = T.PATH; m[y * w + 11] = T.PATH; }
+                for (let x = 2; x < w - 2; x++) m[9 * w + x] = T.PATH;
+                for (let y = 4; y <= 6; y++) for (let x = 13; x <= 16; x++) m[y * w + x] = T.WATER;
+                m[10 * w + 0] = T.WARP; m[11 * w + 0] = T.WARP;
+                m[10 * w + (w - 1)] = T.WARP; m[11 * w + (w - 1)] = T.WARP;
+                return m;
+            })(),
+            warps: [
+                {x:0,y:10,to:'mt_moon',tx:22,ty:8},
+                {x:0,y:11,to:'mt_moon',tx:22,ty:9},
+                {x:21,y:10,to:'vermilion',tx:1,ty:10},
+                {x:21,y:11,to:'vermilion',tx:1,ty:11}
+            ],
+            npcs: [],
+            enc: null
+        },
+
+        vermilion: {
+            w: 22, h: 18,
+            data: (() => {
+                const w = 22, h = 18;
+                const m = new Array(w * h).fill(T.GRASS);
+                for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+                    if (x === 0 || x === w - 1 || y === 0 || y === h - 1) m[y * w + x] = T.TREE;
+                }
+                for (let y = 1; y < h - 1; y++) { m[y * w + 10] = T.PATH; m[y * w + 11] = T.PATH; }
+                for (let x = 2; x < w - 2; x++) m[10 * w + x] = T.PATH;
+                for (let y = 3; y <= 6; y++) for (let x = 15; x <= 20; x++) m[y * w + x] = T.WATER;
+                m[10 * w + 0] = T.WARP; m[11 * w + 0] = T.WARP;
+                m[10 * w + (w - 1)] = T.WARP; m[11 * w + (w - 1)] = T.WARP;
+                return m;
+            })(),
+            warps: [
+                {x:0,y:10,to:'cerulean',tx:20,ty:10},
+                {x:0,y:11,to:'cerulean',tx:20,ty:11},
+                {x:21,y:10,to:'lavender',tx:1,ty:10},
+                {x:21,y:11,to:'lavender',tx:1,ty:11}
+            ],
+            npcs: [],
+            enc: null
+        },
+
+        lavender: {
+            w: 22, h: 18,
+            data: (() => {
+                const w = 22, h = 18;
+                const m = new Array(w * h).fill(T.GRASS);
+                for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+                    if (x === 0 || x === w - 1 || y === 0 || y === h - 1) m[y * w + x] = T.TREE;
+                }
+                for (let y = 1; y < h - 1; y++) { m[y * w + 10] = T.PATH; m[y * w + 11] = T.PATH; }
+                for (let x = 3; x <= 18; x++) m[10 * w + x] = T.PATH;
+                for (let y = 4; y <= 6; y++) for (let x = 5; x <= 7; x++) m[y * w + x] = T.LAB;
+                m[10 * w + 0] = T.WARP; m[11 * w + 0] = T.WARP;
+                m[10 * w + (w - 1)] = T.WARP; m[11 * w + (w - 1)] = T.WARP;
+                return m;
+            })(),
+            warps: [
+                {x:0,y:10,to:'vermilion',tx:20,ty:10},
+                {x:0,y:11,to:'vermilion',tx:20,ty:11},
+                {x:21,y:10,to:'saffron',tx:1,ty:10},
+                {x:21,y:11,to:'saffron',tx:1,ty:11}
+            ],
+            npcs: [],
+            enc: null
+        },
+
+        saffron: {
+            w: 22, h: 18,
+            data: (() => {
+                const w = 22, h = 18;
+                const m = new Array(w * h).fill(T.GRASS);
+                for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+                    if (x === 0 || x === w - 1 || y === 0 || y === h - 1) m[y * w + x] = T.TREE;
+                }
+                for (let y = 1; y < h - 1; y++) { m[y * w + 10] = T.PATH; m[y * w + 11] = T.PATH; }
+                for (let x = 2; x < w - 2; x++) m[9 * w + x] = T.PATH;
+                for (let y = 4; y <= 7; y++) for (let x = 14; x <= 17; x++) m[y * w + x] = T.LAB;
+                m[10 * w + 0] = T.WARP; m[11 * w + 0] = T.WARP;
+                m[10 * w + (w - 1)] = T.WARP; m[11 * w + (w - 1)] = T.WARP;
+                return m;
+            })(),
+            warps: [
+                {x:0,y:10,to:'lavender',tx:20,ty:10},
+                {x:0,y:11,to:'lavender',tx:20,ty:11},
+                {x:21,y:10,to:'silph_lobby',tx:2,ty:10},
+                {x:21,y:11,to:'silph_lobby',tx:2,ty:10}
+            ],
+            npcs: [],
+            enc: null
+        },
+
+        silph_lobby: {
+            w: 14, h: 12,
+            data: (() => {
+                const w = 14, h = 12;
+                const m = new Array(w * h).fill(T.FLOOR_IN);
+                for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+                    if (x === 0 || x === w - 1 || y === 0 || y === h - 1) m[y * w + x] = T.WALL_IN;
+                }
+                m[10 * w + 2] = T.WARP;
+                m[2 * w + 4] = T.SHELF; m[2 * w + 9] = T.SHELF;
+                m[5 * w + 4] = T.TABLE; m[5 * w + 9] = T.TABLE;
+                return m;
+            })(),
+            warps: [{x:2,y:10,to:'saffron',tx:20,ty:10}],
+            npcs: [],
             enc: null
         },
 
@@ -1510,6 +1686,48 @@
         }
         if (mapId === 'route2' && GS.story.block_02_done && !GS.story.block_03_done) {
             setTimeout(() => { playBeat('ch2_mtmoon_entry'); }, 320);
+        }
+        if (mapId === 'mt_moon' && GS.story.block_03_done && !GS.story.block_04_done) {
+            setTimeout(() => { playBeat('ch2_green_first_contact'); }, 320);
+        }
+        if (mapId === 'mt_moon' && GS.story.block_04_done && !GS.story.block_05_done) {
+            setTimeout(() => { playBeat('ch2_rocket_grunt_cave'); }, 320);
+        }
+        if (mapId === 'mt_moon' && GS.story.block_05_done && !GS.story.block_06_done) {
+            setTimeout(() => { playBeat('ch2_fossil_rumor'); }, 320);
+        }
+        if (mapId === 'cerulean' && GS.story.block_06_done && !GS.story.block_07_done) {
+            setTimeout(() => { playBeat('ch3_cerulean_arrival'); }, 320);
+        }
+        if (mapId === 'cerulean' && GS.story.block_07_done && !GS.story.block_08_done) {
+            setTimeout(() => { playBeat('ch3_misty_clash'); }, 320);
+        }
+        if (mapId === 'cerulean' && GS.story.block_08_done && !GS.story.block_09_done) {
+            setTimeout(() => { playBeat('ch3_bill_event'); }, 320);
+        }
+        if (mapId === 'vermilion' && GS.story.block_09_done && !GS.story.block_10_done) {
+            setTimeout(() => { playBeat('ch4_vermilion_setup'); }, 320);
+        }
+        if (mapId === 'vermilion' && GS.story.block_10_done && !GS.story.block_11_done) {
+            setTimeout(() => { playBeat('ch4_ssanne_rocket'); }, 320);
+        }
+        if (mapId === 'vermilion' && GS.story.block_11_done && !GS.story.block_12_done) {
+            setTimeout(() => { playBeat('ch5_surge_pressure'); }, 320);
+        }
+        if (mapId === 'lavender' && GS.story.block_12_done && !GS.story.block_13_done) {
+            setTimeout(() => { playBeat('ch6_lavender_shadow'); }, 320);
+        }
+        if (mapId === 'silph_lobby' && GS.story.block_13_done && !GS.story.block_14_done) {
+            setTimeout(() => { playBeat('ch7_silph_infiltration'); }, 320);
+        }
+        if (mapId === 'saffron' && GS.story.block_14_done && !GS.story.block_15_done) {
+            setTimeout(() => { playBeat('ch8_saffron_psychic'); }, 320);
+        }
+        if (mapId === 'silph_lobby' && GS.story.block_15_done && !GS.story.block_16_done) {
+            setTimeout(() => { playBeat('ch9_final_island_setup'); }, 320);
+        }
+        if (mapId === 'silph_lobby' && GS.story.block_16_done && !GS.story.block_17_done) {
+            setTimeout(() => { playBeat('ch10_mewtwo_confront'); }, 320);
         }
         if (mapId === 'pewter_gym' && GS.story.caughtPika && !GS.story.brockBattleDone) {
             setTimeout(() => {

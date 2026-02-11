@@ -248,7 +248,7 @@
         {"kind": "dialog", "speaker": "Misty", "lines": ["Se vai correr por KANTO fazendo bagunca, primeiro me prove seu valor.", "No meu ginasio, agua nao perdoa."]},
         {
           "kind": "battle",
-          "enemy": {"name": "STARYU", "spr": "pidgey", "lv": 11, "hp": 30, "maxHp": 30},
+          "enemy": {"name": "STARYU", "spr": "staryu", "lv": 11, "hp": 30, "maxHp": 30},
           "options": {
             "scripted": true,
             "onEnd": "only_if_win",
