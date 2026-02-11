@@ -1,6 +1,7 @@
 # Sprites (Plugavel)
 
 Este projeto aceita override completo de sprites (personagens + pokemons) por JSON.
+No estado atual, o jogo tenta carregar `assets/sprites/user.sprites.json` por padrao.
 
 ## Arquivos locais
 
@@ -24,7 +25,7 @@ Voce pode colocar:
 
 ## Como ativar
 
-1. Override local:
+1. Override local (padrao):
 - `?sprites=external`
 
 2. Override remoto:
@@ -37,4 +38,3 @@ Voce pode colocar:
 ## Chaves suportadas
 
 `red`, `blue`, `brock`, `oak`, `mom`, `girl`, `green`, `pikachuOW`, `pikachuBattle`, `pikachuBack`, `rattata`, `pidgey`, `staryu`, `poliwhirl`, `poliwhirlBack`, `poliwrath`, `poliwrathBack`, `bulbasaur`, `bulbasaurBack`, `ivysaur`, `venusaur`, `snorlax`, `gyarados`, `charmander`, `charmeleon`, `charizard`, `squirtle`, `wartortle`, `mew`, `kangaskhan`, `nidoking`, `koffing`, `ekans`, `arbok`, `geodude`, `onix`, `generalTiles`, `buildingTiles`
-

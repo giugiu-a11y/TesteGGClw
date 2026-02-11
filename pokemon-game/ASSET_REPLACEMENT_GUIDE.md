@@ -22,6 +22,8 @@ Arquivo:
 Ativar:
 - `?sprites=external`
 
+Obs: atualmente este modo ja e o comportamento padrao do jogo.
+
 Modo remoto:
 - `?sprites=remote&spritesJson=<URL_JSON>`
 
@@ -56,4 +58,3 @@ git add pokemon-game/assets/tilesets/user.png \
 git commit -m "Asset pipeline: complete external tiles+sprites mapping"
 git push origin main
 ```
-

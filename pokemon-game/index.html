@@ -1406,7 +1406,8 @@
         // - default: built-in DEFAULT_SPRITE_URLS
         // - ?sprites=external -> ./assets/sprites/user.sprites.json
         // - ?sprites=remote&spritesJson=https://...json
-        const mode = qs('sprites', '');
+        // Default to local external sprites config if available.
+        const mode = qs('sprites', 'external');
         if (!mode) return {};
 
         let jsonUrl = './assets/sprites/user.sprites.json';
