@@ -1,0 +1,203 @@
+{
+  "description": "All Pokémon sprites - front, back, and icons",
+  "front_sprites": {
+    "general_collection": {
+      "asset_id": 3900,
+      "file": "pokemon/3900_pokemon_front.png",
+      "description": "Front-facing Pokémon sprites (battle view)",
+      "size": "8KB"
+    },
+    "batch_1": {
+      "asset_id": 3903,
+      "file": "pokemon/3903_pokemon_sprite_3903.png",
+      "size": "5KB"
+    },
+    "batch_2": {
+      "asset_id": 3904,
+      "file": "pokemon/3904_pokemon_sprite_3904.png",
+      "description": "Large Pokémon sprite set",
+      "size": "274KB"
+    },
+    "batch_3": {
+      "asset_id": 3905,
+      "file": "pokemon/3905_pokemon_sprite_3905.png",
+      "size": "95KB"
+    },
+    "batch_4": {
+      "asset_id": 3906,
+      "file": "pokemon/3906_pokemon_sprite_3906.png",
+      "size": "30KB"
+    },
+    "batch_5": {
+      "asset_id": 3907,
+      "file": "pokemon/3907_pokemon_sprite_3907.png",
+      "size": "48KB"
+    },
+    "batch_6": {
+      "asset_id": 3908,
+      "file": "pokemon/3908_pokemon_sprite_3908.png",
+      "size": "13KB"
+    },
+    "batch_7": {
+      "asset_id": 3909,
+      "file": "pokemon/3909_pokemon_sprite_3909.png",
+      "size": "9KB"
+    },
+    "batch_8": {
+      "asset_id": 3910,
+      "file": "pokemon/3910_pokemon_sprite_3910.png",
+      "size": "17KB"
+    },
+    "batch_9": {
+      "asset_id": 3911,
+      "file": "pokemon/3911_pokemon_sprite_3911.png",
+      "size": "5KB"
+    },
+    "batch_10": {
+      "asset_id": 3912,
+      "file": "pokemon/3912_pokemon_sprite_3912.png",
+      "size": "11KB"
+    },
+    "batch_11": {
+      "asset_id": 3913,
+      "file": "pokemon/3913_pokemon_sprite_3913.png",
+      "size": "21KB"
+    },
+    "batch_12": {
+      "asset_id": 3914,
+      "file": "pokemon/3914_pokemon_sprite_3914.png",
+      "size": "38KB"
+    },
+    "batch_13": {
+      "asset_id": 3915,
+      "file": "pokemon/3915_pokemon_sprite_3915.png",
+      "size": "12KB"
+    },
+    "batch_14": {
+      "asset_id": 3916,
+      "file": "pokemon/3916_pokemon_sprite_3916.png",
+      "size": "17KB"
+    },
+    "batch_15": {
+      "asset_id": 3917,
+      "file": "pokemon/3917_pokemon_sprite_3917.png",
+      "size": "5KB"
+    },
+    "batch_16": {
+      "asset_id": 3918,
+      "file": "pokemon/3918_pokemon_sprite_3918.png",
+      "size": "5KB"
+    },
+    "batch_17": {
+      "asset_id": 3919,
+      "file": "pokemon/3919_pokemon_sprite_3919.png",
+      "size": "4KB"
+    },
+    "batch_18": {
+      "asset_id": 3920,
+      "file": "pokemon/3920_pokemon_sprite_3920.png",
+      "size": "16KB"
+    }
+  },
+  "back_sprites": {
+    "general_collection": {
+      "asset_id": 3901,
+      "file": "pokemon/3901_pokemon_back.png",
+      "description": "Back-facing Pokémon sprites (trainer's view)",
+      "size": "5KB"
+    },
+    "batch_1": {
+      "asset_id": 3921,
+      "file": "pokemon/3921_pokemon_back_3921.png",
+      "size": "11KB"
+    },
+    "batch_2": {
+      "asset_id": 3922,
+      "file": "pokemon/3922_pokemon_back_3922.png",
+      "size": "11KB"
+    },
+    "batch_3": {
+      "asset_id": 3923,
+      "file": "pokemon/3923_pokemon_back_3923.png",
+      "size": "36KB"
+    },
+    "batch_4": {
+      "asset_id": 3924,
+      "file": "pokemon/3924_pokemon_back_3924.png",
+      "size": "11KB"
+    },
+    "batch_5": {
+      "asset_id": 3925,
+      "file": "pokemon/3925_pokemon_back_3925.png",
+      "size": "22KB"
+    },
+    "batch_6": {
+      "asset_id": 3926,
+      "file": "pokemon/3926_pokemon_back_3926.png",
+      "size": "5KB"
+    },
+    "batch_7": {
+      "asset_id": 3927,
+      "file": "pokemon/3927_pokemon_back_3927.png",
+      "size": "25KB"
+    },
+    "batch_8": {
+      "asset_id": 3928,
+      "file": "pokemon/3928_pokemon_back_3928.png",
+      "size": "25KB"
+    },
+    "batch_9": {
+      "asset_id": 3929,
+      "file": "pokemon/3929_pokemon_back_3929.png",
+      "size": "42KB"
+    },
+    "batch_10": {
+      "asset_id": 3930,
+      "file": "pokemon/3930_pokemon_back_3930.png",
+      "size": "27KB"
+    },
+    "batch_11": {
+      "asset_id": 3931,
+      "file": "pokemon/3931_pokemon_back_3931.png",
+      "size": "8KB"
+    },
+    "batch_12": {
+      "asset_id": 3932,
+      "file": "pokemon/3932_pokemon_back_3932.png",
+      "size": "4KB"
+    },
+    "batch_13": {
+      "asset_id": 3933,
+      "file": "pokemon/3933_pokemon_back_3933.png",
+      "description": "Master back sprite collection (all Pokémon)",
+      "size": "1.8MB"
+    },
+    "batch_14": {
+      "asset_id": 3934,
+      "file": "pokemon/3934_pokemon_back_3934.png",
+      "size": "29KB"
+    },
+    "batch_15": {
+      "asset_id": 3935,
+      "file": "pokemon/3935_pokemon_back_3935.png",
+      "size": "1KB"
+    }
+  },
+  "icons_pokedex": {
+    "icon_collection": {
+      "asset_id": 3902,
+      "file": "pokemon/3902_pokemon_icons.png",
+      "description": "Pokédex icons and small sprites",
+      "size": "114KB",
+      "use_case": "Pokédex, inventory, UI elements"
+    }
+  },
+  "usage_notes": {
+    "front_view": "Use for enemy Pokémon in battle (right side)",
+    "back_view": "Use for player's Pokémon in battle (left side)",
+    "icons": "Use for Pokédex, party selection, quick menus",
+    "total_pokemon": "150+ Pokémon (complete Kanto Pokédex)",
+    "sprite_size": "Variable, typically 96x96 to 120x120 pixels",
+    "animation": "Most include idle animations (2-3 frames)"
+  }
+}

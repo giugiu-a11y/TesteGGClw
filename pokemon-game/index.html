@@ -327,7 +327,13 @@
             <button class="down" ontouchstart="startMove('down')" ontouchend="stopMove()" onmousedown="startMove('down')" onmouseup="stopMove()">▼</button>
         </div>
         <div class="action-buttons">
-            <button class="btn-b" onclick="handleB()">B</button>
+            <button class="btn-b"
+                onmousedown="setRunPressed(true)"
+                onmouseup="setRunPressed(false)"
+                onmouseleave="setRunPressed(false)"
+                ontouchstart="setRunPressed(true)"
+                ontouchend="setRunPressed(false)"
+                onclick="handleB(event)">B</button>
             <button class="btn-a" onclick="handleA()">A</button>
         </div>
     </div>
@@ -1145,6 +1151,7 @@
     let inBattle = false;
     let battle = null;
     let moveInt = null;
+    let moveDir = null;
     let animFrame = 0;
 
     // ==================== STORY SCRIPT ====================
@@ -1851,7 +1858,52 @@
         const mapBg = prebuiltMapBg[GS.map];
         const hasMapBg = !!mapBg;
         if (hasMapBg) {
-            ctx.drawImage(mapBg, 0, 0, canvas.width, canvas.height);
+            // Draw a camera window from large prebuilt maps to avoid full-image stretching.
+            const srcTile = TILE;
+            let srcX = Math.floor(camX * srcTile);
+            let srcY = Math.floor(camY * srcTile);
+            let srcW = VW * srcTile;
+            let srcH = VH * srcTile;
+            let dstX = 0;
+            let dstY = 0;
+            let dstW = canvas.width;
+            let dstH = canvas.height;
+
+            if (srcX < 0) {
+                const cut = -srcX;
+                srcX = 0;
+                const ratio = cut / (VW * srcTile);
+                const shift = Math.floor(canvas.width * ratio);
+                dstX += shift;
+                dstW -= shift;
+                srcW -= cut;
+            }
+            if (srcY < 0) {
+                const cut = -srcY;
+                srcY = 0;
+                const ratio = cut / (VH * srcTile);
+                const shift = Math.floor(canvas.height * ratio);
+                dstY += shift;
+                dstH -= shift;
+                srcH -= cut;
+            }
+            if (srcX + srcW > mapBg.width) {
+                const cut = (srcX + srcW) - mapBg.width;
+                const ratio = cut / (VW * srcTile);
+                const shrink = Math.floor(canvas.width * ratio);
+                dstW -= shrink;
+                srcW -= cut;
+            }
+            if (srcY + srcH > mapBg.height) {
+                const cut = (srcY + srcH) - mapBg.height;
+                const ratio = cut / (VH * srcTile);
+                const shrink = Math.floor(canvas.height * ratio);
+                dstH -= shrink;
+                srcH -= cut;
+            }
+            if (srcW > 0 && srcH > 0 && dstW > 0 && dstH > 0) {
+                ctx.drawImage(mapBg, srcX, srcY, srcW, srcH, dstX, dstY, dstW, dstH);
+            }
         }
         
         // Draw tiles
@@ -1963,8 +2015,26 @@
         }
     }
     
-    function startMove(dir) { move(dir); moveInt = setInterval(() => move(dir), 150); }
-    function stopMove() { if (moveInt) { clearInterval(moveInt); moveInt = null; } }
+    let runPressed = false;
+    function setRunPressed(v) { runPressed = !!v; }
+    function moveStepMs() { return runPressed ? 85 : 150; }
+    function startMove(dir) {
+        stopMove();
+        move(dir);
+        moveDir = dir;
+        moveInt = setTimeout(function tick() {
+            if (!moveDir) return;
+            move(moveDir);
+            moveInt = setTimeout(tick, moveStepMs());
+        }, 170);
+    }
+    function stopMove() {
+        if (moveInt) {
+            clearTimeout(moveInt);
+            moveInt = null;
+        }
+        moveDir = null;
+    }
     
     // ==================== WARPS ====================
     function checkWarp() {
@@ -2763,7 +2833,12 @@
         showDialog('', ['...']);
     }
     
-    function handleB() {}
+    function handleB(ev) {
+        // Pointer/touch already controls B hold via setRunPressed().
+        if (ev) return;
+        // Keyboard fallback: toggle run mode.
+        setRunPressed(!runPressed);
+    }
 
     function dbg(msg) {
         const bar = document.getElementById('debugBar');
@@ -2829,12 +2904,69 @@
     canvas.addEventListener('click', tapAdvance);
     canvas.addEventListener('touchstart', tapAdvance, {passive: false});
     
+    const keyToDir = (k) => {
+        if (k === 'ArrowUp' || k === 'w' || k === 'W') return 'up';
+        if (k === 'ArrowDown' || k === 's' || k === 'S') return 'down';
+        if (k === 'ArrowLeft' || k === 'a' || k === 'A') return 'left';
+        if (k === 'ArrowRight' || k === 'd' || k === 'D') return 'right';
+        return null;
+    };
+    const dirPressed = {up: false, down: false, left: false, right: false};
+    const dirOrder = [];
+    const activeDir = () => {
+        for (let i = dirOrder.length - 1; i >= 0; i--) {
+            const d = dirOrder[i];
+            if (dirPressed[d]) return d;
+        }
+        return null;
+    };
+    const pressDir = (d) => {
+        dirPressed[d] = true;
+        const idx = dirOrder.indexOf(d);
+        if (idx >= 0) dirOrder.splice(idx, 1);
+        dirOrder.push(d);
+        const a = activeDir();
+        if (a) startMove(a);
+    };
+    const releaseDir = (d) => {
+        dirPressed[d] = false;
+        const a = activeDir();
+        if (a) startMove(a);
+        else stopMove();
+    };
+
     document.addEventListener('keydown', e => {
-        if (e.key === 'ArrowUp' || e.key === 'w') move('up');
-        else if (e.key === 'ArrowDown' || e.key === 's') move('down');
-        else if (e.key === 'ArrowLeft' || e.key === 'a') move('left');
-        else if (e.key === 'ArrowRight' || e.key === 'd') move('right');
-        else if (e.key === 'Enter' || e.key === 'z' || e.key === 'x') handleA();
+        const d = keyToDir(e.key);
+        if (d) {
+            e.preventDefault();
+            if (!dirPressed[d]) pressDir(d);
+            return;
+        }
+        if (e.key === 'Shift' || e.key === 'b' || e.key === 'B') {
+            setRunPressed(true);
+            return;
+        }
+        if (e.key === 'Enter' || e.key === 'z' || e.key === 'Z' || e.key === 'x' || e.key === 'X') {
+            e.preventDefault();
+            handleA();
+        }
+    });
+    document.addEventListener('keyup', e => {
+        const d = keyToDir(e.key);
+        if (d) {
+            e.preventDefault();
+            releaseDir(d);
+            return;
+        }
+        if (e.key === 'Shift' || e.key === 'b' || e.key === 'B') {
+            setRunPressed(false);
+        }
+    });
+    window.addEventListener('blur', () => {
+        stopMove();
+        setRunPressed(false);
+        dirPressed.up = dirPressed.down = dirPressed.left = dirPressed.right = false;
+        dirOrder.length = 0;
     });
     
     // ==================== SAVE/LOAD ====================

@@ -7,15 +7,12 @@
     "mom": "./assets/tilesets/characters/mom.png",
     "girl": "./assets/tilesets/characters/lass.png",
     "green": "./assets/tilesets/characters/green_normal.png",
-
-    "pikachuOW": "./assets/tilesets/characters/pokemon_pikachu.png",
-
+    "pikachuOW": "./assets/tilesets/characters/pikachu.png",
     "pikachuBattle": "./assets/tilesets/pokemon_sprites/pikachu_front.png",
     "pikachuBack": "./assets/tilesets/pokemon_sprites/pikachu_back.png",
     "rattata": "./assets/tilesets/pokemon_sprites/rattata_front.png",
     "pidgey": "./assets/tilesets/pokemon_sprites/pidgey_front.png",
     "staryu": "./assets/tilesets/pokemon_sprites/staryu_front.png",
-
     "poliwhirl": "./assets/tilesets/pokemon_sprites/poliwhirl_front.png",
     "poliwhirlBack": "./assets/tilesets/pokemon_sprites/poliwhirl_back.png",
     "poliwrath": "./assets/tilesets/pokemon_sprites/poliwrath_front.png",
@@ -26,25 +23,21 @@
     "venusaur": "./assets/tilesets/pokemon_sprites/venusaur_front.png",
     "snorlax": "./assets/tilesets/pokemon_sprites/snorlax_front.png",
     "gyarados": "./assets/tilesets/pokemon_sprites/gyarados_front.png",
-
     "charmander": "./assets/tilesets/pokemon_sprites/charmander_front.png",
     "charmeleon": "./assets/tilesets/pokemon_sprites/charmeleon_front.png",
     "charizard": "./assets/tilesets/pokemon_sprites/charizard_front.png",
-
     "squirtle": "./assets/tilesets/pokemon_sprites/squirtle_front.png",
     "wartortle": "./assets/tilesets/pokemon_sprites/wartortle_front.png",
-
     "mew": "./assets/tilesets/pokemon_sprites/mew_front.png",
     "kangaskhan": "./assets/tilesets/pokemon_sprites/kangaskhan_front.png",
-
     "nidoking": "./assets/tilesets/pokemon_sprites/nidoking_front.png",
     "koffing": "./assets/tilesets/pokemon_sprites/koffing_front.png",
     "ekans": "./assets/tilesets/pokemon_sprites/ekans_front.png",
     "arbok": "./assets/tilesets/pokemon_sprites/arbok_front.png",
     "geodude": "./assets/tilesets/pokemon_sprites/geodude_front.png",
     "onix": "./assets/tilesets/pokemon_sprites/onix_front.png",
-
-    "generalTiles": "./assets/tilesets/manual_environmental/outdoor_tileset_1.png",
-    "buildingTiles": "./assets/tilesets/manual_environmental/buildings_sheet_3.png"
+    "generalTiles": "./assets/tilesets/manual_environmental/outdoor_1.png",
+    "buildingTiles": "./assets/tilesets/manual_environmental/buildings_sheet_3.png",
+    "pikachu": "./assets/tilesets/pokemon_sprites/pikachu_front.png"
   }
 }
