@@ -390,6 +390,7 @@
     const ctx = canvas.getContext('2d');
     canvas.width = VW * ST;
     canvas.height = VH * ST;
+    ctx.imageSmoothingEnabled = false;
     
     // ==================== SPRITE SOURCES ====================
     const GITHUB_BASE = 'https://raw.githubusercontent.com/pret/pokefirered/master/';
@@ -458,6 +459,13 @@
     // Loaded images
     const sprites = {};
     let loadedCount = 0;
+    const prebuiltMapBg = {};
+    const PREBUILT_MAP_BG_URLS = {
+        mt_moon: './assets/tilesets/manual_environmental/mt_moon.png',
+        saffron: './assets/tilesets/manual_environmental/saffron_city.png',
+        indigo_plateau: './assets/tilesets/manual_environmental/indigo_plateau.png',
+        silph_lobby: './assets/tilesets/manual_environmental/rocket_hideout.png'
+    };
     
     // ==================== COLORS (FRLG-ish, but original) ====================
     const C = {
@@ -1473,8 +1481,8 @@
     }
 
     async function tryLoadExternalTileset() {
-        // Default to local user pack so uploads in assets/tilesets apply without query params.
-        const which = qs('tileset', 'external');
+        // Keep a stable visual baseline by default.
+        const which = qs('tileset', 'punyworld');
         if (!which) return false;
 
         let png = './assets/tilesets/user.png';
@@ -1577,6 +1585,24 @@
 
         // Load story in parallel; do not block asset loading.
         loadStory();
+
+        // Optional prebuilt map backgrounds (for user-imported city/cave sheets).
+        if (qs('mapbg', '1') !== '0') {
+            for (const [mapId, url] of Object.entries(PREBUILT_MAP_BG_URLS)) {
+                try {
+                    const img = new Image();
+                    img.crossOrigin = 'anonymous';
+                    await new Promise((resolve, reject) => {
+                        img.onload = resolve;
+                        img.onerror = reject;
+                        img.src = url;
+                    });
+                    prebuiltMapBg[mapId] = img;
+                } catch {
+                    // Ignore missing optional files; map falls back to tiled rendering.
+                }
+            }
+        }
 
         for (const [name, url] of Object.entries(SPRITE_URLS)) {
             text.textContent = `Loading ${name}...`;
@@ -1822,15 +1848,22 @@
         
         const camX = Math.floor(GS.px - VW / 2);
         const camY = Math.floor(GS.py - VH / 2);
+        const mapBg = prebuiltMapBg[GS.map];
+        const hasMapBg = !!mapBg;
+        if (hasMapBg) {
+            ctx.drawImage(mapBg, 0, 0, canvas.width, canvas.height);
+        }
         
         // Draw tiles
-        for (let sy = 0; sy < VH + 1; sy++) {
-            for (let sx = 0; sx < VW + 1; sx++) {
-                const mx = camX + sx;
-                const my = camY + sy;
-                if (mx >= 0 && mx < map.w && my >= 0 && my < map.h) {
-                    const tile = map.data[my * map.w + mx];
-                    drawTile(tile, sx, sy, mx, my, map);
+        if (!hasMapBg) {
+            for (let sy = 0; sy < VH + 1; sy++) {
+                for (let sx = 0; sx < VW + 1; sx++) {
+                    const mx = camX + sx;
+                    const my = camY + sy;
+                    if (mx >= 0 && mx < map.w && my >= 0 && my < map.h) {
+                        const tile = map.data[my * map.w + mx];
+                        drawTile(tile, sx, sy, mx, my, map);
+                    }
                 }
             }
         }
