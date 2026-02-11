@@ -2608,10 +2608,19 @@
         }, 500);
         render();
     }
+
+    function applyStartupQueryFlags() {
+        // Useful for iPad/Safari cache-state issues:
+        // ?reset=1 clears the local save before boot.
+        if (qs('reset', '') === '1') {
+            try { localStorage.removeItem('pokemon_adv'); } catch {}
+        }
+    }
     
     setInterval(saveGame, 30000);
     
     // Start loading
+    applyStartupQueryFlags();
     loadAssets();
     </script>
 </body>
