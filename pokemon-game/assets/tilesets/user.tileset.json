@@ -1,35 +1,35 @@
 {
   "tileSize": 16,
-  "atlasCols": 8,
+  "atlasCols": 27,
   "map": {
     "GRASS": {"ax": 0, "ay": 0},
     "GRASS_ALT": {"ax": 1, "ay": 0},
     "TALL_GRASS": {"ax": 2, "ay": 0},
     "FLOWER": {"ax": 3, "ay": 0},
-    "TREE": {"ax": 4, "ay": 0},
 
-    "PATH": {"ax": 0, "ay": 1},
-    "PATH_ALT": {"ax": 1, "ay": 1},
+    "TREE": {"ax": 0, "ay": 8},
 
-    "WATER": {"ax": 2, "ay": 2},
+    "PATH": {"ax": 17, "ay": 3},
+    "PATH_ALT": {"ax": 17, "ay": 2},
 
-    "FENCE": {"ax": 0, "ay": 5},
-    "SIGN": {"ax": 2, "ay": 6},
+    "WATER": {"ax": 0, "ay": 12},
 
-    "ROOF_RED": {"ax": 5, "ay": 5},
-    "ROOF_BLUE": {"ax": 5, "ay": 5},
-    "ROOF_LAB": {"ax": 5, "ay": 5},
-    "WALL": {"ax": 6, "ay": 5},
-    "DOOR": {"ax": 1, "ay": 6},
-    "WINDOW": {"ax": 6, "ay": 6},
+    "FENCE": {"ax": 0, "ay": 6},
+    "SIGN": {"ax": 6, "ay": 6},
 
-    "WARP": {"ax": 3, "ay": 1},
+    "ROOF_RED": {"ax": 16, "ay": 35},
+    "ROOF_BLUE": {"ax": 13, "ay": 35},
+    "ROOF_LAB": {"ax": 12, "ay": 35},
+    "WALL": {"ax": 16, "ay": 36},
+    "DOOR": {"ax": 13, "ay": 37},
+    "WINDOW": {"ax": 16, "ay": 36},
 
-    "FLOOR_IN": {"ax": 4, "ay": 2},
-    "WALL_IN": {"ax": 5, "ay": 2},
+    "WARP": {"ax": 10, "ay": 4},
 
-    "TABLE": {"ax": 0, "ay": 7},
-    "SHELF": {"ax": 1, "ay": 7}
+    "FLOOR_IN": {"ax": 10, "ay": 10},
+    "WALL_IN": {"ax": 10, "ay": 31},
+
+    "TABLE": {"ax": 15, "ay": 34},
+    "SHELF": {"ax": 16, "ay": 34}
   }
 }
-

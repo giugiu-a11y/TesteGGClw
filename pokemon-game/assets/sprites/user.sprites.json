@@ -1,0 +1,50 @@
+{
+  "sprites": {
+    "red": "https://raw.githubusercontent.com/pret/pokefirered/master/graphics/object_events/pics/people/red_normal.png",
+    "blue": "https://raw.githubusercontent.com/pret/pokefirered/master/graphics/object_events/pics/people/blue.png",
+    "brock": "https://raw.githubusercontent.com/pret/pokefirered/master/graphics/object_events/pics/people/brock.png",
+    "oak": "https://raw.githubusercontent.com/pret/pokefirered/master/graphics/object_events/pics/people/prof_oak.png",
+    "mom": "https://raw.githubusercontent.com/pret/pokefirered/master/graphics/object_events/pics/people/mom.png",
+    "girl": "https://raw.githubusercontent.com/pret/pokefirered/master/graphics/object_events/pics/people/lass.png",
+    "green": "https://raw.githubusercontent.com/pret/pokefirered/master/graphics/object_events/pics/people/green.png",
+
+    "pikachuOW": "https://raw.githubusercontent.com/pret/pokefirered/master/graphics/object_events/pics/pokemon/pikachu.png",
+
+    "pikachuBattle": "https://play.pokemonshowdown.com/sprites/gen3frlg/pikachu.png",
+    "pikachuBack": "https://play.pokemonshowdown.com/sprites/gen3-back/pikachu.png",
+    "rattata": "https://play.pokemonshowdown.com/sprites/gen3frlg/rattata.png",
+    "pidgey": "https://play.pokemonshowdown.com/sprites/gen3frlg/pidgey.png",
+    "staryu": "https://play.pokemonshowdown.com/sprites/gen3frlg/staryu.png",
+
+    "poliwhirl": "https://play.pokemonshowdown.com/sprites/gen3frlg/poliwhirl.png",
+    "poliwhirlBack": "https://play.pokemonshowdown.com/sprites/gen3-back/poliwhirl.png",
+    "poliwrath": "https://play.pokemonshowdown.com/sprites/gen3frlg/poliwrath.png",
+    "poliwrathBack": "https://play.pokemonshowdown.com/sprites/gen3-back/poliwrath.png",
+    "bulbasaur": "https://play.pokemonshowdown.com/sprites/gen3frlg/bulbasaur.png",
+    "bulbasaurBack": "https://play.pokemonshowdown.com/sprites/gen3-back/bulbasaur.png",
+    "ivysaur": "https://play.pokemonshowdown.com/sprites/gen3frlg/ivysaur.png",
+    "venusaur": "https://play.pokemonshowdown.com/sprites/gen3frlg/venusaur.png",
+    "snorlax": "https://play.pokemonshowdown.com/sprites/gen3frlg/snorlax.png",
+    "gyarados": "https://play.pokemonshowdown.com/sprites/gen3frlg/gyarados.png",
+
+    "charmander": "https://play.pokemonshowdown.com/sprites/gen3frlg/charmander.png",
+    "charmeleon": "https://play.pokemonshowdown.com/sprites/gen3frlg/charmeleon.png",
+    "charizard": "https://play.pokemonshowdown.com/sprites/gen3frlg/charizard.png",
+
+    "squirtle": "https://play.pokemonshowdown.com/sprites/gen3frlg/squirtle.png",
+    "wartortle": "https://play.pokemonshowdown.com/sprites/gen3frlg/wartortle.png",
+
+    "mew": "https://play.pokemonshowdown.com/sprites/gen3frlg/mew.png",
+    "kangaskhan": "https://play.pokemonshowdown.com/sprites/gen3frlg/kangaskhan.png",
+
+    "nidoking": "https://play.pokemonshowdown.com/sprites/gen3frlg/nidoking.png",
+    "koffing": "https://play.pokemonshowdown.com/sprites/gen3frlg/koffing.png",
+    "ekans": "https://play.pokemonshowdown.com/sprites/gen3frlg/ekans.png",
+    "arbok": "https://play.pokemonshowdown.com/sprites/gen3frlg/arbok.png",
+    "geodude": "https://play.pokemonshowdown.com/sprites/gen3frlg/geodude.png",
+    "onix": "https://play.pokemonshowdown.com/sprites/gen3frlg/onix.png",
+
+    "generalTiles": "https://raw.githubusercontent.com/pret/pokefirered/master/data/tilesets/primary/general/tiles.png",
+    "buildingTiles": "https://raw.githubusercontent.com/pret/pokefirered/master/data/tilesets/primary/building/tiles.png"
+  }
+}

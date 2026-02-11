@@ -394,7 +394,7 @@
     // ==================== SPRITE SOURCES ====================
     const GITHUB_BASE = 'https://raw.githubusercontent.com/pret/pokefirered/master/';
     
-    const SPRITE_URLS = {
+    const DEFAULT_SPRITE_URLS = {
         // Player & NPCs (16x32 sprite sheets with walk animations)
         red: GITHUB_BASE + 'graphics/object_events/pics/people/red_normal.png',
         blue: GITHUB_BASE + 'graphics/object_events/pics/people/blue.png',
@@ -452,10 +452,12 @@
         buildingTiles: GITHUB_BASE + 'data/tilesets/primary/building/tiles.png'
     };
     
+    // Active sprite sources (can be overridden via local/remote JSON config)
+    let SPRITE_URLS = {...DEFAULT_SPRITE_URLS};
+
     // Loaded images
     const sprites = {};
     let loadedCount = 0;
-    const totalSprites = Object.keys(SPRITE_URLS).length;
     
     // ==================== COLORS (FRLG-ish, but original) ====================
     const C = {
@@ -1399,6 +1401,44 @@
         }
     }
 
+    async function tryLoadExternalSpriteConfig() {
+        // Modes:
+        // - default: built-in DEFAULT_SPRITE_URLS
+        // - ?sprites=external -> ./assets/sprites/user.sprites.json
+        // - ?sprites=remote&spritesJson=https://...json
+        const mode = qs('sprites', '');
+        if (!mode) return {};
+
+        let jsonUrl = './assets/sprites/user.sprites.json';
+        if (mode === 'remote') {
+            const qJson = normalizeUrl(qs('spritesJson', ''));
+            const sJson = normalizeUrl(localStorage.getItem('spritesJson') || '');
+            jsonUrl = qJson || sJson;
+            if (!jsonUrl) return {};
+            try { localStorage.setItem('spritesJson', jsonUrl); } catch {}
+        } else if (mode !== 'external') {
+            return {};
+        }
+
+        try {
+            const res = await fetch(jsonUrl, {cache: 'no-store'});
+            if (!res.ok) return {};
+            const cfg = await res.json();
+            const incoming = cfg && typeof cfg === 'object' ? (cfg.sprites || cfg) : {};
+            if (!incoming || typeof incoming !== 'object') return {};
+
+            const out = {};
+            for (const key of Object.keys(DEFAULT_SPRITE_URLS)) {
+                const v = incoming[key];
+                if (typeof v === 'string' && v.trim()) out[key] = normalizeUrl(v.trim());
+            }
+            return out;
+        } catch (e) {
+            console.warn('External sprite config load failed; using defaults.', e);
+            return {};
+        }
+    }
+
     async function tryLoadExternalTileset() {
         // Default to punyworld so the public link always opens with the intended style.
         const which = qs('tileset', 'punyworld');
@@ -1463,13 +1503,27 @@
         }
     };
 
+    // Optional helper for DevTools:
+    // setRemoteSprites('https://.../sprites.json')
+    window.setRemoteSprites = function(jsonUrl) {
+        try {
+            const j = normalizeUrl(jsonUrl);
+            if (!j) return false;
+            localStorage.setItem('spritesJson', j);
+            const p = new URLSearchParams(location.search);
+            p.set('sprites', 'remote');
+            p.set('spritesJson', j);
+            location.href = `${location.origin}${location.pathname}?${p.toString()}`;
+            return true;
+        } catch {
+            return false;
+        }
+    };
+
     async function loadAssets() {
         const progress = document.getElementById('progressFill');
         const text = document.getElementById('loadingText');
-        
-        // Update totalSprites based on the new SPRITE_URLS
-        const totalSprites = Object.keys(SPRITE_URLS).length;
-        
+
         loadedCount = 0; // Reset loadedCount in case this function is called again
 
         // Tileset:
@@ -1480,6 +1534,13 @@
             sprites.tileset = createTilesetCanvas();
             sprites.tilesetCfg = null;
         }
+
+        // Optional sprite overrides from local/remote config.
+        const spriteOverrides = await tryLoadExternalSpriteConfig();
+        SPRITE_URLS = {...DEFAULT_SPRITE_URLS, ...spriteOverrides};
+
+        // Update totalSprites based on active SPRITE_URLS
+        const totalSprites = Object.keys(SPRITE_URLS).length;
 
         // Load story in parallel; do not block asset loading.
         loadStory();

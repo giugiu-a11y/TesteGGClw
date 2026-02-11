@@ -17,7 +17,9 @@ Este projeto suporta 2 modos:
 ## Pack CC0 (OpenGameArt) incluido
 
 Este repo ja inclui um pack CC0 em:
-- `assets/tilesets/user.png` (baseado em `tileset16-outdoors_0.png`)
+- `assets/tilesets/punyworld.png`
+- `assets/tilesets/punyworld.tileset.json`
+- `assets/tilesets/user.png` + `assets/tilesets/user.tileset.json` (preconfigurados e completos com o mesmo mapeamento do `punyworld`)
 
 Ative com:
 - `?tileset=external`
@@ -33,3 +35,12 @@ Exemplo de `tileKey`:
 - `"GRASS"`, `"PATH"`, `"WATER"`, `"TALL_GRASS"`, `"TREE"`
 - `"FENCE"`, `"SIGN"`, `"FLOWER"`, `"WARP"`
 - `"FLOOR_IN"`, `"WALL_IN"`, `"TABLE"`, `"SHELF"`
+
+## Com sprites juntos (pokemon/personagens)
+
+O jogo tambem aceita override de sprites por JSON:
+- `assets/sprites/user.sprites.json`
+- ativar com `?sprites=external`
+
+Exemplo completo:
+- `?tileset=external&sprites=external&reset=1`
