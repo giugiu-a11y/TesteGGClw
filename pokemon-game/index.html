@@ -1000,7 +1000,7 @@
     
     // ==================== GAME STATE ====================
     let GS = {
-        px: 10, py: 10, dir: 'down',
+        px: 9, py: 13, dir: 'down',
         map: 'pallet_town',
         // MANGA STORY FLAGS (Pokémon Adventures - Red Chapter)
         story: {
@@ -1669,13 +1669,50 @@
     }
     
     // ==================== MOVEMENT ====================
-    function canMove(x, y) {
-        const map = MAPS[GS.map];
+    function isWalkableOnMap(map, x, y, ignoreNpc = false) {
         if (!map || x < 0 || x >= map.w || y < 0 || y >= map.h) return false;
         const tile = map.data[y * map.w + x];
         if (SOLID.includes(tile)) return false;
-        if (map.npcs) for (const n of map.npcs) if (n.x === x && n.y === y) return false;
+        if (!ignoreNpc && map.npcs) for (const n of map.npcs) if (n.x === x && n.y === y) return false;
         return true;
+    }
+
+    function ensureWalkablePlayerPosition() {
+        const map = MAPS[GS.map];
+        if (!map) return;
+        if (isWalkableOnMap(map, GS.px, GS.py, true)) return;
+
+        // Find nearest walkable tile around current position.
+        for (let r = 1; r <= 16; r++) {
+            for (let dy = -r; dy <= r; dy++) {
+                for (let dx = -r; dx <= r; dx++) {
+                    if (Math.abs(dx) + Math.abs(dy) > r) continue;
+                    const tx = GS.px + dx;
+                    const ty = GS.py + dy;
+                    if (isWalkableOnMap(map, tx, ty, true)) {
+                        GS.px = tx;
+                        GS.py = ty;
+                        return;
+                    }
+                }
+            }
+        }
+
+        // Fallback full scan (should rarely happen).
+        for (let y = 0; y < map.h; y++) {
+            for (let x = 0; x < map.w; x++) {
+                if (isWalkableOnMap(map, x, y, true)) {
+                    GS.px = x;
+                    GS.py = y;
+                    return;
+                }
+            }
+        }
+    }
+
+    function canMove(x, y) {
+        const map = MAPS[GS.map];
+        return isWalkableOnMap(map, x, y, false);
     }
     
     function move(dir) {
@@ -1706,6 +1743,7 @@
                 GS.map = w.to;
                 GS.px = w.tx;
                 GS.py = w.ty;
+                ensureWalkablePlayerPosition();
                 onMapEnter(GS.map);
                 break;
             }
@@ -1786,6 +1824,7 @@
     function onMapEnter(mapId) {
         // Lightweight, non-breaking story hooks. Real season script will live in beats/flags.
         if (!GS.story) GS.story = {};
+        ensureWalkablePlayerPosition();
         if (mapId === 'pewter_gym' && GS.story.caughtPika && !GS.story.brockBattleDone) {
             setTimeout(() => {
                 showDialog('', [
@@ -2490,6 +2529,7 @@
         const s = localStorage.getItem('pokemon_adv');
         if (s) {
             GS = migrateSave(JSON.parse(s));
+            ensureWalkablePlayerPosition();
             // Defensive reset for stale runtime flags from previous sessions.
             dialog = null;
             dialogQ = [];
@@ -2525,7 +2565,7 @@
 
         // MANGA-ACCURATE GAME STATE (Pokémon Adventures)
         GS = {
-            px: 10, py: 10, dir: 'down', map: 'pallet_town',
+            px: 9, py: 13, dir: 'down', map: 'pallet_town',
             // Story progression (MANGA ACCURATE)
             story: {
                 season: 1,
@@ -2551,6 +2591,7 @@
             items: {potion: 3, pokeball: 5},
             badges: 0
         };
+        ensureWalkablePlayerPosition();
         
         document.getElementById('titleScreen').style.display = 'none';
         
