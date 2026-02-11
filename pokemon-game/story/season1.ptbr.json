@@ -367,11 +367,141 @@
       ]
     },
     {
+      "id": "ch11_aftershock_recovery",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ POS-CRISE ]", "KANTO ainda sente o impacto dos eventos em SAFFRON.", "RED segue sem pausa para fechar as pendencias da TEAM ROCKET."]},
+        {"kind": "dialog", "speaker": "RED", "lines": ["Ainda nao acabou.", "Se eles se reorganizarem, tudo comeca de novo."]},
+        {"kind": "set", "path": "story.block_18_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch12_cinnabar_research",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ CINNABAR ISLAND ]", "Documentos queimados e laboratorios vazios deixam rastros de experimentos proibidos."]},
+        {"kind": "dialog", "speaker": "RED", "lines": ["Eles estavam mexendo com coisas que nunca deveriam ter tocado."]},
+        {
+          "kind": "battle",
+          "enemy": {"name": "NIDOKING", "spr": "nidoking", "lv": 24, "hp": 72, "maxHp": 72},
+          "options": {
+            "scripted": true,
+            "onEnd": "only_if_win",
+            "scriptSteps": [
+              {"type": "log", "text": "CIENTISTA CORROMPIDO enviou NIDOKING!"},
+              {"type": "enemyMove", "move": "Thrash", "damage": 9},
+              {"type": "playerMove", "move": "Hypnosis", "damage": 0},
+              {"type": "playerMove", "move": "Bubble Beam", "damage": 999},
+              {"type": "end", "won": true}
+            ]
+          }
+        },
+        {"kind": "set", "path": "story.block_19_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch13_viridian_giovanni",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "Giovanni", "lines": ["Voce avancou longe, RED.", "Mas nao entende o tabuleiro inteiro."]},
+        {
+          "kind": "battle",
+          "enemy": {"name": "ONIX", "spr": "onix", "lv": 28, "hp": 90, "maxHp": 90},
+          "options": {
+            "scripted": true,
+            "onEnd": "only_if_win",
+            "scriptSteps": [
+              {"type": "log", "text": "GIOVANNI enviou ONIX!"},
+              {"type": "enemyMove", "move": "Rock Tomb", "damage": 10},
+              {"type": "playerMove", "move": "Water Gun", "damage": 24},
+              {"type": "enemyMove", "move": "Dig", "damage": 8},
+              {"type": "playerMove", "move": "Bubble Beam", "damage": 999},
+              {"type": "end", "won": true}
+            ]
+          }
+        },
+        {"kind": "dialog", "speaker": "RED", "lines": ["Acabou pra voce em KANTO.", "Nao vou deixar sua sombra voltar."]},
+        {"kind": "set", "path": "story.block_20_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch14_indigo_opening",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ INDIGO PLATEAU ]", "A Liga reune os treinadores mais fortes de KANTO.", "RED entra carregando tudo o que viveu ate aqui."]},
+        {"kind": "set", "path": "story.block_21_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch15_elite_lance",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "Lance", "lines": ["Nao e so sobre vencer.", "E sobre proteger o equilibrio entre humanos e POKeMON."]},
+        {
+          "kind": "battle",
+          "enemy": {"name": "GYARADOS", "spr": "gyarados", "lv": 32, "hp": 104, "maxHp": 104},
+          "options": {
+            "scripted": true,
+            "onEnd": "only_if_win",
+            "scriptSteps": [
+              {"type": "log", "text": "LANCE enviou GYARADOS!"},
+              {"type": "enemyMove", "move": "Hydro Pump", "damage": 11},
+              {"type": "playerMove", "move": "Body Slam", "damage": 14},
+              {"type": "enemyMove", "move": "Dragon Rage", "damage": 10},
+              {"type": "playerMove", "move": "Bubble Beam", "damage": 999},
+              {"type": "end", "won": true}
+            ]
+          }
+        },
+        {"kind": "set", "path": "story.block_22_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch16_blue_champion",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "Blue", "lines": ["Demorou pra chegar, RED.", "Mas eu sabia que voce nao ia desistir."]},
+        {
+          "kind": "battle",
+          "enemy": {"name": "CHARIZARD", "spr": "charizard", "lv": 36, "hp": 118, "maxHp": 118},
+          "options": {
+            "scripted": true,
+            "onEnd": "only_if_win",
+            "scriptSteps": [
+              {"type": "log", "text": "BLUE enviou CHARIZARD!"},
+              {"type": "enemyMove", "move": "Flamethrower", "damage": 12},
+              {"type": "playerMove", "move": "Hypnosis", "damage": 0},
+              {"type": "playerMove", "move": "Bubble Beam", "damage": 999},
+              {"type": "end", "won": true}
+            ]
+          }
+        },
+        {"kind": "dialog", "speaker": "Blue", "lines": ["...Heh. Dessa vez foi seu dia.", "Nao se acostuma, RED."]},
+        {"kind": "set", "path": "story.block_23_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch17_season1_epilogue",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ EPILOGO - TEMPORADA 1 ]", "RED encerra a primeira grande fase da jornada em KANTO.", "Mas o mundo dos POKeMON continua em movimento."]},
+        {"kind": "dialog", "speaker": "RED", "lines": ["Ainda tem muito pra fazer.", "E eu vou continuar seguindo em frente."]},
+        {"kind": "set", "path": "story.block_24_done", "value": true}
+      ]
+    },
+    {
       "id": "s1_outline_next",
       "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
       "type": "outline",
       "actions": [
-        {"kind": "dialog", "speaker": "", "lines": ["[ TODO: Integracao no mapa ]", "17 blocos narrativos ja estruturados no JSON.", "Proximo passo: ligar os beats aos mapas/warps capitulo a capitulo."]}
+        {"kind": "dialog", "speaker": "", "lines": ["[ STATUS ]", "24 blocos narrativos ja estruturados e integrados ao fluxo automatico.", "Proximo passo: refinamento visual final (tiles/layout) e polimento de cenas."]}
       ]
     }
   ]

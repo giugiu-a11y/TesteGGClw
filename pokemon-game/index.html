@@ -843,13 +843,20 @@
                 for (let y = 4; y <= 7; y++) for (let x = 14; x <= 17; x++) m[y * w + x] = T.LAB;
                 m[10 * w + 0] = T.WARP; m[11 * w + 0] = T.WARP;
                 m[10 * w + (w - 1)] = T.WARP; m[11 * w + (w - 1)] = T.WARP;
+                // Story progression exits
+                m[0 * w + 10] = T.WARP; m[0 * w + 11] = T.WARP;       // north -> fuchsia
+                m[(h - 1) * w + 10] = T.WARP; m[(h - 1) * w + 11] = T.WARP; // south -> viridian_gym
                 return m;
             })(),
             warps: [
                 {x:0,y:10,to:'lavender',tx:20,ty:10},
                 {x:0,y:11,to:'lavender',tx:20,ty:11},
                 {x:21,y:10,to:'silph_lobby',tx:2,ty:10},
-                {x:21,y:11,to:'silph_lobby',tx:2,ty:10}
+                {x:21,y:11,to:'silph_lobby',tx:2,ty:10},
+                {x:10,y:0,to:'fuchsia',tx:10,ty:16},
+                {x:11,y:0,to:'fuchsia',tx:11,ty:16},
+                {x:10,y:17,to:'viridian_gym',tx:10,ty:15},
+                {x:11,y:17,to:'viridian_gym',tx:11,ty:15}
             ],
             npcs: [],
             enc: null
@@ -869,6 +876,104 @@
                 return m;
             })(),
             warps: [{x:2,y:10,to:'saffron',tx:20,ty:10}],
+            npcs: [],
+            enc: null
+        },
+
+        fuchsia: {
+            w: 22, h: 18,
+            data: (() => {
+                const w = 22, h = 18;
+                const m = new Array(w * h).fill(T.GRASS);
+                for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+                    if (x === 0 || x === w - 1 || y === 0 || y === h - 1) m[y * w + x] = T.TREE;
+                }
+                for (let y = 1; y < h - 1; y++) { m[y * w + 10] = T.PATH; m[y * w + 11] = T.PATH; }
+                for (let x = 3; x <= 18; x++) m[9 * w + x] = T.PATH;
+                for (let y = 4; y <= 6; y++) for (let x = 4; x <= 7; x++) m[y * w + x] = T.WATER;
+                for (let y = 4; y <= 6; y++) for (let x = 14; x <= 17; x++) m[y * w + x] = T.HOUSE_RED;
+                m[0 * w + 10] = T.WARP; m[0 * w + 11] = T.WARP; // to saffron
+                m[(h - 1) * w + 10] = T.WARP; m[(h - 1) * w + 11] = T.WARP; // to cinnabar
+                return m;
+            })(),
+            warps: [
+                {x:10,y:0,to:'saffron',tx:10,ty:1},
+                {x:11,y:0,to:'saffron',tx:11,ty:1},
+                {x:10,y:17,to:'cinnabar',tx:10,ty:1},
+                {x:11,y:17,to:'cinnabar',tx:11,ty:1}
+            ],
+            npcs: [],
+            enc: null
+        },
+
+        cinnabar: {
+            w: 22, h: 18,
+            data: (() => {
+                const w = 22, h = 18;
+                const m = new Array(w * h).fill(T.PATH);
+                for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+                    if (x === 0 || x === w - 1 || y === 0 || y === h - 1) m[y * w + x] = T.WATER;
+                }
+                for (let y = 3; y <= 7; y++) for (let x = 7; x <= 14; x++) m[y * w + x] = T.GRASS;
+                for (let y = 9; y <= 13; y++) for (let x = 8; x <= 13; x++) m[y * w + x] = T.LAB;
+                m[0 * w + 10] = T.WARP; m[0 * w + 11] = T.WARP; // to fuchsia
+                m[(h - 1) * w + 10] = T.WARP; m[(h - 1) * w + 11] = T.WARP; // to indigo
+                return m;
+            })(),
+            warps: [
+                {x:10,y:0,to:'fuchsia',tx:10,ty:16},
+                {x:11,y:0,to:'fuchsia',tx:11,ty:16},
+                {x:10,y:17,to:'indigo_plateau',tx:10,ty:1},
+                {x:11,y:17,to:'indigo_plateau',tx:11,ty:1}
+            ],
+            npcs: [],
+            enc: null
+        },
+
+        viridian_gym: {
+            w: 22, h: 18,
+            data: (() => {
+                const w = 22, h = 18;
+                const m = new Array(w * h).fill(T.FLOOR_IN);
+                for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+                    if (x === 0 || x === w - 1 || y === 0 || y === h - 1) m[y * w + x] = T.WALL_IN;
+                }
+                for (let y = 4; y <= 12; y++) { m[y * w + 10] = T.PATH; m[y * w + 11] = T.PATH; }
+                m[15 * w + 10] = T.WARP; m[15 * w + 11] = T.WARP; // to saffron
+                m[1 * w + 10] = T.WARP; m[1 * w + 11] = T.WARP;   // to indigo
+                m[5 * w + 6] = T.TABLE; m[5 * w + 15] = T.TABLE;
+                m[9 * w + 6] = T.TABLE; m[9 * w + 15] = T.TABLE;
+                return m;
+            })(),
+            warps: [
+                {x:10,y:15,to:'saffron',tx:10,ty:16},
+                {x:11,y:15,to:'saffron',tx:11,ty:16},
+                {x:10,y:1,to:'indigo_plateau',tx:10,ty:15},
+                {x:11,y:1,to:'indigo_plateau',tx:11,ty:15}
+            ],
+            npcs: [],
+            enc: null
+        },
+
+        indigo_plateau: {
+            w: 22, h: 18,
+            data: (() => {
+                const w = 22, h = 18;
+                const m = new Array(w * h).fill(T.FLOOR_IN);
+                for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+                    if (x === 0 || x === w - 1 || y === 0 || y === h - 1) m[y * w + x] = T.WALL_IN;
+                }
+                for (let y = 2; y <= 15; y++) { m[y * w + 10] = T.PATH; m[y * w + 11] = T.PATH; }
+                m[15 * w + 10] = T.WARP; m[15 * w + 11] = T.WARP; // back to gym
+                m[2 * w + 10] = T.SIGN;
+                m[4 * w + 4] = T.SHELF; m[4 * w + 17] = T.SHELF;
+                m[8 * w + 4] = T.TABLE; m[8 * w + 17] = T.TABLE;
+                return m;
+            })(),
+            warps: [
+                {x:10,y:15,to:'viridian_gym',tx:10,ty:2},
+                {x:11,y:15,to:'viridian_gym',tx:11,ty:2}
+            ],
             npcs: [],
             enc: null
         },
@@ -1817,6 +1922,27 @@
         }
         if (mapId === 'silph_lobby' && GS.story.block_16_done && !GS.story.block_17_done) {
             return playBeat('ch10_mewtwo_confront');
+        }
+        if (mapId === 'fuchsia' && GS.story.block_17_done && !GS.story.block_18_done) {
+            return playBeat('ch11_aftershock_recovery');
+        }
+        if (mapId === 'cinnabar' && GS.story.block_18_done && !GS.story.block_19_done) {
+            return playBeat('ch12_cinnabar_research');
+        }
+        if (mapId === 'viridian_gym' && GS.story.block_19_done && !GS.story.block_20_done) {
+            return playBeat('ch13_viridian_giovanni');
+        }
+        if (mapId === 'indigo_plateau' && GS.story.block_20_done && !GS.story.block_21_done) {
+            return playBeat('ch14_indigo_opening');
+        }
+        if (mapId === 'indigo_plateau' && GS.story.block_21_done && !GS.story.block_22_done) {
+            return playBeat('ch15_elite_lance');
+        }
+        if (mapId === 'indigo_plateau' && GS.story.block_22_done && !GS.story.block_23_done) {
+            return playBeat('ch16_blue_champion');
+        }
+        if (mapId === 'indigo_plateau' && GS.story.block_23_done && !GS.story.block_24_done) {
+            return playBeat('ch17_season1_epilogue');
         }
         return false;
     }
