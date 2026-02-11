@@ -619,6 +619,9 @@
       "actions": [
         {"kind": "dialog", "speaker": "Prof. Oak", "lines": ["Forca sem controle e so risco.", "Treinem com objetivo, nao com ego."]},
         {"kind": "dialog", "speaker": "", "lines": ["[ O time de RED entra num novo ciclo de treino tecnico. ]"]},
+        {"kind": "dialog", "speaker": "SAUR", "lines": ["Bulba... SAUR!"]},
+        {"kind": "evolve", "slot": "saur", "to": "IVYSAUR", "options": {"name": "SAUR", "lv": 18, "maxHpBoost": 8}},
+        {"kind": "dialog", "speaker": "", "lines": ["SAUR evoluiu para IVYSAUR!"]},
         {"kind": "set", "path": "story.block_32_done", "value": true}
       ]
     },

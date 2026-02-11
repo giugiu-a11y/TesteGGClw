@@ -1210,6 +1210,20 @@
         if (next.length) GS.team = next;
     }
 
+    function evolveMon(slot, toSpecies, opts = {}) {
+        const key = String(slot || '').toLowerCase();
+        const ref = key === 'poli' ? GS.poli : key === 'saur' ? GS.saur : key === 'pika' ? GS.pika : null;
+        if (!ref) return false;
+        const species = String(toSpecies || '').toUpperCase();
+        if (!species) return false;
+        ref.species = species;
+        if (typeof opts.name === 'string' && opts.name.trim()) ref.name = opts.name.trim().toUpperCase();
+        if (typeof opts.lv === 'number') ref.lv = Math.max(ref.lv, opts.lv);
+        if (typeof opts.maxHpBoost === 'number') ref.maxHp = Math.max(1, ref.maxHp + opts.maxHpBoost);
+        if (ref.hp > ref.maxHp) ref.hp = ref.maxHp;
+        return true;
+    }
+
     function runActions(actions, idx = 0, onDone = null) {
         const list = Array.isArray(actions) ? actions : [];
         if (idx >= list.length) {
@@ -1229,6 +1243,10 @@
         }
         if (a.kind === 'ensureTeam') {
             ensureTeam(a.value);
+            return runActions(list, idx + 1, onDone);
+        }
+        if (a.kind === 'evolve') {
+            evolveMon(a.slot, a.to, a.options && typeof a.options === 'object' ? a.options : {});
             return runActions(list, idx + 1, onDone);
         }
         if (a.kind === 'battle') {
@@ -2389,7 +2407,7 @@
         document.getElementById('playerSprite').src = backSprite;
         updatePlayerHp();
         
-        setBattleLog(`Wild ${enemy.name} appeared!`);
+        setBattleLog(`Um ${enemy.name} apareceu!`);
         document.getElementById('battleScreen').style.display = 'flex';
         document.getElementById('movesMenu').style.display = 'none';
         hideBattleOk();
@@ -2477,7 +2495,7 @@
         bar.className = 'hp-fill' + (pct < 20 ? ' critical' : pct < 50 ? ' low' : '');
         
         const pokeName = active.name || active.species;
-        document.getElementById('battleLog').textContent = `${pokeName} used ${m.name}!${dmg ? ` ${dmg} damage!` : ''}`;
+        document.getElementById('battleLog').textContent = `${pokeName} usou ${m.name}!${dmg ? ` ${dmg} de dano!` : ''}`;
         
         if (battle.enemy.hp <= 0) { setTimeout(() => endBattle(true), 1000); return; }
         setTimeout(enemyTurn, 1500);
@@ -2488,7 +2506,7 @@
         const dmg = Math.floor((30 * battle.enemy.lv / 50) + 2 + Math.random() * 3);
         active.hp = Math.max(0, active.hp - dmg);
         updatePlayerHp();
-        document.getElementById('battleLog').textContent = `${battle.enemy.name} attacked! ${dmg} damage!`;
+        document.getElementById('battleLog').textContent = `${battle.enemy.name} atacou! ${dmg} de dano!`;
         if (active.hp <= 0) { setTimeout(() => endBattle(false), 1000); return; }
         battle.turn = 'player';
         hideMoves();
@@ -2507,16 +2525,16 @@
                     active.exp = 0;
                     active.maxHp += 2;
                     active.hp = active.maxHp;
-                    document.getElementById('battleLog').textContent = `${pokeName} grew to Lv.${active.lv}!`;
+                    document.getElementById('battleLog').textContent = `${pokeName} subiu para Lv.${active.lv}!`;
                 } else {
-                    document.getElementById('battleLog').textContent = `Gained ${exp} EXP!`;
+                    document.getElementById('battleLog').textContent = `Ganhou ${exp} EXP!`;
                 }
             } else {
                 // In storyLock mode, leveling is cosmetic and scripted by story beats.
-                document.getElementById('battleLog').textContent = `Victory!`;
+                document.getElementById('battleLog').textContent = `Vitoria!`;
             }
         } else {
-            document.getElementById('battleLog').textContent = `${pokeName} fainted...`;
+            document.getElementById('battleLog').textContent = `${pokeName} caiu...`;
             active.hp = Math.floor(active.maxHp / 2);
         }
         setTimeout(() => {
@@ -2532,19 +2550,19 @@
     
     function tryRun() {
         if (GAME_MODE.storyLock) {
-            document.getElementById('battleLog').textContent = "Can't escape!";
+            document.getElementById('battleLog').textContent = 'Nao da para fugir!';
             setTimeout(enemyTurn, 1000);
             return;
         }
         if (Math.random() < 0.7) {
-            document.getElementById('battleLog').textContent = 'Got away safely!';
+            document.getElementById('battleLog').textContent = 'Voce fugiu em seguranca!';
             setTimeout(() => {
                 document.getElementById('battleScreen').style.display = 'none';
                 inBattle = false;
                 battle = null;
             }, 1000);
         } else {
-            document.getElementById('battleLog').textContent = "Can't escape!";
+            document.getElementById('battleLog').textContent = 'Nao da para fugir!';
             setTimeout(enemyTurn, 1000);
         }
     }
@@ -2554,11 +2572,11 @@
         if (GS.items.potion > 0 && active.hp < active.maxHp) {
             GS.items.potion--;
             active.hp = Math.min(active.maxHp, active.hp + 20);
-            document.getElementById('battleLog').textContent = 'Used POTION! +20 HP!';
+            document.getElementById('battleLog').textContent = 'Usou POTION! +20 HP!';
             updatePlayerHp();
             setTimeout(enemyTurn, 1500);
         } else {
-            document.getElementById('battleLog').textContent = GS.items.potion > 0 ? 'HP is full!' : 'No potions!';
+            document.getElementById('battleLog').textContent = GS.items.potion > 0 ? 'HP cheio!' : 'Sem potions!';
         }
     }
     
