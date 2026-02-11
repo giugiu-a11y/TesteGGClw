@@ -3,15 +3,38 @@
     "season": 1,
     "language": "pt-BR",
     "fidelity_target": 0.75,
+    "sources": [
+      {
+        "id": "manga_vol1_scribd",
+        "label": "Pokemon Adventures Vol 01 (Scribd)",
+        "url": "https://pt.scribd.com/document/496161531/Pokemon-Adventures-Vol-01"
+      },
+      {
+        "id": "tiles_spriters_resource",
+        "label": "The Spriters Resource (FRLG)",
+        "url": "https://www.spriters-resource.com/gba/pokemonfireredleafgreen/"
+      },
+      {
+        "id": "tiles_spriters_resource_general_3870",
+        "label": "Tileset Geral (asset 3870)",
+        "url": "https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/asset/3870/"
+      },
+      {
+        "id": "assets_yepoleb_repo",
+        "label": "Yepoleb/Pokemon-assets",
+        "url": "https://github.com/Yepoleb/Pokemon-assets"
+      }
+    ],
     "notes": [
       "Objetivo: >=75% fidelidade ao manga Pokemon Adventures.",
-      "Cada beat deve ter sourceRef (capitulo/pagina/edicao/scan) para revisao."
+      "Cada beat deve ter sourceRef (capitulo/pagina/edicao/scan) para revisao.",
+      "Texto no jogo deve ser preferencialmente uma adaptacao fiel; texto 100% literal depende de voce fornecer o transcript/trechos exatos (copyright)."
     ]
   },
   "beats": [
     {
       "id": "ch1_intro",
-      "sourceRef": "TODO: manga edition/scan + chapter/page",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
       "type": "cutscene",
       "actions": [
         {"kind": "dialog", "speaker": "", "lines": ["[ POKeMON ADVENTURES ]", "[ Chapter 1: VS MEW ]", "━━━━━━━━━━━━━━━━━━━━━━"]},
@@ -30,7 +53,7 @@
     },
     {
       "id": "ch1_oak_mew_explain",
-      "sourceRef": "TODO: manga edition/scan + chapter/page",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
       "type": "cutscene",
       "actions": [
         {"kind": "dialog", "speaker": "Prof. Oak", "lines": ["RED! Entre, rapido!", "Voce viu algo na floresta, nao viu?", "Aquele brilho rosa... eu vi tambem, da janela!"]},
@@ -51,4 +74,3 @@
     }
   ]
 }
-
