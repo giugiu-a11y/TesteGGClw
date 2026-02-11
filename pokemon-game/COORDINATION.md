@@ -1,28 +1,26 @@
-# Coordination Rules (Pokemon Game)
+# COORDINATION (2 IAs)
 
-Objetivo: evitar retrabalho/regressoes quando 2 IAs (ou mais) mexem no mesmo projeto.
+## Fonte de Verdade
+- Estado atual: `STATUS.md`
+- Proximos passos: `NEXT.md`
+- Historia: `story/season1.ptbr.json`
 
-## Fonte Unica de Verdade
-- `clawd/pokemon-game/NEXT.md` e o estado do projeto.
-- Qualquer mudanca relevante exige atualizar `NEXT.md` no mesmo PR/commit.
+## Ownership por Area
+- IA A (engine): input, dialog, batalha, warp, save/load.
+- IA B (content/visual): mapas, tileset mapping, story beats/dialogos.
+- Se uma IA mexer na area da outra, registrar no commit e atualizar `STATUS.md`.
 
-## Nao Quebrar o Funil
-- O "funil" e: abrir um link estavel no iPad e jogar.
-- Prioridade: GitHub Pages.
-- Tunnel (localtunnel) so para debug rapido e pode quebrar; nao otimizar o projeto em torno dele.
+## Regras Anti-Retrabalho
+1. Nao duplicar gatilho de historia em dois lugares.
+   - Regra: gatilhos ficam em `onMapEnter()` + beats JSON.
+2. Nao editar `index.html` inteiro de uma vez.
+   - Fazer patches pequenos por bloco (mapa, input, batalha, story).
+3. Sempre testar sintaxe antes de commit:
+   - `node --check` no script extraido de `index.html`
+   - `python3 -m json.tool` nos JSON alterados
+4. Nao commitar lixo de ambiente (`sessions/**`, `__pycache__`, venv).
 
-## Regras de Mudanca
-- Nao reescrever `index.html` inteiro: mudar em blocos pequenos e testaveis.
-- Nao reintroduzir RNG/grind quando `GAME_MODE.storyLock=true`.
-- Nao adicionar passos manuais para o usuario (iPad). Se for inevitavel, deixar 1 passo maximo e mandar por Telegram.
-
-## Definition of Done (por feature)
-- Visual: ainda parece FRLG (UI/cores) e nao "demo".
-- Narrativa: cenas/dialogos >= 75% fieis ao mangá (sem perder sentido).
-- Jogabilidade: jogador so confirma (A/OK) quando a historia mandar.
-- Persistencia: save/load nao quebra a progressao do story.
-
-## Higiene
-- Nao misturar commits de `sessions/**` com `pokemon-game/**`.
-- Se um agente mexer em scripts de deploy/tunnel, registrar em `NEXT.md` o motivo e o comando de teste.
-
+## Contrato de Qualidade
+- iPad first: toque precisa avancar dialogo e batalha.
+- Manga first: jogador so confirma; sistema executa a acao.
+- Visual: estilo consistente (nao parecer prototipo cru).

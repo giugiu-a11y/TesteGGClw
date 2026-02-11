@@ -17,20 +17,19 @@
     "FENCE": {"ax": 0, "ay": 6},
     "SIGN": {"ax": 6, "ay": 6},
 
-    "ROOF_RED": {"ax": 12, "ay": 31},
-    "ROOF_BLUE": {"ax": 12, "ay": 31},
-    "ROOF_LAB": {"ax": 12, "ay": 31},
-    "WALL": {"ax": 11, "ay": 31},
-    "DOOR": {"ax": 11, "ay": 33},
-    "WINDOW": {"ax": 22, "ay": 13},
+    "ROOF_RED": {"ax": 16, "ay": 35},
+    "ROOF_BLUE": {"ax": 13, "ay": 35},
+    "ROOF_LAB": {"ax": 12, "ay": 35},
+    "WALL": {"ax": 16, "ay": 36},
+    "DOOR": {"ax": 13, "ay": 37},
+    "WINDOW": {"ax": 16, "ay": 36},
 
     "WARP": {"ax": 10, "ay": 4},
 
-    "FLOOR_IN": {"ax": 11, "ay": 31},
-    "WALL_IN": {"ax": 11, "ay": 31},
+    "FLOOR_IN": {"ax": 10, "ay": 10},
+    "WALL_IN": {"ax": 10, "ay": 31},
 
     "TABLE": {"ax": 15, "ay": 34},
     "SHELF": {"ax": 16, "ay": 34}
   }
 }
-

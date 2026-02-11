@@ -1,30 +1,25 @@
-# NEXT (Pokemon Adventures)
+# NEXT (Execucao)
 
-## Definicao de "Final"
-1. Manga-first: eventos, capturas e evolucoes acontecem quando o mangá dita.
-2. Feel de Pokemon classico (Yellow/FRLG), mas sem grind infinito.
-3. Link estavel para iPad (preferir GitHub Pages; tunnel so para testes).
-4. Jogador so confirma (A/OK). Ataques/itens acontecem automaticamente conforme o mangá.
+## Prioridade 1 - Fechar Base Jogavel
+1. Validar no iPad que o intro completo avanca sem travar (ch1_intro inteiro).
+2. Validar entrada/saida de casas + Oak Lab com novo layout de Pallet.
+3. Ajustar colisao/warps se algum tile de porta ficar desalinhado.
 
-## Done
-- Sprint 1: cenas + warps + save/load (ver `STATUS.md`).
-- Batalha basica + UI e sprites (atual em `index.html`).
-- Batalha scripted/confirm-only (A/OK) em `storyLock` (sem BAG manual).
+## Prioridade 2 - Visual FireRed-like (sem retrabalho)
+1. Refinar `assets/tilesets/punyworld.tileset.json` com coordenadas finais.
+2. Revisar tiles de interior (`FLOOR_IN`, `WALL_IN`, `TABLE`, `SHELF`) para nao parecer placeholder.
+3. Padronizar paleta de UI (dialog/battle) para combinar melhor com overworld.
 
-## Doing (agora)
-- Deploy GitHub Pages (tirar dependencia de tunnel).
-- StoryScript (temporada 1): estrutura + flags + cenas com dialogos fieis.
+## Prioridade 3 - Story Season 1
+1. Expandir beats em `story/season1.ptbr.json`:
+   - Viridian chegada
+   - Floresta / encontro chave
+   - Rocket setup
+   - Pewter arco inicial
+2. Ligar cada beat a trigger claro (`onMapEnter`, fala NPC, batalha scriptada).
+3. Manter `sourceRef` por beat para rastreabilidade de fidelidade.
 
-## Next
-- Map rendering com tileset FRLG (Pallet/Route1/Viridian/Pewter).
-- Scripted encounters/battles/captures (temporada 1) sem RNG.
-- Revisar/reescrever dialogos para >= 75% fidelidade do mangá.
-- Quebrar conteudo por beats em `clawd/pokemon-game/SEASON1_CHECKLIST.md`.
-
-## Como testar
-- Dev: `cd /home/ubuntu/clawd/pokemon-game && ./start-dev.sh`
-- iPad: abrir o link do GitHub Pages (quando publicado).
-
-## Coordenação (multi-IA)
-- Ler `clawd/pokemon-game/COORDINATION.md` antes de mudar coisas grandes.
-- Atualizar este arquivo (`NEXT.md`) na mesma mudanca.
+## Regras Operacionais
+- Nao voltar a logica de cutscene dentro de `checkWarp()`.
+- Nao quebrar `storyLock` (sem grind manual).
+- Mudanca grande = atualizar `STATUS.md` + este arquivo no mesmo commit.

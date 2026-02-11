@@ -484,40 +484,63 @@
     const MAPS = {
         pallet_town: {
             w: 20, h: 18,
-            data: [
-                3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-                3,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,3,
-                3,0,10,0,0,0,0,0,0,1,1,0,0,0,0,10,0,0,0,3,
-                3,0,0,0,4,4,4,0,0,1,1,0,0,5,5,5,0,0,0,3,
-                3,0,0,0,4,4,4,0,0,1,1,0,0,5,5,5,0,0,0,3,
-                3,0,0,0,0,13,0,0,0,1,1,0,0,0,13,0,0,0,0,3,
-                3,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,3,
-                3,7,7,7,7,7,7,0,0,1,1,0,0,7,7,7,7,7,7,3,
-                3,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,3,
-                3,0,0,6,6,6,6,6,0,1,1,0,8,0,0,0,0,0,0,3,
-                3,0,0,6,6,6,6,6,0,1,1,0,0,0,0,0,0,0,0,3,
-                3,0,0,6,6,6,6,6,0,1,1,0,0,0,0,0,14,0,0,3,
-                3,0,0,0,0,13,0,0,0,1,1,0,0,0,0,0,0,0,0,3,
-                3,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,3,
-                3,0,10,0,0,0,0,0,0,1,1,0,0,0,0,0,10,0,0,3,
-                3,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,3,
-                3,3,3,3,3,3,3,3,3,1,1,3,3,3,3,3,3,3,3,3,
-                9,9,9,9,9,9,9,9,9,13,13,9,9,9,9,9,9,9,9,9
-            ],
+            data: (() => {
+                const w = 20, h = 18;
+                const m = new Array(w * h).fill(T.GRASS);
+
+                // Border trees (keep south gate open to Route 1).
+                for (let y = 0; y < h; y++) {
+                    for (let x = 0; x < w; x++) {
+                        if (x === 0 || x === w - 1 || y === 0) m[y * w + x] = T.TREE;
+                    }
+                }
+
+                // South transition row and gate.
+                for (let x = 0; x < w; x++) m[(h - 1) * w + x] = T.TALL_GRASS;
+                m[(h - 1) * w + 9] = T.WARP;
+                m[(h - 1) * w + 10] = T.WARP;
+
+                // Main road + cross road.
+                for (let y = 1; y <= 16; y++) {
+                    m[y * w + 9] = T.PATH;
+                    m[y * w + 10] = T.PATH;
+                }
+                for (let x = 2; x <= 17; x++) m[8 * w + x] = T.PATH;
+
+                // Player house (left), rival house (right), Oak lab (south-center).
+                for (let y = 3; y <= 5; y++) for (let x = 3; x <= 5; x++) m[y * w + x] = T.HOUSE_RED;
+                for (let y = 3; y <= 5; y++) for (let x = 13; x <= 15; x++) m[y * w + x] = T.HOUSE_BLUE;
+                for (let y = 9; y <= 11; y++) for (let x = 7; x <= 11; x++) m[y * w + x] = T.LAB;
+
+                // Building entrances as warp tiles.
+                m[6 * w + 4] = T.WARP;
+                m[6 * w + 14] = T.WARP;
+                m[12 * w + 9] = T.WARP;
+
+                // Town details.
+                m[7 * w + 11] = T.SIGN;
+                m[2 * w + 2] = T.FLOWER;
+                m[2 * w + 17] = T.FLOWER;
+                m[14 * w + 3] = T.FLOWER;
+                m[14 * w + 16] = T.FLOWER;
+                for (let x = 6; x <= 12; x++) m[10 * w + x] = T.FENCE;
+
+                return m;
+            })(),
             warps: [
-                {x:5,y:5,to:'player_house',tx:3,ty:6},
-                {x:14,y:5,to:'rival_house',tx:3,ty:6},
-                {x:5,y:12,to:'oak_lab',tx:5,ty:10},
+                {x:4,y:6,to:'player_house',tx:3,ty:6},
+                {x:14,y:6,to:'rival_house',tx:3,ty:6},
+                {x:9,y:12,to:'oak_lab',tx:5,ty:10},
                 {x:9,y:17,to:'route1',tx:9,ty:23},
                 {x:10,y:17,to:'route1',tx:10,ty:23}
             ],
             npcs: [
-                {x:16,y:11,name:'Girl',sprite:'girl',dialog:[
+                {x:15,y:10,name:'Girl',sprite:'girl',dialog:[
                     'Bem-vindo a PALLET TOWN!',
                     'Ouviu o boato? Dizem que viram uma luz estranha na floresta!',
                     'O Professor OAK esta investigando isso no laboratorio...'
                 ]},
-                {x:12,y:6,name:'Blue',sprite:'blue',dialog:[
+                {x:13,y:7,name:'Blue',sprite:'blue',dialog:[
                     '...Ah. Voce, RED.',
                     'O velho falou de um POKeMON raro avistado por aqui.',
                     'Nao ache que vai chegar antes de mim.',
@@ -716,7 +739,7 @@
                 m[2 * w + 6] = T.SHELF;
                 return m;
             })(),
-            warps: [{x:3,y:6,to:'pallet_town',tx:5,ty:6}],
+            warps: [{x:3,y:6,to:'pallet_town',tx:4,ty:6}],
             npcs: [{x:5,y:3,name:'Mom',sprite:'mom',dialog:['RED! Go see Professor OAK!','He has something for you!']}],
             enc: null
         },
@@ -749,12 +772,16 @@
                 }
                 m[11 * w + 4] = T.WARP;
                 m[11 * w + 5] = T.WARP;
-                // Lab props
-                m[4 * w + 4] = T.TABLE;
-                m[2 * w + 8] = T.SHELF;
+                // Lab props (clear center aisle).
+                m[2 * w + 2] = T.SHELF;
+                m[2 * w + 7] = T.SHELF;
+                m[5 * w + 2] = T.TABLE;
+                m[5 * w + 7] = T.TABLE;
+                m[8 * w + 2] = T.TABLE;
+                m[8 * w + 7] = T.TABLE;
                 return m;
             })(),
-            warps: [{x:4,y:11,to:'pallet_town',tx:5,ty:13},{x:5,y:11,to:'pallet_town',tx:5,ty:13}],
+            warps: [{x:4,y:11,to:'pallet_town',tx:9,ty:12},{x:5,y:11,to:'pallet_town',tx:9,ty:12}],
             npcs: [{x:4,y:2,name:'Prof. Oak',sprite:'oak',
                 // Dynamic dialog based on story state (set in getOakDialog)
                 dialog: null
@@ -1370,99 +1397,7 @@
                 GS.map = w.to;
                 GS.px = w.tx;
                 GS.py = w.ty;
-
                 onMapEnter(GS.map);
-                
-                // Special events - Manga story triggers
-                // MANGA-ACCURATE: Oak gives Poliwhirl after you see Mew
-                if (w.to === 'oak_lab' && !GS.story.gotSaur && GS.story.sawMew) {
-                    setTimeout(() => {
-                        showDialog('Prof. Oak', [
-                            'RED! Entre, rapido!',
-                            'Voce viu algo na floresta, nao viu?',
-                            'Aquele brilho rosa... eu vi tambem, da janela!'
-                        ], () => {
-                            showDialog('Prof. Oak', [
-                                'Aquilo era o MEW... um POKeMON lendario!',
-                                'Dizem que ele carrega o DNA de todos os POKeMON do mundo.',
-                                'Passei anos pesquisando, mas ele sempre escapa...'
-                            ], () => {
-                                showDialog('RED', [
-                                    'MEW?! Entao era isso!',
-                                    'Eu tentei capturar com o POLI... mas sumiu!'
-                                ], () => {
-                                    showDialog('Prof. Oak', [
-                                        'Entao voce ja tem um POLIWHIRL... impressionante.',
-                                        'Voce criou ele sozinho? Voce tem talento, RED.',
-                                        'Eu quero que voce me ajude na minha pesquisa.'
-                                    ], () => {
-                                        showDialog('', [
-                                            '[ Prof. Oak hands you a red device! ]'
-                                        ], () => {
-                                            GS.story.gotPokedex = true;
-                                            showDialog('Prof. Oak', [
-                                                'Isto e a POKeDEX!',
-                                                'Ela registra dados automaticamente quando voce encontra POKeMON.',
-                                                'E eu tenho mais um presente pra voce...'
-                                            ], () => {
-                                                showDialog('', [
-                                                    '[ Prof. Oak tosses a POKé BALL! ]',
-                                                    '[ A green POKéMON with a bulb on its back appears! ]'
-                                                ], () => {
-                                                    showDialog('Prof. Oak', [
-                                                        'Este e um BULBASAUR. Eu chamo ele de SAUR.',
-                                                        'Tipo Grama/Veneno... uma boa combinacao pro seu jeito de lutar.',
-                                                        'Com o POLI, voces vao formar um time excelente.'
-                                                    ], () => {
-                                                        GS.story.gotSaur = true;
-                                                        GS.story.talkedToOak = true;
-                                                        GS.team.push(GS.saur);
-                                                        showDialog('', [
-                                                            '[ SAUR looks at you calmly! ]',
-                                                            '[ BULBASAUR joined your team! ]'
-                                                        ], () => {
-                                                            showDialog('RED', [
-                                                                'Um BULBASAUR?! Incrivel!',
-                                                                'SAUR! Voce e o POLI vao me ajudar a encontrar o MEW!'
-                                                            ], () => {
-                                                                showDialog('Prof. Oak', [
-                                                                    'Tome cuidado, RED...',
-                                                                    'Um grupo criminoso chamado TEAM ROCKET tambem esta atras do MEW.',
-                                                                    'Eles vao fazer qualquer coisa para captura-lo.',
-                                                                    'Meu neto BLUE ja seguiu para o norte. Fique atento.',
-                                                                    'Agora va. Sua aventura comeca.'
-                                                                ]);
-                                                            });
-                                                        });
-                                                    });
-                                                });
-                                            });
-                                        });
-                                    });
-                                });
-                            });
-                        });
-                    }, 500);
-                } else if (w.to === 'oak_lab' && !GS.story.sawMew) {
-                    // Haven't seen Mew yet
-                    setTimeout(() => {
-                        showDialog('Prof. Oak', [
-                            'Ah, RED! Entre!',
-                            'Vejo que voce tem um POLIWHIRL. Foi voce que criou?',
-                            'Voce viu algo incomum na floresta ultimamente?',
-                            'Tenho detectado leituras de energia... estranhas.'
-                        ]);
-                    }, 500);
-                } else if (w.to === 'oak_lab' && GS.story.gotSaur) {
-                    // Already have Saur
-                    setTimeout(() => {
-                        showDialog('Prof. Oak', [
-                            'Como POLI e SAUR estao, RED?',
-                            'Lembre: a POKeDEX registra dados automaticamente.',
-                            'Quando estiver pronto, siga para VIRIDIAN CITY ao norte.'
-                        ]);
-                    }, 500);
-                }
                 break;
             }
         }
