@@ -1909,8 +1909,13 @@
         if (dialogQ.length === 0) {
             document.getElementById('dialogBox').style.display = 'none';
             document.getElementById('tapOverlay').style.display = 'none';
-            if (dialog && dialog.cb) dialog.cb();
+            // Important: clear dialog state BEFORE invoking cb.
+            // Story runner chains many dialog actions; the callback commonly opens the next dialog.
+            // If we null-out after cb, we can wipe the newly opened dialog and "freeze" on iPad.
+            const cb = dialog && dialog.cb ? dialog.cb : null;
             dialog = null;
+            dialogQ = [];
+            if (cb) cb();
             return;
         }
         const box = document.getElementById('dialogBox');
@@ -2128,11 +2133,20 @@
         dbg(`PROMISE: ${e.reason ? (e.reason.message || String(e.reason)) : 'unknown'}`);
     });
 
+    let lastTapAt = 0;
     function tapAdvance(e) {
         try {
+            const now = Date.now();
+            // iOS often fires touchstart + click; debounce to avoid double-advancing.
+            if (now - lastTapAt < 120) return;
+            lastTapAt = now;
+
             if (e && typeof e.preventDefault === 'function') e.preventDefault();
             if (e && typeof e.stopPropagation === 'function') e.stopPropagation();
             dbg(`tapAdvance: dialog=${!!dialog} q=${Array.isArray(dialogQ) ? dialogQ.length : 'NA'} map=${GS.map}`);
+            // Fail-safe: when a dialog is open, advance it directly (do not route through handleA()).
+            if (inBattle && battle && battle.pending) { battleOk(); return; }
+            if (dialog) { nextDialog(); return; }
             handleA();
         } catch (err) {
             dbg(`tapAdvance threw: ${err && err.message ? err.message : String(err)}`);
