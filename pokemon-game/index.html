@@ -1285,6 +1285,15 @@
         catch { return dflt; }
     }
 
+    function normalizeUrl(v) {
+        try {
+            if (!v) return '';
+            return new URL(String(v), location.href).toString();
+        } catch {
+            return '';
+        }
+    }
+
     async function tryLoadExternalTileset() {
         // Default to punyworld so the public link always opens with the intended style.
         const which = qs('tileset', 'punyworld');
@@ -1295,6 +1304,20 @@
         if (which === 'punyworld') {
             png = './assets/tilesets/punyworld.png';
             json = './assets/tilesets/punyworld.tileset.json';
+        } else if (which === 'remote') {
+            // Plug-and-play mode:
+            // ?tileset=remote&tilesetPng=https://...png&tilesetJson=https://...json
+            const qPng = normalizeUrl(qs('tilesetPng', ''));
+            const qJson = normalizeUrl(qs('tilesetJson', ''));
+            const sPng = normalizeUrl(localStorage.getItem('tilesetPng') || '');
+            const sJson = normalizeUrl(localStorage.getItem('tilesetJson') || '');
+            png = qPng || sPng;
+            json = qJson || sJson;
+            if (!png || !json) return false;
+            try {
+                localStorage.setItem('tilesetPng', png);
+                localStorage.setItem('tilesetJson', json);
+            } catch {}
         } else if (which !== 'external') {
             return false;
         }
@@ -1318,6 +1341,22 @@
             return false;
         }
     }
+
+    // Optional helper for DevTools:
+    // setRemoteTileset('https://...png','https://...json')
+    window.setRemoteTileset = function(pngUrl, jsonUrl) {
+        try {
+            const p = normalizeUrl(pngUrl);
+            const j = normalizeUrl(jsonUrl);
+            if (!p || !j) return false;
+            localStorage.setItem('tilesetPng', p);
+            localStorage.setItem('tilesetJson', j);
+            location.href = `${location.origin}${location.pathname}?tileset=remote`;
+            return true;
+        } catch {
+            return false;
+        }
+    };
 
     async function loadAssets() {
         const progress = document.getElementById('progressFill');
