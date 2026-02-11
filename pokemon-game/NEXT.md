@@ -12,9 +12,9 @@
 
 ## Prioridade 3 - Story Season 1
 1. Expandir beats em `story/season1.ptbr.json`:
-   - Mt. Moon setup
-   - Green (ladra) encounter beat
-   - Rocket escalation beat (apos Pewter)
+   - Integrar no mapa os blocos 04-17 (Green, Rocket, Cerulean, Vermilion, Lavender, Silph, Mewtwo)
+   - Trocar placeholders de sprites faltantes (ex.: Staryu) por assets corretos
+   - Encadear progressao por capitulo (flags + warps) sem replay indevido
 2. Ligar cada beat a trigger claro (`onMapEnter`, fala NPC, batalha scriptada).
 3. Manter `sourceRef` por beat para rastreabilidade de fidelidade.
 

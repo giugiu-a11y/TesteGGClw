@@ -1505,6 +1505,12 @@
                 }
             }, 400);
         }
+        if (mapId === 'pewter' && GS.story.brockBattleDone && !GS.story.block_02_done) {
+            setTimeout(() => { playBeat('ch2_depart_pewter'); }, 320);
+        }
+        if (mapId === 'route2' && GS.story.block_02_done && !GS.story.block_03_done) {
+            setTimeout(() => { playBeat('ch2_mtmoon_entry'); }, 320);
+        }
         if (mapId === 'pewter_gym' && GS.story.caughtPika && !GS.story.brockBattleDone) {
             setTimeout(() => {
                 showDialog('', [

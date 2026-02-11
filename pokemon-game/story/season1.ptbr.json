@@ -167,11 +167,211 @@
       ]
     },
     {
+      "id": "ch2_depart_pewter",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ RED deixa PEWTER em direcao ao leste. ]", "As montanhas ficam mais altas e o ar mais frio."]},
+        {"kind": "dialog", "speaker": "RED", "lines": ["MEW... TEAM ROCKET... tudo parece conectado.", "Nao posso parar agora."]},
+        {"kind": "set", "path": "story.block_02_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch2_mtmoon_entry",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ MT. MOON ]", "Um tunel escuro se abre diante de RED.", "Eco de passos... e de problemas."]},
+        {"kind": "set", "path": "story.block_03_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch2_green_first_contact",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "???", "lines": ["Voce e lento, RED.", "Se ficar moscando, vao roubar ate sua POKeDEX."]},
+        {"kind": "dialog", "speaker": "", "lines": ["[ Uma garota agil some nas sombras com um sorriso provocador. ]"]},
+        {"kind": "set", "path": "story.metGreen", "value": true},
+        {"kind": "set", "path": "story.block_04_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch2_rocket_grunt_cave",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "Rocket", "lines": ["Garoto intrometido.", "Essa caverna e territorio da TEAM ROCKET."]},
+        {
+          "kind": "battle",
+          "enemy": {"name": "RATTATA", "spr": "rattata", "lv": 9, "hp": 28, "maxHp": 28},
+          "options": {
+            "scripted": true,
+            "onEnd": "only_if_win",
+            "scriptSteps": [
+              {"type": "log", "text": "ROCKET GRUNT enviou RATTATA!"},
+              {"type": "enemyMove", "move": "Quick Attack", "damage": 5},
+              {"type": "playerMove", "move": "Bubble Beam", "damage": 13},
+              {"type": "enemyMove", "move": "Bite", "damage": 4},
+              {"type": "playerMove", "move": "Water Gun", "damage": 999},
+              {"type": "end", "won": true}
+            ]
+          }
+        },
+        {"kind": "set", "path": "story.block_05_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch2_fossil_rumor",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ RED encontra pesquisadores discutindo fosseis raros. ]", "TEAM ROCKET tambem esta atras deles."]},
+        {"kind": "dialog", "speaker": "RED", "lines": ["Nao vou deixar eles usarem isso pra machucar POKeMON."]},
+        {"kind": "set", "path": "story.block_06_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch3_cerulean_arrival",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ CERULEAN CITY ]", "A cidade da agua parece tranquila por fora.", "Mas os conflitos em KANTO so aumentam."]},
+        {"kind": "set", "path": "story.block_07_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch3_misty_clash",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "Misty", "lines": ["Se vai correr por KANTO fazendo bagunca, primeiro me prove seu valor.", "No meu ginasio, agua nao perdoa."]},
+        {
+          "kind": "battle",
+          "enemy": {"name": "STARYU", "spr": "pidgey", "lv": 11, "hp": 30, "maxHp": 30},
+          "options": {
+            "scripted": true,
+            "onEnd": "only_if_win",
+            "scriptSteps": [
+              {"type": "log", "text": "MISTY enviou STARYU!"},
+              {"type": "enemyMove", "move": "Water Gun", "damage": 6},
+              {"type": "playerMove", "move": "Double Slap", "damage": 10},
+              {"type": "enemyMove", "move": "Swift", "damage": 4},
+              {"type": "playerMove", "move": "Bubble Beam", "damage": 999},
+              {"type": "end", "won": true}
+            ]
+          }
+        },
+        {"kind": "set", "path": "story.block_08_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch3_bill_event",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "Bill", "lines": ["RED! Preciso de ajuda com um experimento de transferencia!", "Se der errado, posso ficar preso num corpo de POKeMON!"]},
+        {"kind": "dialog", "speaker": "", "lines": ["[ RED ajuda BILL e recebe informacoes valiosas sobre a TEAM ROCKET. ]"]},
+        {"kind": "set", "path": "story.block_09_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch4_vermilion_setup",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ VERMILION CITY ]", "Um porto movimentado e boatos sobre navios suspeitos."]},
+        {"kind": "dialog", "speaker": "RED", "lines": ["Se a ROCKET esta transportando algo, vai ser por aqui."]},
+        {"kind": "set", "path": "story.block_10_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch4_ssanne_rocket",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ S.S. ANNE ]", "A tripulacao entra em panico com uma operacao clandestina."]},
+        {
+          "kind": "battle",
+          "enemy": {"name": "ARBOK", "spr": "arbok", "lv": 15, "hp": 44, "maxHp": 44},
+          "options": {
+            "scripted": true,
+            "onEnd": "only_if_win",
+            "scriptSteps": [
+              {"type": "log", "text": "EXECUTIVO ROCKET enviou ARBOK!"},
+              {"type": "enemyMove", "move": "Poison Fang", "damage": 7},
+              {"type": "playerMove", "move": "Hypnosis", "damage": 0},
+              {"type": "playerMove", "move": "Bubble Beam", "damage": 999},
+              {"type": "end", "won": true}
+            ]
+          }
+        },
+        {"kind": "set", "path": "story.block_11_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch5_surge_pressure",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "Lt. Surge", "lines": ["Sem disciplina voce nao sobrevive em guerra.", "Treinador bom responde sob pressao."]},
+        {"kind": "dialog", "speaker": "RED", "lines": ["Entao vamos ver quem aguenta mais."]},
+        {"kind": "set", "path": "story.block_12_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch6_lavender_shadow",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ LAVENDER TOWN ]", "A cidade carrega um silencio pesado.", "Algo muito errado esta ligado a torre."]},
+        {"kind": "set", "path": "story.block_13_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch7_silph_infiltration",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ SILPH CO. ]", "A TEAM ROCKET assume o controle do predio."]},
+        {"kind": "dialog", "speaker": "RED", "lines": ["Nao importa quantos andares tenham.", "Vou subir um por um."]},
+        {"kind": "set", "path": "story.block_14_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch8_saffron_psychic",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ SAFFRON CITY ]", "O conflito chega ao centro de KANTO.", "Forca mental contra forca bruta."]},
+        {"kind": "set", "path": "story.block_15_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch9_final_island_setup",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ ILHAS / LABORATORIO ]", "Os planos da ROCKET chegam na fase final.", "Mewtwo e o destino de KANTO se cruzam."]},
+        {"kind": "set", "path": "story.block_16_done", "value": true}
+      ]
+    },
+    {
+      "id": "ch10_mewtwo_confront",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "RED", "lines": ["Nao importa o quao forte voce seja...", "Eu nao vou abandonar meus POKeMON."]},
+        {"kind": "dialog", "speaker": "", "lines": ["[ O confronto final com MEWTWO se aproxima. ]"]},
+        {"kind": "set", "path": "story.block_17_done", "value": true}
+      ]
+    },
+    {
       "id": "s1_outline_next",
       "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
       "type": "outline",
       "actions": [
-        {"kind": "dialog", "speaker": "", "lines": ["[ TODO: Beat list Season 1 ]", "Rocket em Pewter / captura de Pikachu / Brock (feito) / proximo: Mt. Moon e Green."]}
+        {"kind": "dialog", "speaker": "", "lines": ["[ TODO: Integracao no mapa ]", "17 blocos narrativos ja estruturados no JSON.", "Proximo passo: ligar os beats aos mapas/warps capitulo a capitulo."]}
       ]
     }
   ]

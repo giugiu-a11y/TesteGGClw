@@ -24,6 +24,7 @@ Data: 2026-02-11
   - `runActions()` ganhou `kind: "battle"` para batalhas scriptadas em JSON.
   - Novos beats em `story/season1.ptbr.json`: chegada em Viridian, primeiro evento da floresta (com batalha), chegada em Pewter.
   - Acrescentado: arco inicial de Brock (mapa `pewter_gym`, NPC Brock, battle beat `ch1_brock_intro`).
+  - Escala de conteudo: `story/season1.ptbr.json` expandido para 17 blocos narrativos (base estruturada para temporada completa).
 
 ## Riscos Abertos
 - Mapeamento do Puny World ainda e aproximado (precisa refinamento fino por tile).
