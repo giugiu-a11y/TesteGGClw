@@ -893,6 +893,22 @@
             ensureTeam(a.value);
             return runActions(list, idx + 1);
         }
+        if (a.kind === 'battle') {
+            const enemy = a.enemy && typeof a.enemy === 'object'
+                ? a.enemy
+                : {name: 'PIDGEY', spr: 'pidgey', lv: 4, hp: 18, maxHp: 18};
+            const opts = a.options && typeof a.options === 'object' ? a.options : {};
+            const nextOnEnd = opts.onEnd;
+            startBattle(enemy, {
+                ...opts,
+                scripted: opts.scripted !== false,
+                onEnd: (won) => {
+                    if (nextOnEnd === 'only_if_win' && !won) return;
+                    runActions(list, idx + 1);
+                }
+            });
+            return;
+        }
         // Unknown action: skip
         runActions(list, idx + 1);
     }
@@ -1422,53 +1438,37 @@
         if (mapId === 'viridian' && !GS.story.visitedViridian) {
             GS.story.visitedViridian = true;
             setTimeout(() => {
-                showDialog('', [
-                    '[ VIRIDIAN CITY ]',
-                    'A atmosfera aqui e diferente.',
-                    'Voce sente que algo grande esta por vir...'
-                ]);
+                if (!playBeat('ch1_viridian_arrival')) {
+                    showDialog('', [
+                        '[ VIRIDIAN CITY ]',
+                        'A atmosfera aqui e diferente.',
+                        'Voce sente que algo grande esta por vir...'
+                    ]);
+                }
             }, 400);
         }
         if (mapId === 'viridian_forest' && GS.story.gotSaur && !GS.story.forestBeat1) {
             GS.story.forestBeat1 = true;
             setTimeout(() => {
-                showDialog('', [
-                    '[ VIRIDIAN FOREST ]',
-                    'A grama alta se move, como se o lugar estivesse vivo.',
-                    'POLI fica alerta.'
-                ], () => {
-                    // Scripted battle demo (manga-first: player only confirms).
-                    startBattle(
-                        {name: 'PIDGEY', spr: 'pidgey', lv: 4, hp: 18, maxHp: 18},
-                        {
-                            scripted: true,
-                            scriptSteps: [
-                                {type: 'log', text: 'Um PIDGEY selvagem apareceu!'},
-                                {type: 'playerMove', move: 'Water Gun', damage: 7},
-                                {type: 'enemyMove', move: 'Tackle', damage: 3},
-                                {type: 'playerMove', move: 'Water Gun', damage: 999},
-                                {type: 'end', won: true},
-                            ],
-                            onEnd: (won) => {
-                                if (!won) return;
-                                showDialog('', [
-                                    'O silencio volta por um instante...',
-                                    'Mas a floresta ainda observa.'
-                                ]);
-                            }
-                        }
-                    );
-                });
+                if (!playBeat('ch1_viridian_forest_first')) {
+                    showDialog('', [
+                        '[ VIRIDIAN FOREST ]',
+                        'A grama alta se move, como se o lugar estivesse vivo.',
+                        'POLI fica alerta.'
+                    ]);
+                }
             }, 400);
         }
         if (mapId === 'pewter' && !GS.story.visitedPewter) {
             GS.story.visitedPewter = true;
             setTimeout(() => {
-                showDialog('', [
-                    '[ PEWTER CITY ]',
-                    'Rocha, poeira... e um silencio estranho.',
-                    'Algo observa voce das sombras.'
-                ]);
+                if (!playBeat('ch1_pewter_arrival')) {
+                    showDialog('', [
+                        '[ PEWTER CITY ]',
+                        'Rocha, poeira... e um silencio estranho.',
+                        'Algo observa voce das sombras.'
+                    ]);
+                }
             }, 400);
         }
     }

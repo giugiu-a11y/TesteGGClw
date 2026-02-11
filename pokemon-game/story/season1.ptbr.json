@@ -74,11 +74,56 @@
       ]
     },
     {
+      "id": "ch1_viridian_arrival",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ VIRIDIAN CITY ]", "A cidade parece calma... mas ha tensao no ar.", "RED sente que a jornada acabou de comecar de verdade."]},
+        {"kind": "dialog", "speaker": "RED", "lines": ["Nao vou perder tempo aqui.", "Se o MEW passou por KANTO, eu vou seguir qualquer pista."]},
+        {"kind": "dialog", "speaker": "", "lines": ["[ Ao norte, a floresta fica cada vez mais densa... ]"]}
+      ]
+    },
+    {
+      "id": "ch1_viridian_forest_first",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ VIRIDIAN FOREST ]", "A grama alta se move, como se o lugar estivesse vivo.", "POLI e SAUR ficam em guarda."]},
+        {
+          "kind": "battle",
+          "enemy": {"name": "PIDGEY", "spr": "pidgey", "lv": 4, "hp": 18, "maxHp": 18},
+          "options": {
+            "scripted": true,
+            "onEnd": "only_if_win",
+            "scriptSteps": [
+              {"type": "log", "text": "Um PIDGEY selvagem apareceu!"},
+              {"type": "playerMove", "move": "Water Gun", "damage": 7},
+              {"type": "enemyMove", "move": "Tackle", "damage": 3},
+              {"type": "playerMove", "move": "Water Gun", "damage": 999},
+              {"type": "end", "won": true}
+            ]
+          }
+        },
+        {"kind": "dialog", "speaker": "", "lines": ["O silencio volta por um instante...", "Mas a floresta ainda observa."]},
+        {"kind": "set", "path": "story.forestBattleDone", "value": true}
+      ]
+    },
+    {
+      "id": "ch1_pewter_arrival",
+      "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ PEWTER CITY ]", "Rocha, poeira... e um silencio estranho.", "Rumores sobre ataques a POKeMON circulam pelas ruas."]},
+        {"kind": "dialog", "speaker": "RED", "lines": ["TEAM ROCKET...", "Se eles estao mesmo aqui, eu vou derrubar um por um."]},
+        {"kind": "set", "path": "story.pewterHook", "value": true}
+      ]
+    },
+    {
       "id": "s1_outline_next",
       "sourceRef": "manga_vol1_scribd TODO: capitulo/pagina",
       "type": "outline",
       "actions": [
-        {"kind": "dialog", "speaker": "", "lines": ["[ TODO: Beat list Season 1 ]", "Viridian / Forest / Rocket / Pewter / Pikachu / Brock ..."]}
+        {"kind": "dialog", "speaker": "", "lines": ["[ TODO: Beat list Season 1 ]", "Rocket em Pewter / captura de Pikachu / arco de Brock / avancar capitulo por capitulo."]}
       ]
     }
   ]
