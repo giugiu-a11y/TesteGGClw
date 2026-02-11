@@ -322,10 +322,10 @@
     
     <div class="controls">
         <div class="dpad">
-            <button class="up" ontouchstart="startMove('up')" ontouchend="stopMove()" onmousedown="startMove('up')" onmouseup="stopMove()">▲</button>
-            <button class="left" ontouchstart="startMove('left')" ontouchend="stopMove()" onmousedown="startMove('left')" onmouseup="stopMove()">◄</button>
-            <button class="right" ontouchstart="startMove('right')" ontouchend="stopMove()" onmousedown="startMove('right')" onmouseup="stopMove()">►</button>
-            <button class="down" ontouchstart="startMove('down')" ontouchend="stopMove()" onmousedown="startMove('down')" onmouseup="stopMove()">▼</button>
+            <button class="up" ontouchstart="startMove('up')" ontouchend="stopMove()" ontouchcancel="stopMove()" onmousedown="startMove('up')" onmouseup="stopMove()" onmouseleave="stopMove()">▲</button>
+            <button class="left" ontouchstart="startMove('left')" ontouchend="stopMove()" ontouchcancel="stopMove()" onmousedown="startMove('left')" onmouseup="stopMove()" onmouseleave="stopMove()">◄</button>
+            <button class="right" ontouchstart="startMove('right')" ontouchend="stopMove()" ontouchcancel="stopMove()" onmousedown="startMove('right')" onmouseup="stopMove()" onmouseleave="stopMove()">►</button>
+            <button class="down" ontouchstart="startMove('down')" ontouchend="stopMove()" ontouchcancel="stopMove()" onmousedown="startMove('down')" onmouseup="stopMove()" onmouseleave="stopMove()">▼</button>
         </div>
         <div class="action-buttons">
             <button class="btn-b"
@@ -344,7 +344,7 @@
     <div id="dialogBox" onclick="tapAdvance(event)" ontouchstart="tapAdvance(event); return false">
         <div class="speaker"></div>
         <div class="text"></div>
-        <div class="continue">▼ Press A</div>
+        <div class="continue">▼ Toque / A</div>
     </div>
 
     <div id="debugBar"></div>
@@ -472,8 +472,7 @@
         mt_moon: {url: './assets/tilesets/manual_environmental/mt_moon.png', ox: 0, oy: 0},
         saffron: {url: './assets/tilesets/manual_environmental/saffron_city.png', ox: 0, oy: 0},
         indigo_plateau: {url: './assets/tilesets/manual_environmental/indigo_plateau.png', ox: 0, oy: 0},
-        silph_lobby: {url: './assets/tilesets/manual_environmental/rocket_hideout.png', ox: 0, oy: 0},
-        viridian: {url: './assets/tilesets/manual_environmental/buildings_sheet_3.png', ox: 18, oy: 4}
+        silph_lobby: {url: './assets/tilesets/manual_environmental/rocket_hideout.png', ox: 0, oy: 0}
     };
     
     // ==================== COLORS (FRLG-ish, but original) ====================
@@ -1861,54 +1860,19 @@
         const mapBgEntry = prebuiltMapBg[GS.map];
         const hasMapBg = !!mapBgEntry;
         if (hasMapBg) {
-            // Draw a camera window from large prebuilt maps to avoid full-image stretching.
+            // Stable crop from prebuilt maps; avoids stretch artifacts near bounds.
             const mapBg = mapBgEntry.img;
             const srcTile = TILE;
+            const srcW = VW * srcTile;
+            const srcH = VH * srcTile;
             const originX = Math.floor((mapBgEntry.ox || 0) * srcTile);
             const originY = Math.floor((mapBgEntry.oy || 0) * srcTile);
-            let srcX = originX + Math.floor(camX * srcTile);
-            let srcY = originY + Math.floor(camY * srcTile);
-            let srcW = VW * srcTile;
-            let srcH = VH * srcTile;
-            let dstX = 0;
-            let dstY = 0;
-            let dstW = canvas.width;
-            let dstH = canvas.height;
-
-            if (srcX < 0) {
-                const cut = -srcX;
-                srcX = 0;
-                const ratio = cut / (VW * srcTile);
-                const shift = Math.floor(canvas.width * ratio);
-                dstX += shift;
-                dstW -= shift;
-                srcW -= cut;
-            }
-            if (srcY < 0) {
-                const cut = -srcY;
-                srcY = 0;
-                const ratio = cut / (VH * srcTile);
-                const shift = Math.floor(canvas.height * ratio);
-                dstY += shift;
-                dstH -= shift;
-                srcH -= cut;
-            }
-            if (srcX + srcW > mapBg.width) {
-                const cut = (srcX + srcW) - mapBg.width;
-                const ratio = cut / (VW * srcTile);
-                const shrink = Math.floor(canvas.width * ratio);
-                dstW -= shrink;
-                srcW -= cut;
-            }
-            if (srcY + srcH > mapBg.height) {
-                const cut = (srcY + srcH) - mapBg.height;
-                const ratio = cut / (VH * srcTile);
-                const shrink = Math.floor(canvas.height * ratio);
-                dstH -= shrink;
-                srcH -= cut;
-            }
-            if (srcW > 0 && srcH > 0 && dstW > 0 && dstH > 0) {
-                ctx.drawImage(mapBg, srcX, srcY, srcW, srcH, dstX, dstY, dstW, dstH);
+            const maxX = Math.max(0, mapBg.width - srcW);
+            const maxY = Math.max(0, mapBg.height - srcH);
+            const srcX = Math.max(0, Math.min(maxX, originX + Math.floor(camX * srcTile)));
+            const srcY = Math.max(0, Math.min(maxY, originY + Math.floor(camY * srcTile)));
+            if (srcW > 0 && srcH > 0) {
+                ctx.drawImage(mapBg, srcX, srcY, srcW, srcH, 0, 0, canvas.width, canvas.height);
             }
         }
         
@@ -2023,7 +1987,7 @@
     
     let runPressed = false;
     function setRunPressed(v) { runPressed = !!v; }
-    function moveStepMs() { return runPressed ? 85 : 150; }
+    function moveStepMs() { return runPressed ? 85 : 145; }
     function startMove(dir) {
         stopMove();
         move(dir);
@@ -2032,7 +1996,7 @@
             if (!moveDir) return;
             move(moveDir);
             moveInt = setTimeout(tick, moveStepMs());
-        }, 170);
+        }, 120);
     }
     function stopMove() {
         if (moveInt) {
@@ -2625,7 +2589,14 @@
             return;
         }
         const box = document.getElementById('dialogBox');
-        box.querySelector('.speaker').textContent = dialog.speaker;
+        const speakerEl = box.querySelector('.speaker');
+        if (dialog.speaker) {
+            speakerEl.style.display = 'block';
+            speakerEl.textContent = dialog.speaker;
+        } else {
+            speakerEl.style.display = 'none';
+            speakerEl.textContent = '';
+        }
         box.querySelector('.text').textContent = dialogQ.shift();
         box.style.display = 'block';
         document.getElementById('tapOverlay').style.display = 'block';
