@@ -5,6 +5,8 @@ import json
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 from dotenv import load_dotenv
+import subprocess
+import shlex
 
 _env_dir = os.path.dirname(__file__)
 _env_assistente = os.path.join(_env_dir, ".env.assistente")
@@ -48,6 +50,27 @@ SYSTEM_PROMPT = (
 def _auth_ok(update: Update) -> bool:
     return not ALLOWED_USER_ID or update.effective_user.id == ALLOWED_USER_ID
 
+def _clip(s: str, max_len: int = 3500) -> str:
+    s = (s or "").strip()
+    if len(s) <= max_len:
+        return s
+    return s[: max_len - 50] + "\n...[truncated]...\n" + s[-40:]
+
+def _run(cmd: str, cwd: str, timeout: int = 180) -> tuple[int, str]:
+    try:
+        p = subprocess.run(
+            cmd,
+            cwd=cwd,
+            shell=True,
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+        )
+        out = (p.stdout or "") + (("\n" + p.stderr) if p.stderr else "")
+        return p.returncode, out.strip()
+    except subprocess.TimeoutExpired:
+        return 124, f"timeout after {timeout}s"
+
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not _auth_ok(update):
@@ -59,19 +82,45 @@ async def pull_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not _auth_ok(update):
         await update.message.reply_text("Acesso restrito.")
         return
-    await update.message.reply_text(
-        "Cole e rode no AWS:\n"
-        "cd /home/ubuntu/clawd && git pull --rebase --autostash origin main"
-    )
+    # Minimal: command only.
+    await update.message.reply_text("cd /home/ubuntu/clawd && git pull --rebase --autostash origin main")
+
+async def pull_run_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not _auth_ok(update):
+        await update.message.reply_text("Acesso restrito.")
+        return
+    # Run the pull here and return output, so user doesn't need to copy terminal output.
+    cmd = "git pull --rebase --autostash origin main"
+    rc, out = _run(cmd, cwd="/home/ubuntu/clawd", timeout=240)
+    await update.message.reply_text(_clip(f"rc={rc}\n{out or '(no output)'}"))
+
+async def rebase_abort_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not _auth_ok(update):
+        await update.message.reply_text("Acesso restrito.")
+        return
+    rc, out = _run("git rebase --abort", cwd="/home/ubuntu/clawd", timeout=120)
+    await update.message.reply_text(_clip(f"rc={rc}\n{out or '(no output)'}"))
+
+async def rebase_continue_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not _auth_ok(update):
+        await update.message.reply_text("Acesso restrito.")
+        return
+    rc, out = _run("git rebase --continue", cwd="/home/ubuntu/clawd", timeout=180)
+    await update.message.reply_text(_clip(f"rc={rc}\n{out or '(no output)'}"))
+
+async def rebase_status_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not _auth_ok(update):
+        await update.message.reply_text("Acesso restrito.")
+        return
+    rc, out = _run("git status --porcelain=v1 && git status", cwd="/home/ubuntu/clawd", timeout=60)
+    await update.message.reply_text(_clip(f"rc={rc}\n{out or '(no output)'}"))
 
 async def tunnel_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not _auth_ok(update):
         await update.message.reply_text("Acesso restrito.")
         return
-    await update.message.reply_text(
-        "Cole e rode no AWS:\n"
-        "cd /home/ubuntu/clawd/pokemon-game && ./start-tunnel.sh"
-    )
+    # Minimal: command only.
+    await update.message.reply_text("cd /home/ubuntu/clawd/pokemon-game && ./start-tunnel.sh")
 
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -110,6 +159,10 @@ def main():
     )
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("pull", pull_cmd))
+    app.add_handler(CommandHandler("pull_run", pull_run_cmd))
+    app.add_handler(CommandHandler("rebase_abort", rebase_abort_cmd))
+    app.add_handler(CommandHandler("rebase_continue", rebase_continue_cmd))
+    app.add_handler(CommandHandler("rebase_status", rebase_status_cmd))
     app.add_handler(CommandHandler("tunnel", tunnel_cmd))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     app.run_polling()

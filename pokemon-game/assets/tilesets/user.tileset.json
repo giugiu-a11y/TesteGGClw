@@ -1,65 +1,90 @@
 {
-  "GRASS": [
-    0
-  ],
-  "GRASS_ALT": [
-    1
-  ],
-  "TALL_GRASS": [
-    9
-  ],
-  "FLOWER": [
-    10
-  ],
-  "PATH": [
-    1
-  ],
-  "PATH_ALT": [
-    2
-  ],
-  "WATER": [
-    2
-  ],
-  "TREE": [
-    3
-  ],
-  "FENCE": [
-    7
-  ],
-  "SIGN": [
-    8
-  ],
-  "ROOF_RED": [
-    32
-  ],
-  "ROOF_BLUE": [
-    33
-  ],
-  "ROOF_LAB": [
-    34
-  ],
-  "WALL": [
-    35
-  ],
-  "DOOR": [
-    48
-  ],
-  "WINDOW": [
-    49
-  ],
-  "WARP": [
-    13
-  ],
-  "FLOOR_IN": [
-    15
-  ],
-  "WALL_IN": [
-    16
-  ],
-  "TABLE": [
-    17
-  ],
-  "SHELF": [
-    18
-  ]
+  "tileSize": 16,
+  "atlasCols": 8,
+  "map": {
+    "GRASS": {
+      "ax": 0,
+      "ay": 0
+    },
+    "GRASS_ALT": {
+      "ax": 1,
+      "ay": 0
+    },
+    "TALL_GRASS": {
+      "ax": 2,
+      "ay": 0
+    },
+    "FLOWER": {
+      "ax": 3,
+      "ay": 0
+    },
+    "TREE": {
+      "ax": 4,
+      "ay": 0
+    },
+    "PATH": {
+      "ax": 5,
+      "ay": 0
+    },
+    "PATH_ALT": {
+      "ax": 6,
+      "ay": 0
+    },
+    "WATER": {
+      "ax": 7,
+      "ay": 0
+    },
+    "FENCE": {
+      "ax": 0,
+      "ay": 1
+    },
+    "SIGN": {
+      "ax": 1,
+      "ay": 1
+    },
+    "ROOF_RED": {
+      "ax": 2,
+      "ay": 1
+    },
+    "ROOF_BLUE": {
+      "ax": 3,
+      "ay": 1
+    },
+    "ROOF_LAB": {
+      "ax": 4,
+      "ay": 1
+    },
+    "WALL": {
+      "ax": 5,
+      "ay": 1
+    },
+    "DOOR": {
+      "ax": 6,
+      "ay": 1
+    },
+    "WINDOW": {
+      "ax": 7,
+      "ay": 1
+    },
+    "WARP": {
+      "ax": 0,
+      "ay": 2
+    },
+    "FLOOR_IN": {
+      "ax": 1,
+      "ay": 2
+    },
+    "WALL_IN": {
+      "ax": 2,
+      "ay": 2
+    },
+    "TABLE": {
+      "ax": 3,
+      "ay": 2
+    },
+    "SHELF": {
+      "ax": 4,
+      "ay": 2
+    }
+  }
 }

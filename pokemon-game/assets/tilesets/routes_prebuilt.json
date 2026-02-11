@@ -1,0 +1,99 @@
+{
+  "description": "Pre-built route maps from assets 3873-3879",
+  "routes": {
+    "pallet_town": {
+      "asset_id": 3873,
+      "file": "cities/3873_city_pallet_town.png",
+      "description": "Starting town, Pallet Town",
+      "size": "29KB"
+    },
+    "viridian_city": {
+      "asset_id": 3874,
+      "file": "cities/3874_city_viridian.png",
+      "description": "Viridian City, first gym city",
+      "size": "8KB"
+    },
+    "pewter_city": {
+      "asset_id": 3875,
+      "file": "cities/3875_city_pewter.png",
+      "description": "Pewter City, second gym city",
+      "size": "41KB"
+    },
+    "route_2_3": {
+      "asset_id": 3876,
+      "file": "cities/3876_city_map_3876.png",
+      "description": "Route 2-3 terrain variants",
+      "size": "5KB"
+    },
+    "route_4_5": {
+      "asset_id": 3878,
+      "file": "cities/3878_city_map_3878.png",
+      "description": "Route 4-5 with Mount Moon",
+      "size": "153KB"
+    },
+    "route_6_onwards": {
+      "asset_id": 3879,
+      "file": "cities/3879_city_map_3879.png",
+      "description": "Routes 6+ eastern section",
+      "size": "8KB"
+    }
+  },
+  "terrain_tiles": {
+    "outdoor_terrain": {
+      "asset_id": 3863,
+      "file": "routes/3863_outdoor_terrain.png",
+      "description": "Outdoor terrain base",
+      "size": "107KB"
+    },
+    "grass_variants": {
+      "asset_id": 3864,
+      "file": "routes/3864_grass_variants.png",
+      "description": "Grass tile variations",
+      "size": "111KB"
+    },
+    "water_tiles": {
+      "asset_id": 3865,
+      "file": "routes/3865_water_tiles.png",
+      "description": "Water and shoreline tiles",
+      "size": "18KB"
+    },
+    "route_special": {
+      "asset_id": 3866,
+      "file": "routes/3866_route_terrain_3866.png",
+      "description": "Special route terrain",
+      "size": "18KB"
+    },
+    "route_extras_1": {
+      "asset_id": 3868,
+      "file": "routes/3868_route_terrain_3868.png",
+      "description": "Extra route terrain set 1",
+      "size": "95KB"
+    },
+    "route_extras_2": {
+      "asset_id": 3869,
+      "file": "routes/3869_route_terrain_3869.png",
+      "description": "Extra route terrain set 2",
+      "size": "178KB"
+    }
+  },
+  "animation_tiles": {
+    "water_animated": {
+      "asset_id": 3971,
+      "file": "animated/3971_anim_3971.png",
+      "description": "Animated water tiles",
+      "size": "17KB"
+    },
+    "flowers_animated": {
+      "asset_id": 3973,
+      "file": "animated/3973_anim_3973.png",
+      "description": "Animated flower tiles",
+      "size": "12KB"
+    },
+    "general_anim": {
+      "asset_id": 3972,
+      "file": "animated/3972_anim_3972.png",
+      "description": "General animation tiles",
+      "size": "29KB"
+    }
+  }
+}

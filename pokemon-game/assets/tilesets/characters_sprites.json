@@ -1,0 +1,95 @@
+{
+  "description": "Character sprites and walk cycles",
+  "protagonists": {
+    "male": {
+      "asset_id": 3880,
+      "file": "characters/3880_protagonist_male.png",
+      "description": "Male protagonist (Red/Ash equivalent)",
+      "size": "22KB"
+    },
+    "female": {
+      "asset_id": 3881,
+      "file": "characters/3881_protagonist_female.png",
+      "description": "Female protagonist (Leaf equivalent)",
+      "size": "15KB"
+    }
+  },
+  "npcs": {
+    "general_sprites": {
+      "asset_id": 3882,
+      "file": "characters/3882_npc_sprites.png",
+      "description": "General NPC sprite collection",
+      "size": "1.1MB",
+      "includes": "Gym leaders, trainers, shopkeepers, and various NPCs"
+    },
+    "npc_collection_1": {
+      "asset_id": 3951,
+      "file": "characters/3951_npc_3951.png",
+      "description": "NPC variant set 1",
+      "size": "22KB"
+    },
+    "npc_collection_2": {
+      "asset_id": 3952,
+      "file": "characters/3952_npc_3952.png",
+      "description": "NPC variant set 2",
+      "size": "13KB"
+    }
+  },
+  "movement_cycles": {
+    "description": "Walk cycles for main character movement",
+    "walk_north": {
+      "asset_id": 3936,
+      "file": "characters/3936_character_walk_3936.png",
+      "description": "Walking north animation frames",
+      "size": "23KB"
+    },
+    "walk_south": {
+      "asset_id": 3937,
+      "file": "characters/3937_character_walk_3937.png",
+      "description": "Walking south animation frames",
+      "size": "15KB"
+    },
+    "walk_east": {
+      "asset_id": 3938,
+      "file": "characters/3938_character_walk_3938.png",
+      "description": "Walking east animation frames",
+      "size": "22KB"
+    },
+    "walk_west": {
+      "asset_id": 3939,
+      "file": "characters/3939_character_walk_3939.png",
+      "description": "Walking west animation frames",
+      "size": "16KB"
+    },
+    "run_cycle_1": {
+      "asset_id": 3940,
+      "file": "characters/3940_character_walk_3940.png",
+      "description": "Running animation set 1",
+      "size": "13KB"
+    },
+    "run_cycle_2": {
+      "asset_id": 3941,
+      "file": "characters/3941_character_walk_3941.png",
+      "description": "Running animation set 2",
+      "size": "24KB"
+    },
+    "idle_pose": {
+      "asset_id": 3943,
+      "file": "characters/3943_character_walk_3943.png",
+      "description": "Idle standing poses",
+      "size": "44KB"
+    },
+    "interact_animation": {
+      "asset_id": 3945,
+      "file": "characters/3945_character_walk_3945.png",
+      "description": "Interaction animation frames",
+      "size": "22KB"
+    }
+  },
+  "animation_notes": {
+    "movement": "Use assets 3936-3950 for character movement",
+    "ignored_dynamic": "Excluded assets with complex dynamic movement to avoid conflicts",
+    "frame_rate": "Recommend 8-12fps for walk cycles",
+    "tile_size": "All sprites assume 32x32 base with variable heights"
+  }
+}
