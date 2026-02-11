@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "season": 1,
+    "language": "pt-BR",
+    "fidelity_target": 0.75,
+    "notes": [
+      "Objetivo: >=75% fidelidade ao manga Pokemon Adventures.",
+      "Cada beat deve ter sourceRef (capitulo/pagina/edicao/scan) para revisao."
+    ]
+  },
+  "beats": [
+    {
+      "id": "ch1_intro",
+      "sourceRef": "TODO: manga edition/scan + chapter/page",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "", "lines": ["[ POKeMON ADVENTURES ]", "[ Chapter 1: VS MEW ]", "━━━━━━━━━━━━━━━━━━━━━━"]},
+        {"kind": "dialog", "speaker": "", "lines": ["PALLET TOWN - Uma pequena cidade na regiao de KANTO.", "Aqui vive um garoto que vive se gabando de ser um grande treinador...", "O nome dele e RED."]},
+        {"kind": "dialog", "speaker": "RED", "lines": ["Heh! Olha so!", "Eu vou ser o maior treinador de POKeMON de PALLET TOWN!", "Eu e meu parceiro POLI somos imparaveis!"]},
+        {"kind": "dialog", "speaker": "", "lines": ["[ RED ja tem o POLI, um Poliwhirl que ele criou desde pequeno. ]", "[ Mas as outras criancas nao acreditam nas suas bravatas... ]"]},
+        {"kind": "dialog", "speaker": "???", "lines": ["Ah e? Entao prova!", "Voce fala, fala... mas ninguem nunca te viu lutar de verdade!"]},
+        {"kind": "dialog", "speaker": "RED", "lines": ["Tch! Ta bom! Eu vou mostrar!", "Eu vou capturar o POKeMON mais raro de todos!", "...Huh? Que luz e essa na floresta?!"]},
+        {"kind": "dialog", "speaker": "", "lines": ["[ Uma luz brilhante atravessa as arvores! ]", "[ Um POKeMON rosa misterioso flutua diante de voce! ]", "[ Pequeno... com um olhar curioso e inocente... ]"]},
+        {"kind": "dialog", "speaker": "RED", "lines": ["O-O que e isso?! Eu nunca vi nada assim!", "Essa e a minha chance! POLI, vamos capturar!", "Vai, POKe BALL!"]},
+        {"kind": "dialog", "speaker": "", "lines": ["[ RED arremessa uma POKe BALL! ]", "[ ...Mas MEW cria uma barreira e desvia! ]", "[ MEW inclina a cabeca... e desaparece! ]"]},
+        {"kind": "set", "path": "story.sawMew", "value": true},
+        {"kind": "ensureTeam", "value": ["poli"]},
+        {"kind": "dialog", "speaker": "RED", "lines": ["E... escapou! Mas o que ERA aquilo?!", "Nem o POLI conseguiu acompanhar...", "O Professor OAK estuda POKeMON raros. Ele deve saber!"]}
+      ]
+    },
+    {
+      "id": "ch1_oak_mew_explain",
+      "sourceRef": "TODO: manga edition/scan + chapter/page",
+      "type": "cutscene",
+      "actions": [
+        {"kind": "dialog", "speaker": "Prof. Oak", "lines": ["RED! Entre, rapido!", "Voce viu algo na floresta, nao viu?", "Aquele brilho rosa... eu vi tambem, da janela!"]},
+        {"kind": "dialog", "speaker": "Prof. Oak", "lines": ["Aquilo era o MEW... um POKeMON lendario!", "Dizem que ele carrega o DNA de todos os POKeMON do mundo.", "Passei anos pesquisando, mas ele sempre escapa..."]},
+        {"kind": "dialog", "speaker": "RED", "lines": ["MEW?! Entao era isso!", "Eu tentei capturar com o POLI... mas sumiu!"]},
+        {"kind": "dialog", "speaker": "Prof. Oak", "lines": ["Entao voce ja tem um POLIWHIRL... impressionante.", "Voce criou ele sozinho? Voce tem talento, RED.", "Eu quero que voce me ajude na minha pesquisa."]},
+        {"kind": "dialog", "speaker": "", "lines": ["[ Prof. Oak hands you a red device! ]"]},
+        {"kind": "set", "path": "story.gotPokedex", "value": true},
+        {"kind": "dialog", "speaker": "Prof. Oak", "lines": ["Isto e a POKeDEX!", "Ela registra dados automaticamente quando voce encontra POKeMON.", "E eu tenho mais um presente pra voce..."]},
+        {"kind": "dialog", "speaker": "", "lines": ["[ Prof. Oak tosses a POKe BALL! ]", "[ A green POKeMON with a bulb on its back appears! ]"]},
+        {"kind": "dialog", "speaker": "Prof. Oak", "lines": ["Este e um BULBASAUR. Eu chamo ele de SAUR.", "Tipo Grama/Veneno... uma boa combinacao pro seu jeito de lutar.", "Com o POLI, voces vao formar um time excelente."]},
+        {"kind": "set", "path": "story.gotSaur", "value": true},
+        {"kind": "ensureTeam", "value": ["poli", "saur"]},
+        {"kind": "dialog", "speaker": "", "lines": ["[ SAUR olha para voce com calma. ]", "[ BULBASAUR entrou no seu time! ]"]},
+        {"kind": "dialog", "speaker": "RED", "lines": ["Um BULBASAUR?! Incrivel!", "SAUR! Voce e o POLI vao me ajudar a encontrar o MEW!"]},
+        {"kind": "dialog", "speaker": "Prof. Oak", "lines": ["Tome cuidado, RED...", "Um grupo criminoso chamado TEAM ROCKET tambem esta atras do MEW.", "Eles vao fazer qualquer coisa para captura-lo.", "Meu neto BLUE ja seguiu para o norte. Fique atento.", "Agora va. Sua aventura comeca."]}
+      ]
+    }
+  ]
+}
+

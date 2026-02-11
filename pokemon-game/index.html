@@ -475,9 +475,10 @@
         HOUSE_RED: 4, HOUSE_BLUE: 5, LAB: 6,
         FENCE: 7, SIGN: 8, TALL_GRASS: 9,
         FLOWER: 10, LEDGE: 11, WARP: 13, NPC: 14
+        , FLOOR_IN: 15, WALL_IN: 16
     };
     
-    const SOLID = [T.WATER, T.TREE, T.HOUSE_RED, T.HOUSE_BLUE, T.LAB, T.FENCE, T.NPC];
+    const SOLID = [T.WATER, T.TREE, T.HOUSE_RED, T.HOUSE_BLUE, T.LAB, T.FENCE, T.NPC, T.WALL_IN];
     
     // ==================== MAPS ====================
     const MAPS = {
@@ -786,6 +787,87 @@
     let battle = null;
     let moveInt = null;
     let animFrame = 0;
+
+    // ==================== STORY SCRIPT ====================
+    let STORY = null;
+
+    async function loadStory() {
+        try {
+            const res = await fetch('./story/season1.ptbr.json', {cache: 'no-store'});
+            if (!res.ok) throw new Error('story fetch failed');
+            STORY = await res.json();
+        } catch (e) {
+            console.warn('Failed to load story JSON. Falling back to inline story.', e);
+            STORY = null;
+        }
+    }
+
+    function getBeat(id) {
+        const beats = STORY && STORY.beats ? STORY.beats : null;
+        if (!beats) return null;
+        return beats.find(b => b && b.id === id) || null;
+    }
+
+    function getByPath(root, path) {
+        const parts = String(path || '').split('.').filter(Boolean);
+        let cur = root;
+        for (const p of parts) {
+            if (!cur || typeof cur !== 'object') return undefined;
+            cur = cur[p];
+        }
+        return cur;
+    }
+
+    function setByPath(root, path, value) {
+        const parts = String(path || '').split('.').filter(Boolean);
+        if (parts.length === 0) return;
+        let cur = root;
+        for (let i = 0; i < parts.length - 1; i++) {
+            const p = parts[i];
+            if (!cur[p] || typeof cur[p] !== 'object') cur[p] = {};
+            cur = cur[p];
+        }
+        cur[parts[parts.length - 1]] = value;
+    }
+
+    function ensureTeam(ids) {
+        const want = Array.isArray(ids) ? ids : [];
+        const next = [];
+        for (const id of want) {
+            if (id === 'poli') next.push(GS.poli);
+            if (id === 'saur') next.push(GS.saur);
+        }
+        if (next.length) GS.team = next;
+    }
+
+    function runActions(actions, idx = 0) {
+        const list = Array.isArray(actions) ? actions : [];
+        if (idx >= list.length) return;
+        const a = list[idx];
+        if (!a || typeof a !== 'object') return runActions(list, idx + 1);
+
+        if (a.kind === 'dialog') {
+            showDialog(a.speaker || '', Array.isArray(a.lines) ? a.lines : ['...'], () => runActions(list, idx + 1));
+            return;
+        }
+        if (a.kind === 'set') {
+            setByPath(GS, a.path, a.value);
+            return runActions(list, idx + 1);
+        }
+        if (a.kind === 'ensureTeam') {
+            ensureTeam(a.value);
+            return runActions(list, idx + 1);
+        }
+        // Unknown action: skip
+        runActions(list, idx + 1);
+    }
+
+    function playBeat(id) {
+        const beat = getBeat(id);
+        if (!beat) return false;
+        runActions(beat.actions, 0);
+        return true;
+    }
     
     // ==================== ASSET LOADING ====================
     function createTilesetCanvas() {
@@ -907,6 +989,9 @@
 
         // Generate tileset locally (more stable + consistent style).
         sprites.tileset = createTilesetCanvas();
+
+        // Load story in parallel; do not block asset loading.
+        loadStory();
 
         for (const [name, url] of Object.entries(SPRITE_URLS)) {
             text.textContent = `Loading ${name}...`;
@@ -2012,67 +2097,15 @@
         document.getElementById('titleScreen').style.display = 'none';
         
         setTimeout(() => {
-            // CHAPTER 1: VS MEW - Manga-faithful intro
-            showDialog('', [
-                '[ POKÉMON ADVENTURES ]',
-                '[ Chapter 1: VS MEW ]',
-                '━━━━━━━━━━━━━━━━━━━━━━'
-            ], () => {
+            // Manga-first: run story beat from external script (fallback is the old inline flow).
+            if (!playBeat('ch1_intro')) {
+                // If story JSON didn't load yet, keep legacy flow (avoid blank screen).
                 showDialog('', [
                     'PALLET TOWN - Uma pequena cidade na regiao de KANTO.',
                     'Aqui vive um garoto que vive se gabando de ser um grande treinador...',
                     'O nome dele e RED.'
-                ], () => {
-                    showDialog('RED', [
-                        'Heh! Olha so!',
-                        'Eu vou ser o maior treinador de POKeMON de PALLET TOWN!',
-                        'Eu e meu parceiro POLI somos imparaveis!'
-                    ], () => {
-                        showDialog('', [
-                            '[ RED ja tem o POLI, um Poliwhirl que ele criou desde pequeno. ]',
-                            '[ Mas as outras criancas nao acreditam nas suas bravatas... ]'
-                        ], () => {
-                            showDialog('???', [
-                                'Ah e? Entao prova!',
-                                'Voce fala, fala... mas ninguem nunca te viu lutar de verdade!'
-                            ], () => {
-                                showDialog('RED', [
-                                    'Tch! Ta bom! Eu vou mostrar!',
-                                    'Eu vou capturar o POKeMON mais raro de todos!',
-                                    '...Huh? Que luz e essa na floresta?!'
-                                ], () => {
-                                    // The Mew encounter!
-                                    showDialog('', [
-                                        '[ Uma luz brilhante atravessa as arvores! ]',
-                                        '[ Um POKeMON rosa misterioso flutua diante de voce! ]',
-                                        '[ Pequeno... com um olhar curioso e inocente... ]'
-                                    ], () => {
-                                        showDialog('RED', [
-                                            'O-O que e isso?! Eu nunca vi nada assim!',
-                                            'Essa e a minha chance! POLI, vamos capturar!',
-                                            'Vai, POKe BALL!'
-                                        ], () => {
-                                            showDialog('', [
-                                                '[ RED arremessa uma POKe BALL! ]',
-                                                '[ ...Mas MEW cria uma barreira e desvia! ]',
-                                                '[ MEW inclina a cabeca... e desaparece! ]'
-                                            ], () => {
-                                                GS.story.sawMew = true;
-                                                GS.team = [GS.poli]; // Red has Poli from the start!
-                                                showDialog('RED', [
-                                                    'E... escapou! Mas o que ERA aquilo?!',
-                                                    'Nem o POLI conseguiu acompanhar...',
-                                                    'O Professor OAK estuda POKeMON raros. Ele deve saber!'
-                                                ]);
-                                            });
-                                        });
-                                    });
-                                });
-                            });
-                        });
-                    });
-                });
-            });
+                ]);
+            }
         }, 500);
         render();
     }
