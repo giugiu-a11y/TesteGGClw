@@ -607,9 +607,8 @@
         'player_house', 'rival_house', 'oak_lab'
     ]);
     // By default, prefer prebuilt visual sheets for fidelity.
-    // Pallet opening is kept tile-accurate to prevent sprite/collision visual drift
-    // reported in the first cutscene.
-    const ALWAYS_TILE_RENDER_MAPS = new Set(['pallet_town']);
+    // Keep this set empty unless a specific map needs emergency tile-only rendering.
+    const ALWAYS_TILE_RENDER_MAPS = new Set([]);
     
     // ==================== COLORS (FRLG-ish, but original) ====================
     const C = {
@@ -2304,6 +2303,21 @@
     }
 
     function renderFrame() {
+        // Defensive runtime self-heal for stale UI/cutscene flags after iPad tap races.
+        if (dialog && Array.isArray(dialogQ) && dialogQ.length === 0) {
+            dialog = null;
+            const box = document.getElementById('dialogBox');
+            const ov = document.getElementById('tapOverlay');
+            if (box) box.style.display = 'none';
+            if (ov) ov.style.display = 'none';
+        }
+        if (cutsceneLock && !activeBeatId && !dialog && !inBattle) {
+            cutsceneLock = false;
+        }
+        if (activeBeatId && !cutsceneLock && !dialog && !inBattle) {
+            activeBeatId = null;
+        }
+
         const map = MAPS[GS.map];
         if (!map) {
             SceneManager.clearRenderLayer();
@@ -2468,6 +2482,17 @@
     }
     
     function move(dir) {
+        // Self-heal stuck flags before movement gate checks.
+        if (dialog && Array.isArray(dialogQ) && dialogQ.length === 0) {
+            dialog = null;
+            const box = document.getElementById('dialogBox');
+            const ov = document.getElementById('tapOverlay');
+            if (box) box.style.display = 'none';
+            if (ov) ov.style.display = 'none';
+        }
+        if (cutsceneLock && !activeBeatId && !dialog && !inBattle) {
+            cutsceneLock = false;
+        }
         if (dialog || inBattle || cutsceneLock) return;
         GS.dir = dir;
         let nx = GS.px, ny = GS.py;
