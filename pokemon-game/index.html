@@ -145,6 +145,10 @@
             text-align: right; font-size: 8px; 
             color: #666; margin-top: 8px;
             animation: blink 1s infinite;
+            background-position: left center;
+            background-repeat: no-repeat;
+            background-size: 12px 12px;
+            padding-left: 14px;
         }
         
         @keyframes blink { 50% { opacity: 0; } }
@@ -161,6 +165,9 @@
         .battle-field {
             flex: 1; display: flex; flex-direction: column;
             justify-content: space-around; padding: 15px;
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
         }
         
         .pokemon-slot {
@@ -173,6 +180,15 @@
         .pokemon-sprite {
             width: 80px; height: 80px;
             image-rendering: pixelated;
+        }
+
+        .trainer-portrait {
+            width: 72px; height: 72px;
+            image-rendering: pixelated;
+            border: 2px solid rgba(0,0,0,0.45);
+            border-radius: 6px;
+            background: rgba(255,255,255,0.85);
+            padding: 2px;
         }
         
         .pokemon-info {
@@ -350,8 +366,9 @@
     <div id="debugBar"></div>
     
     <div id="battleScreen">
-        <div class="battle-field">
+        <div class="battle-field" id="battleField">
             <div class="pokemon-slot enemy-slot">
+                <img class="trainer-portrait" id="trainerPortrait" src="" style="display:none" alt="trainer">
                 <div class="pokemon-info">
                     <div class="pokemon-name" id="enemyName">RATTATA</div>
                     <div class="pokemon-level" id="enemyLevel">Lv. 3</div>
@@ -455,9 +472,35 @@
         geodude: 'https://play.pokemonshowdown.com/sprites/gen3frlg/geodude.png',
         onix: 'https://play.pokemonshowdown.com/sprites/gen3frlg/onix.png',
 
+        // Trainer portraits (local assets)
+        trainerBlue: './assets/tilesets/trainers/rival_early_front_pic.png',
+        trainerBrock: './assets/tilesets/trainers/leader_brock_front_pic.png',
+        trainerRocket: './assets/tilesets/trainers/rocket_grunt_m_front_pic.png',
+        trainerGiovanni: './assets/tilesets/trainers/leader_giovanni_front_pic.png',
+        trainerLance: './assets/tilesets/trainers/elite_four_lance_front_pic.png',
+        trainerOak: './assets/tilesets/trainers/professor_oak_front_pic.png',
+
         // Optional remote tilesets (not used by default; we generate our own tiles for stability/style control)
         generalTiles: GITHUB_BASE + 'data/tilesets/primary/general/tiles.png',
         buildingTiles: GITHUB_BASE + 'data/tilesets/primary/building/tiles.png'
+    };
+
+    const BATTLE_TERRAIN_URLS = {
+        grass: './assets/tilesets/battle_terrain/grass/terrain.png',
+        longgrass: './assets/tilesets/battle_terrain/longgrass/terrain.png',
+        building: './assets/tilesets/battle_terrain/building/terrain.png',
+        cave: './assets/tilesets/battle_terrain/cave/terrain.png',
+        mountain: './assets/tilesets/battle_terrain/mountain/terrain.png',
+        water: './assets/tilesets/battle_terrain/water/terrain.png',
+        pond: './assets/tilesets/battle_terrain/pond/terrain.png',
+    };
+
+    const UI_SKIN_URLS = {
+        menu: './assets/tilesets/manual_ui/ui_elements_1.png',
+        log: './assets/tilesets/manual_ui/battle_ui_2.png',
+        ok: './assets/tilesets/manual_ui/battle_ui_1.png',
+        arrow: './assets/tilesets/interface/red_arrow.png',
+        selectBtn: './assets/tilesets/interface/select_button.png'
     };
     
     // Active sprite sources (can be overridden via local/remote JSON config)
@@ -1445,6 +1488,74 @@
         }
     }
 
+    function mapBattleTerrain(mapId) {
+        if (!mapId) return BATTLE_TERRAIN_URLS.grass;
+        if (mapId.includes('gym') || mapId.includes('house') || mapId === 'oak_lab' || mapId === 'silph_lobby') return BATTLE_TERRAIN_URLS.building;
+        if (mapId.includes('forest')) return BATTLE_TERRAIN_URLS.longgrass;
+        if (mapId.includes('moon') || mapId.includes('cave')) return BATTLE_TERRAIN_URLS.cave;
+        if (mapId.includes('pewter') || mapId.includes('indigo') || mapId.includes('route3')) return BATTLE_TERRAIN_URLS.mountain;
+        if (mapId.includes('cinnabar')) return BATTLE_TERRAIN_URLS.water;
+        if (mapId.includes('cerulean') || mapId.includes('fuchsia')) return BATTLE_TERRAIN_URLS.pond;
+        return BATTLE_TERRAIN_URLS.grass;
+    }
+
+    function mapTrainerSpriteKey(name) {
+        const n = String(name || '').toLowerCase();
+        if (n.includes('blue') || n.includes('rival')) return 'trainerBlue';
+        if (n.includes('brock')) return 'trainerBrock';
+        if (n.includes('rocket') || n.includes('grunt')) return 'trainerRocket';
+        if (n.includes('giovanni')) return 'trainerGiovanni';
+        if (n.includes('lance')) return 'trainerLance';
+        if (n.includes('oak')) return 'trainerOak';
+        return '';
+    }
+
+    function applyVisualSkin() {
+        const continueEl = document.querySelector('#dialogBox .continue');
+        if (continueEl) {
+            continueEl.style.backgroundImage = `url('${UI_SKIN_URLS.arrow}')`;
+        }
+        const menuEl = document.getElementById('battleMenu');
+        const logEl = document.getElementById('battleLog');
+        const okEl = document.getElementById('battleOk');
+        if (menuEl) {
+            menuEl.style.backgroundImage = `linear-gradient(rgba(255,255,255,0.88), rgba(255,255,255,0.88)), url('${UI_SKIN_URLS.menu}')`;
+            menuEl.style.backgroundSize = 'cover';
+        }
+        if (logEl) {
+            logEl.style.backgroundImage = `linear-gradient(rgba(248,250,252,0.92), rgba(248,250,252,0.92)), url('${UI_SKIN_URLS.log}')`;
+            logEl.style.backgroundSize = 'cover';
+        }
+        if (okEl) {
+            okEl.style.backgroundImage = `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('${UI_SKIN_URLS.ok}')`;
+            okEl.style.backgroundSize = 'cover';
+        }
+        const buttons = document.querySelectorAll('.battle-menu button, .battle-ok button, .back-btn');
+        buttons.forEach((btn) => {
+            btn.style.backgroundImage = `linear-gradient(rgba(255,255,255,0.08), rgba(255,255,255,0.08)), url('${UI_SKIN_URLS.selectBtn}')`;
+            btn.style.backgroundSize = 'cover';
+            btn.style.backgroundPosition = 'center';
+        });
+    }
+
+    function applyBattleVisuals(enemy, opts = {}) {
+        const bf = document.getElementById('battleField');
+        if (bf) {
+            const terrainUrl = mapBattleTerrain(GS.map);
+            bf.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.18), rgba(0,0,0,0.18)), url('${terrainUrl}')`;
+        }
+        const portraitEl = document.getElementById('trainerPortrait');
+        if (!portraitEl) return;
+        const trainerKey = opts.trainerSprite || mapTrainerSpriteKey(opts.trainerName || enemy.trainer || '');
+        if (!trainerKey || !SPRITE_URLS[trainerKey]) {
+            portraitEl.style.display = 'none';
+            portraitEl.src = '';
+            return;
+        }
+        portraitEl.src = SPRITE_URLS[trainerKey];
+        portraitEl.style.display = 'block';
+    }
+
     async function tryLoadExternalSpriteConfig() {
         // Modes:
         // - default: built-in DEFAULT_SPRITE_URLS
@@ -1675,6 +1786,7 @@
             loadedCount++;
             progress.style.width = (loadedCount / totalSprites * 100) + '%';
         }
+        applyVisualSkin();
         
         document.getElementById('loadingScreen').style.display = 'none';
         document.getElementById('titleScreen').style.display = 'flex';
@@ -2422,6 +2534,7 @@
         document.getElementById('battleScreen').style.display = 'flex';
         document.getElementById('movesMenu').style.display = 'none';
         hideBattleOk();
+        applyBattleVisuals(enemy, opts);
 
         if (battle.scripted) {
             // In manga-first mode, hide menus and run the script.
