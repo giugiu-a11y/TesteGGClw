@@ -469,6 +469,11 @@
     const prebuiltMapBg = {};
     const PREBUILT_MAP_BG_CONFIG = {
         // Uses ripped map sheets as visual background while preserving collision/warps from engine maps.
+        pallet_town: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ox: 0, oy: 0},
+        viridian: {url: './assets/tilesets/cities/3874_city_viridian.png', ox: 0, oy: 0},
+        pewter: {url: './assets/tilesets/cities/3875_city_pewter.png', ox: 0, oy: 0},
+        route2: {url: './assets/tilesets/cities/3876_city_map_3876.png', ox: 0, oy: 0},
+        route3: {url: './assets/tilesets/cities/3878_city_map_3878.png', ox: 0, oy: 0},
         mt_moon: {url: './assets/tilesets/manual_environmental/mt_moon.png', ox: 0, oy: 0},
         saffron: {url: './assets/tilesets/manual_environmental/saffron_city.png', ox: 0, oy: 0},
         indigo_plateau: {url: './assets/tilesets/manual_environmental/indigo_plateau.png', ox: 0, oy: 0},
@@ -1041,8 +1046,8 @@
             })(),
             warps: [
                 {x:1, y:12, to: 'viridian', tx: 18, ty: 8},       // Gate back to Viridian
-                {x:9, y:24, to: 'route1', tx: 9, ty: 16},         // Back towards Pallet
-                {x:10, y:24, to: 'route1', tx: 10, ty: 16}
+                {x:9, y:24, to: 'route2', tx: 9, ty: 16},         // South exit to Route 2
+                {x:10, y:24, to: 'route2', tx: 10, ty: 16}
             ],
             npcs: [], // No NPCs initially in Viridian Forest for chapter 2
             // Encounters for Chapter 2: VS Bulbasaur
@@ -1239,14 +1244,17 @@
         }
         if (a.kind === 'set') {
             setByPath(GS, a.path, a.value);
+            scheduleSave('story-set');
             return runActions(list, idx + 1, onDone);
         }
         if (a.kind === 'ensureTeam') {
             ensureTeam(a.value);
+            scheduleSave('story-team');
             return runActions(list, idx + 1, onDone);
         }
         if (a.kind === 'evolve') {
             evolveMon(a.slot, a.to, a.options && typeof a.options === 'object' ? a.options : {});
+            scheduleSave('story-evolve');
             return runActions(list, idx + 1, onDone);
         }
         if (a.kind === 'battle') {
@@ -1278,6 +1286,7 @@
         GS.story.beat = id;
         runActions(beat.actions, 0, () => {
             if (activeBeatId === id) activeBeatId = null;
+            scheduleSave('beat');
             // Continue chaining story automatically when multiple beats belong to the same area.
             setTimeout(() => { tryAutoStoryBeat(); }, 220);
         });
@@ -1509,7 +1518,7 @@
 
     async function tryLoadExternalTileset() {
         // Keep a stable visual baseline by default.
-        const which = qs('tileset', 'punyworld');
+        const which = qs('tileset', 'external');
         if (!which) return false;
 
         let png = './assets/tilesets/user.png';
@@ -2000,6 +2009,7 @@
             GS.px = nx; GS.py = ny;
             checkWarp();
             checkEncounter();
+            scheduleSave('move');
         }
     }
     
@@ -2035,6 +2045,7 @@
                 GS.py = w.ty;
                 ensureWalkablePlayerPosition();
                 onMapEnter(GS.map);
+                scheduleSave('warp');
                 break;
             }
         }
@@ -2965,7 +2976,47 @@
     });
     
     // ==================== SAVE/LOAD ====================
-    function saveGame() { localStorage.setItem('pokemon_adv', JSON.stringify(GS)); }
+    const SAVE_KEY = 'pokemon_adv';
+    const SAVE_BAK_KEY = 'pokemon_adv_bak';
+    const SAVE_META_KEY = 'pokemon_adv_meta';
+    let saveQueued = false;
+
+    function readStorage(key) {
+        try { return localStorage.getItem(key); } catch { return null; }
+    }
+
+    function writeStorage(key, val) {
+        try {
+            localStorage.setItem(key, val);
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    function scheduleSave(reason = 'queued') {
+        if (saveQueued) return;
+        saveQueued = true;
+        setTimeout(() => {
+            saveQueued = false;
+            saveGame(reason);
+        }, 80);
+    }
+
+    function saveGame(reason = 'manual') {
+        const payload = JSON.stringify(GS);
+        const prev = readStorage(SAVE_KEY);
+        if (prev) writeStorage(SAVE_BAK_KEY, prev);
+        if (writeStorage(SAVE_KEY, payload)) {
+            writeStorage(SAVE_META_KEY, JSON.stringify({
+                at: Date.now(),
+                reason,
+                map: GS.map,
+                px: GS.px,
+                py: GS.py
+            }));
+        }
+    }
     function migrateSave(gs) {
         if (!gs || typeof gs !== 'object') return gs;
         if (!gs.story || typeof gs.story !== 'object') gs.story = {};
@@ -2984,9 +3035,17 @@
         return gs;
     }
     function loadGame() {
-        const s = localStorage.getItem('pokemon_adv');
-        if (s) {
-            GS = migrateSave(JSON.parse(s));
+        const primary = readStorage(SAVE_KEY);
+        const backup = readStorage(SAVE_BAK_KEY);
+        let loaded = null;
+        if (primary) {
+            try { loaded = JSON.parse(primary); } catch {}
+        }
+        if (!loaded && backup) {
+            try { loaded = JSON.parse(backup); } catch {}
+        }
+        if (loaded) {
+            GS = migrateSave(loaded);
             ensureWalkablePlayerPosition();
             // Defensive reset for stale runtime flags from previous sessions.
             dialog = null;
@@ -3002,6 +3061,7 @@
             if (battleScreen) battleScreen.style.display = 'none';
             document.getElementById('titleScreen').style.display = 'none';
             onMapEnter(GS.map);
+            scheduleSave('load-repair');
             render();
         }
         else alert('No save found!');
@@ -3064,6 +3124,7 @@
                 ]);
             }
         }, 500);
+        scheduleSave('new-game');
         render();
     }
 
@@ -3071,11 +3132,13 @@
         // Useful for iPad/Safari cache-state issues:
         // ?reset=1 clears the local save before boot.
         if (qs('reset', '') === '1') {
-            try { localStorage.removeItem('pokemon_adv'); } catch {}
+            try { localStorage.removeItem(SAVE_KEY); } catch {}
+            try { localStorage.removeItem(SAVE_BAK_KEY); } catch {}
+            try { localStorage.removeItem(SAVE_META_KEY); } catch {}
         }
     }
     
-    setInterval(saveGame, 30000);
+    setInterval(() => saveGame('interval'), 30000);
     
     // Start loading
     applyStartupQueryFlags();
