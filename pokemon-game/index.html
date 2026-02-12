@@ -1295,6 +1295,10 @@
     let renderLoopActive = false;
     let renderLoopToken = 0;
     let renderRafId = 0;
+    let currentCollisionMapId = '';
+    let currentCollisionGrid = null;
+    let currentCollisionW = 0;
+    let currentCollisionH = 0;
 
     function hideRuntimeOverlays() {
         const dialogBox = document.getElementById('dialogBox');
@@ -1331,8 +1335,65 @@
         loadScene(mapId) {
             this.currentScene = mapId;
             this.clearRenderLayer();
+            loadCollisionGrid(mapId);
         }
     };
+
+    function normalizeAssetPath(v) {
+        if (!v || typeof v !== 'string') return '';
+        return v.replace(/\\/g, '/').replace(/^\.\//, '');
+    }
+
+    function mapBgUrlForMap(mapId) {
+        const conf = PREBUILT_MAP_BG_CONFIG && PREBUILT_MAP_BG_CONFIG[mapId];
+        return conf && typeof conf.url === 'string' ? conf.url : '';
+    }
+
+    function hasSceneBackdrop() {
+        const el = document.getElementById('sceneBackdrop');
+        if (!el) return false;
+        return el.style.display !== 'none' && !!el.style.backgroundImage;
+    }
+
+    function loadCollisionGrid(mapId) {
+        const map = MAPS[mapId];
+        if (!map || !Array.isArray(map.data) || !map.w || !map.h) {
+            currentCollisionMapId = '';
+            currentCollisionGrid = null;
+            currentCollisionW = 0;
+            currentCollisionH = 0;
+            return;
+        }
+        const total = map.w * map.h;
+        const grid = new Uint8Array(total);
+        for (let i = 0; i < total; i++) {
+            const tile = map.data[i];
+            grid[i] = SOLID.includes(tile) ? 1 : 0;
+        }
+
+        // Optional per-map collision overrides from mapbg manifest (tile coordinates).
+        const conf = PREBUILT_MAP_BG_CONFIG && PREBUILT_MAP_BG_CONFIG[mapId];
+        const rects = conf && Array.isArray(conf.solidRects) ? conf.solidRects : [];
+        for (const r of rects) {
+            const rx = Number(r && r.x);
+            const ry = Number(r && r.y);
+            const rw = Number(r && r.w);
+            const rh = Number(r && r.h);
+            if (!Number.isFinite(rx) || !Number.isFinite(ry) || !Number.isFinite(rw) || !Number.isFinite(rh)) continue;
+            for (let y = ry; y < ry + rh; y++) {
+                for (let x = rx; x < rx + rw; x++) {
+                    if (x >= 0 && y >= 0 && x < map.w && y < map.h) {
+                        grid[y * map.w + x] = 1;
+                    }
+                }
+            }
+        }
+
+        currentCollisionMapId = mapId;
+        currentCollisionGrid = grid;
+        currentCollisionW = map.w;
+        currentCollisionH = map.h;
+    }
 
     async function loadStory() {
         try {
@@ -1512,7 +1573,14 @@
         if (activeBeatId && activeBeatId !== id) return false;
         const beat = getBeat(id);
         if (!beat) return false;
-        setSceneBackdrop(beatBackdropFor(id));
+        const beatBg = beatBackdropFor(id);
+        const mapBg = mapBgUrlForMap(GS.map);
+        // Avoid visual ghosting: don't stack identical map sheet as both mapbg and scene backdrop.
+        if (normalizeAssetPath(beatBg) && normalizeAssetPath(beatBg) !== normalizeAssetPath(mapBg)) {
+            setSceneBackdrop(beatBg);
+        } else {
+            setSceneBackdrop('');
+        }
         cutsceneLock = true;
         activeBeatId = id;
         GS.story.beat = id;
@@ -2218,6 +2286,9 @@
             SceneManager.clearRenderLayer();
             return;
         }
+        if (SceneManager.currentScene !== GS.map) {
+            SceneManager.loadScene(GS.map);
+        }
         
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -2225,7 +2296,8 @@
         const camX = Math.floor(GS.px - VW / 2);
         const camY = Math.floor(GS.py - VH / 2);
         const mapBgEntry = PREBUILT_SKIP_MAPS.has(GS.map) ? null : prebuiltMapBg[GS.map];
-        const hasMapBg = !!mapBgEntry;
+        const overlayMode = cutsceneLock && hasSceneBackdrop();
+        const hasMapBg = !!mapBgEntry && !overlayMode;
         if (!hasMapBg && STYLE_LOCK_CORE_MAPS.has(GS.map) && qs('stylelock', '1') !== '0') {
             dbg(`stylelock: missing mapbg for ${GS.map}; using atlas fallback`);
         }
@@ -2323,8 +2395,12 @@
     // ==================== MOVEMENT ====================
     function isWalkableOnMap(map, x, y, ignoreNpc = false) {
         if (!map || x < 0 || x >= map.w || y < 0 || y >= map.h) return false;
-        const tile = map.data[y * map.w + x];
-        if (SOLID.includes(tile)) return false;
+        if (currentCollisionGrid && currentCollisionMapId === GS.map && currentCollisionW === map.w && currentCollisionH === map.h) {
+            if (currentCollisionGrid[y * map.w + x]) return false;
+        } else {
+            const tile = map.data[y * map.w + x];
+            if (SOLID.includes(tile)) return false;
+        }
         if (!ignoreNpc && map.npcs) for (const n of map.npcs) if (n.x === x && n.y === y) return false;
         return true;
     }
