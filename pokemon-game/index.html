@@ -1280,6 +1280,7 @@
     // ==================== STORY SCRIPT ====================
     let STORY = null;
     let activeBeatId = null;
+    let cutsceneLock = false;
 
     async function loadStory() {
         try {
@@ -1345,6 +1346,33 @@
         return true;
     }
 
+    function runMovePath(path, stepMs, onDone) {
+        const dirs = Array.isArray(path) ? path.filter(Boolean) : [];
+        const delay = Math.max(40, Number(stepMs) || 120);
+        let i = 0;
+        function step() {
+            if (i >= dirs.length) {
+                if (typeof onDone === 'function') onDone();
+                return;
+            }
+            const d = String(dirs[i++]);
+            GS.dir = d;
+            let nx = GS.px, ny = GS.py;
+            if (d === 'up') ny--;
+            else if (d === 'down') ny++;
+            else if (d === 'left') nx--;
+            else if (d === 'right') nx++;
+            if (canMove(nx, ny)) {
+                GS.px = nx;
+                GS.py = ny;
+                checkWarp();
+                checkEncounter();
+            }
+            setTimeout(step, delay);
+        }
+        step();
+    }
+
     function runActions(actions, idx = 0, onDone = null) {
         const list = Array.isArray(actions) ? actions : [];
         if (idx >= list.length) {
@@ -1361,6 +1389,32 @@
         if (a.kind === 'set') {
             setByPath(GS, a.path, a.value);
             scheduleSave('story-set');
+            return runActions(list, idx + 1, onDone);
+        }
+        if (a.kind === 'face') {
+            if (a.dir) GS.dir = String(a.dir);
+            return runActions(list, idx + 1, onDone);
+        }
+        if (a.kind === 'pause') {
+            const ms = Math.max(0, Number(a.ms) || 250);
+            setTimeout(() => runActions(list, idx + 1, onDone), ms);
+            return;
+        }
+        if (a.kind === 'move') {
+            runMovePath(a.path, a.stepMs, () => {
+                scheduleSave('story-move');
+                runActions(list, idx + 1, onDone);
+            });
+            return;
+        }
+        if (a.kind === 'teleport') {
+            if (a.map && MAPS[a.map]) GS.map = a.map;
+            if (typeof a.x === 'number') GS.px = a.x;
+            if (typeof a.y === 'number') GS.py = a.y;
+            if (a.dir) GS.dir = String(a.dir);
+            ensureWalkablePlayerPosition();
+            onMapEnter(GS.map);
+            scheduleSave('story-teleport');
             return runActions(list, idx + 1, onDone);
         }
         if (a.kind === 'ensureTeam') {
@@ -1399,10 +1453,12 @@
         const beat = getBeat(id);
         if (!beat) return false;
         setSceneBackdrop(beatBackdropFor(id));
+        cutsceneLock = true;
         activeBeatId = id;
         GS.story.beat = id;
         runActions(beat.actions, 0, () => {
             if (activeBeatId === id) activeBeatId = null;
+            cutsceneLock = false;
             scheduleSave('beat');
             // Continue chaining story automatically when multiple beats belong to the same area.
             setTimeout(() => { tryAutoStoryBeat(); }, 220);
@@ -2252,7 +2308,7 @@
     }
     
     function move(dir) {
-        if (dialog || inBattle) return;
+        if (dialog || inBattle || cutsceneLock) return;
         GS.dir = dir;
         let nx = GS.px, ny = GS.py;
         if (dir === 'up') ny--;
@@ -3334,6 +3390,7 @@
             inBattle = false;
             battle = null;
             activeBeatId = null;
+            cutsceneLock = false;
             const dialogBox = document.getElementById('dialogBox');
             const tapOverlay = document.getElementById('tapOverlay');
             const battleScreen = document.getElementById('battleScreen');
@@ -3355,6 +3412,7 @@
         inBattle = false;
         battle = null;
         activeBeatId = null;
+        cutsceneLock = false;
         const dialogBox = document.getElementById('dialogBox');
         const tapOverlay = document.getElementById('tapOverlay');
         const battleScreen = document.getElementById('battleScreen');
