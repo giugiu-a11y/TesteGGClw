@@ -596,13 +596,12 @@
         oak_lab: 'Oak Lab'
     };
 
-    // Composite map sheets are visually rich, but can diverge from collision/warp grids.
-    // Keep gameplay fully tile-accurate (single style) and reserve rich sheets for cutscenes/backdrops.
+    // Composite map sheets are visually rich. We only skip the known problematic maps
+    // where overlays visibly diverge from collision/warp logic.
     const PREBUILT_SKIP_MAPS = new Set([
-        'pallet_town', 'route1', 'viridian', 'route2', 'pewter', 'route3',
-        'mt_moon', 'cerulean', 'vermilion', 'lavender', 'saffron', 'silph_lobby',
-        'fuchsia', 'cinnabar', 'viridian_gym', 'indigo_plateau', 'pewter_gym',
-        'viridian_forest', 'player_house', 'rival_house', 'oak_lab'
+        'pallet_town',
+        'route1',
+        'viridian_forest'
     ]);
     
     // ==================== COLORS (FRLG-ish, but original) ====================
