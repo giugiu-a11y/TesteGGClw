@@ -27,6 +27,7 @@ Data: 2026-02-12
   - primeiros 5 beats com pausas e `stepMs` ajustados para fluidez narrativa.
 - QA e contrato:
   - `tools/asset_preflight.py` + `tools/gameplay_preflight.js` no `ci-check.sh`.
+  - `tools/intro_preflight.js` no `ci-check.sh` para blindar regressao na abertura.
   - checklist release consolidado em `QA_CHECKLIST_RELEASE.md`.
 
 ## Qualidade / Validacoes

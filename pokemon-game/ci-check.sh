@@ -26,4 +26,7 @@ python3 tools/asset_preflight.py
 echo "[ci-check] Gameplay preflight..."
 node tools/gameplay_preflight.js
 
+echo "[ci-check] Intro preflight..."
+node tools/intro_preflight.js
+
 echo "[ci-check] OK"
