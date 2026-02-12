@@ -9,6 +9,11 @@ python3 -m json.tool story/season1.ptbr.json >/dev/null
 
 echo "[ci-check] JSON tileset..."
 python3 -m json.tool assets/tilesets/punyworld.tileset.json >/dev/null
+python3 -m json.tool assets/tilesets/user.tileset.json >/dev/null
+python3 -m json.tool assets/tilesets/mapbg.manifest.json >/dev/null
+
+echo "[ci-check] JSON sprites..."
+python3 -m json.tool assets/sprites/user.sprites.json >/dev/null
 
 echo "[ci-check] JS syntax from index.html <script>..."
 awk 'BEGIN{p=0} /<script>/{p=1;next} /<\/script>/{p=0} p{print}' index.html > /tmp/pokemon_game_script_ci.js

@@ -599,11 +599,12 @@
 
     // Composite map sheets are visually rich. We only skip the known problematic maps
     // where overlays visibly diverge from collision/warp logic.
-    const PREBUILT_SKIP_MAPS = new Set([
-        'pallet_town',
-        'route1',
-        'viridian_forest'
-    ]);
+    function buildPrebuiltSkipSet() {
+        const raw = qs('mapbgskip', '').trim();
+        if (!raw) return new Set();
+        return new Set(raw.split(',').map(s => s.trim()).filter(Boolean));
+    }
+    const PREBUILT_SKIP_MAPS = buildPrebuiltSkipSet();
     const STYLE_LOCK_CORE_MAPS = new Set([
         'pallet_town', 'route1', 'viridian', 'route2', 'viridian_forest',
         'pewter', 'route3', 'mt_moon', 'cerulean', 'vermilion',
@@ -2000,7 +2001,15 @@
                         img.onerror = reject;
                         img.src = conf.url;
                     });
-                    prebuiltMapBg[mapId] = {img, ox: conf.ox || 0, oy: conf.oy || 0, fixed: !!conf.fixed};
+                    prebuiltMapBg[mapId] = {
+                        img,
+                        ox: conf.ox || 0,
+                        oy: conf.oy || 0,
+                        px: Number.isFinite(conf.px) ? conf.px : null,
+                        py: Number.isFinite(conf.py) ? conf.py : null,
+                        ts: Number.isFinite(conf.ts) ? conf.ts : TILE,
+                        fixed: !!conf.fixed
+                    };
                 } catch {
                     // Ignore missing optional files; map falls back to tiled rendering.
                 }
@@ -2260,11 +2269,15 @@
         if (hasMapBg) {
             // Stable crop from prebuilt maps; avoids stretch artifacts near bounds.
             const mapBg = mapBgEntry.img;
-            const srcTile = TILE;
+            const srcTile = mapBgEntry.ts || TILE;
             const srcW = VW * srcTile;
             const srcH = VH * srcTile;
-            const originX = Math.floor((mapBgEntry.ox || 0) * srcTile);
-            const originY = Math.floor((mapBgEntry.oy || 0) * srcTile);
+            const originX = Number.isFinite(mapBgEntry.px)
+                ? Math.floor(mapBgEntry.px)
+                : Math.floor((mapBgEntry.ox || 0) * srcTile);
+            const originY = Number.isFinite(mapBgEntry.py)
+                ? Math.floor(mapBgEntry.py)
+                : Math.floor((mapBgEntry.oy || 0) * srcTile);
             const maxX = Math.max(0, mapBg.width - srcW);
             const maxY = Math.max(0, mapBg.height - srcH);
             const srcX = mapBgEntry.fixed
