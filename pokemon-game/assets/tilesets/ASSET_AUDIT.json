@@ -1,0 +1,816 @@
+{
+  "generated_at": "2026-02-12",
+  "stats": {
+    "tileset_png_total": 1727,
+    "non_mod16_total": 73
+  },
+  "non_mod16": [
+    {
+      "file": "assets/tilesets/animated/3971_anim_3971.png",
+      "w": 495,
+      "h": 209,
+      "mod16": [
+        15,
+        1
+      ]
+    },
+    {
+      "file": "assets/tilesets/animated/3972_anim_3972.png",
+      "w": 183,
+      "h": 633,
+      "mod16": [
+        7,
+        9
+      ]
+    },
+    {
+      "file": "assets/tilesets/animated/3973_anim_3973.png",
+      "w": 142,
+      "h": 247,
+      "mod16": [
+        14,
+        7
+      ]
+    },
+    {
+      "file": "assets/tilesets/animated/3974_anim_3974.png",
+      "w": 149,
+      "h": 250,
+      "mod16": [
+        5,
+        10
+      ]
+    },
+    {
+      "file": "assets/tilesets/animated/3975_anim_3975.png",
+      "w": 143,
+      "h": 360,
+      "mod16": [
+        15,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/animated/3976_anim_3976.png",
+      "w": 368,
+      "h": 537,
+      "mod16": [
+        0,
+        9
+      ]
+    },
+    {
+      "file": "assets/tilesets/animated/3977_anim_3977.png",
+      "w": 149,
+      "h": 259,
+      "mod16": [
+        5,
+        3
+      ]
+    },
+    {
+      "file": "assets/tilesets/animated/3978_anim_3978.png",
+      "w": 414,
+      "h": 410,
+      "mod16": [
+        14,
+        10
+      ]
+    },
+    {
+      "file": "assets/tilesets/battle_terrain/building/anim.png",
+      "w": 88,
+      "h": 8,
+      "mod16": [
+        8,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/battle_terrain/cave/terrain.png",
+      "w": 64,
+      "h": 88,
+      "mod16": [
+        0,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/battle_terrain/grass/terrain.png",
+      "w": 64,
+      "h": 104,
+      "mod16": [
+        0,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/battle_terrain/longgrass/anim.png",
+      "w": 64,
+      "h": 136,
+      "mod16": [
+        0,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/battle_terrain/longgrass/terrain.png",
+      "w": 64,
+      "h": 104,
+      "mod16": [
+        0,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/battle_terrain/pond/anim.png",
+      "w": 64,
+      "h": 40,
+      "mod16": [
+        0,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/battle_terrain/sand/terrain.png",
+      "w": 64,
+      "h": 88,
+      "mod16": [
+        0,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/battle_terrain/underwater/terrain.png",
+      "w": 64,
+      "h": 88,
+      "mod16": [
+        0,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/battle_terrain/water/terrain.png",
+      "w": 64,
+      "h": 88,
+      "mod16": [
+        0,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/cities/3873_city_pallet_town.png",
+      "w": 1032,
+      "h": 376,
+      "mod16": [
+        8,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/cities/3875_city_pewter.png",
+      "w": 1032,
+      "h": 872,
+      "mod16": [
+        8,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/cities/3876_city_map_3876.png",
+      "w": 648,
+      "h": 1312,
+      "mod16": [
+        8,
+        0
+      ]
+    },
+    {
+      "file": "assets/tilesets/field_effects/fldeff_cut.png",
+      "w": 8,
+      "h": 8,
+      "mod16": [
+        8,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/interface/hp_bar_anim.png",
+      "w": 144,
+      "h": 8,
+      "mod16": [
+        0,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/interface/hpbar_unused.png",
+      "w": 96,
+      "h": 8,
+      "mod16": [
+        0,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/interface/numbers1.png",
+      "w": 88,
+      "h": 8,
+      "mod16": [
+        8,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/interface/numbers2.png",
+      "w": 96,
+      "h": 8,
+      "mod16": [
+        0,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/interface/select_button.png",
+      "w": 24,
+      "h": 16,
+      "mod16": [
+        8,
+        0
+      ]
+    },
+    {
+      "file": "assets/tilesets/interface/selector_outline.png",
+      "w": 24,
+      "h": 24,
+      "mod16": [
+        8,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/interface/status_icons.png",
+      "w": 256,
+      "h": 8,
+      "mod16": [
+        0,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_environmental/buildings_sheet.png",
+      "w": 349,
+      "h": 197,
+      "mod16": [
+        13,
+        5
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_environmental/buildings_sheet_2.png",
+      "w": 250,
+      "h": 200,
+      "mod16": [
+        10,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_environmental/cerulean_cave.png",
+      "w": 567,
+      "h": 260,
+      "mod16": [
+        7,
+        4
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_environmental/environmental_3.png",
+      "w": 536,
+      "h": 1400,
+      "mod16": [
+        8,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_environmental/environmental_4.png",
+      "w": 848,
+      "h": 360,
+      "mod16": [
+        0,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_environmental/indigo_plateau.png",
+      "w": 2016,
+      "h": 1288,
+      "mod16": [
+        0,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_environmental/mt_moon.png",
+      "w": 712,
+      "h": 376,
+      "mod16": [
+        8,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_environmental/outdoor_1.png",
+      "w": 477,
+      "h": 800,
+      "mod16": [
+        13,
+        0
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_environmental/sea.png",
+      "w": 269,
+      "h": 390,
+      "mod16": [
+        13,
+        6
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_environmental/sea_2.png",
+      "w": 774,
+      "h": 1426,
+      "mod16": [
+        6,
+        2
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_environmental/sea_3.png",
+      "w": 1205,
+      "h": 632,
+      "mod16": [
+        5,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_items/balls_sheet.png",
+      "w": 192,
+      "h": 100,
+      "mod16": [
+        0,
+        4
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_items/balls_sheet_2.png",
+      "w": 848,
+      "h": 360,
+      "mod16": [
+        0,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_items/items_sheet.png",
+      "w": 721,
+      "h": 525,
+      "mod16": [
+        1,
+        13
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_items/items_sheet_2.png",
+      "w": 238,
+      "h": 2967,
+      "mod16": [
+        14,
+        7
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_items/items_sheet_3.png",
+      "w": 1032,
+      "h": 872,
+      "mod16": [
+        8,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_items/misc_items_sheet.png",
+      "w": 673,
+      "h": 638,
+      "mod16": [
+        1,
+        14
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_items/misc_items_sheet_2.png",
+      "w": 523,
+      "h": 760,
+      "mod16": [
+        11,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_player_overworlds/player_overworlds_1.png",
+      "w": 1032,
+      "h": 376,
+      "mod16": [
+        8,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_player_overworlds/player_overworlds_2.png",
+      "w": 1971,
+      "h": 1836,
+      "mod16": [
+        3,
+        12
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_player_overworlds/player_overworlds_3.png",
+      "w": 1560,
+      "h": 672,
+      "mod16": [
+        8,
+        0
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_player_overworlds/player_overworlds_4.png",
+      "w": 1176,
+      "h": 1808,
+      "mod16": [
+        8,
+        0
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_player_overworlds/player_red_leaf_1.png",
+      "w": 754,
+      "h": 521,
+      "mod16": [
+        2,
+        9
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_player_overworlds/player_red_leaf_2.png",
+      "w": 300,
+      "h": 450,
+      "mod16": [
+        12,
+        2
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_ui/battle_ui_1.png",
+      "w": 495,
+      "h": 288,
+      "mod16": [
+        15,
+        0
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_ui/battle_ui_2.png",
+      "w": 792,
+      "h": 1384,
+      "mod16": [
+        8,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_ui/battle_ui_3.png",
+      "w": 648,
+      "h": 360,
+      "mod16": [
+        8,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_ui/ui_elements_1.png",
+      "w": 738,
+      "h": 1056,
+      "mod16": [
+        2,
+        0
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_ui/ui_elements_2.png",
+      "w": 1096,
+      "h": 1090,
+      "mod16": [
+        8,
+        2
+      ]
+    },
+    {
+      "file": "assets/tilesets/manual_ui/ui_elements_3.png",
+      "w": 1496,
+      "h": 672,
+      "mod16": [
+        8,
+        0
+      ]
+    },
+    {
+      "file": "assets/tilesets/missing_tiles/01_sheet_buildings_misc.png",
+      "w": 300,
+      "h": 450,
+      "mod16": [
+        12,
+        2
+      ]
+    },
+    {
+      "file": "assets/tilesets/missing_tiles/02_map_route_10.png",
+      "w": 648,
+      "h": 1312,
+      "mod16": [
+        8,
+        0
+      ]
+    },
+    {
+      "file": "assets/tilesets/missing_tiles/03_map_pewter_city.png",
+      "w": 1032,
+      "h": 872,
+      "mod16": [
+        8,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/missing_tiles/04_map_route_12.png",
+      "w": 616,
+      "h": 1952,
+      "mod16": [
+        8,
+        0
+      ]
+    },
+    {
+      "file": "assets/tilesets/missing_tiles/06_map_pallet_town.png",
+      "w": 1032,
+      "h": 376,
+      "mod16": [
+        8,
+        8
+      ]
+    },
+    {
+      "file": "assets/tilesets/missing_tiles/07_collection.png",
+      "w": 477,
+      "h": 800,
+      "mod16": [
+        13,
+        0
+      ]
+    },
+    {
+      "file": "assets/tilesets/missing_tiles/09_buildings_exterior_sheet.png",
+      "w": 1096,
+      "h": 1090,
+      "mod16": [
+        8,
+        2
+      ]
+    },
+    {
+      "file": "assets/tilesets/missing_tiles/10_houses_interiors.png",
+      "w": 754,
+      "h": 521,
+      "mod16": [
+        2,
+        9
+      ]
+    },
+    {
+      "file": "assets/tilesets/missing_tiles/12_map_route_5_daycare.png",
+      "w": 984,
+      "h": 672,
+      "mod16": [
+        8,
+        0
+      ]
+    },
+    {
+      "file": "assets/tilesets/missing_tiles/13_ui_battle_interface.png",
+      "w": 495,
+      "h": 288,
+      "mod16": [
+        15,
+        0
+      ]
+    },
+    {
+      "file": "assets/tilesets/missing_tiles/14_map_route_2_gate.png",
+      "w": 648,
+      "h": 1312,
+      "mod16": [
+        8,
+        0
+      ]
+    },
+    {
+      "file": "assets/tilesets/missing_tiles/15_map_route_4_center.png",
+      "w": 1992,
+      "h": 352,
+      "mod16": [
+        8,
+        0
+      ]
+    },
+    {
+      "file": "assets/tilesets/missing_tiles/16_map_route_6_house.png",
+      "w": 584,
+      "h": 672,
+      "mod16": [
+        8,
+        0
+      ]
+    },
+    {
+      "file": "assets/tilesets/missing_tiles/17_items_inventory.png",
+      "w": 721,
+      "h": 525,
+      "mod16": [
+        1,
+        13
+      ]
+    },
+    {
+      "file": "assets/tilesets/missing_tiles/19_map_route_11_gate.png",
+      "w": 1602,
+      "h": 352,
+      "mod16": [
+        2,
+        0
+      ]
+    }
+  ],
+  "folders": {
+    "CURATED_ASSET_PLAN.md": {
+      "files": 1,
+      "png": 0
+    },
+    "animated": {
+      "files": 9,
+      "png": 8
+    },
+    "animated.png": {
+      "files": 1,
+      "png": 1
+    },
+    "assets_inventory.md": {
+      "files": 1,
+      "png": 0
+    },
+    "battle_terrain": {
+      "files": 36,
+      "png": 22
+    },
+    "battles": {
+      "files": 1,
+      "png": 0
+    },
+    "characters": {
+      "files": 254,
+      "png": 253
+    },
+    "characters.json": {
+      "files": 1,
+      "png": 0
+    },
+    "characters_sprites.json": {
+      "files": 1,
+      "png": 0
+    },
+    "cities": {
+      "files": 7,
+      "png": 5
+    },
+    "data.json": {
+      "files": 1,
+      "png": 0
+    },
+    "field_effects": {
+      "files": 2,
+      "png": 1
+    },
+    "interface": {
+      "files": 18,
+      "png": 17
+    },
+    "manual_environmental": {
+      "files": 18,
+      "png": 17
+    },
+    "manual_items": {
+      "files": 10,
+      "png": 9
+    },
+    "manual_player_overworlds": {
+      "files": 7,
+      "png": 6
+    },
+    "manual_trainers": {
+      "files": 1,
+      "png": 0
+    },
+    "manual_ui": {
+      "files": 7,
+      "png": 6
+    },
+    "missing_tiles": {
+      "files": 21,
+      "png": 19
+    },
+    "pallet_meta.bin": {
+      "files": 1,
+      "png": 0
+    },
+    "pokemon": {
+      "files": 1,
+      "png": 0
+    },
+    "pokemon_battle": {
+      "files": 1,
+      "png": 0
+    },
+    "pokemon_frlg": {
+      "files": 1,
+      "png": 0
+    },
+    "pokemon_icons": {
+      "files": 1,
+      "png": 0
+    },
+    "pokemon_sprites": {
+      "files": 1209,
+      "png": 1208
+    },
+    "pokemon_sprites.json": {
+      "files": 1,
+      "png": 0
+    },
+    "puny_water_strip.png": {
+      "files": 1,
+      "png": 1
+    },
+    "punyworld.json": {
+      "files": 1,
+      "png": 0
+    },
+    "punyworld.png": {
+      "files": 1,
+      "png": 1
+    },
+    "punyworld.tileset.json": {
+      "files": 1,
+      "png": 0
+    },
+    "readme.md": {
+      "files": 1,
+      "png": 0
+    },
+    "routes_prebuilt.json": {
+      "files": 1,
+      "png": 0
+    },
+    "trainers": {
+      "files": 153,
+      "png": 152
+    },
+    "ui": {
+      "files": 1,
+      "png": 0
+    },
+    "user.json": {
+      "files": 1,
+      "png": 0
+    },
+    "user.png": {
+      "files": 1,
+      "png": 1
+    },
+    "user.tileset.json": {
+      "files": 1,
+      "png": 0
+    }
+  }
+}

@@ -546,7 +546,7 @@
     const sprites = {};
     let loadedCount = 0;
     const prebuiltMapBg = {};
-    const PREBUILT_MAP_BG_CONFIG = {
+    const DEFAULT_PREBUILT_MAP_BG_CONFIG = {
         // Uses ripped map sheets as visual background while preserving collision/warps from engine maps.
         pallet_town: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ox: 0, oy: 0},
         route1: {url: './assets/tilesets/missing_tiles/05_map_route_1.png', ox: 0, oy: 0},
@@ -571,6 +571,7 @@
         indigo_plateau: {url: './assets/tilesets/manual_environmental/indigo_plateau.png', ox: 0, oy: 0},
         silph_lobby: {url: './assets/tilesets/manual_environmental/rocket_hideout.png', ox: 49, oy: 0, fixed: true}
     };
+    let PREBUILT_MAP_BG_CONFIG = {...DEFAULT_PREBUILT_MAP_BG_CONFIG};
 
     const MAP_LABELS = {
         pallet_town: 'Pallet Town',
@@ -602,6 +603,13 @@
         'pallet_town',
         'route1',
         'viridian_forest'
+    ]);
+    const STYLE_LOCK_CORE_MAPS = new Set([
+        'pallet_town', 'route1', 'viridian', 'route2', 'viridian_forest',
+        'pewter', 'route3', 'mt_moon', 'cerulean', 'vermilion',
+        'lavender', 'saffron', 'silph_lobby', 'fuchsia', 'cinnabar',
+        'viridian_gym', 'indigo_plateau', 'pewter_gym',
+        'player_house', 'rival_house', 'oak_lab'
     ]);
     
     // ==================== COLORS (FRLG-ish, but original) ====================
@@ -1943,8 +1951,21 @@
                 sprites.tileset = img;
                 sprites.tilesetCfg = cfg;
             } catch {
-                sprites.tileset = createTilesetCanvas();
-                sprites.tilesetCfg = null;
+                try {
+                    const cfgRes2 = await fetch('./assets/tilesets/punyworld.tileset.json', {cache: 'no-store'});
+                    const cfg2 = await cfgRes2.json();
+                    const img2 = new Image();
+                    await new Promise((resolve, reject) => {
+                        img2.onload = resolve;
+                        img2.onerror = reject;
+                        img2.src = './assets/tilesets/punyworld.png';
+                    });
+                    sprites.tileset = img2;
+                    sprites.tilesetCfg = cfg2;
+                } catch {
+                    sprites.tileset = createTilesetCanvas();
+                    sprites.tilesetCfg = null;
+                }
             }
         }
 
@@ -1960,6 +1981,16 @@
 
         // Optional prebuilt map backgrounds (for user-imported city/cave sheets).
         if (qs('mapbg', '1') !== '0') {
+            try {
+                const manifestRes = await fetch('./assets/tilesets/mapbg.manifest.json', {cache: 'no-store'});
+                const manifest = await manifestRes.json();
+                const fromFile = manifest && typeof manifest === 'object' ? manifest.mapbg : null;
+                if (fromFile && typeof fromFile === 'object') {
+                    PREBUILT_MAP_BG_CONFIG = fromFile;
+                }
+            } catch {
+                PREBUILT_MAP_BG_CONFIG = {...DEFAULT_PREBUILT_MAP_BG_CONFIG};
+            }
             for (const [mapId, conf] of Object.entries(PREBUILT_MAP_BG_CONFIG)) {
                 try {
                     const img = new Image();
@@ -2223,6 +2254,9 @@
         const camY = Math.floor(GS.py - VH / 2);
         const mapBgEntry = PREBUILT_SKIP_MAPS.has(GS.map) ? null : prebuiltMapBg[GS.map];
         const hasMapBg = !!mapBgEntry;
+        if (!hasMapBg && STYLE_LOCK_CORE_MAPS.has(GS.map) && qs('stylelock', '1') !== '0') {
+            dbg(`stylelock: missing mapbg for ${GS.map}; using atlas fallback`);
+        }
         if (hasMapBg) {
             // Stable crop from prebuilt maps; avoids stretch artifacts near bounds.
             const mapBg = mapBgEntry.img;
