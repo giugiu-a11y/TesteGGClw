@@ -1321,13 +1321,20 @@
         const dialogVisible = !!(dialogBox && dialogBox.style.display !== 'none');
         const overlayVisible = !!(tapOverlay && tapOverlay.style.display !== 'none');
 
+        // If UI is visible but dialog state was lost, close stale UI to avoid soft-lock.
+        if (!dialog && dialogVisible) {
+            dialogBox.style.display = 'none';
+        }
         if (dialog && Array.isArray(dialogQ) && dialogQ.length === 0) {
             dialog = null;
         }
+        if (dialog && dialogVisible && !overlayVisible) {
+            // Keep interaction layer aligned with visible dialog.
+            tapOverlay.style.display = 'block';
+        }
         if (dialog && !dialogVisible && !overlayVisible) {
-            // Dialog state exists but no visible UI to progress -> unlock.
-            dialog = null;
-            dialogQ = [];
+            // Dialog state exists but UI vanished: resume renderer for current dialog step.
+            try { nextDialog(); } catch {}
         }
         if (!dialog && !inBattle && overlayVisible) {
             tapOverlay.style.display = 'none';
