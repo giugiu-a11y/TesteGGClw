@@ -1312,6 +1312,31 @@
         if (battleScreen) battleScreen.style.display = 'none';
     }
 
+    function clearOrphanRuntimeLocks() {
+        const dialogBox = document.getElementById('dialogBox');
+        const tapOverlay = document.getElementById('tapOverlay');
+        const dialogVisible = !!(dialogBox && dialogBox.style.display !== 'none');
+        const overlayVisible = !!(tapOverlay && tapOverlay.style.display !== 'none');
+
+        if (dialog && Array.isArray(dialogQ) && dialogQ.length === 0) {
+            dialog = null;
+        }
+        if (dialog && !dialogVisible && !overlayVisible) {
+            // Dialog state exists but no visible UI to progress -> unlock.
+            dialog = null;
+            dialogQ = [];
+        }
+        if (!dialog && !inBattle && overlayVisible) {
+            tapOverlay.style.display = 'none';
+        }
+        if (cutsceneLock && !activeBeatId && !dialog && !inBattle) {
+            cutsceneLock = false;
+        }
+        if (activeBeatId && !cutsceneLock && !dialog && !inBattle) {
+            activeBeatId = null;
+        }
+    }
+
     const SceneManager = {
         currentScene: null,
         clearRenderLayer() {
@@ -2304,19 +2329,7 @@
 
     function renderFrame() {
         // Defensive runtime self-heal for stale UI/cutscene flags after iPad tap races.
-        if (dialog && Array.isArray(dialogQ) && dialogQ.length === 0) {
-            dialog = null;
-            const box = document.getElementById('dialogBox');
-            const ov = document.getElementById('tapOverlay');
-            if (box) box.style.display = 'none';
-            if (ov) ov.style.display = 'none';
-        }
-        if (cutsceneLock && !activeBeatId && !dialog && !inBattle) {
-            cutsceneLock = false;
-        }
-        if (activeBeatId && !cutsceneLock && !dialog && !inBattle) {
-            activeBeatId = null;
-        }
+        clearOrphanRuntimeLocks();
 
         const map = MAPS[GS.map];
         if (!map) {
@@ -2483,16 +2496,7 @@
     
     function move(dir) {
         // Self-heal stuck flags before movement gate checks.
-        if (dialog && Array.isArray(dialogQ) && dialogQ.length === 0) {
-            dialog = null;
-            const box = document.getElementById('dialogBox');
-            const ov = document.getElementById('tapOverlay');
-            if (box) box.style.display = 'none';
-            if (ov) ov.style.display = 'none';
-        }
-        if (cutsceneLock && !activeBeatId && !dialog && !inBattle) {
-            cutsceneLock = false;
-        }
+        clearOrphanRuntimeLocks();
         if (dialog || inBattle || cutsceneLock) return;
         GS.dir = dir;
         let nx = GS.px, ny = GS.py;
@@ -2514,16 +2518,7 @@
     function moveStepMs() { return runPressed ? 85 : 145; }
     function startMove(dir) {
         // Runtime self-heal for rare iPad/tap race conditions where dialog/cutscene flags stick.
-        if (dialog && Array.isArray(dialogQ) && dialogQ.length === 0) {
-            dialog = null;
-            const box = document.getElementById('dialogBox');
-            const ov = document.getElementById('tapOverlay');
-            if (box) box.style.display = 'none';
-            if (ov) ov.style.display = 'none';
-        }
-        if (cutsceneLock && !activeBeatId && !dialog && !inBattle) {
-            cutsceneLock = false;
-        }
+        clearOrphanRuntimeLocks();
         stopMove();
         move(dir);
         moveDir = dir;
@@ -2742,6 +2737,7 @@
         // Lightweight, non-breaking story hooks. Real season script will live in beats/flags.
         if (!GS.story) GS.story = {};
         ensureWalkablePlayerPosition();
+        clearOrphanRuntimeLocks();
         setSceneBackdrop('');
         showMapBanner(mapId);
         if (mapId === 'pewter_gym' && GS.story.autoBrock && GS.story.caughtPika && !GS.story.brockBattleDone) {
@@ -3695,6 +3691,8 @@
     }
     
     setInterval(() => saveGame('interval'), 30000);
+    // Watchdog to auto-unlock stale UI/cutscene state that can block movement.
+    setInterval(() => { clearOrphanRuntimeLocks(); }, 500);
     
     // Start loading
     applyStartupQueryFlags();
