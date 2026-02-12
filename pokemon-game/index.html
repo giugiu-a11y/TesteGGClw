@@ -607,8 +607,9 @@
         'player_house', 'rival_house', 'oak_lab'
     ]);
     // By default, prefer prebuilt visual sheets for fidelity.
-    // Keep this set empty unless a specific map needs emergency tile-only rendering.
-    const ALWAYS_TILE_RENDER_MAPS = new Set([]);
+    // Pallet opening is kept tile-accurate to prevent sprite/collision visual drift
+    // reported in the first cutscene.
+    const ALWAYS_TILE_RENDER_MAPS = new Set(['pallet_town']);
     
     // ==================== COLORS (FRLG-ish, but original) ====================
     const C = {
