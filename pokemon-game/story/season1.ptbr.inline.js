@@ -376,6 +376,13 @@ window.__POKEMON_STORY__ = {
         },
         {
           "kind": "dialog",
+          "speaker": "BULBASAUR",
+          "lines": [
+            "Bulba!"
+          ]
+        },
+        {
+          "kind": "dialog",
           "speaker": "",
           "lines": [
             "[ SAUR olha para voce com calma. ]",

@@ -166,6 +166,30 @@
             pointer-events: none;
             filter: saturate(1.1) contrast(1.04);
         }
+        #dialogBox .dialog-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        #dialogBox .text-wrap {
+            flex: 1;
+            min-width: 0;
+        }
+
+        #dialogBox .portrait {
+            display: none;
+            width: 56px;
+            height: 56px;
+            object-fit: contain;
+            image-rendering: pixelated;
+            background: #fff;
+            border: 2px solid #1f2a44;
+            border-radius: 6px;
+            padding: 2px;
+            flex: 0 0 auto;
+        }
+
         #dialogBox .speaker {
             font-weight: bold; color: #1f2a44;
             margin-bottom: 6px; font-size: 10px;
@@ -391,8 +415,13 @@
     <div id="sceneBackdrop"></div>
 
     <div id="dialogBox">
-        <div class="speaker"></div>
-        <div class="text"></div>
+        <div class="dialog-content">
+            <img id="dialogPortrait" class="portrait" alt="portrait">
+            <div class="text-wrap">
+                <div class="speaker"></div>
+                <div class="text"></div>
+            </div>
+        </div>
         <div class="continue">▼ Toque / A</div>
     </div>
 
@@ -552,9 +581,11 @@
         silph_lobby: {url: './assets/tilesets/manual_environmental/rocket_hideout.png', ts: 16, px: 792, py: 24, fixed: true}
     };
     let PREBUILT_MAP_BG_CONFIG = {...DEFAULT_PREBUILT_MAP_BG_CONFIG};
-    // Gameplay-first: keep cutscene actions automatic, but avoid forced auto-walk
-    // unless explicitly enabled via ?autocutmove=1.
-    const AUTO_CUTSCENE_MOVE = qs('autocutmove', '0') === '1';
+    // Story controls:
+    // - autocutmove=1 (default): scripted scene walk enabled.
+    // - autodialog=0 (default): dialog advances on user tap/A, not automatically.
+    const AUTO_CUTSCENE_MOVE = qs('autocutmove', '1') === '1';
+    const AUTO_DIALOG_ADVANCE = qs('autodialog', '0') === '1';
     const DEFAULT_SCENE_BACKDROP = './assets/tilesets/missing_tiles/05_map_route_1.png';
     const DEFAULT_SCENE_BACKDROP_RULES = [
         {match: 'pallet|oak|ch1_intro|ch1_oak', url: './assets/tilesets/cities/3873_city_pallet_town.png'},
@@ -1314,6 +1345,25 @@
     let currentCollisionGrid = null;
     let currentCollisionW = 0;
     let currentCollisionH = 0;
+    const DIALOG_PORTRAIT_SPEAKER_MAP = {
+        'BULBASAUR': 'bulbasaur',
+        'SAUR': 'bulbasaur',
+        'POLI': 'poliwhirl',
+        'POLIWHIRL': 'poliwhirl',
+        'PIKACHU': 'pikachuBattle',
+        'MEW': 'mew',
+        'CHARMANDER': 'charmander'
+    };
+
+    function dialogPortraitKeyFor(speaker, line) {
+        const s = String(speaker || '').trim().toUpperCase();
+        if (s && DIALOG_PORTRAIT_SPEAKER_MAP[s]) return DIALOG_PORTRAIT_SPEAKER_MAP[s];
+        const t = String(line || '').toUpperCase();
+        if (t.includes('BULBASAUR') || t.includes('SAUR')) return 'bulbasaur';
+        if (t.includes('PIKACHU')) return 'pikachuBattle';
+        if (t.includes('MEW')) return 'mew';
+        return '';
+    }
 
     function cancelStoryMove() {
         storyMoveToken++;
@@ -1342,6 +1392,7 @@
     function scheduleDialogAutoAdvance() {
         clearDialogAutoAdvance();
         // Failsafe: only for scripted cutscenes (not free NPC chat).
+        if (!AUTO_DIALOG_ADVANCE) return;
         if (!cutsceneLock || !dialog) return;
         const dialogRef = dialog;
         dialogAutoTimer = setTimeout(() => {
@@ -3269,6 +3320,12 @@
         actionProgressAt = Date.now();
         if (!dialog) {
             clearDialogAutoAdvance();
+            const box = document.getElementById('dialogBox');
+            const portrait = box ? box.querySelector('#dialogPortrait') : null;
+            if (portrait) {
+                portrait.style.display = 'none';
+                portrait.removeAttribute('src');
+            }
             document.getElementById('dialogBox').style.display = 'none';
             document.getElementById('tapOverlay').style.display = 'none';
             dialogQ = [];
@@ -3276,6 +3333,12 @@
         }
         if (dialogQ.length === 0) {
             clearDialogAutoAdvance();
+            const box = document.getElementById('dialogBox');
+            const portrait = box ? box.querySelector('#dialogPortrait') : null;
+            if (portrait) {
+                portrait.style.display = 'none';
+                portrait.removeAttribute('src');
+            }
             document.getElementById('dialogBox').style.display = 'none';
             document.getElementById('tapOverlay').style.display = 'none';
             // Important: clear dialog state BEFORE invoking cb.
@@ -3297,6 +3360,8 @@
         }
         const box = document.getElementById('dialogBox');
         const speakerEl = box.querySelector('.speaker');
+        const textEl = box.querySelector('.text');
+        const portraitEl = box.querySelector('#dialogPortrait');
         if (dialog.speaker) {
             speakerEl.style.display = 'block';
             speakerEl.textContent = dialog.speaker;
@@ -3304,7 +3369,16 @@
             speakerEl.style.display = 'none';
             speakerEl.textContent = '';
         }
-        box.querySelector('.text').textContent = dialogQ.shift();
+        const line = dialogQ.shift();
+        textEl.textContent = line;
+        const portraitKey = dialogPortraitKeyFor(dialog.speaker, line);
+        if (portraitEl && portraitKey && SPRITE_URLS[portraitKey]) {
+            portraitEl.src = SPRITE_URLS[portraitKey];
+            portraitEl.style.display = 'block';
+        } else if (portraitEl) {
+            portraitEl.style.display = 'none';
+            portraitEl.removeAttribute('src');
+        }
         box.style.display = 'block';
         document.getElementById('tapOverlay').style.display = 'block';
         scheduleDialogAutoAdvance();
