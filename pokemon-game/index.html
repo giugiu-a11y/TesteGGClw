@@ -572,6 +572,21 @@
         silph_lobby: {url: './assets/tilesets/manual_environmental/rocket_hideout.png', ox: 49, oy: 0, fixed: true}
     };
     let PREBUILT_MAP_BG_CONFIG = {...DEFAULT_PREBUILT_MAP_BG_CONFIG};
+    const DEFAULT_SCENE_BACKDROP = './assets/tilesets/cities/3873_city_pallet_town.png';
+    const DEFAULT_SCENE_BACKDROP_RULES = [
+        {match: 'silph|rocket', url: './assets/tilesets/manual_environmental/rocket_hideout.png'},
+        {match: 'mewtwo|cave', url: './assets/tilesets/manual_environmental/cerulean_cave.png'},
+        {match: 'cinnabar|research', url: './assets/tilesets/manual_environmental/one_island.png'},
+        {match: 'lavender|shadow', url: './assets/tilesets/manual_environmental/environmental_4.png'},
+        {match: 'indigo|elite|champion', url: './assets/tilesets/manual_environmental/indigo_plateau.png'},
+        {match: 'mtmoon|moon', url: './assets/tilesets/manual_environmental/mt_moon.png'},
+        {match: 'viridian_forest|forest', url: './assets/tilesets/missing_tiles/02_map_route_10.png'},
+        {match: 'pewter|brock', url: './assets/tilesets/cities/3875_city_pewter.png'},
+        {match: 'viridian', url: './assets/tilesets/cities/3874_city_viridian.png'},
+        {match: 'pallet|oak', url: './assets/tilesets/cities/3873_city_pallet_town.png'}
+    ];
+    let SCENE_BACKDROP_DEFAULT = DEFAULT_SCENE_BACKDROP;
+    let SCENE_BACKDROP_RULES = [...DEFAULT_SCENE_BACKDROP_RULES];
 
     const MAP_LABELS = {
         pallet_town: 'Pallet Town',
@@ -1691,18 +1706,16 @@
 
     function beatBackdropFor(id) {
         const b = String(id || '').toLowerCase();
-        if (!b) return '';
-        if (b.includes('silph') || b.includes('rocket')) return './assets/tilesets/manual_environmental/rocket_hideout.png';
-        if (b.includes('mewtwo') || b.includes('cave')) return './assets/tilesets/manual_environmental/cerulean_cave.png';
-        if (b.includes('cinnabar') || b.includes('research')) return './assets/tilesets/manual_environmental/one_island.png';
-        if (b.includes('lavender') || b.includes('shadow')) return './assets/tilesets/manual_environmental/environmental_4.png';
-        if (b.includes('indigo') || b.includes('elite') || b.includes('champion')) return './assets/tilesets/manual_environmental/indigo_plateau.png';
-        if (b.includes('mtmoon') || b.includes('moon')) return './assets/tilesets/manual_environmental/mt_moon.png';
-        if (b.includes('viridian_forest') || b.includes('forest')) return './assets/tilesets/missing_tiles/02_map_route_10.png';
-        if (b.includes('pewter') || b.includes('brock')) return './assets/tilesets/cities/3875_city_pewter.png';
-        if (b.includes('viridian')) return './assets/tilesets/cities/3874_city_viridian.png';
-        if (b.includes('pallet') || b.includes('oak')) return './assets/tilesets/cities/3873_city_pallet_town.png';
-        return '';
+        if (!b) return SCENE_BACKDROP_DEFAULT || '';
+        for (const rule of SCENE_BACKDROP_RULES) {
+            try {
+                const rx = new RegExp(rule.match, 'i');
+                if (rx.test(b)) return rule.url;
+            } catch {
+                // Ignore malformed optional rule.
+            }
+        }
+        return SCENE_BACKDROP_DEFAULT || '';
     }
 
     function setSceneBackdrop(url) {
@@ -2003,6 +2016,22 @@
                     // Ignore missing optional files; map falls back to tiled rendering.
                 }
             }
+        }
+
+        // Optional scene backdrop rules manifest for beat/cutscene visuals.
+        try {
+            const sceneRes = await fetch('./assets/tilesets/scene_backdrop.manifest.json', {cache: 'no-store'});
+            const sceneCfg = await sceneRes.json();
+            const rules = sceneCfg && Array.isArray(sceneCfg.rules) ? sceneCfg.rules : null;
+            const def = sceneCfg && typeof sceneCfg.default === 'string' ? sceneCfg.default : null;
+            if (def) SCENE_BACKDROP_DEFAULT = def;
+            if (rules) {
+                SCENE_BACKDROP_RULES = rules
+                    .filter(r => r && typeof r.match === 'string' && typeof r.url === 'string');
+            }
+        } catch {
+            SCENE_BACKDROP_DEFAULT = DEFAULT_SCENE_BACKDROP;
+            SCENE_BACKDROP_RULES = [...DEFAULT_SCENE_BACKDROP_RULES];
         }
 
         for (const [name, url] of Object.entries(SPRITE_URLS)) {

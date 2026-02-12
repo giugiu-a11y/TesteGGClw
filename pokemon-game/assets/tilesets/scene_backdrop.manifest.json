@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "default": "./assets/tilesets/cities/3873_city_pallet_town.png",
+  "rules": [
+    { "match": "silph|rocket", "url": "./assets/tilesets/manual_environmental/rocket_hideout.png" },
+    { "match": "mewtwo|cave", "url": "./assets/tilesets/manual_environmental/cerulean_cave.png" },
+    { "match": "cinnabar|research", "url": "./assets/tilesets/manual_environmental/one_island.png" },
+    { "match": "lavender|shadow", "url": "./assets/tilesets/manual_environmental/environmental_4.png" },
+    { "match": "indigo|elite|champion", "url": "./assets/tilesets/manual_environmental/indigo_plateau.png" },
+    { "match": "mtmoon|moon", "url": "./assets/tilesets/manual_environmental/mt_moon.png" },
+    { "match": "viridian_forest|forest", "url": "./assets/tilesets/missing_tiles/02_map_route_10.png" },
+    { "match": "pewter|brock", "url": "./assets/tilesets/cities/3875_city_pewter.png" },
+    { "match": "viridian", "url": "./assets/tilesets/cities/3874_city_viridian.png" },
+    { "match": "pallet|oak", "url": "./assets/tilesets/cities/3873_city_pallet_town.png" }
+  ]
+}
