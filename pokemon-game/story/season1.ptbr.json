@@ -82,6 +82,7 @@
       "sourceRef": "Pokemon Adventures RGB Arc (chapter-mapped adaptation, Vol.1-3) - scene aligned",
       "type": "cutscene",
       "actions": [
+        {"kind": "teleport", "map": "oak_lab", "x": 5, "y": 9, "dir": "up"},
         {"kind": "dialog", "speaker": "Prof. Oak", "lines": ["RED! Entre, rapido!", "Voce viu algo na floresta, nao viu?", "Aquele brilho rosa... eu vi tambem, da janela!"]},
         {"kind": "dialog", "speaker": "Prof. Oak", "lines": ["Aquilo era o MEW... um POKeMON lendario!", "Dizem que ele carrega o DNA de todos os POKeMON do mundo.", "Passei anos pesquisando, mas ele sempre escapa..."]},
         {"kind": "dialog", "speaker": "RED", "lines": ["MEW?! Entao era isso!", "Eu tentei capturar com o POLI... mas sumiu!"]},
@@ -95,7 +96,9 @@
         {"kind": "ensureTeam", "value": ["poli", "saur"]},
         {"kind": "dialog", "speaker": "", "lines": ["[ SAUR olha para voce com calma. ]", "[ BULBASAUR entrou no seu time! ]"]},
         {"kind": "dialog", "speaker": "RED", "lines": ["Um BULBASAUR?! Incrivel!", "SAUR! Voce e o POLI vao me ajudar a encontrar o MEW!"]},
-        {"kind": "dialog", "speaker": "Prof. Oak", "lines": ["Tome cuidado, RED...", "Um grupo criminoso chamado TEAM ROCKET tambem esta atras do MEW.", "Eles vao fazer qualquer coisa para captura-lo.", "Meu neto BLUE ja seguiu para o norte. Fique atento.", "Agora va. Sua aventura comeca."]}
+        {"kind": "dialog", "speaker": "Prof. Oak", "lines": ["Tome cuidado, RED...", "Um grupo criminoso chamado TEAM ROCKET tambem esta atras do MEW.", "Eles vao fazer qualquer coisa para captura-lo.", "Meu neto BLUE ja seguiu para o norte. Fique atento.", "Agora va. Sua aventura comeca."]},
+        {"kind": "teleport", "map": "viridian", "x": 10, "y": 15, "dir": "up"},
+        {"kind": "move", "path": ["up", "up", "up"], "stepMs": 120}
       ]
     },
     {
@@ -105,7 +108,9 @@
       "actions": [
         {"kind": "dialog", "speaker": "", "lines": ["[ VIRIDIAN CITY ]", "A cidade parece calma... mas ha tensao no ar.", "RED sente que a jornada acabou de comecar de verdade."]},
         {"kind": "dialog", "speaker": "RED", "lines": ["Nao vou perder tempo aqui.", "Se o MEW passou por KANTO, eu vou seguir qualquer pista."]},
-        {"kind": "dialog", "speaker": "", "lines": ["[ Ao norte, a floresta fica cada vez mais densa... ]"]}
+        {"kind": "dialog", "speaker": "", "lines": ["[ Ao norte, a floresta fica cada vez mais densa... ]"]},
+        {"kind": "move", "path": ["up", "up", "up"], "stepMs": 120},
+        {"kind": "teleport", "map": "viridian_forest", "x": 4, "y": 15, "dir": "up"}
       ]
     },
     {
@@ -114,6 +119,7 @@
       "type": "cutscene",
       "actions": [
         {"kind": "dialog", "speaker": "", "lines": ["[ VIRIDIAN FOREST ]", "A grama alta se move, como se o lugar estivesse vivo.", "POLI e SAUR ficam em guarda."]},
+        {"kind": "move", "path": ["up", "up", "right", "up", "left"], "stepMs": 120},
         {"kind": "dialog", "speaker": "", "lines": ["[ RED avanca por trilhas apertadas entre arvores densas. ]", "[ Galhos quebrados e marcas no chao indicam movimentacao recente. ]"]},
         {
           "kind": "battle",
@@ -132,7 +138,8 @@
         },
         {"kind": "dialog", "speaker": "", "lines": ["O silencio volta por um instante...", "Mas a floresta ainda observa."]},
         {"kind": "dialog", "speaker": "RED", "lines": ["Isso nao foi um encontro comum.", "Alguem esta conduzindo essa pressao na floresta."]},
-        {"kind": "set", "path": "story.forestBattleDone", "value": true}
+        {"kind": "set", "path": "story.forestBattleDone", "value": true},
+        {"kind": "teleport", "map": "pewter", "x": 10, "y": 15, "dir": "up"}
       ]
     },
     {
@@ -142,12 +149,14 @@
       "actions": [
         {"kind": "dialog", "speaker": "", "lines": ["[ PEWTER CITY ]", "Rocha, poeira... e um silencio estranho.", "Rumores sobre ataques a POKeMON circulam pelas ruas."]},
         {"kind": "dialog", "speaker": "RED", "lines": ["TEAM ROCKET...", "Se eles estao mesmo aqui, eu vou derrubar um por um."]},
+        {"kind": "move", "path": ["left", "left", "up", "up"], "stepMs": 120},
         {"kind": "dialog", "speaker": "", "lines": ["[ Um membro da TEAM ROCKET surge em um beco. ]", "[ Um PIKACHU ferido tenta fugir do cativeiro. ]"]},
         {
           "kind": "battle",
           "enemy": {"name": "EKANS", "spr": "ekans", "lv": 7, "hp": 24, "maxHp": 24},
           "options": {
             "scripted": true,
+            "trainerName": "Rocket",
             "onEnd": "only_if_win",
             "scriptSteps": [
               {"type": "log", "text": "ROCKET GRUNT enviou EKANS!"},
@@ -164,7 +173,10 @@
         {"kind": "set", "path": "story.pewterHook", "value": true},
         {"kind": "set", "path": "story.caughtPika", "value": true},
         {"kind": "ensureTeam", "value": ["poli", "saur", "pika"]},
-        {"kind": "dialog", "speaker": "", "lines": ["[ PIKACHU entrou para o time! ]"]}
+        {"kind": "dialog", "speaker": "", "lines": ["[ PIKACHU entrou para o time! ]"]},
+        {"kind": "dialog", "speaker": "", "lines": ["[ RED segue para o PEWTER GYM para enfrentar BROCK. ]"]},
+        {"kind": "set", "path": "story.autoBrock", "value": true},
+        {"kind": "teleport", "map": "pewter_gym", "x": 5, "y": 7, "dir": "up"}
       ]
     },
     {
@@ -172,6 +184,7 @@
       "sourceRef": "Pokemon Adventures RGB Arc (chapter-mapped adaptation, Vol.1-3) - scene aligned",
       "type": "cutscene",
       "actions": [
+        {"kind": "face", "dir": "up"},
         {"kind": "dialog", "speaker": "", "lines": ["[ Arena de PEWTER GYM ]", "As pedras do ginasio amplificam cada passo.", "BROCK cruza os bracos e mede RED em silencio."]},
         {"kind": "dialog", "speaker": "Brock", "lines": ["Entao e voce, RED.", "Ouvi que protegeu um PIKACHU da TEAM ROCKET.", "Coragem sem tecnica nao basta. Mostre seu nivel."]},
         {
@@ -179,6 +192,7 @@
           "enemy": {"name": "GEODUDE", "spr": "geodude", "lv": 10, "hp": 32, "maxHp": 32},
           "options": {
             "scripted": true,
+            "trainerName": "Brock",
             "onEnd": "only_if_win",
             "scriptSteps": [
               {"type": "log", "text": "BROCK enviou GEODUDE!"},
@@ -192,7 +206,9 @@
         },
         {"kind": "dialog", "speaker": "Brock", "lines": ["Bom controle.", "Seu estilo e agressivo, mas seus POKeMON confiam em voce.", "Nao vou te parar aqui. Continue avancando em KANTO."]},
         {"kind": "dialog", "speaker": "RED", "lines": ["Valeu, BROCK.", "Nao vou desperdiçar essa chance."]},
-        {"kind": "set", "path": "story.brockBattleDone", "value": true}
+        {"kind": "set", "path": "story.brockBattleDone", "value": true},
+        {"kind": "set", "path": "story.autoBrock", "value": false},
+        {"kind": "teleport", "map": "pewter", "x": 9, "y": 7, "dir": "down"}
       ]
     },
     {
@@ -202,6 +218,8 @@
       "actions": [
         {"kind": "dialog", "speaker": "", "lines": ["[ RED deixa PEWTER em direcao ao leste. ]", "As montanhas ficam mais altas e o ar mais frio."]},
         {"kind": "dialog", "speaker": "RED", "lines": ["MEW... TEAM ROCKET... tudo parece conectado.", "Nao posso parar agora."]},
+        {"kind": "teleport", "map": "route3", "x": 3, "y": 8, "dir": "right"},
+        {"kind": "move", "path": ["right", "right", "right"], "stepMs": 120},
         {"kind": "set", "path": "story.block_02_done", "value": true}
       ]
     },

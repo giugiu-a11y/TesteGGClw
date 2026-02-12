@@ -2555,6 +2555,12 @@
         ensureWalkablePlayerPosition();
         setSceneBackdrop('');
         showMapBanner(mapId);
+        if (mapId === 'pewter_gym' && GS.story.autoBrock && GS.story.caughtPika && !GS.story.brockBattleDone) {
+            GS.story.autoBrock = false;
+            scheduleSave('story-auto-brock');
+            setTimeout(() => { playBeat('ch1_brock_intro'); }, 240);
+            return;
+        }
         if (mapId === 'pewter_gym' && GS.story.caughtPika && !GS.story.brockBattleDone) {
             setTimeout(() => {
                 showDialog('', [
