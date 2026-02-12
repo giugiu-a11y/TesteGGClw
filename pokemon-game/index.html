@@ -1305,10 +1305,20 @@
     let renderLoopActive = false;
     let renderLoopToken = 0;
     let renderRafId = 0;
+    let storyMoveTimer = 0;
+    let storyMoveToken = 0;
     let currentCollisionMapId = '';
     let currentCollisionGrid = null;
     let currentCollisionW = 0;
     let currentCollisionH = 0;
+
+    function cancelStoryMove() {
+        storyMoveToken++;
+        if (storyMoveTimer) {
+            clearTimeout(storyMoveTimer);
+            storyMoveTimer = 0;
+        }
+    }
 
     function hideRuntimeOverlays() {
         const dialogBox = document.getElementById('dialogBox');
@@ -1396,6 +1406,7 @@
         unloadScene(opts = {}) {
             const preserveFlow = !!opts.preserveFlow;
             stopMove();
+            cancelStoryMove();
             this.clearRenderLayer();
             setSceneBackdrop('');
             if (!preserveFlow) {
@@ -1557,9 +1568,15 @@
     function runMovePath(path, stepMs, onDone) {
         const dirs = Array.isArray(path) ? path.filter(Boolean) : [];
         const delay = Math.max(40, Number(stepMs) || 120);
+        const token = ++storyMoveToken;
         let i = 0;
         function step() {
+            if (token !== storyMoveToken) {
+                storyMoveTimer = 0;
+                return;
+            }
             if (i >= dirs.length) {
+                storyMoveTimer = 0;
                 if (typeof onDone === 'function') onDone();
                 return;
             }
@@ -1573,10 +1590,8 @@
             if (canMove(nx, ny)) {
                 GS.px = nx;
                 GS.py = ny;
-                checkWarp();
-                checkEncounter();
             }
-            setTimeout(step, delay);
+            storyMoveTimer = setTimeout(step, delay);
         }
         step();
     }
@@ -1681,6 +1696,7 @@
         if (!beat) return false;
         // Prevent residual movement timers from carrying into cutscenes.
         stopMove();
+        cancelStoryMove();
         const beatBg = beatBackdropFor(id);
         const mapBg = mapBgUrlForMap(GS.map);
         // Avoid visual ghosting: don't stack identical map sheet as both mapbg and scene backdrop.
@@ -1693,6 +1709,7 @@
         activeBeatId = id;
         GS.story.beat = id;
         runActions(beat.actions, 0, () => {
+            cancelStoryMove();
             if (activeBeatId === id) activeBeatId = null;
             cutsceneLock = false;
             scheduleSave('beat');
@@ -2595,7 +2612,10 @@
     function move(dir) {
         // Self-heal stuck flags before movement gate checks.
         clearOrphanRuntimeLocks();
-        if (dialog || inBattle || cutsceneLock) return;
+        if (dialog || inBattle || cutsceneLock) {
+            stopMove();
+            return;
+        }
         GS.dir = dir;
         let nx = GS.px, ny = GS.py;
         if (dir === 'up') ny--;
@@ -3223,6 +3243,7 @@
     // ==================== DIALOG ====================
     function showDialog(speaker, texts, cb) {
         actionProgressAt = Date.now();
+        stopMove();
         const lines = Array.isArray(texts) ? texts : [texts];
         dialogQ = lines.map(v => String(v ?? '...'));
         dialog = {speaker, cb};
