@@ -1594,6 +1594,23 @@
             if (activeBeatId === id) activeBeatId = null;
             cutsceneLock = false;
             scheduleSave('beat');
+            // Ensure intro always chains into Oak's lab beat even if map-enter hook timing is missed.
+            if (id === 'ch1_intro' && GS.story && GS.story.sawMew && !GS.story.gotSaur) {
+                if (GS.map !== 'oak_lab') {
+                    GS.map = 'oak_lab';
+                    GS.px = 5;
+                    GS.py = 9;
+                    GS.dir = 'up';
+                    ensureWalkablePlayerPosition();
+                    onMapEnter(GS.map, {preserveFlow: true});
+                }
+                setTimeout(() => {
+                    if (!activeBeatId && !inBattle && !dialog && GS.story && GS.story.sawMew && !GS.story.gotSaur) {
+                        playBeat('ch1_oak_mew_explain');
+                    }
+                }, 180);
+                return;
+            }
             // Continue chaining story automatically when multiple beats belong to the same area.
             setTimeout(() => { tryAutoStoryBeat(); }, 220);
         });
@@ -2471,6 +2488,17 @@
     function setRunPressed(v) { runPressed = !!v; }
     function moveStepMs() { return runPressed ? 85 : 145; }
     function startMove(dir) {
+        // Runtime self-heal for rare iPad/tap race conditions where dialog/cutscene flags stick.
+        if (dialog && Array.isArray(dialogQ) && dialogQ.length === 0) {
+            dialog = null;
+            const box = document.getElementById('dialogBox');
+            const ov = document.getElementById('tapOverlay');
+            if (box) box.style.display = 'none';
+            if (ov) ov.style.display = 'none';
+        }
+        if (cutsceneLock && !activeBeatId && !dialog && !inBattle) {
+            cutsceneLock = false;
+        }
         stopMove();
         move(dir);
         moveDir = dir;
