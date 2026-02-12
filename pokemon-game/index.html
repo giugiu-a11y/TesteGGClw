@@ -595,6 +595,14 @@
         rival_house: 'Blue House',
         oak_lab: 'Oak Lab'
     };
+
+    // Composite map sheets are visually rich, but some are not 1:1 with collision grids.
+    // Disable them on core overworld maps to keep doors/warps/jogabilidade precise.
+    const PREBUILT_SKIP_MAPS = new Set([
+        'pallet_town', 'route1', 'viridian', 'route2', 'pewter', 'route3',
+        'cerulean', 'vermilion', 'lavender', 'saffron', 'fuchsia', 'cinnabar',
+        'viridian_forest'
+    ]);
     
     // ==================== COLORS (FRLG-ish, but original) ====================
     const C = {
@@ -1437,7 +1445,15 @@
                 ...opts,
                 scripted: opts.scripted !== false,
                 onEnd: (won) => {
-                    if (nextOnEnd === 'only_if_win' && !won) return;
+                    if (nextOnEnd === 'only_if_win' && !won) {
+                        // Fail-safe: never deadlock story/input if scripted battle is lost.
+                        const active = getActivePokemon();
+                        active.hp = Math.max(1, Math.floor(active.maxHp * 0.5));
+                        showDialog('', ['Voce recua por um instante, mas continua.'], () => {
+                            runActions(list, idx + 1, onDone);
+                        });
+                        return;
+                    }
                     runActions(list, idx + 1, onDone);
                 }
             });
@@ -2191,7 +2207,7 @@
         
         const camX = Math.floor(GS.px - VW / 2);
         const camY = Math.floor(GS.py - VH / 2);
-        const mapBgEntry = prebuiltMapBg[GS.map];
+        const mapBgEntry = PREBUILT_SKIP_MAPS.has(GS.map) ? null : prebuiltMapBg[GS.map];
         const hasMapBg = !!mapBgEntry;
         if (hasMapBg) {
             // Stable crop from prebuilt maps; avoids stretch artifacts near bounds.
