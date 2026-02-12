@@ -1,16 +1,19 @@
 {
   "version": 1,
-  "default": "./assets/tilesets/cities/3873_city_pallet_town.png",
+  "default": "./assets/tilesets/missing_tiles/05_map_route_1.png",
   "rules": [
+    { "match": "pallet|oak|ch1_intro|ch1_oak", "url": "./assets/tilesets/cities/3873_city_pallet_town.png" },
+    { "match": "viridian_forest|forest|bug", "url": "./assets/tilesets/missing_tiles/02_map_route_10.png" },
+    { "match": "viridian|giovanni", "url": "./assets/tilesets/cities/3874_city_viridian.png" },
+    { "match": "pewter|brock|museum|fossil", "url": "./assets/tilesets/cities/3875_city_pewter.png" },
+    { "match": "mtmoon|moon|cave", "url": "./assets/tilesets/manual_environmental/mt_moon.png" },
+    { "match": "cerulean|misty|bill", "url": "./assets/tilesets/missing_tiles/15_map_route_4_center.png" },
+    { "match": "vermilion|surge|ssanne", "url": "./assets/tilesets/missing_tiles/16_map_route_6_house.png" },
+    { "match": "lavender|shadow|ghost|gengar|hypno", "url": "./assets/tilesets/manual_environmental/environmental_4.png" },
+    { "match": "saffron|psychic|alakazam", "url": "./assets/tilesets/manual_environmental/saffron_city.png" },
     { "match": "silph|rocket", "url": "./assets/tilesets/manual_environmental/rocket_hideout.png" },
-    { "match": "mewtwo|cave", "url": "./assets/tilesets/manual_environmental/cerulean_cave.png" },
-    { "match": "cinnabar|research", "url": "./assets/tilesets/manual_environmental/one_island.png" },
-    { "match": "lavender|shadow", "url": "./assets/tilesets/manual_environmental/environmental_4.png" },
-    { "match": "indigo|elite|champion", "url": "./assets/tilesets/manual_environmental/indigo_plateau.png" },
-    { "match": "mtmoon|moon", "url": "./assets/tilesets/manual_environmental/mt_moon.png" },
-    { "match": "viridian_forest|forest", "url": "./assets/tilesets/missing_tiles/02_map_route_10.png" },
-    { "match": "pewter|brock", "url": "./assets/tilesets/cities/3875_city_pewter.png" },
-    { "match": "viridian", "url": "./assets/tilesets/cities/3874_city_viridian.png" },
-    { "match": "pallet|oak", "url": "./assets/tilesets/cities/3873_city_pallet_town.png" }
+    { "match": "fuchsia|safari|koga", "url": "./assets/tilesets/missing_tiles/19_map_route_11_gate.png" },
+    { "match": "cinnabar|research|mewtwo", "url": "./assets/tilesets/manual_environmental/one_island.png" },
+    { "match": "indigo|elite|champion|lance|agatha|bruno|lorelei", "url": "./assets/tilesets/manual_environmental/indigo_plateau.png" }
   ]
 }
