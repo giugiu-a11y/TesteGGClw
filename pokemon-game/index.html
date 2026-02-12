@@ -1292,6 +1292,47 @@
     let STORY = null;
     let activeBeatId = null;
     let cutsceneLock = false;
+    let renderLoopActive = false;
+    let renderLoopToken = 0;
+    let renderRafId = 0;
+
+    function hideRuntimeOverlays() {
+        const dialogBox = document.getElementById('dialogBox');
+        const tapOverlay = document.getElementById('tapOverlay');
+        const battleScreen = document.getElementById('battleScreen');
+        if (dialogBox) dialogBox.style.display = 'none';
+        if (tapOverlay) tapOverlay.style.display = 'none';
+        if (battleScreen) battleScreen.style.display = 'none';
+    }
+
+    const SceneManager = {
+        currentScene: null,
+        clearRenderLayer() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        },
+        unloadScene(opts = {}) {
+            const preserveFlow = !!opts.preserveFlow;
+            stopMove();
+            this.clearRenderLayer();
+            setSceneBackdrop('');
+            if (!preserveFlow) {
+                dialog = null;
+                dialogQ = [];
+                inBattle = false;
+                battle = null;
+                activeBeatId = null;
+                cutsceneLock = false;
+                hideRuntimeOverlays();
+            }
+            this.currentScene = null;
+        },
+        loadScene(mapId) {
+            this.currentScene = mapId;
+            this.clearRenderLayer();
+        }
+    };
 
     async function loadStory() {
         try {
@@ -1424,7 +1465,7 @@
             if (typeof a.y === 'number') GS.py = a.y;
             if (a.dir) GS.dir = String(a.dir);
             ensureWalkablePlayerPosition();
-            onMapEnter(GS.map);
+            onMapEnter(GS.map, {preserveFlow: true});
             scheduleSave('story-teleport');
             return runActions(list, idx + 1, onDone);
         }
@@ -2171,9 +2212,12 @@
         ctx.fillRect(sx * ST, sy * ST, ST, ST);
     }
 
-    function render() {
+    function renderFrame() {
         const map = MAPS[GS.map];
-        if (!map) return requestAnimationFrame(render);
+        if (!map) {
+            SceneManager.clearRenderLayer();
+            return;
+        }
         
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -2253,7 +2297,27 @@
         drawSprite(sprites.red, psx, psy, animFrame, GS.dir);
         
         animFrame = (animFrame + 0.1) % 4;
-        requestAnimationFrame(render);
+    }
+
+    function stopRenderLoop() {
+        renderLoopActive = false;
+        renderLoopToken++;
+        if (renderRafId) {
+            cancelAnimationFrame(renderRafId);
+            renderRafId = 0;
+        }
+    }
+
+    function startRenderLoop() {
+        if (renderLoopActive) return;
+        renderLoopActive = true;
+        const token = ++renderLoopToken;
+        const tick = () => {
+            if (!renderLoopActive || token !== renderLoopToken) return;
+            renderFrame();
+            renderRafId = requestAnimationFrame(tick);
+        };
+        tick();
     }
     
     // ==================== MOVEMENT ====================
@@ -2351,7 +2415,7 @@
                 GS.px = w.tx;
                 GS.py = w.ty;
                 ensureWalkablePlayerPosition();
-                onMapEnter(GS.map);
+                onMapEnter(GS.map, {preserveFlow: false});
                 scheduleSave('warp');
                 break;
             }
@@ -2528,7 +2592,15 @@
         return false;
     }
 
-    function onMapEnter(mapId) {
+    function onMapEnter(mapId, opts = {}) {
+        const preserveFlow = !!opts.preserveFlow;
+        const changed = SceneManager.currentScene !== mapId;
+        if (changed) {
+            SceneManager.unloadScene({preserveFlow});
+            SceneManager.loadScene(mapId);
+        } else {
+            SceneManager.clearRenderLayer();
+        }
         // Lightweight, non-breaking story hooks. Real season script will live in beats/flags.
         if (!GS.story) GS.story = {};
         ensureWalkablePlayerPosition();
@@ -3384,6 +3456,8 @@
             try { loaded = JSON.parse(backup); } catch {}
         }
         if (loaded) {
+            SceneManager.unloadScene({preserveFlow: false});
+            stopRenderLoop();
             GS = migrateSave(loaded);
             ensureWalkablePlayerPosition();
             // Defensive reset for stale runtime flags from previous sessions.
@@ -3400,14 +3474,16 @@
             if (tapOverlay) tapOverlay.style.display = 'none';
             if (battleScreen) battleScreen.style.display = 'none';
             document.getElementById('titleScreen').style.display = 'none';
-            onMapEnter(GS.map);
+            onMapEnter(GS.map, {preserveFlow: false});
             scheduleSave('load-repair');
-            render();
+            startRenderLoop();
         }
         else alert('No save found!');
     }
     
     function startNewGame() {
+        SceneManager.unloadScene({preserveFlow: false});
+        stopRenderLoop();
         // Hard reset runtime state to avoid post-cutscene soft-locks.
         dialog = null;
         dialogQ = [];
@@ -3467,7 +3543,7 @@
             }
         }, 500);
         scheduleSave('new-game');
-        render();
+        startRenderLoop();
     }
 
     function applyStartupQueryFlags() {

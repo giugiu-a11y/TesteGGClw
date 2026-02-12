@@ -13,14 +13,14 @@
     "vermilion": { "url": "./assets/tilesets/missing_tiles/16_map_route_6_house.png", "ts": 8, "ox": 0, "oy": 0 },
     "lavender": { "url": "./assets/tilesets/manual_environmental/environmental_4.png", "ts": 8, "ox": 0, "oy": 0 },
     "saffron": { "url": "./assets/tilesets/manual_environmental/saffron_city.png", "ts": 8, "ox": 0, "oy": 0 },
-    "silph_lobby": { "url": "./assets/tilesets/manual_environmental/rocket_hideout.png", "ts": 8, "px": 784, "py": 0, "fixed": true },
+    "silph_lobby": { "url": "./assets/tilesets/manual_environmental/rocket_hideout.png", "ts": 8, "px": 784, "py": 24, "fixed": true },
     "fuchsia": { "url": "./assets/tilesets/missing_tiles/19_map_route_11_gate.png", "ts": 8, "ox": 0, "oy": 0 },
     "cinnabar": { "url": "./assets/tilesets/manual_environmental/one_island.png", "ts": 8, "ox": 0, "oy": 0 },
-    "viridian_gym": { "url": "./assets/tilesets/cities/3874_city_viridian.png", "ts": 8, "px": 1024, "py": 0, "fixed": true },
+    "viridian_gym": { "url": "./assets/tilesets/cities/3874_city_viridian.png", "ts": 8, "px": 1024, "py": 24, "fixed": true },
     "indigo_plateau": { "url": "./assets/tilesets/manual_environmental/indigo_plateau.png", "ts": 8, "ox": 0, "oy": 0 },
-    "pewter_gym": { "url": "./assets/tilesets/cities/3875_city_pewter.png", "ts": 8, "px": 688, "py": 384, "fixed": true },
-    "player_house": { "url": "./assets/tilesets/cities/3873_city_pallet_town.png", "ts": 8, "px": 384, "py": 16, "fixed": true },
-    "rival_house": { "url": "./assets/tilesets/cities/3873_city_pallet_town.png", "ts": 8, "px": 384, "py": 176, "fixed": true },
-    "oak_lab": { "url": "./assets/tilesets/cities/3873_city_pallet_town.png", "ts": 8, "px": 768, "py": 0, "fixed": true }
+    "pewter_gym": { "url": "./assets/tilesets/cities/3875_city_pewter.png", "ts": 8, "px": 688, "py": 408, "fixed": true },
+    "player_house": { "url": "./assets/tilesets/cities/3873_city_pallet_town.png", "ts": 8, "px": 384, "py": 24, "fixed": true },
+    "rival_house": { "url": "./assets/tilesets/cities/3873_city_pallet_town.png", "ts": 8, "px": 384, "py": 184, "fixed": true },
+    "oak_lab": { "url": "./assets/tilesets/cities/3873_city_pallet_town.png", "ts": 8, "px": 768, "py": 24, "fixed": true }
   }
 }
