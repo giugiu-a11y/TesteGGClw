@@ -606,6 +606,16 @@
         'viridian_gym', 'indigo_plateau', 'pewter_gym',
         'player_house', 'rival_house', 'oak_lab'
     ]);
+    // Map backgrounds for these interiors are visually sensitive to crop offsets.
+    // Keep them on logical tile rendering so visuals always match collision grid.
+    const ALWAYS_TILE_RENDER_MAPS = new Set([
+        'player_house',
+        'rival_house',
+        'oak_lab',
+        'pewter_gym',
+        'viridian_gym',
+        'silph_lobby'
+    ]);
     
     // ==================== COLORS (FRLG-ish, but original) ====================
     const C = {
@@ -2295,7 +2305,8 @@
         
         const camX = Math.floor(GS.px - VW / 2);
         const camY = Math.floor(GS.py - VH / 2);
-        const mapBgEntry = PREBUILT_SKIP_MAPS.has(GS.map) ? null : prebuiltMapBg[GS.map];
+        const forceTileRender = ALWAYS_TILE_RENDER_MAPS.has(GS.map);
+        const mapBgEntry = (PREBUILT_SKIP_MAPS.has(GS.map) || forceTileRender) ? null : prebuiltMapBg[GS.map];
         const overlayMode = cutsceneLock && hasSceneBackdrop();
         const hasMapBg = !!mapBgEntry && !overlayMode;
         if (!hasMapBg && STYLE_LOCK_CORE_MAPS.has(GS.map) && qs('stylelock', '1') !== '0') {
