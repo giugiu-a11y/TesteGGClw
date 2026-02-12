@@ -596,12 +596,13 @@
         oak_lab: 'Oak Lab'
     };
 
-    // Composite map sheets are visually rich, but some are not 1:1 with collision grids.
-    // Disable them on core overworld maps to keep doors/warps/jogabilidade precise.
+    // Composite map sheets are visually rich, but can diverge from collision/warp grids.
+    // Keep gameplay fully tile-accurate (single style) and reserve rich sheets for cutscenes/backdrops.
     const PREBUILT_SKIP_MAPS = new Set([
         'pallet_town', 'route1', 'viridian', 'route2', 'pewter', 'route3',
-        'cerulean', 'vermilion', 'lavender', 'saffron', 'fuchsia', 'cinnabar',
-        'viridian_forest'
+        'mt_moon', 'cerulean', 'vermilion', 'lavender', 'saffron', 'silph_lobby',
+        'fuchsia', 'cinnabar', 'viridian_gym', 'indigo_plateau', 'pewter_gym',
+        'viridian_forest', 'player_house', 'rival_house', 'oak_lab'
     ]);
     
     // ==================== COLORS (FRLG-ish, but original) ====================
