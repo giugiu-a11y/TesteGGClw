@@ -552,6 +552,9 @@
         silph_lobby: {url: './assets/tilesets/manual_environmental/rocket_hideout.png', ts: 16, px: 792, py: 24, fixed: true}
     };
     let PREBUILT_MAP_BG_CONFIG = {...DEFAULT_PREBUILT_MAP_BG_CONFIG};
+    // Gameplay-first: keep cutscene actions automatic, but avoid forced auto-walk
+    // unless explicitly enabled via ?autocutmove=1.
+    const AUTO_CUTSCENE_MOVE = qs('autocutmove', '0') === '1';
     const DEFAULT_SCENE_BACKDROP = './assets/tilesets/missing_tiles/05_map_route_1.png';
     const DEFAULT_SCENE_BACKDROP_RULES = [
         {match: 'pallet|oak|ch1_intro|ch1_oak', url: './assets/tilesets/cities/3873_city_pallet_town.png'},
@@ -1251,7 +1254,7 @@
                 return m;
             })(),
             warps: [{x:4,y:11,to:'pallet_town',tx:9,ty:12},{x:5,y:11,to:'pallet_town',tx:9,ty:12}],
-            npcs: [{x:4,y:2,name:'Prof. Oak',sprite:'oak',
+            npcs: [{x:5,y:5,name:'Prof. Oak',sprite:'oak',
                 // Dynamic dialog based on story state (set in getOakDialog)
                 dialog: null
             }],
@@ -1625,13 +1628,20 @@
                 setTimeout(() => runActions(list, idx + 1, onDone), ms);
                 return;
             }
-            if (a.kind === 'move') {
-                runMovePath(a.path, a.stepMs, () => {
-                    scheduleSave('story-move');
-                    runActions(list, idx + 1, onDone);
-                });
+        if (a.kind === 'move') {
+            if (!AUTO_CUTSCENE_MOVE) {
+                // Skip forced auto-walk by default to avoid perceived input-loss/auto-run on iPad.
+                const dirs = Array.isArray(a.path) ? a.path : [];
+                if (dirs.length) GS.dir = String(dirs[dirs.length - 1]);
+                setTimeout(() => runActions(list, idx + 1, onDone), Math.max(40, Number(a.stepMs) || 120));
                 return;
             }
+            runMovePath(a.path, a.stepMs, () => {
+                scheduleSave('story-move');
+                runActions(list, idx + 1, onDone);
+            });
+            return;
+        }
             if (a.kind === 'teleport') {
                 if (a.map && MAPS[a.map]) GS.map = a.map;
                 if (typeof a.x === 'number') GS.px = a.x;
