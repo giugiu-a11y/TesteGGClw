@@ -9,6 +9,10 @@ Data: 2026-02-12
 - Fluxo: manga-first (`storyLock=true`), batalhas confirm-only e cutscenes roteirizadas.
 
 ## Finalizado Hoje
+- Governanca operacional adicionada:
+  - `OPERATIONS_PLAYBOOK.md` (padrao de qualidade + anti-regressao + protocolo Telegram).
+  - `CHANGELOG_OPERACIONAL.md` (historico tecnico-operacional continuo).
+  - `send_release_telegram.sh` (envio com fallback automatico).
 - Scene lifecycle hardening:
   - `SceneManager` ativo com `currentScene`, `unloadScene()`, `loadScene()`, `clearRenderLayer()`.
   - loop único de render com `startRenderLoop()` / `stopRenderLoop()`.

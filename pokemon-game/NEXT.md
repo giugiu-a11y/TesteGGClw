@@ -26,3 +26,6 @@
   - `bash ci-check.sh`
 - Validar checklist final:
   - `QA_CHECKLIST_RELEASE.md`
+- Seguir governanca:
+  - `OPERATIONS_PLAYBOOK.md`
+  - atualizar `CHANGELOG_OPERACIONAL.md` a cada ciclo relevante
