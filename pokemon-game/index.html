@@ -135,6 +135,25 @@
             max-width: 90vw;
             word-break: break-word;
         }
+
+        #mapBanner {
+            display: none;
+            position: fixed;
+            top: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2600;
+            background: rgba(15, 23, 42, 0.92);
+            color: #f8fafc;
+            border: 3px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 8px 12px;
+            font-size: 9px;
+            box-shadow: 0 6px 0 rgba(0,0,0,0.25);
+            letter-spacing: 0.3px;
+            text-align: center;
+            min-width: 180px;
+        }
         #dialogBox .speaker {
             font-weight: bold; color: #1f2a44;
             margin-bottom: 6px; font-size: 10px;
@@ -197,6 +216,7 @@
             border-radius: 8px;
             padding: 8px 12px;
             min-width: 150px;
+            box-shadow: inset 0 0 0 2px rgba(255,255,255,0.45);
         }
         
         .pokemon-name { font-size: 11px; font-weight: bold; }
@@ -364,6 +384,7 @@
     </div>
 
     <div id="debugBar"></div>
+    <div id="mapBanner"></div>
     
     <div id="battleScreen">
         <div class="battle-field" id="battleField">
@@ -521,6 +542,30 @@
         saffron: {url: './assets/tilesets/manual_environmental/saffron_city.png', ox: 0, oy: 0},
         indigo_plateau: {url: './assets/tilesets/manual_environmental/indigo_plateau.png', ox: 0, oy: 0},
         silph_lobby: {url: './assets/tilesets/manual_environmental/rocket_hideout.png', ox: 0, oy: 0}
+    };
+
+    const MAP_LABELS = {
+        pallet_town: 'Pallet Town',
+        route1: 'Route 1',
+        viridian: 'Viridian City',
+        route2: 'Route 2',
+        viridian_forest: 'Viridian Forest',
+        pewter: 'Pewter City',
+        pewter_gym: 'Pewter Gym',
+        route3: 'Route 3',
+        mt_moon: 'Mt. Moon',
+        cerulean: 'Cerulean City',
+        vermilion: 'Vermilion City',
+        lavender: 'Lavender Town',
+        saffron: 'Saffron City',
+        silph_lobby: 'Silph Co.',
+        fuchsia: 'Fuchsia City',
+        cinnabar: 'Cinnabar Island',
+        viridian_gym: 'Viridian Gym',
+        indigo_plateau: 'Indigo Plateau',
+        player_house: 'Red House',
+        rival_house: 'Blue House',
+        oak_lab: 'Oak Lab'
     };
     
     // ==================== COLORS (FRLG-ish, but original) ====================
@@ -1510,6 +1555,30 @@
         return '';
     }
 
+    function inferTrainerByBeat() {
+        const id = String(activeBeatId || GS?.story?.beat || '').toLowerCase();
+        if (!id) return {name: '', sprite: ''};
+        if (id.includes('brock')) return {name: 'Brock', sprite: 'trainerBrock'};
+        if (id.includes('rocket')) return {name: 'Team Rocket', sprite: 'trainerRocket'};
+        if (id.includes('giovanni')) return {name: 'Giovanni', sprite: 'trainerGiovanni'};
+        if (id.includes('lance')) return {name: 'Lance', sprite: 'trainerLance'};
+        if (id.includes('blue') || id.includes('champion') || id.includes('duel')) return {name: 'Blue', sprite: 'trainerBlue'};
+        if (id.includes('oak')) return {name: 'Prof. Oak', sprite: 'trainerOak'};
+        return {name: '', sprite: ''};
+    }
+
+    let bannerTimer = null;
+    function showMapBanner(mapId) {
+        const el = document.getElementById('mapBanner');
+        if (!el) return;
+        const title = MAP_LABELS[mapId] || mapId || '';
+        if (!title) return;
+        el.textContent = title;
+        el.style.display = 'block';
+        if (bannerTimer) clearTimeout(bannerTimer);
+        bannerTimer = setTimeout(() => { el.style.display = 'none'; }, 1400);
+    }
+
     function applyVisualSkin() {
         const continueEl = document.querySelector('#dialogBox .continue');
         if (continueEl) {
@@ -1536,6 +1605,12 @@
             btn.style.backgroundSize = 'cover';
             btn.style.backgroundPosition = 'center';
         });
+        const hpBars = document.querySelectorAll('.hp-bar');
+        hpBars.forEach((bar) => {
+            bar.style.backgroundImage = "url('./assets/tilesets/interface/hp_bar_anim.png')";
+            bar.style.backgroundSize = 'cover';
+            bar.style.backgroundRepeat = 'no-repeat';
+        });
     }
 
     function applyBattleVisuals(enemy, opts = {}) {
@@ -1546,7 +1621,8 @@
         }
         const portraitEl = document.getElementById('trainerPortrait');
         if (!portraitEl) return;
-        const trainerKey = opts.trainerSprite || mapTrainerSpriteKey(opts.trainerName || enemy.trainer || '');
+        const byBeat = inferTrainerByBeat();
+        const trainerKey = opts.trainerSprite || mapTrainerSpriteKey(opts.trainerName || enemy.trainer || byBeat.name) || byBeat.sprite;
         if (!trainerKey || !SPRITE_URLS[trainerKey]) {
             portraitEl.style.display = 'none';
             portraitEl.src = '';
@@ -2337,6 +2413,7 @@
         // Lightweight, non-breaking story hooks. Real season script will live in beats/flags.
         if (!GS.story) GS.story = {};
         ensureWalkablePlayerPosition();
+        showMapBanner(mapId);
         if (mapId === 'pewter_gym' && GS.story.caughtPika && !GS.story.brockBattleDone) {
             setTimeout(() => {
                 showDialog('', [
@@ -2949,6 +3026,29 @@
             ]);
             return;
         }
+        if (mapId === 'viridian_forest') {
+            showDialog('', [
+                'VIRIDIAN FOREST',
+                'Insetos e POKeMON selvagens por toda parte.',
+                'Fique atento.'
+            ]);
+            return;
+        }
+        if (mapId === 'route1' || mapId === 'route2' || mapId === 'route3') {
+            showDialog('', [
+                mapId.toUpperCase().replace('_', ' '),
+                'Rota de transicao entre cidades.',
+                'Treinadores e encontros podem acontecer aqui.'
+            ]);
+            return;
+        }
+        if (mapId === 'indigo_plateau') {
+            showDialog('', [
+                'INDIGO PLATEAU',
+                'A liga POKeMON de KANTO.'
+            ]);
+            return;
+        }
         showDialog('', ['...']);
     }
     
@@ -3223,6 +3323,7 @@
             badges: 0
         };
         ensureWalkablePlayerPosition();
+        showMapBanner(GS.map);
         
         document.getElementById('titleScreen').style.display = 'none';
         
