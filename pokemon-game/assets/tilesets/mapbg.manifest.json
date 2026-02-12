@@ -130,7 +130,7 @@
       "url": "./assets/tilesets/cities/3873_city_pallet_town.png",
       "ts": 16,
       "px": 768,
-      "py": 32,
+      "py": 0,
       "fixed": true
     }
   }
