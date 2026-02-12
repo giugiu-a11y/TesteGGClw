@@ -1583,6 +1583,8 @@
         if (activeBeatId && activeBeatId !== id) return false;
         const beat = getBeat(id);
         if (!beat) return false;
+        // Prevent residual movement timers from carrying into cutscenes.
+        stopMove();
         const beatBg = beatBackdropFor(id);
         const mapBg = mapBgUrlForMap(GS.map);
         // Avoid visual ghosting: don't stack identical map sheet as both mapbg and scene backdrop.
@@ -2681,12 +2683,14 @@
 
     function onMapEnter(mapId, opts = {}) {
         const preserveFlow = !!opts.preserveFlow;
+        stopMove();
         const changed = SceneManager.currentScene !== mapId;
         if (changed) {
             SceneManager.unloadScene({preserveFlow});
             SceneManager.loadScene(mapId);
         } else {
             SceneManager.clearRenderLayer();
+            loadCollisionGrid(mapId);
         }
         // Lightweight, non-breaking story hooks. Real season script will live in beats/flags.
         if (!GS.story) GS.story = {};
