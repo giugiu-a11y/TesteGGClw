@@ -436,6 +436,7 @@
         </div>
     </div>
 
+    <script src="./story/season1.ptbr.inline.js"></script>
     <script>
     // ==================== CONFIG ====================
     const TILE = 16;
@@ -527,28 +528,28 @@
     const prebuiltMapBg = {};
     const DEFAULT_PREBUILT_MAP_BG_CONFIG = {
         // Uses ripped map sheets as visual background while preserving collision/warps from engine maps.
-        pallet_town: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ox: 0, oy: 0},
-        route1: {url: './assets/tilesets/missing_tiles/05_map_route_1.png', ox: 0, oy: 0},
-        viridian: {url: './assets/tilesets/cities/3874_city_viridian.png', ox: 0, oy: 0},
-        pewter: {url: './assets/tilesets/cities/3875_city_pewter.png', ox: 0, oy: 0},
-        route2: {url: './assets/tilesets/cities/3876_city_map_3876.png', ox: 0, oy: 0},
-        route3: {url: './assets/tilesets/cities/3878_city_map_3878.png', ox: 0, oy: 0},
-        cerulean: {url: './assets/tilesets/missing_tiles/15_map_route_4_center.png', ox: 0, oy: 0},
-        vermilion: {url: './assets/tilesets/missing_tiles/16_map_route_6_house.png', ox: 0, oy: 0},
-        lavender: {url: './assets/tilesets/manual_environmental/environmental_4.png', ox: 0, oy: 0},
-        fuchsia: {url: './assets/tilesets/missing_tiles/19_map_route_11_gate.png', ox: 0, oy: 0},
-        cinnabar: {url: './assets/tilesets/manual_environmental/one_island.png', ox: 0, oy: 0},
-        viridian_forest: {url: './assets/tilesets/missing_tiles/02_map_route_10.png', ox: 0, oy: 0},
+        pallet_town: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ts: 16, px: 40, py: 48},
+        route1: {url: './assets/tilesets/missing_tiles/05_map_route_1.png', ts: 16, px: 40, py: 48},
+        viridian: {url: './assets/tilesets/cities/3874_city_viridian.png', ts: 16, px: 40, py: 48},
+        pewter: {url: './assets/tilesets/cities/3875_city_pewter.png', ts: 16, px: 40, py: 48},
+        route2: {url: './assets/tilesets/cities/3876_city_map_3876.png', ts: 16, px: 40, py: 48},
+        route3: {url: './assets/tilesets/cities/3878_city_map_3878.png', ts: 16, px: 40, py: 48},
+        cerulean: {url: './assets/tilesets/missing_tiles/15_map_route_4_center.png', ts: 16, px: 40, py: 48},
+        vermilion: {url: './assets/tilesets/missing_tiles/16_map_route_6_house.png', ts: 16, px: 24, py: 48},
+        lavender: {url: './assets/tilesets/manual_environmental/environmental_4.png', ts: 16, ox: 0, oy: 0},
+        fuchsia: {url: './assets/tilesets/missing_tiles/19_map_route_11_gate.png', ts: 16, px: 40, py: 48},
+        cinnabar: {url: './assets/tilesets/manual_environmental/one_island.png', ts: 16, ox: 0, oy: 0},
+        viridian_forest: {url: './assets/tilesets/missing_tiles/02_map_route_10.png', ts: 16, px: 40, py: 48},
         // Reuse city sheets that already include the matching interiors/gym panels.
-        viridian_gym: {url: './assets/tilesets/cities/3874_city_viridian.png', ox: 64, oy: 0, fixed: true},
-        pewter_gym: {url: './assets/tilesets/cities/3875_city_pewter.png', ox: 43, oy: 24, fixed: true},
-        player_house: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ox: 24, oy: 1, fixed: true},
-        rival_house: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ox: 24, oy: 11, fixed: true},
-        oak_lab: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ox: 48, oy: 0, fixed: true},
-        mt_moon: {url: './assets/tilesets/manual_environmental/mt_moon.png', ox: 0, oy: 0},
-        saffron: {url: './assets/tilesets/manual_environmental/saffron_city.png', ox: 0, oy: 0},
-        indigo_plateau: {url: './assets/tilesets/manual_environmental/indigo_plateau.png', ox: 0, oy: 0},
-        silph_lobby: {url: './assets/tilesets/manual_environmental/rocket_hideout.png', ox: 49, oy: 0, fixed: true}
+        viridian_gym: {url: './assets/tilesets/cities/3874_city_viridian.png', ts: 16, px: 1008, py: 48, fixed: true},
+        pewter_gym: {url: './assets/tilesets/cities/3875_city_pewter.png', ts: 16, px: 800, py: 576, fixed: true},
+        player_house: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ts: 16, px: 440, py: 48, fixed: true},
+        rival_house: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ts: 16, px: 440, py: 232, fixed: true},
+        oak_lab: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ts: 16, px: 840, py: 48, fixed: true},
+        mt_moon: {url: './assets/tilesets/manual_environmental/mt_moon.png', ts: 16, px: 8, py: 56},
+        saffron: {url: './assets/tilesets/manual_environmental/saffron_city.png', ts: 16, px: 40, py: 48},
+        indigo_plateau: {url: './assets/tilesets/manual_environmental/indigo_plateau.png', ts: 16, px: 40, py: 48},
+        silph_lobby: {url: './assets/tilesets/manual_environmental/rocket_hideout.png', ts: 16, px: 784, py: 32, fixed: true}
     };
     let PREBUILT_MAP_BG_CONFIG = {...DEFAULT_PREBUILT_MAP_BG_CONFIG};
     const DEFAULT_SCENE_BACKDROP = './assets/tilesets/missing_tiles/05_map_route_1.png';
@@ -1297,6 +1298,7 @@
 
     // ==================== STORY SCRIPT ====================
     let STORY = null;
+    let storyLoadPromise = null;
     let activeBeatId = null;
     let cutsceneLock = false;
     let actionProgressAt = Date.now();
@@ -1347,8 +1349,10 @@
         if (!dialog && dialogVisible) {
             dialogBox.style.display = 'none';
         }
-        if (dialog && Array.isArray(dialogQ) && dialogQ.length === 0) {
-            dialog = null;
+        // Never null-out dialog just because queue is empty: the final "tap to continue"
+        // must still execute nextDialog() and invoke the callback chain.
+        if (dialog && Array.isArray(dialogQ) && dialogQ.length === 0 && !dialogVisible && !overlayVisible) {
+            try { nextDialog(); } catch {}
         }
         if (dialog && dialogVisible && !overlayVisible) {
             // Keep interaction layer aligned with visible dialog.
@@ -1468,15 +1472,33 @@
         currentCollisionH = map.h;
     }
 
-    async function loadStory() {
-        try {
-            const res = await fetch('./story/season1.ptbr.json', {cache: 'no-store'});
-            if (!res.ok) throw new Error('story fetch failed');
-            STORY = await res.json();
-        } catch (e) {
-            console.warn('Failed to load story JSON. Falling back to inline story.', e);
-            STORY = null;
-        }
+    async function loadStory(force = false) {
+        if (!force && storyLoadPromise) return storyLoadPromise;
+        storyLoadPromise = (async () => {
+            // Prefer bundled local story payload (works even when fetch/cache is flaky).
+            try {
+                const inlineStory = (typeof window !== 'undefined' && window.__POKEMON_STORY__) ? window.__POKEMON_STORY__ : null;
+                if (inlineStory && Array.isArray(inlineStory.beats) && inlineStory.beats.length > 0) {
+                    STORY = inlineStory;
+                    return STORY;
+                }
+            } catch {}
+            try {
+                const res = await fetch('./story/season1.ptbr.json', {cache: 'no-store'});
+                if (!res.ok) throw new Error('story fetch failed');
+                STORY = await res.json();
+            } catch (e) {
+                console.warn('Failed to load story JSON. Falling back to inline story.', e);
+                STORY = null;
+            }
+            return STORY;
+        })();
+        return storyLoadPromise;
+    }
+
+    async function ensureStoryLoaded() {
+        if (STORY && STORY.beats) return STORY;
+        return loadStory(false);
     }
 
     function getBeat(id) {
@@ -1569,77 +1591,87 @@
         const a = list[idx];
         if (!a || typeof a !== 'object') return runActions(list, idx + 1, onDone);
 
-        if (a.kind === 'dialog') {
-            showDialog(a.speaker || '', Array.isArray(a.lines) ? a.lines : ['...'], () => runActions(list, idx + 1, onDone));
-            return;
-        }
-        if (a.kind === 'set') {
-            setByPath(GS, a.path, a.value);
-            scheduleSave('story-set');
-            return runActions(list, idx + 1, onDone);
-        }
-        if (a.kind === 'face') {
-            if (a.dir) GS.dir = String(a.dir);
-            return runActions(list, idx + 1, onDone);
-        }
-        if (a.kind === 'pause') {
-            const ms = Math.max(0, Number(a.ms) || 250);
-            setTimeout(() => runActions(list, idx + 1, onDone), ms);
-            return;
-        }
-        if (a.kind === 'move') {
-            runMovePath(a.path, a.stepMs, () => {
-                scheduleSave('story-move');
-                runActions(list, idx + 1, onDone);
-            });
-            return;
-        }
-        if (a.kind === 'teleport') {
-            if (a.map && MAPS[a.map]) GS.map = a.map;
-            if (typeof a.x === 'number') GS.px = a.x;
-            if (typeof a.y === 'number') GS.py = a.y;
-            if (a.dir) GS.dir = String(a.dir);
-            ensureWalkablePlayerPosition();
-            onMapEnter(GS.map, {preserveFlow: true});
-            scheduleSave('story-teleport');
-            return runActions(list, idx + 1, onDone);
-        }
-        if (a.kind === 'ensureTeam') {
-            ensureTeam(a.value);
-            scheduleSave('story-team');
-            return runActions(list, idx + 1, onDone);
-        }
-        if (a.kind === 'evolve') {
-            evolveMon(a.slot, a.to, a.options && typeof a.options === 'object' ? a.options : {});
-            scheduleSave('story-evolve');
-            return runActions(list, idx + 1, onDone);
-        }
-        if (a.kind === 'battle') {
-            const enemy = a.enemy && typeof a.enemy === 'object'
-                ? a.enemy
-                : {name: 'PIDGEY', spr: 'pidgey', lv: 4, hp: 18, maxHp: 18};
-            const opts = a.options && typeof a.options === 'object' ? a.options : {};
-            const nextOnEnd = opts.onEnd;
-            startBattle(enemy, {
-                ...opts,
-                scripted: opts.scripted !== false,
-                onEnd: (won) => {
-                    if (nextOnEnd === 'only_if_win' && !won) {
-                        // Fail-safe: never deadlock story/input if scripted battle is lost.
-                        const active = getActivePokemon();
-                        active.hp = Math.max(1, Math.floor(active.maxHp * 0.5));
-                        showDialog('', ['Voce recua por um instante, mas continua.'], () => {
-                            runActions(list, idx + 1, onDone);
-                        });
-                        return;
-                    }
+        try {
+            if (a.kind === 'dialog') {
+                showDialog(a.speaker || '', Array.isArray(a.lines) ? a.lines : ['...'], () => runActions(list, idx + 1, onDone));
+                return;
+            }
+            if (a.kind === 'set') {
+                setByPath(GS, a.path, a.value);
+                scheduleSave('story-set');
+                return runActions(list, idx + 1, onDone);
+            }
+            if (a.kind === 'face') {
+                if (a.dir) GS.dir = String(a.dir);
+                return runActions(list, idx + 1, onDone);
+            }
+            if (a.kind === 'pause') {
+                const ms = Math.max(0, Number(a.ms) || 250);
+                setTimeout(() => runActions(list, idx + 1, onDone), ms);
+                return;
+            }
+            if (a.kind === 'move') {
+                runMovePath(a.path, a.stepMs, () => {
+                    scheduleSave('story-move');
                     runActions(list, idx + 1, onDone);
-                }
-            });
-            return;
+                });
+                return;
+            }
+            if (a.kind === 'teleport') {
+                if (a.map && MAPS[a.map]) GS.map = a.map;
+                if (typeof a.x === 'number') GS.px = a.x;
+                if (typeof a.y === 'number') GS.py = a.y;
+                if (a.dir) GS.dir = String(a.dir);
+                ensureWalkablePlayerPosition();
+                onMapEnter(GS.map, {preserveFlow: true});
+                scheduleSave('story-teleport');
+                return runActions(list, idx + 1, onDone);
+            }
+            if (a.kind === 'ensureTeam') {
+                ensureTeam(a.value);
+                scheduleSave('story-team');
+                return runActions(list, idx + 1, onDone);
+            }
+            if (a.kind === 'evolve') {
+                evolveMon(a.slot, a.to, a.options && typeof a.options === 'object' ? a.options : {});
+                scheduleSave('story-evolve');
+                return runActions(list, idx + 1, onDone);
+            }
+            if (a.kind === 'battle') {
+                const enemy = a.enemy && typeof a.enemy === 'object'
+                    ? a.enemy
+                    : {name: 'PIDGEY', spr: 'pidgey', lv: 4, hp: 18, maxHp: 18};
+                const opts = a.options && typeof a.options === 'object' ? a.options : {};
+                const nextOnEnd = opts.onEnd;
+                startBattle(enemy, {
+                    ...opts,
+                    scripted: opts.scripted !== false,
+                    onEnd: (won) => {
+                        try {
+                            if (nextOnEnd === 'only_if_win' && !won) {
+                                // Fail-safe: never deadlock story/input if scripted battle is lost.
+                                const active = getActivePokemon();
+                                active.hp = Math.max(1, Math.floor(active.maxHp * 0.5));
+                                showDialog('', ['Voce recua por um instante, mas continua.'], () => {
+                                    runActions(list, idx + 1, onDone);
+                                });
+                                return;
+                            }
+                            runActions(list, idx + 1, onDone);
+                        } catch (err) {
+                            dbg(`battle onEnd error: ${err && err.message ? err.message : String(err)}`);
+                            runActions(list, idx + 1, onDone);
+                        }
+                    }
+                });
+                return;
+            }
+            // Unknown action: skip
+            runActions(list, idx + 1, onDone);
+        } catch (err) {
+            dbg(`runActions error @${idx}: ${err && err.message ? err.message : String(err)}`);
+            setTimeout(() => runActions(list, idx + 1, onDone), 0);
         }
-        // Unknown action: skip
-        runActions(list, idx + 1, onDone);
     }
 
     function playBeat(id) {
@@ -2200,6 +2232,26 @@
         }
 
         const dirIdx = {down: 0, left: 1, right: 2, up: 3}[dir] ?? 0;
+
+        // Common FRLG overworld strips (e.g. 144x32 = 9 frames, 3 per direction).
+        if (sh >= 32 && sh < 64 && sw >= 48) {
+            const cols = Math.floor(sw / 16);
+            if (cols >= 3) {
+                const step = Math.floor(frame) % 3;
+                let base = 0;
+                if (cols >= 12) {
+                    base = ({down: 0, left: 3, right: 6, up: 9}[dir] ?? 0);
+                } else if (cols >= 9) {
+                    base = ({down: 0, left: 3, right: 6, up: 0}[dir] ?? 0);
+                } else if (cols >= 6) {
+                    base = ({down: 0, left: 3, right: 3, up: 0}[dir] ?? 0);
+                }
+                const frameX = Math.min(cols - 1, base + step) * 16;
+                ctx.drawImage(sprite, frameX, 0, 16, 32, dx, dy - (ST / 2), ST, ST * 1.5);
+                return;
+            }
+        }
+
         const isSheet = (sw >= 64 && sh >= 128);
         if (isSheet) {
             const f = Math.floor(frame) % 4;
@@ -2801,7 +2853,10 @@
                 ]);
             }, 320);
         }
-        setTimeout(() => { tryAutoStoryBeat(); }, 260);
+        setTimeout(async () => {
+            await ensureStoryLoaded();
+            tryAutoStoryBeat();
+        }, 260);
     }
     
     // ==================== ENCOUNTERS ====================
@@ -3168,7 +3223,8 @@
     // ==================== DIALOG ====================
     function showDialog(speaker, texts, cb) {
         actionProgressAt = Date.now();
-        dialogQ = texts.slice();
+        const lines = Array.isArray(texts) ? texts : [texts];
+        dialogQ = lines.map(v => String(v ?? '...'));
         dialog = {speaker, cb};
         nextDialog();
     }
@@ -3192,7 +3248,15 @@
             const cb = dialog && dialog.cb ? dialog.cb : null;
             dialog = null;
             dialogQ = [];
-            if (cb) cb();
+            if (cb) {
+                try {
+                    cb();
+                } catch (err) {
+                    dbg(`dialog callback error: ${err && err.message ? err.message : String(err)}`);
+                    activeBeatId = null;
+                    cutsceneLock = false;
+                }
+            }
             return;
         }
         const box = document.getElementById('dialogBox');
@@ -3363,6 +3427,7 @@
     function handleA() {
         if (inBattle && battle && battle.pending) { battleOk(); return; }
         if (dialog) { nextDialog(); return; }
+        if (cutsceneLock) return;
         const map = MAPS[GS.map];
         if (!map) return;
         let tx = GS.px, ty = GS.py;
@@ -3489,6 +3554,7 @@
             // Fail-safe: when a dialog is open, advance it directly (do not route through handleA()).
             if (inBattle && battle && battle.pending) { battleOk(); return; }
             if (dialog) { nextDialog(); return; }
+            if (cutsceneLock) return;
             handleA();
         } catch (err) {
             dbg(`tapAdvance threw: ${err && err.message ? err.message : String(err)}`);
@@ -3732,8 +3798,9 @@
         
         document.getElementById('titleScreen').style.display = 'none';
         
-        setTimeout(() => {
+        setTimeout(async () => {
             // Manga-first: run story beat from external script (fallback is the old inline flow).
+            await ensureStoryLoaded();
             if (!playBeat('ch1_intro')) {
                 // If story JSON didn't load yet, keep legacy flow (avoid blank screen).
                 showDialog('', [

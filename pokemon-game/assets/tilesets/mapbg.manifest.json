@@ -4,62 +4,62 @@
     "pallet_town": {
       "url": "./assets/tilesets/cities/3873_city_pallet_town.png",
       "ts": 16,
-      "ox": 0,
-      "oy": 0
+      "px": 40,
+      "py": 48
     },
     "route1": {
       "url": "./assets/tilesets/missing_tiles/05_map_route_1.png",
       "ts": 16,
-      "ox": 0,
-      "oy": 0
+      "px": 40,
+      "py": 48
     },
     "viridian": {
       "url": "./assets/tilesets/cities/3874_city_viridian.png",
       "ts": 16,
-      "ox": 0,
-      "oy": 0
+      "px": 40,
+      "py": 48
     },
     "route2": {
       "url": "./assets/tilesets/cities/3876_city_map_3876.png",
       "ts": 16,
-      "ox": 0,
-      "oy": 0
+      "px": 40,
+      "py": 48
     },
     "viridian_forest": {
       "url": "./assets/tilesets/missing_tiles/02_map_route_10.png",
       "ts": 16,
-      "ox": 0,
-      "oy": 0
+      "px": 40,
+      "py": 48
     },
     "pewter": {
       "url": "./assets/tilesets/cities/3875_city_pewter.png",
       "ts": 16,
-      "ox": 0,
-      "oy": 0
+      "px": 40,
+      "py": 48
     },
     "route3": {
       "url": "./assets/tilesets/cities/3878_city_map_3878.png",
       "ts": 16,
-      "ox": 0,
-      "oy": 0
+      "px": 40,
+      "py": 48
     },
     "mt_moon": {
       "url": "./assets/tilesets/manual_environmental/mt_moon.png",
       "ts": 16,
-      "ox": 0,
-      "oy": 0
+      "px": 8,
+      "py": 56
     },
     "cerulean": {
       "url": "./assets/tilesets/missing_tiles/15_map_route_4_center.png",
       "ts": 16,
-      "ox": 0,
-      "oy": 0
+      "px": 40,
+      "py": 48
     },
     "vermilion": {
       "url": "./assets/tilesets/missing_tiles/16_map_route_6_house.png",
       "ts": 16,
-      "ox": 0,
-      "oy": 0
+      "px": 24,
+      "py": 48
     },
     "lavender": {
       "url": "./assets/tilesets/manual_environmental/environmental_4.png",
@@ -70,8 +70,8 @@
     "saffron": {
       "url": "./assets/tilesets/manual_environmental/saffron_city.png",
       "ts": 16,
-      "ox": 0,
-      "oy": 0
+      "px": 40,
+      "py": 48
     },
     "silph_lobby": {
       "url": "./assets/tilesets/manual_environmental/rocket_hideout.png",
@@ -83,8 +83,8 @@
     "fuchsia": {
       "url": "./assets/tilesets/missing_tiles/19_map_route_11_gate.png",
       "ts": 16,
-      "ox": 0,
-      "oy": 0
+      "px": 40,
+      "py": 48
     },
     "cinnabar": {
       "url": "./assets/tilesets/manual_environmental/one_island.png",
@@ -95,42 +95,42 @@
     "viridian_gym": {
       "url": "./assets/tilesets/cities/3874_city_viridian.png",
       "ts": 16,
-      "px": 1024,
-      "py": 32,
+      "px": 1008,
+      "py": 48,
       "fixed": true
     },
     "indigo_plateau": {
       "url": "./assets/tilesets/manual_environmental/indigo_plateau.png",
       "ts": 16,
-      "ox": 0,
-      "oy": 0
+      "px": 40,
+      "py": 48
     },
     "pewter_gym": {
       "url": "./assets/tilesets/cities/3875_city_pewter.png",
       "ts": 16,
-      "px": 688,
-      "py": 416,
+      "px": 800,
+      "py": 576,
       "fixed": true
     },
     "player_house": {
       "url": "./assets/tilesets/cities/3873_city_pallet_town.png",
       "ts": 16,
-      "px": 384,
-      "py": 32,
+      "px": 440,
+      "py": 48,
       "fixed": true
     },
     "rival_house": {
       "url": "./assets/tilesets/cities/3873_city_pallet_town.png",
       "ts": 16,
-      "px": 384,
-      "py": 192,
+      "px": 440,
+      "py": 232,
       "fixed": true
     },
     "oak_lab": {
       "url": "./assets/tilesets/cities/3873_city_pallet_town.png",
       "ts": 16,
-      "px": 768,
-      "py": 0,
+      "px": 840,
+      "py": 48,
       "fixed": true
     }
   }
