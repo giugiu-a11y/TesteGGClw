@@ -387,10 +387,10 @@
         </div>
     </div>
 
-    <div id="tapOverlay" onclick="tapAdvance(event)" ontouchstart="tapAdvance(event); return false"></div>
+    <div id="tapOverlay"></div>
     <div id="sceneBackdrop"></div>
 
-    <div id="dialogBox" onclick="tapAdvance(event)" ontouchstart="tapAdvance(event); return false">
+    <div id="dialogBox">
         <div class="speaker"></div>
         <div class="text"></div>
         <div class="continue">▼ Toque / A</div>
@@ -3139,6 +3139,12 @@
     }
     
     function nextDialog() {
+        if (!dialog) {
+            document.getElementById('dialogBox').style.display = 'none';
+            document.getElementById('tapOverlay').style.display = 'none';
+            dialogQ = [];
+            return;
+        }
         if (dialogQ.length === 0) {
             document.getElementById('dialogBox').style.display = 'none';
             document.getElementById('tapOverlay').style.display = 'none';
@@ -3426,11 +3432,14 @@
     });
 
     let lastTapAt = 0;
+    let tapBusy = false;
     function tapAdvance(e) {
+        if (tapBusy) return;
         try {
+            tapBusy = true;
             const now = Date.now();
             // iOS often fires touchstart + click; debounce to avoid double-advancing.
-            if (now - lastTapAt < 120) return;
+            if (now - lastTapAt < 180) return;
             lastTapAt = now;
 
             if (e && typeof e.preventDefault === 'function') e.preventDefault();
@@ -3445,10 +3454,14 @@
             // Fail open: clear dialog state so the game doesn't brick.
             dialog = null;
             dialogQ = [];
+            activeBeatId = null;
+            cutsceneLock = false;
             const box = document.getElementById('dialogBox');
             if (box) box.style.display = 'none';
             const ov = document.getElementById('tapOverlay');
             if (ov) ov.style.display = 'none';
+        } finally {
+            setTimeout(() => { tapBusy = false; }, 40);
         }
     }
 
