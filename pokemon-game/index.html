@@ -528,28 +528,28 @@
     const prebuiltMapBg = {};
     const DEFAULT_PREBUILT_MAP_BG_CONFIG = {
         // Uses ripped map sheets as visual background while preserving collision/warps from engine maps.
-        pallet_town: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ts: 16, px: 40, py: 48},
-        route1: {url: './assets/tilesets/missing_tiles/05_map_route_1.png', ts: 16, px: 40, py: 48},
-        viridian: {url: './assets/tilesets/cities/3874_city_viridian.png', ts: 16, px: 40, py: 48},
-        pewter: {url: './assets/tilesets/cities/3875_city_pewter.png', ts: 16, px: 40, py: 48},
-        route2: {url: './assets/tilesets/cities/3876_city_map_3876.png', ts: 16, px: 40, py: 48},
-        route3: {url: './assets/tilesets/cities/3878_city_map_3878.png', ts: 16, px: 40, py: 48},
-        cerulean: {url: './assets/tilesets/missing_tiles/15_map_route_4_center.png', ts: 16, px: 40, py: 48},
-        vermilion: {url: './assets/tilesets/missing_tiles/16_map_route_6_house.png', ts: 16, px: 24, py: 48},
+        pallet_town: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ts: 16, px: 8, py: 24},
+        route1: {url: './assets/tilesets/missing_tiles/05_map_route_1.png', ts: 16, px: 8, py: 24},
+        viridian: {url: './assets/tilesets/cities/3874_city_viridian.png', ts: 16, px: 8, py: 24},
+        pewter: {url: './assets/tilesets/cities/3875_city_pewter.png', ts: 16, px: 8, py: 24},
+        route2: {url: './assets/tilesets/cities/3876_city_map_3876.png', ts: 16, px: 8, py: 24},
+        route3: {url: './assets/tilesets/cities/3878_city_map_3878.png', ts: 16, px: 8, py: 24},
+        cerulean: {url: './assets/tilesets/missing_tiles/15_map_route_4_center.png', ts: 16, px: 8, py: 24},
+        vermilion: {url: './assets/tilesets/missing_tiles/16_map_route_6_house.png', ts: 16, px: 8, py: 24},
         lavender: {url: './assets/tilesets/manual_environmental/environmental_4.png', ts: 16, ox: 0, oy: 0},
-        fuchsia: {url: './assets/tilesets/missing_tiles/19_map_route_11_gate.png', ts: 16, px: 40, py: 48},
+        fuchsia: {url: './assets/tilesets/missing_tiles/19_map_route_11_gate.png', ts: 16, px: 8, py: 24},
         cinnabar: {url: './assets/tilesets/manual_environmental/one_island.png', ts: 16, ox: 0, oy: 0},
-        viridian_forest: {url: './assets/tilesets/missing_tiles/02_map_route_10.png', ts: 16, px: 40, py: 48},
+        viridian_forest: {url: './assets/tilesets/missing_tiles/02_map_route_10.png', ts: 16, px: 8, py: 24},
         // Reuse city sheets that already include the matching interiors/gym panels.
-        viridian_gym: {url: './assets/tilesets/cities/3874_city_viridian.png', ts: 16, px: 1008, py: 48, fixed: true},
-        pewter_gym: {url: './assets/tilesets/cities/3875_city_pewter.png', ts: 16, px: 800, py: 576, fixed: true},
-        player_house: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ts: 16, px: 440, py: 48, fixed: true},
-        rival_house: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ts: 16, px: 440, py: 232, fixed: true},
-        oak_lab: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ts: 16, px: 840, py: 48, fixed: true},
-        mt_moon: {url: './assets/tilesets/manual_environmental/mt_moon.png', ts: 16, px: 8, py: 56},
-        saffron: {url: './assets/tilesets/manual_environmental/saffron_city.png', ts: 16, px: 40, py: 48},
-        indigo_plateau: {url: './assets/tilesets/manual_environmental/indigo_plateau.png', ts: 16, px: 40, py: 48},
-        silph_lobby: {url: './assets/tilesets/manual_environmental/rocket_hideout.png', ts: 16, px: 784, py: 32, fixed: true}
+        viridian_gym: {url: './assets/tilesets/cities/3874_city_viridian.png', ts: 16, px: 1008, py: 24, fixed: true},
+        pewter_gym: {url: './assets/tilesets/cities/3875_city_pewter.png', ts: 16, px: 696, py: 408, fixed: true},
+        player_house: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ts: 16, px: 392, py: 40, fixed: true},
+        rival_house: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ts: 16, px: 392, py: 200, fixed: true},
+        oak_lab: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ts: 16, px: 776, py: 24, fixed: true},
+        mt_moon: {url: './assets/tilesets/manual_environmental/mt_moon.png', ts: 16, px: 8, py: 24},
+        saffron: {url: './assets/tilesets/manual_environmental/saffron_city.png', ts: 16, px: 8, py: 24},
+        indigo_plateau: {url: './assets/tilesets/manual_environmental/indigo_plateau.png', ts: 16, px: 8, py: 24},
+        silph_lobby: {url: './assets/tilesets/manual_environmental/rocket_hideout.png', ts: 16, px: 792, py: 24, fixed: true}
     };
     let PREBUILT_MAP_BG_CONFIG = {...DEFAULT_PREBUILT_MAP_BG_CONFIG};
     const DEFAULT_SCENE_BACKDROP = './assets/tilesets/missing_tiles/05_map_route_1.png';
@@ -2637,8 +2637,13 @@
     function startMove(dir) {
         // Runtime self-heal for rare iPad/tap race conditions where dialog/cutscene flags stick.
         clearOrphanRuntimeLocks();
+        if (dialog || inBattle || cutsceneLock) {
+            stopMove();
+            return;
+        }
         stopMove();
         move(dir);
+        if (dialog || inBattle || cutsceneLock) return;
         moveDir = dir;
         moveInt = setTimeout(function tick() {
             if (!moveDir) return;
@@ -3672,6 +3677,20 @@
         setRunPressed(false);
         dirPressed.up = dirPressed.down = dirPressed.left = dirPressed.right = false;
         dirOrder.length = 0;
+    });
+    window.addEventListener('pagehide', () => {
+        stopMove();
+        setRunPressed(false);
+        dirPressed.up = dirPressed.down = dirPressed.left = dirPressed.right = false;
+        dirOrder.length = 0;
+    });
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState !== 'visible') {
+            stopMove();
+            setRunPressed(false);
+            dirPressed.up = dirPressed.down = dirPressed.left = dirPressed.right = false;
+            dirOrder.length = 0;
+        }
     });
     
     // ==================== SAVE/LOAD ====================

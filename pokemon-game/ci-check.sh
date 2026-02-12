@@ -26,7 +26,13 @@ python3 tools/asset_preflight.py
 echo "[ci-check] Gameplay preflight..."
 node tools/gameplay_preflight.js
 
+echo "[ci-check] MapBG preflight..."
+node tools/mapbg_preflight.js
+
 echo "[ci-check] Intro preflight..."
 node tools/intro_preflight.js
+
+echo "[ci-check] Full season preflight..."
+node tools/full_season_preflight.js
 
 echo "[ci-check] OK"
