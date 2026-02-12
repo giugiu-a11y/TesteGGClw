@@ -517,11 +517,12 @@
     };
 
     const UI_SKIN_URLS = {
-        menu: './assets/tilesets/manual_ui/ui_elements_1.png',
+        menu: './assets/tilesets/missing_tiles/13_ui_battle_interface.png',
         log: './assets/tilesets/manual_ui/battle_ui_2.png',
         ok: './assets/tilesets/manual_ui/battle_ui_1.png',
         arrow: './assets/tilesets/interface/red_arrow.png',
-        selectBtn: './assets/tilesets/interface/select_button.png'
+        selectBtn: './assets/tilesets/interface/select_button.png',
+        bag: './assets/tilesets/missing_tiles/18_ui_bag_inventory.png'
     };
     
     // Active sprite sources (can be overridden via local/remote JSON config)
@@ -534,6 +535,7 @@
     const PREBUILT_MAP_BG_CONFIG = {
         // Uses ripped map sheets as visual background while preserving collision/warps from engine maps.
         pallet_town: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ox: 0, oy: 0},
+        route1: {url: './assets/tilesets/missing_tiles/05_map_route_1.png', ox: 0, oy: 0},
         viridian: {url: './assets/tilesets/cities/3874_city_viridian.png', ox: 0, oy: 0},
         pewter: {url: './assets/tilesets/cities/3875_city_pewter.png', ox: 0, oy: 0},
         route2: {url: './assets/tilesets/cities/3876_city_map_3876.png', ox: 0, oy: 0},
@@ -1605,6 +1607,12 @@
             btn.style.backgroundSize = 'cover';
             btn.style.backgroundPosition = 'center';
         });
+        const bagBtn = document.querySelector('.battle-menu .bag');
+        if (bagBtn) {
+            bagBtn.style.backgroundImage = `linear-gradient(rgba(245,158,11,0.18), rgba(245,158,11,0.18)), url('${UI_SKIN_URLS.bag}')`;
+            bagBtn.style.backgroundSize = 'cover';
+            bagBtn.style.backgroundPosition = 'center';
+        }
         const hpBars = document.querySelectorAll('.hp-bar');
         hpBars.forEach((bar) => {
             bar.style.backgroundImage = "url('./assets/tilesets/interface/hp_bar_anim.png')";
