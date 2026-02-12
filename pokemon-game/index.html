@@ -1926,12 +1926,26 @@
         loadedCount = 0; // Reset loadedCount in case this function is called again
 
         // Tileset:
-        // - default is procedural (stable + safe)
-        // - optional external pack via ?tileset=external
+        // - prefer local user assets
+        // - optional external pack via ?tileset=external|remote
         const loadedExternal = await tryLoadExternalTileset();
         if (!loadedExternal) {
-            sprites.tileset = createTilesetCanvas();
-            sprites.tilesetCfg = null;
+            // Hard preference for user-provided local atlas before procedural fallback.
+            try {
+                const cfgRes = await fetch('./assets/tilesets/user.tileset.json', {cache: 'no-store'});
+                const cfg = await cfgRes.json();
+                const img = new Image();
+                await new Promise((resolve, reject) => {
+                    img.onload = resolve;
+                    img.onerror = reject;
+                    img.src = './assets/tilesets/user.png';
+                });
+                sprites.tileset = img;
+                sprites.tilesetCfg = cfg;
+            } catch {
+                sprites.tileset = createTilesetCanvas();
+                sprites.tilesetCfg = null;
+            }
         }
 
         // Optional sprite overrides from local/remote config.
