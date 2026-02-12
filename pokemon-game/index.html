@@ -561,15 +561,15 @@
         cinnabar: {url: './assets/tilesets/manual_environmental/one_island.png', ox: 0, oy: 0},
         viridian_forest: {url: './assets/tilesets/missing_tiles/02_map_route_10.png', ox: 0, oy: 0},
         // Reuse city sheets that already include the matching interiors/gym panels.
-        viridian_gym: {url: './assets/tilesets/cities/3874_city_viridian.png', ox: 64, oy: 1},
-        pewter_gym: {url: './assets/tilesets/cities/3875_city_pewter.png', ox: 44, oy: 24},
-        player_house: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ox: 24, oy: 1},
-        rival_house: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ox: 24, oy: 11},
-        oak_lab: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ox: 48, oy: 1},
+        viridian_gym: {url: './assets/tilesets/cities/3874_city_viridian.png', ox: 64, oy: 0, fixed: true},
+        pewter_gym: {url: './assets/tilesets/cities/3875_city_pewter.png', ox: 43, oy: 24, fixed: true},
+        player_house: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ox: 24, oy: 1, fixed: true},
+        rival_house: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ox: 24, oy: 11, fixed: true},
+        oak_lab: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ox: 48, oy: 0, fixed: true},
         mt_moon: {url: './assets/tilesets/manual_environmental/mt_moon.png', ox: 0, oy: 0},
         saffron: {url: './assets/tilesets/manual_environmental/saffron_city.png', ox: 0, oy: 0},
         indigo_plateau: {url: './assets/tilesets/manual_environmental/indigo_plateau.png', ox: 0, oy: 0},
-        silph_lobby: {url: './assets/tilesets/manual_environmental/rocket_hideout.png', ox: 0, oy: 0}
+        silph_lobby: {url: './assets/tilesets/manual_environmental/rocket_hideout.png', ox: 49, oy: 0, fixed: true}
     };
 
     const MAP_LABELS = {
@@ -1883,7 +1883,7 @@
                         img.onerror = reject;
                         img.src = conf.url;
                     });
-                    prebuiltMapBg[mapId] = {img, ox: conf.ox || 0, oy: conf.oy || 0};
+                    prebuiltMapBg[mapId] = {img, ox: conf.ox || 0, oy: conf.oy || 0, fixed: !!conf.fixed};
                 } catch {
                     // Ignore missing optional files; map falls back to tiled rendering.
                 }
@@ -2147,8 +2147,12 @@
             const originY = Math.floor((mapBgEntry.oy || 0) * srcTile);
             const maxX = Math.max(0, mapBg.width - srcW);
             const maxY = Math.max(0, mapBg.height - srcH);
-            const srcX = Math.max(0, Math.min(maxX, originX + Math.floor(camX * srcTile)));
-            const srcY = Math.max(0, Math.min(maxY, originY + Math.floor(camY * srcTile)));
+            const srcX = mapBgEntry.fixed
+                ? Math.max(0, Math.min(maxX, originX))
+                : Math.max(0, Math.min(maxX, originX + Math.floor(camX * srcTile)));
+            const srcY = mapBgEntry.fixed
+                ? Math.max(0, Math.min(maxY, originY))
+                : Math.max(0, Math.min(maxY, originY + Math.floor(camY * srcTile)));
             if (srcW > 0 && srcH > 0) {
                 ctx.drawImage(mapBg, srcX, srcY, srcW, srcH, 0, 0, canvas.width, canvas.height);
             }
