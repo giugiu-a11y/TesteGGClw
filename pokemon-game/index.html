@@ -606,16 +606,9 @@
         'viridian_gym', 'indigo_plateau', 'pewter_gym',
         'player_house', 'rival_house', 'oak_lab'
     ]);
-    // Map backgrounds for these interiors are visually sensitive to crop offsets.
-    // Keep them on logical tile rendering so visuals always match collision grid.
-    const ALWAYS_TILE_RENDER_MAPS = new Set([
-        'player_house',
-        'rival_house',
-        'oak_lab',
-        'pewter_gym',
-        'viridian_gym',
-        'silph_lobby'
-    ]);
+    // By default, prefer prebuilt visual sheets for fidelity.
+    // Keep this set empty unless a specific map needs emergency tile-only rendering.
+    const ALWAYS_TILE_RENDER_MAPS = new Set([]);
     
     // ==================== COLORS (FRLG-ish, but original) ====================
     const C = {
