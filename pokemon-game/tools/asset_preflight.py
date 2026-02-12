@@ -113,6 +113,12 @@ def main():
     check_file_exists(SPRITES_JSON)
 
     index_text = INDEX.read_text(encoding="utf-8")
+    script_match = re.search(r"<script>([\s\S]*?)</script>", index_text)
+    if not script_match:
+        fail("main script block not found in index.html")
+    runtime_script = script_match.group(1)
+    if re.search(r"https?://", runtime_script):
+        fail("external URL found in runtime script; strict local assets required")
     map_ids = extract_maps(index_text)
     story = load_json(STORY_JSON)
     beats = story.get("beats", [])

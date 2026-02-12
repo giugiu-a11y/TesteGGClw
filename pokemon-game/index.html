@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Pokémon Adventures - Red Chapter</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { 
@@ -452,73 +451,53 @@
     ctx.imageSmoothingEnabled = false;
     
     // ==================== SPRITE SOURCES ====================
-    const GITHUB_BASE = 'https://raw.githubusercontent.com/pret/pokefirered/master/';
-    
     const DEFAULT_SPRITE_URLS = {
-        // Player & NPCs (16x32 sprite sheets with walk animations)
-        red: GITHUB_BASE + 'graphics/object_events/pics/people/red_normal.png',
-        blue: GITHUB_BASE + 'graphics/object_events/pics/people/blue.png',
-        brock: GITHUB_BASE + 'graphics/object_events/pics/people/brock.png',
-        oak: GITHUB_BASE + 'graphics/object_events/pics/people/prof_oak.png',
-        mom: GITHUB_BASE + 'graphics/object_events/pics/people/mom.png',
-        girl: GITHUB_BASE + 'graphics/object_events/pics/people/lass.png',
-        green: GITHUB_BASE + 'graphics/object_events/pics/people/green.png',
-        
-        // Pokemon overworld sprites
-        pikachuOW: GITHUB_BASE + 'graphics/object_events/pics/pokemon/pikachu.png',
-        
-        // Battle sprites (from Showdown - already colored)
-        pikachuBattle: 'https://play.pokemonshowdown.com/sprites/gen3frlg/pikachu.png',
-        pikachuBack: 'https://play.pokemonshowdown.com/sprites/gen3-back/pikachu.png',
-        rattata: 'https://play.pokemonshowdown.com/sprites/gen3frlg/rattata.png',
-        pidgey: 'https://play.pokemonshowdown.com/sprites/gen3frlg/pidgey.png',
-        staryu: 'https://play.pokemonshowdown.com/sprites/gen3frlg/staryu.png',
-        
-        // MANGA KEY POKEMON - Red's Team
-        poliwhirl: 'https://play.pokemonshowdown.com/sprites/gen3frlg/poliwhirl.png',
-        poliwhirlBack: 'https://play.pokemonshowdown.com/sprites/gen3-back/poliwhirl.png',
-        poliwrath: 'https://play.pokemonshowdown.com/sprites/gen3frlg/poliwrath.png',
-        poliwrathBack: 'https://play.pokemonshowdown.com/sprites/gen3-back/poliwrath.png',
-        bulbasaur: 'https://play.pokemonshowdown.com/sprites/gen3frlg/bulbasaur.png',
-        bulbasaurBack: 'https://play.pokemonshowdown.com/sprites/gen3-back/bulbasaur.png',
-        ivysaur: 'https://play.pokemonshowdown.com/sprites/gen3frlg/ivysaur.png',
-        venusaur: 'https://play.pokemonshowdown.com/sprites/gen3frlg/venusaur.png',
-        snorlax: 'https://play.pokemonshowdown.com/sprites/gen3frlg/snorlax.png',
-        gyarados: 'https://play.pokemonshowdown.com/sprites/gen3frlg/gyarados.png',
-        
-        // Blue's Pokemon
-        charmander: 'https://play.pokemonshowdown.com/sprites/gen3frlg/charmander.png',
-        charmeleon: 'https://play.pokemonshowdown.com/sprites/gen3frlg/charmeleon.png',
-        charizard: 'https://play.pokemonshowdown.com/sprites/gen3frlg/charizard.png',
-        
-        // Green's Pokemon (thief girl)
-        squirtle: 'https://play.pokemonshowdown.com/sprites/gen3frlg/squirtle.png',
-        wartortle: 'https://play.pokemonshowdown.com/sprites/gen3frlg/wartortle.png',
-        
-        // Legendary & Story Pokemon
-        mew: 'https://play.pokemonshowdown.com/sprites/gen3frlg/mew.png',
-        kangaskhan: 'https://play.pokemonshowdown.com/sprites/gen3frlg/kangaskhan.png',
-        
-        // Team Rocket Pokemon
-        nidoking: 'https://play.pokemonshowdown.com/sprites/gen3frlg/nidoking.png',
-        koffing: 'https://play.pokemonshowdown.com/sprites/gen3frlg/koffing.png',
-        ekans: 'https://play.pokemonshowdown.com/sprites/gen3frlg/ekans.png',
-        arbok: 'https://play.pokemonshowdown.com/sprites/gen3frlg/arbok.png',
-        geodude: 'https://play.pokemonshowdown.com/sprites/gen3frlg/geodude.png',
-        onix: 'https://play.pokemonshowdown.com/sprites/gen3frlg/onix.png',
-
-        // Trainer portraits (local assets)
+        red: './assets/tilesets/characters/red_normal.png',
+        blue: './assets/tilesets/characters/blue.png',
+        brock: './assets/tilesets/characters/brock.png',
+        oak: './assets/tilesets/characters/prof_oak.png',
+        mom: './assets/tilesets/characters/mom.png',
+        girl: './assets/tilesets/characters/lass.png',
+        green: './assets/tilesets/characters/green_normal.png',
+        pikachuOW: './assets/tilesets/characters/pikachu.png',
+        pikachuBattle: './assets/tilesets/pokemon_sprites/pikachu_front.png',
+        pikachuBack: './assets/tilesets/pokemon_sprites/pikachu_back.png',
+        rattata: './assets/tilesets/pokemon_sprites/rattata_front.png',
+        pidgey: './assets/tilesets/pokemon_sprites/pidgey_front.png',
+        staryu: './assets/tilesets/pokemon_sprites/staryu_front.png',
+        poliwhirl: './assets/tilesets/pokemon_sprites/poliwhirl_front.png',
+        poliwhirlBack: './assets/tilesets/pokemon_sprites/poliwhirl_back.png',
+        poliwrath: './assets/tilesets/pokemon_sprites/poliwrath_front.png',
+        poliwrathBack: './assets/tilesets/pokemon_sprites/poliwrath_back.png',
+        bulbasaur: './assets/tilesets/pokemon_sprites/bulbasaur_front.png',
+        bulbasaurBack: './assets/tilesets/pokemon_sprites/bulbasaur_back.png',
+        ivysaur: './assets/tilesets/pokemon_sprites/ivysaur_front.png',
+        ivysaurBack: './assets/tilesets/pokemon_sprites/ivysaur_back.png',
+        venusaur: './assets/tilesets/pokemon_sprites/venusaur_front.png',
+        venusaurBack: './assets/tilesets/pokemon_sprites/venusaur_back.png',
+        snorlax: './assets/tilesets/pokemon_sprites/snorlax_front.png',
+        gyarados: './assets/tilesets/pokemon_sprites/gyarados_front.png',
+        charmander: './assets/tilesets/pokemon_sprites/charmander_front.png',
+        charmeleon: './assets/tilesets/pokemon_sprites/charmeleon_front.png',
+        charizard: './assets/tilesets/pokemon_sprites/charizard_front.png',
+        squirtle: './assets/tilesets/pokemon_sprites/squirtle_front.png',
+        wartortle: './assets/tilesets/pokemon_sprites/wartortle_front.png',
+        mew: './assets/tilesets/pokemon_sprites/mew_front.png',
+        kangaskhan: './assets/tilesets/pokemon_sprites/kangaskhan_front.png',
+        nidoking: './assets/tilesets/pokemon_sprites/nidoking_front.png',
+        koffing: './assets/tilesets/pokemon_sprites/koffing_front.png',
+        ekans: './assets/tilesets/pokemon_sprites/ekans_front.png',
+        arbok: './assets/tilesets/pokemon_sprites/arbok_front.png',
+        geodude: './assets/tilesets/pokemon_sprites/geodude_front.png',
+        onix: './assets/tilesets/pokemon_sprites/onix_front.png',
         trainerBlue: './assets/tilesets/trainers/rival_early_front_pic.png',
         trainerBrock: './assets/tilesets/trainers/leader_brock_front_pic.png',
         trainerRocket: './assets/tilesets/trainers/rocket_grunt_m_front_pic.png',
         trainerGiovanni: './assets/tilesets/trainers/leader_giovanni_front_pic.png',
         trainerLance: './assets/tilesets/trainers/elite_four_lance_front_pic.png',
-        trainerOak: './assets/tilesets/trainers/professor_oak_front_pic.png',
-
-        // Optional remote tilesets (not used by default; we generate our own tiles for stability/style control)
-        generalTiles: GITHUB_BASE + 'data/tilesets/primary/general/tiles.png',
-        buildingTiles: GITHUB_BASE + 'data/tilesets/primary/building/tiles.png'
+        trainerOak: './assets/tilesets/trainers/professor_oak_front_pic.png'
     };
+    const REQUIRED_SPRITE_KEYS = new Set(Object.keys(DEFAULT_SPRITE_URLS));
 
     const BATTLE_TERRAIN_URLS = {
         grass: './assets/tilesets/battle_terrain/grass/terrain.png',
@@ -1790,25 +1769,8 @@
     }
 
     async function tryLoadExternalSpriteConfig() {
-        // Modes:
-        // - default: built-in DEFAULT_SPRITE_URLS
-        // - ?sprites=external -> ./assets/sprites/user.sprites.json
-        // - ?sprites=remote&spritesJson=https://...json
-        // Default to local external sprites config if available.
-        const mode = qs('sprites', 'external');
-        if (!mode) return {};
-
-        let jsonUrl = './assets/sprites/user.sprites.json';
-        if (mode === 'remote') {
-            const qJson = normalizeUrl(qs('spritesJson', ''));
-            const sJson = normalizeUrl(localStorage.getItem('spritesJson') || '');
-            jsonUrl = qJson || sJson;
-            if (!jsonUrl) return {};
-            try { localStorage.setItem('spritesJson', jsonUrl); } catch {}
-        } else if (mode !== 'external') {
-            return {};
-        }
-
+        // Strict local mode: only project assets are accepted.
+        const jsonUrl = './assets/sprites/user.sprites.json';
         try {
             const res = await fetch(jsonUrl, {cache: 'no-store'});
             if (!res.ok) return {};
@@ -1816,24 +1778,18 @@
             const incoming = cfg && typeof cfg === 'object' ? (cfg.sprites || cfg) : {};
             if (!incoming || typeof incoming !== 'object') return {};
 
-            function withBase(v) {
+            function asLocal(v) {
                 if (typeof v !== 'string' || !v.trim()) return '';
-                const raw = v.trim();
-                // Absolute URL/path-like values are normalized directly.
-                if (/^(https?:)?\/\//i.test(raw) || raw.startsWith('/') || raw.startsWith('./') || raw.startsWith('../')) {
-                    return normalizeUrl(raw);
-                }
-                const base = (cfg && typeof cfg.pokemonBase === 'string' && cfg.pokemonBase.trim()) ? cfg.pokemonBase.trim() : '';
-                if (!base) return normalizeUrl(raw);
-                const sep = base.endsWith('/') ? '' : '/';
-                return normalizeUrl(`${base}${sep}${raw}`);
+                const raw = normalizeUrl(v.trim());
+                if (!raw.startsWith('./assets/')) return '';
+                return raw;
             }
 
             function fromSpeciesObject(speciesObj, wantBack) {
                 if (!speciesObj || typeof speciesObj !== 'object') return '';
-                if (wantBack && typeof speciesObj.back === 'string') return withBase(speciesObj.back);
-                if (!wantBack && typeof speciesObj.front === 'string') return withBase(speciesObj.front);
-                if (typeof speciesObj.file === 'string') return withBase(speciesObj.file);
+                if (wantBack && typeof speciesObj.back === 'string') return asLocal(speciesObj.back);
+                if (!wantBack && typeof speciesObj.front === 'string') return asLocal(speciesObj.front);
+                if (typeof speciesObj.file === 'string') return asLocal(speciesObj.file);
                 return '';
             }
 
@@ -1841,12 +1797,10 @@
             for (const key of Object.keys(DEFAULT_SPRITE_URLS)) {
                 const v = incoming[key];
                 if (typeof v === 'string' && v.trim()) {
-                    out[key] = withBase(v);
+                    const local = asLocal(v);
+                    if (local) out[key] = local;
                     continue;
                 }
-
-                // Support catalog style by species key, e.g.:
-                // "pikachu": {"front":"025_front.png","back":"025_back.png"}
                 const baseKey = key.replace(/Back$/, '').replace(/Battle$/, '');
                 const wantBack = /Back$/.test(key);
                 const sv = incoming[baseKey];
@@ -1855,39 +1809,15 @@
             }
             return out;
         } catch (e) {
-            console.warn('External sprite config load failed; using defaults.', e);
+            console.warn('Local sprite config load failed; using bundled local defaults.', e);
             return {};
         }
     }
 
     async function tryLoadExternalTileset() {
-        // Keep a stable visual baseline by default.
-        const which = qs('tileset', 'external');
-        if (!which) return false;
-
-        let png = './assets/tilesets/user.png';
-        let json = './assets/tilesets/user.tileset.json';
-        if (which === 'punyworld') {
-            png = './assets/tilesets/punyworld.png';
-            json = './assets/tilesets/punyworld.tileset.json';
-        } else if (which === 'remote') {
-            // Plug-and-play mode:
-            // ?tileset=remote&tilesetPng=https://...png&tilesetJson=https://...json
-            const qPng = normalizeUrl(qs('tilesetPng', ''));
-            const qJson = normalizeUrl(qs('tilesetJson', ''));
-            const sPng = normalizeUrl(localStorage.getItem('tilesetPng') || '');
-            const sJson = normalizeUrl(localStorage.getItem('tilesetJson') || '');
-            png = qPng || sPng;
-            json = qJson || sJson;
-            if (!png || !json) return false;
-            try {
-                localStorage.setItem('tilesetPng', png);
-                localStorage.setItem('tilesetJson', json);
-            } catch {}
-        } else if (which !== 'external') {
-            return false;
-        }
-
+        // Strict local mode: only local user atlas is allowed.
+        const png = './assets/tilesets/user.png';
+        const json = './assets/tilesets/user.tileset.json';
         try {
             const cfgRes = await fetch(json, {cache: 'no-store'});
             if (!cfgRes.ok) return false;
@@ -1903,43 +1833,14 @@
             sprites.tilesetCfg = cfg;
             return true;
         } catch (e) {
-            console.warn('External tileset load failed; using procedural.', e);
+            console.warn('Local tileset load failed.', e);
             return false;
         }
     }
 
-    // Optional helper for DevTools:
-    // setRemoteTileset('https://...png','https://...json')
-    window.setRemoteTileset = function(pngUrl, jsonUrl) {
-        try {
-            const p = normalizeUrl(pngUrl);
-            const j = normalizeUrl(jsonUrl);
-            if (!p || !j) return false;
-            localStorage.setItem('tilesetPng', p);
-            localStorage.setItem('tilesetJson', j);
-            location.href = `${location.origin}${location.pathname}?tileset=remote`;
-            return true;
-        } catch {
-            return false;
-        }
-    };
-
-    // Optional helper for DevTools:
-    // setRemoteSprites('https://.../sprites.json')
-    window.setRemoteSprites = function(jsonUrl) {
-        try {
-            const j = normalizeUrl(jsonUrl);
-            if (!j) return false;
-            localStorage.setItem('spritesJson', j);
-            const p = new URLSearchParams(location.search);
-            p.set('sprites', 'remote');
-            p.set('spritesJson', j);
-            location.href = `${location.origin}${location.pathname}?${p.toString()}`;
-            return true;
-        } catch {
-            return false;
-        }
-    };
+    // Disabled in strict-local mode.
+    window.setRemoteTileset = function(pngUrl, jsonUrl) { return false; };
+    window.setRemoteSprites = function(jsonUrl) { return false; };
 
     async function loadAssets() {
         const progress = document.getElementById('progressFill');
@@ -1947,9 +1848,7 @@
 
         loadedCount = 0; // Reset loadedCount in case this function is called again
 
-        // Tileset:
-        // - prefer local user assets
-        // - optional external pack via ?tileset=external|remote
+        // Tileset: strict local user assets only.
         const loadedExternal = await tryLoadExternalTileset();
         if (!loadedExternal) {
             // Strict mode: always use user-provided atlas as visual source of truth.
@@ -1972,7 +1871,7 @@
             }
         }
 
-        // Optional sprite overrides from local/remote config.
+        // Optional local sprite overrides from user.sprites.json.
         const spriteOverrides = await tryLoadExternalSpriteConfig();
         SPRITE_URLS = {...DEFAULT_SPRITE_URLS, ...spriteOverrides};
 
@@ -2063,8 +1962,10 @@
                 });
             } catch (e) {
                 console.error(`Error loading ${name}:`, e);
-                // Handle errors, e.g., set a placeholder or skip
-                sprites[name] = null; 
+                sprites[name] = null;
+                if (REQUIRED_SPRITE_KEYS.has(name)) {
+                    throw new Error(`Required sprite failed to load: ${name}`);
+                }
             }
             loadedCount++;
             progress.style.width = (loadedCount / totalSprites * 100) + '%';

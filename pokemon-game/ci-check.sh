@@ -23,4 +23,7 @@ node --check /tmp/pokemon_game_script_ci.js
 echo "[ci-check] Asset preflight..."
 python3 tools/asset_preflight.py
 
+echo "[ci-check] Gameplay preflight..."
+node tools/gameplay_preflight.js
+
 echo "[ci-check] OK"
