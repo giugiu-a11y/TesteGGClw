@@ -1298,6 +1298,7 @@
     let STORY = null;
     let activeBeatId = null;
     let cutsceneLock = false;
+    let actionProgressAt = Date.now();
     let renderLoopActive = false;
     let renderLoopToken = 0;
     let renderRafId = 0;
@@ -1318,8 +1319,10 @@
     function clearOrphanRuntimeLocks() {
         const dialogBox = document.getElementById('dialogBox');
         const tapOverlay = document.getElementById('tapOverlay');
+        const battleScreen = document.getElementById('battleScreen');
         const dialogVisible = !!(dialogBox && dialogBox.style.display !== 'none');
         const overlayVisible = !!(tapOverlay && tapOverlay.style.display !== 'none');
+        const battleVisible = !!(battleScreen && battleScreen.style.display !== 'none');
 
         // If UI is visible but dialog state was lost, close stale UI to avoid soft-lock.
         if (!dialog && dialogVisible) {
@@ -1340,6 +1343,17 @@
         }
         if (!dialog && !inBattle && overlayVisible) {
             tapOverlay.style.display = 'none';
+        }
+        if (inBattle && !battleVisible && (!battle || !battle.pending)) {
+            inBattle = false;
+            battle = null;
+        }
+        if (cutsceneLock && activeBeatId && !dialog && !inBattle && !moveInt) {
+            // Recovery for rare broken action chain: no visible step progressing.
+            if (Date.now() - actionProgressAt > 3200) {
+                activeBeatId = null;
+                cutsceneLock = false;
+            }
         }
         if (cutsceneLock && !activeBeatId && !dialog && !inBattle) {
             cutsceneLock = false;
@@ -1527,6 +1541,7 @@
     }
 
     function runActions(actions, idx = 0, onDone = null) {
+        actionProgressAt = Date.now();
         const list = Array.isArray(actions) ? actions : [];
         if (idx >= list.length) {
             if (typeof onDone === 'function') onDone();
@@ -3133,12 +3148,14 @@
     
     // ==================== DIALOG ====================
     function showDialog(speaker, texts, cb) {
+        actionProgressAt = Date.now();
         dialogQ = texts.slice();
         dialog = {speaker, cb};
         nextDialog();
     }
     
     function nextDialog() {
+        actionProgressAt = Date.now();
         if (!dialog) {
             document.getElementById('dialogBox').style.display = 'none';
             document.getElementById('tapOverlay').style.display = 'none';
@@ -3434,12 +3451,14 @@
     let lastTapAt = 0;
     let tapBusy = false;
     function tapAdvance(e) {
+        if (e && e.type === 'click') return;
+        if (e && e.type === 'touchstart' && typeof window !== 'undefined' && window.PointerEvent) return;
         if (tapBusy) return;
         try {
             tapBusy = true;
             const now = Date.now();
-            // iOS often fires touchstart + click; debounce to avoid double-advancing.
-            if (now - lastTapAt < 180) return;
+            // iOS often fires duplicated pointer/touch bursts; debounce to avoid reentry.
+            if (now - lastTapAt < 220) return;
             lastTapAt = now;
 
             if (e && typeof e.preventDefault === 'function') e.preventDefault();
@@ -3461,24 +3480,25 @@
             const ov = document.getElementById('tapOverlay');
             if (ov) ov.style.display = 'none';
         } finally {
-            setTimeout(() => { tapBusy = false; }, 40);
+            setTimeout(() => { tapBusy = false; }, 90);
         }
     }
 
     const tapOverlayEl = document.getElementById('tapOverlay');
     const dialogBoxEl = document.getElementById('dialogBox');
-    // Multiple event types for maximum iPad Safari compatibility.
-    tapOverlayEl.addEventListener('pointerdown', tapAdvance);
-    tapOverlayEl.addEventListener('click', tapAdvance);
-    tapOverlayEl.addEventListener('touchstart', tapAdvance, {passive: false});
-    dialogBoxEl.addEventListener('pointerdown', tapAdvance);
-    dialogBoxEl.addEventListener('click', tapAdvance);
-    dialogBoxEl.addEventListener('touchstart', tapAdvance, {passive: false});
-
-    // iPad fallback: tapping the canvas advances dialog / scripted battle.
-    canvas.addEventListener('pointerdown', tapAdvance);
-    canvas.addEventListener('click', tapAdvance);
-    canvas.addEventListener('touchstart', tapAdvance, {passive: false});
+    // Single input path to avoid duplicate handlers/races on mobile browsers.
+    if (typeof window !== 'undefined' && window.PointerEvent) {
+        tapOverlayEl.addEventListener('pointerdown', tapAdvance);
+        dialogBoxEl.addEventListener('pointerdown', tapAdvance);
+        canvas.addEventListener('pointerdown', tapAdvance);
+    } else {
+        tapOverlayEl.addEventListener('touchstart', tapAdvance, {passive: false});
+        dialogBoxEl.addEventListener('touchstart', tapAdvance, {passive: false});
+        canvas.addEventListener('touchstart', tapAdvance, {passive: false});
+        tapOverlayEl.addEventListener('mousedown', tapAdvance);
+        dialogBoxEl.addEventListener('mousedown', tapAdvance);
+        canvas.addEventListener('mousedown', tapAdvance);
+    }
     
     const keyToDir = (k) => {
         if (k === 'ArrowUp' || k === 'w' || k === 'W') return 'up';
