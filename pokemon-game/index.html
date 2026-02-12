@@ -3678,6 +3678,12 @@
         dirPressed.up = dirPressed.down = dirPressed.left = dirPressed.right = false;
         dirOrder.length = 0;
     });
+    // iPad/Safari fail-safe: guarantee movement stops when touch/pointer lifecycle ends.
+    window.addEventListener('pointerup', stopMove, true);
+    window.addEventListener('pointercancel', stopMove, true);
+    window.addEventListener('mouseup', stopMove, true);
+    window.addEventListener('touchend', stopMove, {capture: true, passive: true});
+    window.addEventListener('touchcancel', stopMove, {capture: true, passive: true});
     window.addEventListener('pagehide', () => {
         stopMove();
         setRunPressed(false);
