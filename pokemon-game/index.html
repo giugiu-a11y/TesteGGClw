@@ -154,6 +154,19 @@
             text-align: center;
             min-width: 180px;
         }
+
+        #sceneBackdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1200;
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            opacity: 0.45;
+            pointer-events: none;
+            filter: saturate(1.1) contrast(1.04);
+        }
         #dialogBox .speaker {
             font-weight: bold; color: #1f2a44;
             margin-bottom: 6px; font-size: 10px;
@@ -376,6 +389,7 @@
     </div>
 
     <div id="tapOverlay" onclick="tapAdvance(event)" ontouchstart="tapAdvance(event); return false"></div>
+    <div id="sceneBackdrop"></div>
 
     <div id="dialogBox" onclick="tapAdvance(event)" ontouchstart="tapAdvance(event); return false">
         <div class="speaker"></div>
@@ -1384,6 +1398,7 @@
         if (activeBeatId && activeBeatId !== id) return false;
         const beat = getBeat(id);
         if (!beat) return false;
+        setSceneBackdrop(beatBackdropFor(id));
         activeBeatId = id;
         GS.story.beat = id;
         runActions(beat.actions, 0, () => {
@@ -1591,6 +1606,34 @@
         el.style.display = 'block';
         if (bannerTimer) clearTimeout(bannerTimer);
         bannerTimer = setTimeout(() => { el.style.display = 'none'; }, 1400);
+    }
+
+    function beatBackdropFor(id) {
+        const b = String(id || '').toLowerCase();
+        if (!b) return '';
+        if (b.includes('silph') || b.includes('rocket')) return './assets/tilesets/manual_environmental/rocket_hideout.png';
+        if (b.includes('mewtwo') || b.includes('cave')) return './assets/tilesets/manual_environmental/cerulean_cave.png';
+        if (b.includes('cinnabar') || b.includes('research')) return './assets/tilesets/manual_environmental/one_island.png';
+        if (b.includes('lavender') || b.includes('shadow')) return './assets/tilesets/missing_tiles/04_map_route_12.png';
+        if (b.includes('indigo') || b.includes('elite') || b.includes('champion')) return './assets/tilesets/manual_environmental/indigo_plateau.png';
+        if (b.includes('mtmoon') || b.includes('moon')) return './assets/tilesets/manual_environmental/mt_moon.png';
+        if (b.includes('viridian_forest') || b.includes('forest')) return './assets/tilesets/missing_tiles/02_map_route_10.png';
+        if (b.includes('pewter') || b.includes('brock')) return './assets/tilesets/cities/3875_city_pewter.png';
+        if (b.includes('viridian')) return './assets/tilesets/cities/3874_city_viridian.png';
+        if (b.includes('pallet') || b.includes('oak')) return './assets/tilesets/cities/3873_city_pallet_town.png';
+        return '';
+    }
+
+    function setSceneBackdrop(url) {
+        const el = document.getElementById('sceneBackdrop');
+        if (!el) return;
+        if (!url) {
+            el.style.display = 'none';
+            el.style.backgroundImage = '';
+            return;
+        }
+        el.style.backgroundImage = `url('${url}')`;
+        el.style.display = 'block';
     }
 
     function applyVisualSkin() {
@@ -2433,6 +2476,7 @@
         // Lightweight, non-breaking story hooks. Real season script will live in beats/flags.
         if (!GS.story) GS.story = {};
         ensureWalkablePlayerPosition();
+        setSceneBackdrop('');
         showMapBanner(mapId);
         if (mapId === 'pewter_gym' && GS.story.caughtPika && !GS.story.brockBattleDone) {
             setTimeout(() => {
