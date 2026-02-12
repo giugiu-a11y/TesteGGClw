@@ -1293,6 +1293,7 @@
     let moveInt = null;
     let moveDir = null;
     let animFrame = 0;
+    let dialogAutoTimer = 0;
 
     // ==================== STORY SCRIPT ====================
     let STORY = null;
@@ -1314,6 +1315,24 @@
         if (dialogBox) dialogBox.style.display = 'none';
         if (tapOverlay) tapOverlay.style.display = 'none';
         if (battleScreen) battleScreen.style.display = 'none';
+    }
+
+    function clearDialogAutoAdvance() {
+        if (dialogAutoTimer) {
+            clearTimeout(dialogAutoTimer);
+            dialogAutoTimer = 0;
+        }
+    }
+
+    function scheduleDialogAutoAdvance() {
+        clearDialogAutoAdvance();
+        // Failsafe: only for scripted cutscenes (not free NPC chat).
+        if (!cutsceneLock || !dialog) return;
+        const dialogRef = dialog;
+        dialogAutoTimer = setTimeout(() => {
+            if (!dialog || dialog !== dialogRef) return;
+            try { nextDialog(); } catch {}
+        }, 2600);
     }
 
     function clearOrphanRuntimeLocks() {
@@ -3157,12 +3176,14 @@
     function nextDialog() {
         actionProgressAt = Date.now();
         if (!dialog) {
+            clearDialogAutoAdvance();
             document.getElementById('dialogBox').style.display = 'none';
             document.getElementById('tapOverlay').style.display = 'none';
             dialogQ = [];
             return;
         }
         if (dialogQ.length === 0) {
+            clearDialogAutoAdvance();
             document.getElementById('dialogBox').style.display = 'none';
             document.getElementById('tapOverlay').style.display = 'none';
             // Important: clear dialog state BEFORE invoking cb.
@@ -3186,6 +3207,7 @@
         box.querySelector('.text').textContent = dialogQ.shift();
         box.style.display = 'block';
         document.getElementById('tapOverlay').style.display = 'block';
+        scheduleDialogAutoAdvance();
     }
     
     // ==================== INPUT ====================
