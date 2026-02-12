@@ -1333,8 +1333,10 @@
             tapOverlay.style.display = 'block';
         }
         if (dialog && !dialogVisible && !overlayVisible) {
-            // Dialog state exists but UI vanished: resume renderer for current dialog step.
-            try { nextDialog(); } catch {}
+            // Dialog state exists but UI vanished: restore the same visible step.
+            // Never auto-advance here (can cause race/skip/freeze on mobile event storms).
+            dialogBox.style.display = 'block';
+            tapOverlay.style.display = 'block';
         }
         if (!dialog && !inBattle && overlayVisible) {
             tapOverlay.style.display = 'none';
