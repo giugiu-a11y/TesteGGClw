@@ -436,8 +436,17 @@
           "x": 10,
           "y": 15,
           "dir": "up"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Voce agora pode explorar livremente! ]",
+            "[ Interaja com pessoas e objetos para continuar a historia. ]"
+          ]
         }
-      ]
+      ],
+      "releaseControl": true
     },
     {
       "id": "ch1_viridian_arrival",
@@ -502,8 +511,17 @@
           "lines": [
             "[ RED corre em direcao a Route 2! ]"
           ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Voce agora pode explorar livremente! ]",
+            "[ Interaja com pessoas e objetos para continuar a historia. ]"
+          ]
         }
-      ]
+      ],
+      "releaseControl": true
     },
     {
       "id": "ch1_viridian_forest_first",
@@ -625,8 +643,17 @@
           "lines": [
             "[ Com SAUR no time, RED continua para PEWTER CITY! ]"
           ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Voce agora pode explorar livremente! ]",
+            "[ Interaja com pessoas e objetos para continuar a historia. ]"
+          ]
         }
-      ]
+      ],
+      "releaseControl": true
     },
     {
       "id": "ch1_pewter_arrival",
@@ -766,8 +793,17 @@
           "lines": [
             "[ RED se dirige ao PEWTER GYM! ]"
           ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Voce agora pode explorar livremente! ]",
+            "[ Interaja com pessoas e objetos para continuar a historia. ]"
+          ]
         }
-      ]
+      ],
+      "releaseControl": true
     },
     {
       "id": "ch1_brock_intro",
@@ -943,8 +979,17 @@
           "lines": [
             "[ Com a BOULDER BADGE, RED parte para MT. MOON! ]"
           ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Voce agora pode explorar livremente! ]",
+            "[ Interaja com pessoas e objetos para continuar a historia. ]"
+          ]
         }
-      ]
+      ],
+      "releaseControl": true
     },
     {
       "id": "ch2_depart_pewter",
@@ -1161,8 +1206,17 @@
           "kind": "set",
           "path": "story.beat",
           "value": "ch2_rocket_grunt_cave"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Voce agora pode explorar livremente! ]",
+            "[ Interaja com pessoas e objetos para continuar a historia. ]"
+          ]
         }
-      ]
+      ],
+      "releaseControl": true
     },
     {
       "id": "ch2_rocket_grunt_cave",
@@ -1514,8 +1568,17 @@
           "kind": "set",
           "path": "story.beat",
           "value": "ch3_bill_event"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Voce agora pode explorar livremente! ]",
+            "[ Interaja com pessoas e objetos para continuar a historia. ]"
+          ]
         }
-      ]
+      ],
+      "releaseControl": true
     },
     {
       "id": "ch3_bill_event",
@@ -1613,8 +1676,17 @@
           "lines": [
             "[ RED parte para VERMILION CITY! ]"
           ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Voce agora pode explorar livremente! ]",
+            "[ Interaja com pessoas e objetos para continuar a historia. ]"
+          ]
         }
-      ]
+      ],
+      "releaseControl": true
     },
     {
       "id": "ch4_vermilion_setup",

@@ -1709,8 +1709,9 @@
                 if (typeof a.x === 'number') GS.px = a.x;
                 if (typeof a.y === 'number') GS.py = a.y;
                 if (a.dir) GS.dir = String(a.dir);
-                ensureWalkablePlayerPosition();
+                // Load collision grid BEFORE checking walkable position
                 onMapEnter(GS.map, {preserveFlow: true});
+                ensureWalkablePlayerPosition();
                 scheduleSave('story-teleport');
                 return runActions(list, idx + 1, onDone);
             }
@@ -1800,6 +1801,11 @@
                         playBeat('ch1_oak_mew_explain');
                     }
                 }, 180);
+                return;
+            }
+            // If beat has releaseControl flag, let player explore instead of auto-chaining
+            if (beat.releaseControl) {
+                // Player gets free control - don't auto-chain to next beat
                 return;
             }
             // Continue chaining story automatically when multiple beats belong to the same area.
@@ -2606,7 +2612,12 @@
         const psy = GS.py - camY;
         drawSprite(sprites.red, psx, psy, animFrame, GS.dir);
         
-        animFrame = (animFrame + 0.1) % 4;
+        // Only animate when moving (not standing still)
+        if (moveDir || storyMoveTimer) {
+            animFrame = (animFrame + 0.15) % 4;
+        } else {
+            animFrame = 0; // Standing still = first frame
+        }
     }
 
     function stopRenderLoop() {
@@ -3150,9 +3161,9 @@
             if (!battle.scriptSteps) {
                 battle.scriptSteps = [
                     {type: 'log', text: `Um ${enemy.name} selvagem apareceu!`},
-                    {type: 'playerMove', move: 'Water Gun', damage: 6},
-                    {type: 'enemyMove', move: 'Tackle', damage: 3},
-                    {type: 'playerMove', move: 'Water Gun', damage: 999},
+                    {type: 'playerMove', move: 'Water Gun', damage: 8},
+                    {type: 'enemyMove', move: 'Tackle', damage: 4},
+                    {type: 'playerMove', move: 'Water Gun', damage: 10},
                     {type: 'end', won: true},
                 ];
             }
