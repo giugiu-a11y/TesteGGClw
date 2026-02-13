@@ -4,8 +4,8 @@
     "pallet_town": {
       "url": "./assets/tilesets/cities/3873_city_pallet_town.png",
       "ts": 16,
-      "px": 8,
-      "py": 24
+      "px": 0,
+      "py": 16
     },
     "route1": {
       "url": "./assets/tilesets/missing_tiles/05_map_route_1.png",
