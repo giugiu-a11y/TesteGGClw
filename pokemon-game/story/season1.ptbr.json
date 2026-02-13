@@ -42,69 +42,40 @@
           "speaker": "",
           "lines": [
             "[ POKeMON ADVENTURES ]",
-            "[ Chapter 1: VS MEW ]",
-            "━━━━━━━━━━━━━━━━━━━━━━"
-          ]
-        },
-        {
-          "kind": "dialog",
-          "speaker": "",
-          "lines": [
-            "PALLET TOWN - Uma pequena cidade na regiao de KANTO.",
-            "Aqui vive um garoto que vive se gabando de ser um grande treinador...",
-            "O nome dele e RED."
-          ]
-        },
-        {
-          "kind": "dialog",
-          "speaker": "RED",
-          "lines": [
-            "Heh! Olha so!",
-            "Eu vou ser o maior treinador de POKeMON de PALLET TOWN!",
-            "Eu e meu parceiro POLI somos imparaveis!"
-          ]
-        },
-        {
-          "kind": "dialog",
-          "speaker": "",
-          "lines": [
-            "[ RED ja tem o POLI, um Poliwhirl que ele criou desde pequeno. ]",
-            "[ Mas as outras criancas nao acreditam nas suas bravatas... ]"
+            "[ Arco RGB - Volume 1 ]",
+            "[ Chapter 1: VS MEW ]"
           ]
         },
         {
           "kind": "teleport",
           "map": "pallet_town",
           "x": 9,
-          "y": 16,
+          "y": 15,
           "dir": "up"
         },
         {
-          "kind": "move",
-          "path": [
-            "up",
-            "up"
-          ],
-          "stepMs": 140
-        },
-        {
           "kind": "dialog",
-          "speaker": "Morador",
+          "speaker": "",
           "lines": [
-            "La vem o RED de novo contando vantagem...",
-            "Mas quando aperta, ele e mais corajoso do que parece."
+            "PALLET TOWN - Uma pacata cidade no sul de KANTO.",
+            "Perto da saida da cidade, um garoto se gaba para os outros..."
           ]
         },
         {
-          "kind": "face",
-          "dir": "left"
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Hehe! Viram so?",
+            "Eu e meu POLI somos a dupla mais forte de Pallet Town!",
+            "Nenhum POKeMON selvagem escapa de nos!"
+          ]
         },
         {
           "kind": "dialog",
-          "speaker": "Crianca",
+          "speaker": "",
           "lines": [
-            "Se voce e tao bom, prova!",
-            "Nao vale inventar desculpa depois!"
+            "[ RED criou POLI, um Poliwhirl, desde que era pequeno. ]",
+            "[ Eles sao parceiros inseparaveis. ]"
           ]
         },
         {
@@ -113,15 +84,23 @@
         },
         {
           "kind": "dialog",
-          "speaker": "???",
+          "speaker": "Garoto",
           "lines": [
-            "Ah e? Entao prova!",
-            "Voce fala, fala... mas ninguem nunca te viu lutar de verdade!"
+            "Voce so fala, RED!",
+            "Qualquer um consegue vencer POKeMON fracos por aqui."
           ]
         },
         {
-          "kind": "pause",
-          "ms": 240
+          "kind": "face",
+          "dir": "left"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Garota",
+          "lines": [
+            "E! Se voce e tao bom assim, prova!",
+            "Captura um POKeMON raro pra gente ver!"
+          ]
         },
         {
           "kind": "face",
@@ -131,21 +110,63 @@
           "kind": "dialog",
           "speaker": "RED",
           "lines": [
-            "Tch! Ta bom! Eu vou mostrar!",
-            "Eu vou capturar o POKeMON mais raro de todos!",
-            "...Huh? Que luz e essa na floresta?!"
+            "Tch! Voces vao ver!",
+            "Eu vou capturar o POKeMON mais raro que existe!"
+          ]
+        },
+        {
+          "kind": "pause",
+          "ms": 400
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Nesse momento, uma luz misteriosa brilha ao norte... ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "...Huh?!",
+            "Que luz e essa vindo da floresta?!",
+            "Isso... isso deve ser um POKeMON raro! POLI, vamos!"
+          ]
+        },
+        {
+          "kind": "move",
+          "path": [
+            "up",
+            "up"
+          ],
+          "stepMs": 100
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED corre em direcao a VIRIDIAN FOREST! ]"
           ]
         },
         {
           "kind": "teleport",
           "map": "viridian_forest",
           "x": 10,
-          "y": 13,
+          "y": 14,
           "dir": "up"
         },
         {
           "kind": "pause",
-          "ms": 260
+          "ms": 300
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ VIRIDIAN FOREST ]",
+            "[ Uma floresta densa ao norte de Pallet Town... ]"
+          ]
         },
         {
           "kind": "move",
@@ -154,24 +175,31 @@
             "up",
             "up"
           ],
-          "stepMs": 135
+          "stepMs": 120
         },
         {
           "kind": "dialog",
           "speaker": "",
           "lines": [
-            "[ Uma luz brilhante atravessa as arvores! ]",
-            "[ Um POKeMON rosa misterioso flutua diante de voce! ]",
-            "[ Pequeno... com um olhar curioso e inocente... ]"
+            "[ Uma luz rosa intensa ilumina a floresta! ]",
+            "[ Um pequeno POKeMON flutua entre as arvores... ]",
+            "[ Seus olhos grandes e curiosos encaram RED. ]"
           ]
         },
         {
           "kind": "dialog",
           "speaker": "RED",
           "lines": [
-            "O-O que e isso?! Eu nunca vi nada assim!",
-            "Essa e a minha chance! POLI, vamos capturar!",
-            "Vai, POKe BALL!"
+            "O-O que e isso?!",
+            "Eu nunca vi um POKeMON assim!",
+            "E a minha chance! POLI, prepara!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Vai, POKe BALL!!"
           ]
         },
         {
@@ -185,10 +213,15 @@
           },
           "options": {
             "scripted": true,
+            "terrain": "forest",
             "scriptSteps": [
               {
                 "type": "log",
-                "text": "Um MEW misterioso apareceu!"
+                "text": "Um MEW selvagem apareceu!"
+              },
+              {
+                "type": "log",
+                "text": "RED joga uma POKe BALL!"
               },
               {
                 "type": "playerMove",
@@ -197,7 +230,11 @@
               },
               {
                 "type": "log",
-                "text": "MEW desviou da Poke Ball com um brilho de barreira!"
+                "text": "MEW criou uma BARREIRA!"
+              },
+              {
+                "type": "log",
+                "text": "A POKe BALL foi rebatida!"
               },
               {
                 "type": "enemyMove",
@@ -206,7 +243,11 @@
               },
               {
                 "type": "log",
-                "text": "MEW desapareceu no ar!"
+                "text": "MEW usou TELEPORT!"
+              },
+              {
+                "type": "log",
+                "text": "MEW desapareceu!"
               },
               {
                 "type": "end",
@@ -217,21 +258,30 @@
         },
         {
           "kind": "pause",
-          "ms": 320
+          "ms": 300
         },
         {
           "kind": "dialog",
           "speaker": "",
           "lines": [
-            "[ RED arremessa uma POKe BALL! ]",
-            "[ ...Mas MEW cria uma barreira e desvia! ]",
-            "[ MEW inclina a cabeca... e desaparece! ]"
+            "[ A POKe BALL e rebatida por uma barreira invisivel! ]",
+            "[ MEW inclina a cabeca curiosamente... ]",
+            "[ ...e desaparece em um flash de luz! ]"
           ]
         },
         {
           "kind": "set",
           "path": "story.sawMew",
           "value": true
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "N-Nao! Escapou!",
+            "Que POKeMON era aquele?! Nunca vi nada igual!",
+            "O Professor OAK deve saber... ele estuda POKeMON raros!"
+          ]
         },
         {
           "kind": "set",
@@ -246,11 +296,10 @@
         },
         {
           "kind": "dialog",
-          "speaker": "RED",
+          "speaker": "",
           "lines": [
-            "E... escapou! Mas o que ERA aquilo?!",
-            "Nem o POLI conseguiu acompanhar...",
-            "O Professor OAK estuda POKeMON raros. Ele deve saber!"
+            "[ RED corre de volta a Pallet Town... ]",
+            "[ ...em direcao ao laboratorio do Professor OAK! ]"
           ]
         },
         {
