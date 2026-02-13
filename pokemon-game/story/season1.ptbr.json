@@ -73,27 +73,19 @@
           ]
         },
         {
-          "kind": "face",
-          "dir": "right"
-        },
-        {
           "kind": "teleport",
           "map": "pallet_town",
-          "x": 6,
-          "y": 8,
-          "dir": "right"
+          "x": 9,
+          "y": 16,
+          "dir": "up"
         },
         {
           "kind": "move",
           "path": [
             "up",
-            "up",
-            "up",
-            "right",
-            "right",
-            "right"
+            "up"
           ],
-          "stepMs": 135
+          "stepMs": 140
         },
         {
           "kind": "dialog",
@@ -104,12 +96,20 @@
           ]
         },
         {
+          "kind": "face",
+          "dir": "left"
+        },
+        {
           "kind": "dialog",
           "speaker": "Crianca",
           "lines": [
             "Se voce e tao bom, prova!",
             "Nao vale inventar desculpa depois!"
           ]
+        },
+        {
+          "kind": "face",
+          "dir": "right"
         },
         {
           "kind": "dialog",
@@ -126,16 +126,6 @@
         {
           "kind": "face",
           "dir": "up"
-        },
-        {
-          "kind": "move",
-          "path": [
-            "left",
-            "left",
-            "up",
-            "up"
-          ],
-          "stepMs": 135
         },
         {
           "kind": "dialog",
