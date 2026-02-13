@@ -669,11 +669,20 @@
         GRASS: 0, PATH: 1, WATER: 2, TREE: 3,
         HOUSE_RED: 4, HOUSE_BLUE: 5, LAB: 6,
         FENCE: 7, SIGN: 8, TALL_GRASS: 9,
-        FLOWER: 10, LEDGE: 11, WARP: 13, NPC: 14
-        , FLOOR_IN: 15, WALL_IN: 16, TABLE: 17, SHELF: 18
+        FLOWER: 10, LEDGE: 11, WARP: 13, NPC: 14,
+        FLOOR_IN: 15, WALL_IN: 16, TABLE: 17, SHELF: 18,
+        // Missing exterior tiles (for roofs & walls):
+        ROOF_RED: 19, ROOF_BLUE: 20, ROOF_LAB: 21,
+        WALL: 22, WINDOW: 23,
+        // Variants:
+        GRASS_ALT: 24, PATH_ALT: 25, DOOR: 26
     };
     
-    const SOLID = [T.WATER, T.TREE, T.HOUSE_RED, T.HOUSE_BLUE, T.LAB, T.FENCE, T.NPC, T.WALL_IN, T.TABLE, T.SHELF];
+    const SOLID = [
+        T.WATER, T.TREE, T.ROOF_RED, T.ROOF_BLUE, T.ROOF_LAB,
+        T.HOUSE_RED, T.HOUSE_BLUE, T.LAB, T.FENCE, T.NPC,
+        T.WALL_IN, T.TABLE, T.SHELF, T.WALL, T.WINDOW
+    ];
     
     // ==================== MAPS ====================
     const MAPS = {
