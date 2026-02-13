@@ -669,11 +669,21 @@
         GRASS: 0, PATH: 1, WATER: 2, TREE: 3,
         HOUSE_RED: 4, HOUSE_BLUE: 5, LAB: 6,
         FENCE: 7, SIGN: 8, TALL_GRASS: 9,
-        FLOWER: 10, LEDGE: 11, WARP: 13, NPC: 14
-        , FLOOR_IN: 15, WALL_IN: 16, TABLE: 17, SHELF: 18
+        FLOWER: 10, LEDGE: 11, WARP: 13, NPC: 14,
+        FLOOR_IN: 15, WALL_IN: 16, TABLE: 17, SHELF: 18,
+        // New tiles for proper collision (matching user.tileset.json)
+        ROOF_RED: 19, ROOF_BLUE: 20, ROOF_LAB: 21,
+        WALL: 22, DOOR: 23, WINDOW: 24, PATH_ALT: 25, GRASS_ALT: 26
     };
     
-    const SOLID = [T.WATER, T.TREE, T.HOUSE_RED, T.HOUSE_BLUE, T.LAB, T.FENCE, T.NPC, T.WALL_IN, T.TABLE, T.SHELF];
+    // SOLID tiles - player cannot walk through these
+    const SOLID = [
+        T.WATER, T.TREE, T.HOUSE_RED, T.HOUSE_BLUE, T.LAB, T.FENCE, T.NPC,
+        T.WALL_IN, T.TABLE, T.SHELF, T.SIGN,
+        // New solid tiles - roofs, walls, windows are impassable
+        T.ROOF_RED, T.ROOF_BLUE, T.ROOF_LAB, T.WALL, T.WINDOW
+        // Note: DOOR is NOT solid (it's an entrance)
+    ];
     
     // ==================== MAPS ====================
     const MAPS = {
@@ -1409,6 +1419,11 @@
         const overlayVisible = !!(tapOverlay && tapOverlay.style.display !== 'none');
         const battleVisible = !!(battleScreen && battleScreen.style.display !== 'none');
 
+        // FIX: Stop movement if we're not in WORLD mode (prevents auto-walk in cutscenes)
+        if (!modeIs(MODE.WORLD) && (moveDir || moveInt)) {
+            stopMove();
+        }
+
         // If UI is visible but dialog state was lost, close stale UI to avoid soft-lock.
         if (!dialog && dialogVisible) {
             dialogBox.style.display = 'none';
@@ -1435,18 +1450,27 @@
             inBattle = false;
             battle = null;
         }
+        
+        // FIX: More aggressive cutscene cleanup with movement stop
         if (cutsceneLock && activeBeatId && !dialog && !inBattle && !moveInt) {
             // Recovery for rare broken action chain: no visible step progressing.
             if (Date.now() - actionProgressAt > 3200) {
                 activeBeatId = null;
                 cutsceneLock = false;
+                stopMove(); // Ensure movement is stopped
             }
         }
         if (cutsceneLock && !activeBeatId && !dialog && !inBattle) {
             cutsceneLock = false;
+            stopMove(); // Ensure movement is stopped
         }
         if (activeBeatId && !cutsceneLock && !dialog && !inBattle) {
             activeBeatId = null;
+        }
+        
+        // FIX: Additional safety - stop any movement if dialog/battle/cutscene is active
+        if ((dialog || inBattle || cutsceneLock || activeBeatId) && moveDir) {
+            stopMove();
         }
     }
 
@@ -2673,10 +2697,17 @@
     function move(dir) {
         // Self-heal stuck flags before movement gate checks.
         clearOrphanRuntimeLocks();
-        if (dialog || inBattle || cutsceneLock) {
+        
+        // Strict mode verification
+        if (!modeIs(MODE.WORLD)) {
             stopMove();
             return;
         }
+        if (dialog || inBattle || cutsceneLock || activeBeatId) {
+            stopMove();
+            return;
+        }
+        
         GS.dir = dir;
         let nx = GS.px, ny = GS.py;
         if (dir === 'up') ny--;
@@ -2686,6 +2717,7 @@
         
         if (canMove(nx, ny)) {
             GS.px = nx; GS.py = ny;
+            if ((GS.encounterCooldown || 0) > 0) GS.encounterCooldown--;
             checkWarp();
             checkEncounter();
             scheduleSave('move');
@@ -2695,24 +2727,55 @@
     let runPressed = false;
     function setRunPressed(v) { runPressed = !!v; }
     function moveStepMs() { return runPressed ? 85 : 145; }
+    // Movement session ID to prevent stale callbacks from running
+    let moveSessionId = 0;
+    
     function startMove(dir) {
         // Runtime self-heal for rare iPad/tap race conditions where dialog/cutscene flags stick.
         clearOrphanRuntimeLocks();
-        if (dialog || inBattle || cutsceneLock) {
+        
+        // Strict mode check - don't move if not in WORLD mode
+        if (!modeIs(MODE.WORLD)) {
             stopMove();
             return;
         }
+        if (dialog || inBattle || cutsceneLock || activeBeatId) {
+            stopMove();
+            return;
+        }
+        
         stopMove();
         move(dir);
-        if (dialog || inBattle || cutsceneLock) return;
+        
+        // Re-check after move (warps/encounters can change mode)
+        if (!modeIs(MODE.WORLD) || dialog || inBattle || cutsceneLock) return;
+        
         moveDir = dir;
+        const sessionId = ++moveSessionId;
+        
         moveInt = setTimeout(function tick() {
-            if (!moveDir) return;
+            // Guard: ensure this session is still valid
+            if (sessionId !== moveSessionId) return;
+            if (!moveDir || moveDir !== dir) return;
+            if (!modeIs(MODE.WORLD) || dialog || inBattle || cutsceneLock || activeBeatId) {
+                stopMove();
+                return;
+            }
+            
             move(moveDir);
+            
+            // Re-check after each step
+            if (!modeIs(MODE.WORLD) || dialog || inBattle || cutsceneLock) {
+                stopMove();
+                return;
+            }
+            
             moveInt = setTimeout(tick, moveStepMs());
         }, 120);
     }
+    
     function stopMove() {
+        moveSessionId++; // Invalidate any pending tick callbacks
         if (moveInt) {
             clearTimeout(moveInt);
             moveInt = null;
