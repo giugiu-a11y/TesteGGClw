@@ -584,7 +584,7 @@
     // Story controls:
     // - autocutmove=1 (default): scripted scene walk enabled.
     // - autodialog=0 (default): dialog advances on user tap/A, not automatically.
-    const AUTO_CUTSCENE_MOVE = qs('autocutmove', '1') === '1';
+    const AUTO_CUTSCENE_MOVE = qs('autocutmove', '0') === '1';
     const AUTO_DIALOG_ADVANCE = qs('autodialog', '0') === '1';
     const DEFAULT_SCENE_BACKDROP = './assets/tilesets/missing_tiles/05_map_route_1.png';
     const DEFAULT_SCENE_BACKDROP_RULES = [
@@ -2677,7 +2677,6 @@
             stopMove();
             return;
         }
-        GS.dir = dir;
         let nx = GS.px, ny = GS.py;
         if (dir === 'up') ny--;
         else if (dir === 'down') ny++;
@@ -2685,6 +2684,7 @@
         else if (dir === 'right') nx++;
         
         if (canMove(nx, ny)) {
+            GS.dir = dir;
             GS.px = nx; GS.py = ny;
             checkWarp();
             checkEncounter();

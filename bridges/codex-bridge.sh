@@ -8,6 +8,9 @@ SOCKET="/tmp/codex-bridge.sock"
 SESSION="codex-bridge"
 WORKDIR="${CODEX_WORKDIR:-/home/ubuntu/projects}"
 
+# Ensure codex command is in PATH, especially when running in tmux/subshells
+export PATH="$PATH:/home/ubuntu/.npm-global/bin"
+
 # Cores
 RED='\033[0;31m'
 GREEN='\033[0;32m'
