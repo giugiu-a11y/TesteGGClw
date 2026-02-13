@@ -584,7 +584,9 @@
     // Story controls:
     // - autocutmove=1 (default): scripted scene walk enabled.
     // - autodialog=0 (default): dialog advances on user tap/A, not automatically.
-    const AUTO_CUTSCENE_MOVE = qs('autocutmove', '0') === '1';
+    // Cutscene auto-walk: enabled by default for intro/story flow.
+    // Disable with ?autocutmove=0 if causing issues on specific devices.
+    const AUTO_CUTSCENE_MOVE = qs('autocutmove', '1') === '1';
     const AUTO_DIALOG_ADVANCE = qs('autodialog', '0') === '1';
     const DEFAULT_SCENE_BACKDROP = './assets/tilesets/missing_tiles/05_map_route_1.png';
     const DEFAULT_SCENE_BACKDROP_RULES = [
