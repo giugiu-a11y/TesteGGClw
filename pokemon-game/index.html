@@ -1646,13 +1646,13 @@
                 return;
             }
             const d = String(dirs[i++]);
-            GS.dir = d;
             let nx = GS.px, ny = GS.py;
             if (d === 'up') ny--;
             else if (d === 'down') ny++;
             else if (d === 'left') nx--;
             else if (d === 'right') nx++;
             if (canMove(nx, ny)) {
+                GS.dir = d;
                 GS.px = nx;
                 GS.py = ny;
             }
