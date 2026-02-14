@@ -307,6 +307,30 @@
             margin-right: 4px;
         }
         /* Location indicator */
+        
+        /* Autosave indicator */
+        #autosaveIndicator {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: #4ade80;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        #autosaveIndicator.saving {
+            opacity: 1;
+            color: #fbbf24;
+        }
+        #autosaveIndicator.saved {
+            opacity: 1;
+            color: #4ade80;
+        }
+
         #locationHud {
             position: fixed;
             top: 10px;
@@ -511,6 +535,7 @@
         <span><kbd>M</kbd> Menu</span>
     </div>
     <div id="locationHud"></div>
+    <div id="autosaveIndicator">💾 Salvando...</div>
     <div id="loadingScreen">
         <div>Loading sprites...</div>
         <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
@@ -4115,6 +4140,27 @@
     });
     
 
+
+
+    // Show autosave indicator
+    function showSaveIndicator(status) {
+        const ind = document.getElementById('autosaveIndicator');
+        if (!ind) return;
+        ind.className = status;
+        ind.textContent = status === 'saving' ? '💾 Salvando...' : '✅ Salvo!';
+        if (status === 'saved') {
+            setTimeout(() => { ind.className = ''; }, 1500);
+        }
+    }
+    
+    // Autosave every 30 seconds
+    setInterval(() => {
+        if (!inBattle && !inDialog && GS.map) {
+            showSaveIndicator('saving');
+            saveGame();
+            setTimeout(() => showSaveIndicator('saved'), 300);
+        }
+    }, 30000);
 
     // Location HUD
     function updateLocationHud() {
