@@ -257,10 +257,6 @@
           }
         },
         {
-          "kind": "pause",
-          "ms": 300
-        },
-        {
           "kind": "dialog",
           "speaker": "",
           "lines": [
@@ -1031,7 +1027,8 @@
             "[ RED segue em direcao a MT. MOON... ]"
           ]
         }
-      ]
+      ],
+      "releaseControl": true
     },
     {
       "id": "ch2_mtmoon_entry",
@@ -1362,7 +1359,8 @@
             "[ RED atravessa MT. MOON em direcao a CERULEAN CITY! ]"
           ]
         }
-      ]
+      ],
+      "releaseControl": true
     },
     {
       "id": "ch3_cerulean_arrival",
@@ -1437,7 +1435,8 @@
           "path": "story.beat",
           "value": "ch3_misty_clash"
         }
-      ]
+      ],
+      "releaseControl": true
     },
     {
       "id": "ch3_misty_clash",
@@ -1650,45 +1649,11 @@
         },
         {
           "kind": "dialog",
-          "speaker": "",
-          "lines": [
-            "[ RED opera o computador seguindo as instrucoes de BILL ]",
-            "[ Uma luz brilhante envolve BILL... ]",
-            "[ BILL volta ao normal! ]"
-          ]
-        },
-        {
-          "kind": "dialog",
           "speaker": "BILL",
           "lines": [
             "OBRIGADO! Voce salvou minha vida!",
             "Me deixa te agradecer propriamente...",
             "Eu ouvi que voce esta atras da TEAM ROCKET, certo?"
-          ]
-        },
-        {
-          "kind": "dialog",
-          "speaker": "",
-          "lines": [
-            "[ Enquanto RED ajuda BILL... ]",
-            "[ SAUR comeca a brilhar! ]"
-          ]
-        },
-        {
-          "kind": "evolve",
-          "slot": "saur",
-          "to": "IVYSAUR",
-          "options": {
-            "name": "SAUR",
-            "lv": 16
-          }
-        },
-        {
-          "kind": "dialog",
-          "speaker": "RED",
-          "lines": [
-            "SAUR?! Voce esta evoluindo!",
-            "Incrivel! SAUR evoluiu para IVYSAUR!"
           ]
         },
         {
@@ -1705,31 +1670,6 @@
             "Eu tenho informacoes sobre eles.",
             "A TEAM ROCKET esta planejando algo grande em VERMILION CITY.",
             "No porto, no S.S. ANNE. Voce devia investigar!"
-          ]
-        },
-        {
-          "kind": "dialog",
-          "speaker": "",
-          "lines": [
-            "[ Enquanto RED ajuda BILL... ]",
-            "[ SAUR comeca a brilhar! ]"
-          ]
-        },
-        {
-          "kind": "evolve",
-          "slot": "saur",
-          "to": "IVYSAUR",
-          "options": {
-            "name": "SAUR",
-            "lv": 16
-          }
-        },
-        {
-          "kind": "dialog",
-          "speaker": "RED",
-          "lines": [
-            "SAUR?! Voce esta evoluindo!",
-            "Incrivel! SAUR evoluiu para IVYSAUR!"
           ]
         },
         {
@@ -1836,7 +1776,8 @@
           "path": "story.beat",
           "value": "ch4_ssanne_rocket"
         }
-      ]
+      ],
+      "releaseControl": true
     },
     {
       "id": "ch4_ssanne_rocket",
@@ -2102,7 +2043,8 @@
           "path": "story.beat",
           "value": "ch6_lavender_shadow"
         }
-      ]
+      ],
+      "releaseControl": true
     },
     {
       "id": "ch6_lavender_shadow",
@@ -2260,7 +2202,8 @@
           "path": "story.beat",
           "value": "ch7_silph_infiltration"
         }
-      ]
+      ],
+      "releaseControl": true
     },
     {
       "id": "ch7_silph_infiltration",
@@ -2507,7 +2450,8 @@
           "path": "story.beat",
           "value": "ch9_final_island_setup"
         }
-      ]
+      ],
+      "releaseControl": true
     },
     {
       "id": "ch9_final_island_setup",
@@ -2582,7 +2526,8 @@
           "path": "story.beat",
           "value": "ch10_mewtwo_confront"
         }
-      ]
+      ],
+      "releaseControl": true
     },
     {
       "id": "ch10_mewtwo_confront",
@@ -2996,7 +2941,8 @@
           "path": "story.beat",
           "value": "ch14_indigo_opening"
         }
-      ]
+      ],
+      "releaseControl": true
     },
     {
       "id": "ch14_indigo_opening",
@@ -3071,7 +3017,8 @@
           "path": "story.beat",
           "value": "ch15_elite_lance"
         }
-      ]
+      ],
+      "releaseControl": true
     },
     {
       "id": "ch15_elite_lance",
@@ -3361,7 +3308,8 @@
           "path": "story.beat",
           "value": "complete"
         }
-      ]
+      ],
+      "releaseControl": true
     },
     {
       "id": "ch18_oak_debrief",
