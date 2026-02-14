@@ -1481,51 +1481,47 @@
         {
           "kind": "battle",
           "enemy": {
-            "name": "GYARADOS",
-            "spr": "gyarados",
-            "lv": 20,
-            "hp": 55,
-            "maxHp": 55
+            "name": "STARMIE",
+            "spr": "staryu",
+            "lv": 21,
+            "hp": 52,
+            "maxHp": 52
           },
           "options": {
-            "ally": "Misty",
-            "terrain": "water",
             "scripted": true,
+            "music": "battle_gym",
             "scriptSteps": [
               {
                 "type": "log",
-                "text": "GYARADOS selvagem esta enfurecido!"
+                "text": "MISTY: Vamos ver se você aguenta a pressão!"
               },
               {
                 "type": "log",
-                "text": "RED e MISTY trabalham juntos!"
-              },
-              {
-                "type": "playerMove",
-                "move": "Thunder Shock",
-                "damage": 20
-              },
-              {
-                "type": "log",
-                "text": "PIKA paralisa GYARADOS!"
-              },
-              {
-                "type": "log",
-                "text": "MISTY usa STARMIE!"
+                "text": "STARMIE, eu escolho você!"
               },
               {
                 "type": "enemyMove",
-                "move": "Thrash",
-                "damage": 15
+                "move": "Water Gun"
               },
               {
                 "type": "playerMove",
-                "move": "Vine Whip",
-                "damage": 18
+                "move": "Vine Whip"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Surf"
+              },
+              {
+                "type": "playerMove",
+                "move": "Razor Leaf"
               },
               {
                 "type": "log",
-                "text": "GYARADOS esta se acalmando!"
+                "text": "STARMIE está enfraquecendo!"
+              },
+              {
+                "type": "playerMove",
+                "move": "Razor Leaf"
               },
               {
                 "type": "end",

@@ -1350,7 +1350,16 @@
         MEW:       { baseStats: [100, 100, 100, 100, 100], type: ['PSYCHIC'] },
         MEWTWO:    { baseStats: [110, 90, 154, 90, 130], type: ['PSYCHIC'] },
         DRAGONITE: { baseStats: [134, 95, 100, 100, 80], type: ['DRAGON', 'FLYING'] },
-        CHARIZARD: { baseStats: [84, 78, 109, 85, 100], type: ['FIRE', 'FLYING'] }
+        CHARIZARD: { baseStats: [84, 78, 109, 85, 100], type: ['FIRE', 'FLYING'] },
+        STARMIE:   { baseStats: [75, 85, 100, 85, 115], type: ['WATER', 'PSYCHIC'] },
+        RAICHU:    { baseStats: [90, 55, 90, 80, 110], type: ['ELECTRIC'] },
+        MACHAMP:   { baseStats: [130, 80, 65, 85, 55], type: ['FIGHTING'] },
+        HAUNTER:   { baseStats: [45, 45, 115, 55, 95], type: ['GHOST', 'POISON'] },
+        ARBOK:     { baseStats: [85, 69, 65, 79, 80], type: ['POISON'] },
+        NIDOKING:  { baseStats: [102, 77, 85, 75, 85], type: ['POISON', 'GROUND'] },
+        SNORLAX:   { baseStats: [160, 65, 65, 110, 30], type: ['NORMAL'] },
+        LAPRAS:    { baseStats: [85, 80, 85, 95, 60], type: ['WATER', 'ICE'] },
+        AERODACTYL:{ baseStats: [105, 65, 60, 75, 130], type: ['ROCK', 'FLYING'] },
     };
 
     const BATTLE_MOVES = {
@@ -1378,6 +1387,14 @@
         'Dragon Claw':   { power: 80, type: 'DRAGON', category: 'Physical' },
         'Ice Beam':      { power: 90, type: 'ICE', category: 'Special' },
         'Recover':       { power: 0, type: 'PSYCHIC', category: 'Status', effect: 'heal_self' },
+        'Hyper Beam':    { power: 150, type: 'NORMAL', category: 'Special' },
+        'Earthquake':    { power: 100, type: 'GROUND', category: 'Physical' },
+        'Blizzard':      { power: 110, type: 'ICE', category: 'Special' },
+        'Body Slam':     { power: 85, type: 'NORMAL', category: 'Physical' },
+        'Seismic Toss':  { power: 0, type: 'FIGHTING', category: 'Physical' },
+        'Double Edge':   { power: 120, type: 'NORMAL', category: 'Physical' },
+        'Wing Attack':   { power: 60, type: 'FLYING', category: 'Physical' },
+        'Flamethrower':  { power: 90, type: 'FIRE', category: 'Special' },
         'Sleep Powder':  { power: 0, type: 'GRASS', category: 'Status', effect: 'sleep' }
     };
 
