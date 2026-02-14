@@ -1777,7 +1777,8 @@
           "value": "ch4_ssanne_rocket"
         }
       ],
-      "releaseControl": true
+      "releaseControl": true,
+      "next": "ch4_ssanne_rocket"
     },
     {
       "id": "ch4_ssanne_rocket",
@@ -1911,7 +1912,8 @@
           "path": "story.beat",
           "value": "ch5_surge_pressure"
         }
-      ]
+      ],
+      "next": "ch5_surge_pressure"
     },
     {
       "id": "ch5_surge_pressure",
@@ -2044,7 +2046,8 @@
           "value": "ch6_lavender_shadow"
         }
       ],
-      "releaseControl": true
+      "releaseControl": true,
+      "next": "ch6_lavender_shadow"
     },
     {
       "id": "ch6_lavender_shadow",
@@ -2203,7 +2206,8 @@
           "value": "ch7_silph_infiltration"
         }
       ],
-      "releaseControl": true
+      "releaseControl": true,
+      "next": "ch7_silph_infiltration"
     },
     {
       "id": "ch7_silph_infiltration",
@@ -2282,11 +2286,56 @@
           ]
         },
         {
+          "kind": "battle",
+          "enemy": {
+            "name": "ALAKAZAM",
+            "spr": "alakazam",
+            "lv": 30,
+            "hp": 60,
+            "maxHp": 60
+          },
+          "options": {
+            "scripted": true,
+            "music": "battle_trainer",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "SABRINA envia ALAKAZAM!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Psychic"
+              },
+              {
+                "type": "playerMove",
+                "move": "Vine Whip"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Psychic"
+              },
+              {
+                "type": "playerMove",
+                "move": "Razor Leaf"
+              },
+              {
+                "type": "playerMove",
+                "move": "Razor Leaf"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
           "kind": "set",
           "path": "story.beat",
           "value": "ch8_saffron_psychic"
         }
-      ]
+      ],
+      "next": "ch8_saffron_psychic"
     },
     {
       "id": "ch8_saffron_psychic",
@@ -2451,7 +2500,8 @@
           "value": "ch9_final_island_setup"
         }
       ],
-      "releaseControl": true
+      "releaseControl": true,
+      "next": "ch9_final_island_setup"
     },
     {
       "id": "ch9_final_island_setup",
@@ -2527,7 +2577,8 @@
           "value": "ch10_mewtwo_confront"
         }
       ],
-      "releaseControl": true
+      "releaseControl": true,
+      "next": "ch10_mewtwo_confront"
     },
     {
       "id": "ch10_mewtwo_confront",
@@ -2778,7 +2829,8 @@
           "path": "story.beat",
           "value": "ch13_viridian_giovanni"
         }
-      ]
+      ],
+      "next": "ch13_viridian_giovanni"
     },
     {
       "id": "ch11_aftershock_recovery",
@@ -2942,7 +2994,8 @@
           "value": "ch14_indigo_opening"
         }
       ],
-      "releaseControl": true
+      "releaseControl": true,
+      "next": "ch14_indigo_opening"
     },
     {
       "id": "ch14_indigo_opening",
@@ -3018,7 +3071,8 @@
           "value": "ch15_elite_lance"
         }
       ],
-      "releaseControl": true
+      "releaseControl": true,
+      "next": "ch15_elite_lance"
     },
     {
       "id": "ch15_elite_lance",
@@ -3081,14 +3135,50 @@
             "name": "DRAGONITE",
             "spr": "dragonite",
             "lv": 55,
-            "hp": 120,
-            "maxHp": 120
+            "hp": 150,
+            "maxHp": 150
           },
           "options": {
-            "trainer": "Lance",
-            "trainerSprite": "lance",
-            "terrain": "league",
-            "elite": true
+            "scripted": true,
+            "music": "battle_champion",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "LANCE, o Mestre dos Dragões!"
+              },
+              {
+                "type": "log",
+                "text": "DRAGONITE apareceu!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Dragon Claw"
+              },
+              {
+                "type": "playerMove",
+                "move": "Ice Beam"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Thrash"
+              },
+              {
+                "type": "playerMove",
+                "move": "Ice Beam"
+              },
+              {
+                "type": "log",
+                "text": "DRAGONITE está enfraquecendo!"
+              },
+              {
+                "type": "playerMove",
+                "move": "Ice Beam"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
           }
         },
         {
@@ -3111,7 +3201,8 @@
           "path": "story.beat",
           "value": "ch16_blue_champion"
         }
-      ]
+      ],
+      "next": "ch16_blue_champion"
     },
     {
       "id": "ch16_blue_champion",
@@ -3246,7 +3337,8 @@
           "path": "story.beat",
           "value": "ch17_season1_epilogue"
         }
-      ]
+      ],
+      "next": "ch17_season1_epilogue"
     },
     {
       "id": "ch17_season1_epilogue",
