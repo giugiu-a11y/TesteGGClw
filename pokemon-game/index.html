@@ -3433,25 +3433,39 @@
         const pokeName = active.name || active.species;
         
         if (won) {
-            if (!GAME_MODE.storyLock) {
-                const exp = battle.enemy.lv * 10;
-                active.exp += exp;
-                if (active.exp >= active.lv * 50) {
-                    active.lv++;
-                    active.exp = 0;
-                    active.maxHp += 2;
-                    active.hp = active.maxHp;
-                    document.getElementById('battleLog').textContent = `${pokeName} subiu para Lv.${active.lv}!`;
-                } else {
-                    document.getElementById('battleLog').textContent = `Ganhou ${exp} EXP!`;
-                }
+            // Calculate XP based on enemy level and type
+            const baseExp = battle.enemy.lv * 12;
+            const bonusExp = battle.enemy.name === 'MEWTWO' ? 500 : 
+                            battle.enemy.lv >= 50 ? 100 : 
+                            battle.enemy.lv >= 30 ? 50 : 0;
+            const totalExp = baseExp + bonusExp;
+            
+            active.exp = (active.exp || 0) + totalExp;
+            const expNeeded = active.lv * 60 + 40; // Progressive XP curve
+            
+            if (active.exp >= expNeeded) {
+                // LEVEL UP!
+                active.lv++;
+                active.exp = active.exp - expNeeded;
+                
+                // Stat boosts based on Pokemon
+                const hpBoost = active.species === 'SNORLAX' ? 8 : 
+                               active.species === 'PIKACHU' ? 2 : 3;
+                active.maxHp += hpBoost;
+                active.hp = active.maxHp; // Full heal on level up
+                
+                // Visual feedback
+                const canvas = document.getElementById('gameCanvas');
+                canvas.classList.add('evolving');
+                setTimeout(() => canvas.classList.remove('evolving'), 800);
+                
+                document.getElementById('battleLog').textContent = `🎉 ${pokeName} subiu para Lv.${active.lv}! HP+${hpBoost}`;
             } else {
-                // In storyLock mode, leveling is cosmetic and scripted by story beats.
-                document.getElementById('battleLog').textContent = `Vitoria!`;
+                document.getElementById('battleLog').textContent = `+${totalExp} EXP! (${active.exp}/${expNeeded})`;
             }
         } else {
-            document.getElementById('battleLog').textContent = `${pokeName} caiu...`;
-            active.hp = Math.floor(active.maxHp / 2);
+            document.getElementById('battleLog').textContent = `${pokeName} foi derrotado...`;
+            active.hp = Math.max(1, Math.floor(active.maxHp / 2)); // Don't fully faint
         }
         setTimeout(() => {
             document.getElementById('battleScreen').style.display = 'none';
