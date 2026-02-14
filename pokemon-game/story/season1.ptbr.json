@@ -305,7 +305,8 @@
           "y": 9,
           "dir": "up"
         }
-      ]
+      ],
+      "next": "ch1_oak_mew_explain"
     },
     {
       "id": "ch1_oak_mew_explain",
@@ -442,7 +443,8 @@
           ]
         }
       ],
-      "releaseControl": true
+      "releaseControl": true,
+      "next": "ch1_viridian_arrival"
     },
     {
       "id": "ch1_viridian_arrival",
@@ -517,7 +519,8 @@
           ]
         }
       ],
-      "releaseControl": true
+      "releaseControl": true,
+      "next": "ch1_viridian_forest_first"
     },
     {
       "id": "ch1_viridian_forest_first",
@@ -649,7 +652,8 @@
           ]
         }
       ],
-      "releaseControl": true
+      "releaseControl": true,
+      "next": "ch1_pewter_arrival"
     },
     {
       "id": "ch1_pewter_arrival",
@@ -799,7 +803,8 @@
           ]
         }
       ],
-      "releaseControl": true
+      "releaseControl": true,
+      "next": "ch1_brock_intro"
     },
     {
       "id": "ch1_brock_intro",
@@ -985,7 +990,8 @@
           ]
         }
       ],
-      "releaseControl": true
+      "releaseControl": true,
+      "next": "ch2_depart_pewter"
     },
     {
       "id": "ch2_depart_pewter",
@@ -1028,7 +1034,8 @@
           ]
         }
       ],
-      "releaseControl": true
+      "releaseControl": true,
+      "next": "ch2_mtmoon_entry"
     },
     {
       "id": "ch2_mtmoon_entry",
@@ -1101,7 +1108,8 @@
           "path": "story.beat",
           "value": "ch2_green_first_contact"
         }
-      ]
+      ],
+      "next": "ch2_green_first_contact"
     },
     {
       "id": "ch2_green_first_contact",
@@ -1213,7 +1221,8 @@
           ]
         }
       ],
-      "releaseControl": true
+      "releaseControl": true,
+      "next": "ch2_rocket_grunt_cave"
     },
     {
       "id": "ch2_rocket_grunt_cave",
@@ -1300,7 +1309,8 @@
           "path": "story.beat",
           "value": "ch2_fossil_rumor"
         }
-      ]
+      ],
+      "next": "ch2_fossil_rumor"
     },
     {
       "id": "ch2_fossil_rumor",
@@ -1360,7 +1370,8 @@
           ]
         }
       ],
-      "releaseControl": true
+      "releaseControl": true,
+      "next": "ch3_cerulean_arrival"
     },
     {
       "id": "ch3_cerulean_arrival",
@@ -1436,7 +1447,8 @@
           "value": "ch3_misty_clash"
         }
       ],
-      "releaseControl": true
+      "releaseControl": true,
+      "next": "ch3_misty_clash"
     },
     {
       "id": "ch3_misty_clash",
@@ -1577,7 +1589,8 @@
           ]
         }
       ],
-      "releaseControl": true
+      "releaseControl": true,
+      "next": "ch3_bill_event"
     },
     {
       "id": "ch3_bill_event",
@@ -1701,7 +1714,8 @@
           ]
         }
       ],
-      "releaseControl": true
+      "releaseControl": true,
+      "next": "ch4_vermilion_setup"
     },
     {
       "id": "ch4_vermilion_setup",
