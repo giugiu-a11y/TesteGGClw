@@ -858,71 +858,44 @@
             "name": "ONIX",
             "spr": "onix",
             "lv": 14,
-            "hp": 45,
-            "maxHp": 45
+            "hp": 35,
+            "maxHp": 35
           },
           "options": {
-            "trainer": "Brock",
-            "trainerSprite": "brock",
-            "terrain": "gym_rock",
             "scripted": true,
+            "music": "battle_gym",
             "scriptSteps": [
               {
                 "type": "log",
-                "text": "Lider BROCK quer batalhar!"
+                "text": "BROCK: Sou o líder do ginásio de PEWTER!"
               },
               {
                 "type": "log",
-                "text": "BROCK enviou ONIX!"
-              },
-              {
-                "type": "log",
-                "text": "RED enviou PIKA!"
-              },
-              {
-                "type": "playerMove",
-                "move": "Thunder Shock",
-                "damage": 5
-              },
-              {
-                "type": "log",
-                "text": "Nao e muito efetivo..."
+                "text": "ONIX, vamos lá!"
               },
               {
                 "type": "enemyMove",
-                "move": "Rock Throw",
-                "damage": 12
-              },
-              {
-                "type": "log",
-                "text": "PIKA esta em apuros!"
-              },
-              {
-                "type": "log",
-                "text": "RED troca para SAUR!"
+                "move": "Rock Throw"
               },
               {
                 "type": "playerMove",
-                "move": "Vine Whip",
-                "damage": 25
+                "move": "Water Gun"
               },
               {
                 "type": "log",
-                "text": "E super efetivo!"
+                "text": "Super efetivo!"
               },
               {
                 "type": "enemyMove",
-                "move": "Bind",
-                "damage": 8
+                "move": "Bind"
               },
               {
                 "type": "playerMove",
-                "move": "Razor Leaf",
-                "damage": 30
+                "move": "Water Gun"
               },
               {
-                "type": "log",
-                "text": "ONIX foi derrotado!"
+                "type": "playerMove",
+                "move": "Water Gun"
               },
               {
                 "type": "end",
@@ -2722,57 +2695,64 @@
             "name": "MEWTWO",
             "spr": "mewtwo",
             "lv": 70,
-            "hp": 150,
-            "maxHp": 150
+            "hp": 200,
+            "maxHp": 200
           },
           "options": {
-            "terrain": "lab_ruins",
-            "legendary": true,
             "scripted": true,
+            "music": "battle_legendary",
             "scriptSteps": [
               {
                 "type": "log",
-                "text": "MEWTWO quer testar RED!"
+                "text": "MEWTWO: Humano... você ousa me desafiar?"
               },
               {
                 "type": "enemyMove",
-                "move": "Psychic",
-                "damage": 30
+                "move": "Psychic"
               },
               {
                 "type": "log",
-                "text": "Poder incrivel!"
+                "text": "O poder de MEWTWO é avassalador!"
               },
               {
                 "type": "playerMove",
-                "move": "Thunder",
-                "damage": 20
-              },
-              {
-                "type": "log",
-                "text": "MEWTWO mal sentiu!"
+                "move": "Shadow Ball"
               },
               {
                 "type": "enemyMove",
-                "move": "Recover",
-                "damage": -20
-              },
-              {
-                "type": "log",
-                "text": "MEWTWO recuperou energia!"
-              },
-              {
-                "type": "log",
-                "text": "RED usa todos os Pokemon juntos!"
+                "move": "Psychic"
               },
               {
                 "type": "playerMove",
-                "move": "Combined Attack",
-                "damage": 50
+                "move": "Shadow Ball"
               },
               {
                 "type": "log",
-                "text": "MEWTWO esta impressionado!"
+                "text": "MEWTWO está se regenerando!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Recover"
+              },
+              {
+                "type": "playerMove",
+                "move": "Thunderbolt"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Psychic"
+              },
+              {
+                "type": "playerMove",
+                "move": "Thunder"
+              },
+              {
+                "type": "log",
+                "text": "MEWTWO está enfraquecendo!"
+              },
+              {
+                "type": "playerMove",
+                "move": "Hyper Beam"
               },
               {
                 "type": "end",
@@ -2997,6 +2977,62 @@
             "8 BADGES! Agora posso ir pro INDIGO PLATEAU!",
             "E hora de provar que sou o melhor treinador de Kanto!"
           ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "NIDOKING",
+            "spr": "nidoking",
+            "lv": 50,
+            "hp": 130,
+            "maxHp": 130
+          },
+          "options": {
+            "scripted": true,
+            "music": "battle_champion",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "GIOVANNI: Então você chegou até aqui..."
+              },
+              {
+                "type": "log",
+                "text": "Vou te mostrar o poder da TEAM ROCKET!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Earthquake"
+              },
+              {
+                "type": "playerMove",
+                "move": "Surf"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Thrash"
+              },
+              {
+                "type": "playerMove",
+                "move": "Surf"
+              },
+              {
+                "type": "log",
+                "text": "NIDOKING está furioso!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Thrash"
+              },
+              {
+                "type": "playerMove",
+                "move": "Hydro Pump"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
         },
         {
           "kind": "set",
