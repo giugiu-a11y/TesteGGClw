@@ -207,6 +207,21 @@
         }
         
         @keyframes blink { 50% { opacity: 0; } }
+        @keyframes evolve-flash {
+            0% { filter: brightness(1); }
+            25% { filter: brightness(3) saturate(0); }
+            50% { filter: brightness(5) saturate(0); }
+            75% { filter: brightness(3) saturate(0); }
+            100% { filter: brightness(1); }
+        }
+        .evolving { animation: evolve-flash 1.5s ease-in-out; }
+        .evolution-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: white; opacity: 0; pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 9999;
+        }
+        .evolution-overlay.active { opacity: 0.9; }
         
         #battleScreen {
             display: none;
@@ -374,6 +389,7 @@
     </style>
 </head>
 <body>
+    <div id="evolutionOverlay" class="evolution-overlay"></div>
     <div id="loadingScreen">
         <div>Loading sprites...</div>
         <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
@@ -520,6 +536,13 @@
         arbok: './assets/tilesets/pokemon_sprites/arbok_front.png',
         geodude: './assets/tilesets/pokemon_sprites/geodude_front.png',
         onix: './assets/tilesets/pokemon_sprites/onix_front.png',
+        raticate: './assets/tilesets/pokemon_sprites/020_raticate_front.png',
+        alakazam: './assets/tilesets/pokemon_sprites/065_alakazam_front.png',
+        gengar: './assets/tilesets/pokemon_sprites/094_gengar_front.png',
+        electabuzz: './assets/tilesets/pokemon_sprites/125_electabuzz_front.png',
+        dragonite: './assets/tilesets/pokemon_sprites/149_dragonite_front.png',
+        mewtwo: './assets/tilesets/pokemon_sprites/150_mewtwo_front.png',
+        pikachu: './assets/tilesets/pokemon_sprites/pikachu_front.png',
         trainerBlue: './assets/tilesets/trainers/rival_early_front_pic.png',
         trainerBrock: './assets/tilesets/trainers/leader_brock_front_pic.png',
         trainerRocket: './assets/tilesets/trainers/rocket_grunt_m_front_pic.png',
@@ -1729,11 +1752,31 @@
         if (!ref) return false;
         const species = String(toSpecies || '').toUpperCase();
         if (!species) return false;
+        
+        // Visual evolution effect
+        const overlay = document.getElementById('evolutionOverlay');
+        const canvas = document.getElementById('gameCanvas');
+        if (overlay && canvas) {
+            overlay.classList.add('active');
+            canvas.classList.add('evolving');
+            setTimeout(() => {
+                overlay.classList.remove('active');
+                canvas.classList.remove('evolving');
+            }, 1500);
+        }
+        
+        // Update Pokemon data
+        const oldSpecies = ref.species;
         ref.species = species;
         if (typeof opts.name === 'string' && opts.name.trim()) ref.name = opts.name.trim().toUpperCase();
         if (typeof opts.lv === 'number') ref.lv = Math.max(ref.lv, opts.lv);
-        if (typeof opts.maxHpBoost === 'number') ref.maxHp = Math.max(1, ref.maxHp + opts.maxHpBoost);
-        if (ref.hp > ref.maxHp) ref.hp = ref.maxHp;
+        
+        // Boost stats on evolution
+        const hpBoost = species === 'IVYSAUR' ? 15 : species === 'VENUSAUR' ? 25 : species === 'POLIWRATH' ? 20 : 10;
+        ref.maxHp = Math.max(ref.maxHp, ref.maxHp + hpBoost);
+        ref.hp = ref.maxHp; // Full heal on evolution
+        
+        console.log(`🌟 ${ref.name} evolved from ${oldSpecies} to ${species}!`);
         return true;
     }
 
