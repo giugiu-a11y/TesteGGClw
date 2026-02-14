@@ -282,6 +282,44 @@
         }
         .team-pokemon .hp-fill.low { background: linear-gradient(90deg, #fbbf24, #f59e0b); }
         .team-pokemon .hp-fill.critical { background: linear-gradient(90deg, #ef4444, #dc2626); }
+        
+        /* Controls HUD */
+        #controlsHud {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            z-index: 100;
+            pointer-events: none;
+        }
+        #controlsHud span {
+            margin-right: 12px;
+            color: #aaa;
+        }
+        #controlsHud kbd {
+            background: #444;
+            padding: 2px 6px;
+            border-radius: 3px;
+            margin-right: 4px;
+        }
+        /* Location indicator */
+        #locationHud {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.7);
+            color: #4ade80;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            z-index: 100;
+            display: none;
+        }
+
         #teamMenu .close-btn {
             display: block;
             margin: 15px auto 0;
@@ -466,6 +504,13 @@
         <div id="teamList"></div>
         <button class="close-btn" onclick="closeTeamMenu()">FECHAR (P)</button>
     </div>
+    <div id="controlsHud">
+        <span><kbd>↑↓←→</kbd> Mover</span>
+        <span><kbd>Z</kbd> Ação</span>
+        <span><kbd>P</kbd> Time</span>
+        <span><kbd>M</kbd> Menu</span>
+    </div>
+    <div id="locationHud"></div>
     <div id="loadingScreen">
         <div>Loading sprites...</div>
         <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
@@ -4069,6 +4114,37 @@
         }
     });
     
+
+
+    // Location HUD
+    function updateLocationHud() {
+        const hud = document.getElementById('locationHud');
+        if (!hud) return;
+        
+        const mapNames = {
+            'pallet_town': '🏠 PALLET TOWN',
+            'route_1': '🛤️ ROUTE 1',
+            'viridian_city': '🌲 VIRIDIAN CITY',
+            'viridian_forest': '🌳 VIRIDIAN FOREST',
+            'pewter_city': '⛰️ PEWTER CITY',
+            'mt_moon': '🌙 MT. MOON',
+            'cerulean_city': '💧 CERULEAN CITY',
+            'vermilion_city': '⚡ VERMILION CITY',
+            'lavender_town': '👻 LAVENDER TOWN',
+            'celadon_city': '🌸 CELADON CITY',
+            'saffron_city': '🔮 SAFFRON CITY',
+            'cinnabar_island': '🔥 CINNABAR ISLAND',
+            'indigo_plateau': '🏆 INDIGO PLATEAU',
+            'oaks_lab': '🔬 OAK\'S LAB'
+        };
+        
+        const name = mapNames[GS.map] || GS.map.replace(/_/g, ' ').toUpperCase();
+        hud.textContent = name;
+        hud.style.display = 'block';
+    }
+    
+    // Call on map change
+    const originalTeleportTo = typeof teleportTo === 'function' ? teleportTo : null;
 
     // Team Menu Functions
     function openTeamMenu() {
