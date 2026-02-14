@@ -1305,6 +1305,113 @@
         }
     };
     
+    // ==================== POKEMON DATA & BATTLE SYSTEM ====================
+    const POKEMON_STATS = {
+        POLIWHIRL: { baseStats: [50, 65, 50, 65, 90], type: ['WATER'] },
+        POLIWRATH: { baseStats: [95, 95, 70, 90, 70], type: ['WATER', 'FIGHTING'] },
+        PIKACHU:   { baseStats: [55, 40, 50, 50, 90], type: ['ELECTRIC'] },
+        BULBASAUR: { baseStats: [49, 49, 65, 65, 45], type: ['GRASS', 'POISON'] },
+        IVYSAUR:   { baseStats: [62, 63, 80, 80, 60], type: ['GRASS', 'POISON'] },
+        VENUSAUR:  { baseStats: [82, 83, 100, 100, 80], type: ['GRASS', 'POISON'] },
+        RATTATA:   { baseStats: [56, 35, 25, 35, 72], type: ['NORMAL'] },
+        RATICATE:  { baseStats: [81, 60, 50, 70, 97], type: ['NORMAL'] },
+        PIDGEY:    { baseStats: [45, 40, 35, 35, 56], type: ['NORMAL', 'FLYING'] },
+        ONIX:      { baseStats: [45, 160, 30, 45, 70], type: ['ROCK', 'GROUND'] },
+        GEODUDE:   { baseStats: [80, 100, 30, 30, 20], type: ['ROCK', 'GROUND'] },
+        KOFFING:   { baseStats: [65, 95, 60, 45, 35], type: ['POISON'] },
+        ELECTABUZZ:{ baseStats: [93, 57, 95, 85, 105], type: ['ELECTRIC'] },
+        GYARADOS:  { baseStats: [125, 79, 60, 100, 81], type: ['WATER', 'FLYING'] },
+        STARMIE:   { baseStats: [75, 85, 100, 85, 115], type: ['WATER', 'PSYCHIC'] },
+        GENGAR:    { baseStats: [65, 60, 130, 75, 110], type: ['GHOST', 'POISON'] },
+        ALAKAZAM:  { baseStats: [55, 50, 135, 95, 120], type: ['PSYCHIC'] },
+        MEW:       { baseStats: [100, 100, 100, 100, 100], type: ['PSYCHIC'] },
+        MEWTWO:    { baseStats: [110, 90, 154, 90, 130], type: ['PSYCHIC'] },
+        DRAGONITE: { baseStats: [134, 95, 100, 100, 80], type: ['DRAGON', 'FLYING'] },
+        CHARIZARD: { baseStats: [84, 78, 109, 85, 100], type: ['FIRE', 'FLYING'] }
+    };
+
+    const BATTLE_MOVES = {
+        'Tackle':        { power: 40, type: 'NORMAL', category: 'Physical' },
+        'Scratch':       { power: 40, type: 'NORMAL', category: 'Physical' },
+        'Vine Whip':     { power: 45, type: 'GRASS', category: 'Physical' },
+        'Razor Leaf':    { power: 55, type: 'GRASS', category: 'Physical' },
+        'Solar Beam':    { power: 120, type: 'GRASS', category: 'Special' },
+        'Petal Dance':   { power: 120, type: 'GRASS', category: 'Special' },
+        'Thunder Shock': { power: 40, type: 'ELECTRIC', category: 'Special' },
+        'Thunderbolt':   { power: 90, type: 'ELECTRIC', category: 'Special' },
+        'Thunder':       { power: 110, type: 'ELECTRIC', category: 'Special' },
+        'Water Gun':     { power: 40, type: 'WATER', category: 'Special' },
+        'Hydro Pump':    { power: 110, type: 'WATER', category: 'Special' },
+        'Surf':          { power: 90, type: 'WATER', category: 'Special' },
+        'Rock Throw':    { power: 50, type: 'ROCK', category: 'Physical' },
+        'Bind':          { power: 15, type: 'NORMAL', category: 'Physical' },
+        'Psychic':       { power: 90, type: 'PSYCHIC', category: 'Special' },
+        'Shadow Ball':   { power: 80, type: 'GHOST', category: 'Special' },
+        'Fire Blast':    { power: 110, type: 'FIRE', category: 'Special' },
+        'Slash':         { power: 70, type: 'NORMAL', category: 'Physical' },
+        'Dig':           { power: 80, type: 'GROUND', category: 'Physical' },
+        'Submission':    { power: 80, type: 'FIGHTING', category: 'Physical' },
+        'Thrash':        { power: 120, type: 'NORMAL', category: 'Physical' },
+        'Dragon Claw':   { power: 80, type: 'DRAGON', category: 'Physical' },
+        'Ice Beam':      { power: 90, type: 'ICE', category: 'Special' },
+        'Recover':       { power: 0, type: 'PSYCHIC', category: 'Status', effect: 'heal_self' },
+        'Sleep Powder':  { power: 0, type: 'GRASS', category: 'Status', effect: 'sleep' }
+    };
+
+    const TYPE_CHART = {
+        'NORMAL':   { 'ROCK': 0.5, 'GHOST': 0, 'STEEL': 0.5 },
+        'FIRE':     { 'WATER': 0.5, 'GRASS': 2, 'ICE': 2, 'BUG': 2, 'ROCK': 0.5, 'DRAGON': 0.5, 'STEEL': 2, 'FIRE': 0.5 },
+        'WATER':    { 'FIRE': 2, 'GRASS': 0.5, 'WATER': 0.5, 'DRAGON': 0.5, 'ROCK': 2, 'GROUND': 2 },
+        'ELECTRIC': { 'WATER': 2, 'GRASS': 0.5, 'ELECTRIC': 0.5, 'GROUND': 0, 'DRAGON': 0.5, 'FLYING': 2 },
+        'GRASS':    { 'FIRE': 0.5, 'WATER': 2, 'GRASS': 0.5, 'GROUND': 2, 'ROCK': 2, 'DRAGON': 0.5, 'BUG': 0.5, 'POISON': 0.5, 'STEEL': 0.5, 'FLYING': 0.5 },
+        'ICE':      { 'FIRE': 0.5, 'WATER': 0.5, 'GRASS': 2, 'ICE': 0.5, 'DRAGON': 2, 'GROUND': 2, 'FLYING': 2, 'STEEL': 0.5 },
+        'FIGHTING': { 'NORMAL': 2, 'ICE': 2, 'ROCK': 2, 'BUG': 0.5, 'PSYCHIC': 0.5, 'FLYING': 0.5, 'GHOST': 0, 'DARK': 2, 'STEEL': 2, 'POISON': 0.5, 'FAIRY': 0.5 },
+        'POISON':   { 'GRASS': 2, 'POISON': 0.5, 'GROUND': 0.5, 'ROCK': 0.5, 'GHOST': 0.5, 'STEEL': 0, 'FAIRY': 2 },
+        'GROUND':   { 'FIRE': 2, 'GRASS': 0.5, 'ELECTRIC': 2, 'POISON': 2, 'ROCK': 2, 'BUG': 0.5, 'FLYING': 0, 'STEEL': 2 },
+        'FLYING':   { 'GRASS': 2, 'FIGHTING': 2, 'BUG': 2, 'ELECTRIC': 0.5, 'ROCK': 0.5, 'STEEL': 0.5 },
+        'PSYCHIC':  { 'FIGHTING': 2, 'PSYCHIC': 0.5, 'POISON': 2, 'DARK': 0, 'STEEL': 0.5 },
+        'BUG':      { 'FIRE': 0.5, 'FIGHTING': 0.5, 'FLYING': 0.5, 'POISON': 0.5, 'GHOST': 0.5, 'STEEL': 0.5, 'DARK': 2, 'GRASS': 2, 'PSYCHIC': 2, 'FAIRY': 0.5 },
+        'ROCK':     { 'FIRE': 2, 'FIGHTING': 0.5, 'FLYING': 2, 'BUG': 2, 'ICE': 2, 'GROUND': 0.5, 'STEEL': 0.5 },
+        'GHOST':    { 'NORMAL': 0, 'PSYCHIC': 2, 'GHOST': 2, 'DARK': 0.5 },
+        'DRAGON':   { 'DRAGON': 2, 'STEEL': 0.5, 'FAIRY': 0 },
+        'DARK':     { 'FIGHTING': 0.5, 'PSYCHIC': 2, 'GHOST': 2, 'DARK': 0.5, 'FAIRY': 0.5 },
+        'STEEL':    { 'FIRE': 0.5, 'WATER': 0.5, 'ELECTRIC': 0.5, 'ICE': 2, 'ROCK': 2, 'FAIRY': 2, 'STEEL': 0.5 },
+        'FAIRY':    { 'FIRE': 0.5, 'FIGHTING': 2, 'POISON': 0.5, 'DRAGON': 2, 'DARK': 2, 'STEEL': 0.5 }
+    };
+
+    function getTypeMultiplier(atkType, defTypes) {
+        let mult = 1;
+        const chart = TYPE_CHART[atkType];
+        if (!chart) return 1;
+        for (const dt of defTypes) {
+            mult *= (chart[dt] !== undefined ? chart[dt] : 1);
+        }
+        return mult;
+    }
+
+    function calcBattleDamage(attacker, defender, moveName) {
+        const move = BATTLE_MOVES[moveName];
+        if (!move || move.power === 0) return 0;
+        
+        const atkStats = POKEMON_STATS[attacker.species] || { baseStats: [50,50,50,50,50], type: ['NORMAL'] };
+        const defStats = POKEMON_STATS[defender.species] || { baseStats: [50,50,50,50,50], type: ['NORMAL'] };
+        
+        const atkLv = attacker.lv || 10;
+        const atkStat = move.category === 'Physical' ? atkStats.baseStats[0] : atkStats.baseStats[2];
+        const defStat = move.category === 'Physical' ? defStats.baseStats[1] : defStats.baseStats[3];
+        
+        let dmg = ((2 * atkLv / 5 + 2) * move.power * atkStat / defStat / 50) + 2;
+        dmg *= getTypeMultiplier(move.type, defStats.type);
+        
+        // STAB bonus
+        if (atkStats.type.includes(move.type)) dmg *= 1.5;
+        
+        // Random variance (85-100%)
+        dmg *= (0.85 + Math.random() * 0.15);
+        
+        return Math.max(1, Math.floor(dmg));
+    }
+
     // ==================== GAME STATE ====================
     let GS = {
         px: 9, py: 13, dir: 'down',
@@ -3051,17 +3158,20 @@
 
         if (step.type === 'playerMove') {
             const active = getActivePokemon();
-            const moveName = step.move || 'Attack';
-            const dmg = Math.max(0, step.damage ?? 0);
+            const moveName = step.move || 'Tackle';
+            // Use proportional damage calculation if no step.damage specified
+            const attacker = { species: active.species, lv: active.lv || 10 };
+            const defender = { species: battle.enemy.name, lv: battle.enemy.lv || 10 };
+            const dmg = step.damage !== undefined ? Math.max(0, step.damage) : calcBattleDamage(attacker, defender, moveName);
             setBattleLog(`${active.name || active.species} vai usar ${moveName}.`);
             battleWaitOk('OK', () => {
-                // Apply
                 battle.enemy.hp = Math.max(0, battle.enemy.hp - dmg);
                 const pct = battle.enemy.hp / battle.enemy.maxHp * 100;
                 const bar = document.getElementById('enemyHp');
                 bar.style.width = pct + '%';
                 bar.className = 'hp-fill' + (pct < 20 ? ' critical' : pct < 50 ? ' low' : '');
-                setBattleLog(`${active.name || active.species} usou ${moveName}! ${dmg ? `${dmg} de dano!` : ''}`.trim());
+                const effMsg = dmg > 15 ? ' Super efetivo!' : dmg < 5 ? ' Não foi muito efetivo...' : '';
+                setBattleLog(`${active.name || active.species} usou ${moveName}! ${dmg} de dano!${effMsg}`.trim());
                 if (battle.enemy.hp <= 0) { setTimeout(() => endBattle(true), 700); return; }
                 setTimeout(() => battleScriptedStep(), 500);
             });
@@ -3070,13 +3180,17 @@
 
         if (step.type === 'enemyMove') {
             const active = getActivePokemon();
-            const moveName = step.move || 'Attack';
-            const dmg = Math.max(0, step.damage ?? 0);
+            const moveName = step.move || 'Tackle';
+            // Use proportional damage calculation if no step.damage specified
+            const attacker = { species: battle.enemy.name, lv: battle.enemy.lv || 10 };
+            const defender = { species: active.species, lv: active.lv || 10 };
+            const dmg = step.damage !== undefined ? Math.max(0, step.damage) : calcBattleDamage(attacker, defender, moveName);
             setBattleLog(`${battle.enemy.name} vai atacar.`);
             battleWaitOk('OK', () => {
                 active.hp = Math.max(0, active.hp - dmg);
                 updatePlayerHp();
-                setBattleLog(`${battle.enemy.name} usou ${moveName}! ${dmg ? `${dmg} de dano!` : ''}`.trim());
+                const effMsg = dmg > 15 ? ' Super efetivo!' : dmg < 5 ? ' Não foi muito efetivo...' : '';
+                setBattleLog(`${battle.enemy.name} usou ${moveName}! ${dmg} de dano!${effMsg}`.trim());
                 if (active.hp <= 0) { setTimeout(() => endBattle(false), 700); return; }
                 setTimeout(() => battleScriptedStep(), 500);
             });

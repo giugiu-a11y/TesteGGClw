@@ -1627,6 +1627,31 @@
           "kind": "dialog",
           "speaker": "",
           "lines": [
+            "[ Enquanto RED ajuda BILL... ]",
+            "[ SAUR comeca a brilhar! ]"
+          ]
+        },
+        {
+          "kind": "evolve",
+          "slot": "saur",
+          "to": "IVYSAUR",
+          "options": {
+            "name": "SAUR",
+            "lv": 16
+          }
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "SAUR?! Voce esta evoluindo!",
+            "Incrivel! SAUR evoluiu para IVYSAUR!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
             "[ RED opera o computador seguindo as instrucoes de BILL ]",
             "[ Uma luz brilhante envolve BILL... ]",
             "[ BILL volta ao normal! ]"
@@ -1643,6 +1668,31 @@
         },
         {
           "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Enquanto RED ajuda BILL... ]",
+            "[ SAUR comeca a brilhar! ]"
+          ]
+        },
+        {
+          "kind": "evolve",
+          "slot": "saur",
+          "to": "IVYSAUR",
+          "options": {
+            "name": "SAUR",
+            "lv": 16
+          }
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "SAUR?! Voce esta evoluindo!",
+            "Incrivel! SAUR evoluiu para IVYSAUR!"
+          ]
+        },
+        {
+          "kind": "dialog",
           "speaker": "RED",
           "lines": [
             "Sim! Eles estao causando problemas por toda Kanto!"
@@ -1655,6 +1705,31 @@
             "Eu tenho informacoes sobre eles.",
             "A TEAM ROCKET esta planejando algo grande em VERMILION CITY.",
             "No porto, no S.S. ANNE. Voce devia investigar!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Enquanto RED ajuda BILL... ]",
+            "[ SAUR comeca a brilhar! ]"
+          ]
+        },
+        {
+          "kind": "evolve",
+          "slot": "saur",
+          "to": "IVYSAUR",
+          "options": {
+            "name": "SAUR",
+            "lv": 16
+          }
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "SAUR?! Voce esta evoluindo!",
+            "Incrivel! SAUR evoluiu para IVYSAUR!"
           ]
         },
         {
@@ -2610,6 +2685,32 @@
           ]
         },
         {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Diante do poder de MEWTWO... ]",
+            "[ POLI comeca a brilhar intensamente! ]"
+          ]
+        },
+        {
+          "kind": "evolve",
+          "slot": "poli",
+          "to": "POLIWRATH",
+          "options": {
+            "name": "POLI",
+            "lv": 35
+          }
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "POLI! Voce tambem esta evoluindo!",
+            "POLI evoluiu para POLIWRATH!",
+            "Agora estamos prontos para enfrentar MEWTWO!"
+          ]
+        },
+        {
           "kind": "battle",
           "enemy": {
             "name": "MEWTWO",
@@ -2999,6 +3100,32 @@
             "Voce chegou ate aqui, RED.",
             "Eu sou LANCE, o ultimo membro da ELITE FOUR.",
             "Meus DRAGOES vao testar sua determinacao!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Antes da batalha final contra LANCE... ]",
+            "[ SAUR brilha mais uma vez! ]"
+          ]
+        },
+        {
+          "kind": "evolve",
+          "slot": "saur",
+          "to": "VENUSAUR",
+          "options": {
+            "name": "SAUR",
+            "lv": 45
+          }
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "SAUR! Voce esta evoluindo de novo!",
+            "SAUR evoluiu para VENUSAUR!",
+            "Com todo esse poder, vamos vencer a ELITE FOUR!"
           ]
         },
         {
