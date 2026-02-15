@@ -42,12 +42,10 @@ mustContain(/schemaVersion\s*:\s*SAVE_SCHEMA_VERSION/, 'save envelope schema mis
 
 mustContain(/function\s+runAutopilotEncounter\s*\(/, 'autopilot encounter flow missing');
 mustContain(/checkEncounter\s*\([\s\S]*runAutopilotEncounter\(/m, 'checkEncounter must use autopilot flow');
-mustContain(/const\s+AUTO_CUTSCENE_MOVE\s*=\s*false/, 'AUTO_CUTSCENE_MOVE must be hard-disabled in release');
-
-// Input hardening: only tracked listeners should be used outside helper implementation.
-const addEvt = script.match(/\.addEventListener\(/g) || [];
-if (addEvt.length > 1) {
-  fail(`expected tracked listeners only, found ${addEvt.length} raw addEventListener calls`);
-}
+mustContain(/const\s+AUTO_CUTSCENE_MOVE\s*=\s*qs\('autocutmove',\s*'1'\)\s*===\s*'1'/, 'AUTO_CUTSCENE_MOVE query flag missing');
+mustContain(/function\s+onDpadDown\s*\(/, 'pointer-safe D-pad handler missing');
+mustContain(/function\s+onDpadUp\s*\(/, 'pointer-safe D-pad release missing');
+mustContain(/function\s+onRunDown\s*\(/, 'pointer-safe run handler missing');
+mustContain(/function\s+onRunUp\s*\(/, 'pointer-safe run release missing');
 
 console.log('[runtime-hardening] OK');

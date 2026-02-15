@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "connections": {
+    "pallet_town": {
+      "south": {"to": "route1", "min": 9, "max": 10}
+    },
+    "route1": {
+      "north": {"to": "viridian", "min": 8, "max": 11},
+      "south": {"to": "pallet_town", "min": 8, "max": 11}
+    },
+    "viridian": {
+      "north": {"to": "route2", "min": 19, "max": 22},
+      "south": {"to": "route1", "min": 19, "max": 22},
+      "east": {"to": "viridian_forest", "min": 22, "max": 24}
+    },
+    "viridian_forest": {
+      "west": {"to": "viridian", "min": 20, "max": 30}
+    },
+    "route2": {
+      "north": {"to": "pewter", "min": 19, "max": 22},
+      "south": {"to": "viridian", "min": 19, "max": 22}
+    },
+    "pewter": {
+      "south": {"to": "route2", "min": 9, "max": 10},
+      "east": {"to": "route3", "min": 8, "max": 9}
+    },
+    "route3": {
+      "west": {"to": "pewter", "min": 8, "max": 9},
+      "east": {"to": "mt_moon", "min": 8, "max": 9}
+    },
+    "mt_moon": {
+      "west": {"to": "route3", "min": 8, "max": 9},
+      "east": {"to": "cerulean", "min": 8, "max": 9}
+    },
+    "cerulean": {
+      "west": {"to": "mt_moon", "min": 10, "max": 11},
+      "east": {"to": "vermilion", "min": 10, "max": 11}
+    },
+    "vermilion": {
+      "west": {"to": "cerulean", "min": 10, "max": 11},
+      "east": {"to": "lavender", "min": 10, "max": 11}
+    },
+    "lavender": {
+      "west": {"to": "vermilion", "min": 10, "max": 11},
+      "east": {"to": "saffron", "min": 10, "max": 11}
+    },
+    "saffron": {
+      "west": {"to": "lavender", "min": 10, "max": 11},
+      "north": {"to": "fuchsia", "min": 10, "max": 11}
+    },
+    "fuchsia": {
+      "north": {"to": "saffron", "min": 10, "max": 11},
+      "south": {"to": "cinnabar", "min": 10, "max": 11}
+    },
+    "cinnabar": {
+      "north": {"to": "fuchsia", "min": 10, "max": 11},
+      "south": {"to": "indigo_plateau", "min": 10, "max": 11}
+    },
+    "indigo_plateau": {
+      "north": {"to": "cinnabar", "min": 10, "max": 11}
+    }
+  }
+}

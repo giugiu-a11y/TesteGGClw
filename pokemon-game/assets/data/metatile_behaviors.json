@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "tiles": {
+    "GRASS": {"walk": true, "encounter": "none", "surface": "grass"},
+    "GRASS_ALT": {"walk": true, "encounter": "none", "surface": "grass"},
+    "PATH": {"walk": true, "encounter": "none", "surface": "path"},
+    "PATH_ALT": {"walk": true, "encounter": "none", "surface": "path"},
+    "FLOWER": {"walk": true, "encounter": "none", "surface": "grass"},
+    "SIGN": {"walk": true, "encounter": "none", "surface": "path", "interact": "sign"},
+    "DOOR": {"walk": true, "encounter": "none", "surface": "path", "interact": "door"},
+    "WARP": {"walk": true, "encounter": "none", "surface": "path", "warp": true},
+
+    "TALL_GRASS": {"walk": true, "encounter": "land", "surface": "grass"},
+
+    "WATER": {"walk": false, "encounter": "water", "surface": "water"},
+    "TREE": {"walk": false, "encounter": "none", "surface": "tree"},
+    "FENCE": {"walk": false, "encounter": "none", "surface": "fence"},
+    "LEDGE": {"walk": false, "encounter": "none", "surface": "ledge"},
+
+    "HOUSE_RED": {"walk": false, "encounter": "none", "surface": "building"},
+    "HOUSE_BLUE": {"walk": false, "encounter": "none", "surface": "building"},
+    "LAB": {"walk": false, "encounter": "none", "surface": "building"},
+    "ROOF_RED": {"walk": false, "encounter": "none", "surface": "roof"},
+    "ROOF_BLUE": {"walk": false, "encounter": "none", "surface": "roof"},
+    "ROOF_LAB": {"walk": false, "encounter": "none", "surface": "roof"},
+    "WALL": {"walk": false, "encounter": "none", "surface": "wall"},
+    "WINDOW": {"walk": false, "encounter": "none", "surface": "wall"},
+
+    "FLOOR_IN": {"walk": true, "encounter": "none", "surface": "indoor"},
+    "WALL_IN": {"walk": false, "encounter": "none", "surface": "indoor_wall"},
+    "TABLE": {"walk": false, "encounter": "none", "surface": "furniture"},
+    "SHELF": {"walk": false, "encounter": "none", "surface": "furniture"},
+
+    "NPC": {"walk": false, "encounter": "none", "surface": "entity"}
+  }
+}

@@ -1,2 +1,5176 @@
-// Auto-generated from season1.ptbr.json for offline/cache-robust startup.
-window.__POKEMON_STORY__ = {"meta": {"season": 1, "language": "pt-BR", "fidelity_target": 1.0, "sources": [{"id": "manga_vol1_scribd", "label": "Pokemon Adventures Vol 01 (Scribd)", "url": "https://pt.scribd.com/document/496161531/Pokemon-Adventures-Vol-01"}, {"id": "tiles_spriters_resource", "label": "The Spriters Resource (FRLG)", "url": "https://www.spriters-resource.com/gba/pokemonfireredleafgreen/"}, {"id": "tiles_spriters_resource_general_3870", "label": "Tileset Geral (asset 3870)", "url": "https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/asset/3870/"}, {"id": "assets_yepoleb_repo", "label": "Yepoleb/Pokemon-assets", "url": "https://github.com/Yepoleb/Pokemon-assets"}], "notes": ["Objetivo: fidelidade maxima de roteiro para o arco RGB (adaptacao cena-a-cena para formato web interativo).", "Cada beat deve ter sourceRef (capitulo/pagina/edicao/scan) para revisao.", "Texto no jogo deve ser preferencialmente uma adaptacao fiel; texto 100% literal depende de voce fornecer o transcript/trechos exatos (copyright)."]}, "beats": [{"id": "ch1_intro", "sourceRef": "Pokemon Adventures RGB Arc (chapter-mapped adaptation, Vol.1-3) - scene aligned", "type": "cutscene", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ POKeMON ADVENTURES ]", "[ Arco RGB - Volume 1 ]", "[ Chapter 1: VS MEW ]"]}, {"kind": "teleport", "map": "pallet_town", "x": 9, "y": 15, "dir": "up"}, {"kind": "dialog", "speaker": "", "lines": ["PALLET TOWN - Uma pacata cidade no sul de KANTO.", "Perto da saida da cidade, um garoto se gaba para os outros..."]}, {"kind": "dialog", "speaker": "RED", "lines": ["Hehe! Viram so?", "Eu e meu POLI somos a dupla mais forte de Pallet Town!", "Nenhum POKeMON selvagem escapa de nos!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ RED criou POLI, um Poliwhirl, desde que era pequeno. ]", "[ Eles sao parceiros inseparaveis. ]"]}, {"kind": "face", "dir": "right"}, {"kind": "dialog", "speaker": "Garoto", "lines": ["Voce so fala, RED!", "Qualquer um consegue vencer POKeMON fracos por aqui."]}, {"kind": "face", "dir": "left"}, {"kind": "dialog", "speaker": "Garota", "lines": ["E! Se voce e tao bom assim, prova!", "Captura um POKeMON raro pra gente ver!"]}, {"kind": "face", "dir": "up"}, {"kind": "dialog", "speaker": "RED", "lines": ["Tch! Voces vao ver!", "Eu vou capturar o POKeMON mais raro que existe!"]}, {"kind": "pause", "ms": 400}, {"kind": "dialog", "speaker": "", "lines": ["[ Nesse momento, uma luz misteriosa brilha ao norte... ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["...Huh?!", "Que luz e essa vindo da floresta?!", "Isso... isso deve ser um POKeMON raro! POLI, vamos!"]}, {"kind": "move", "path": ["up", "up"], "stepMs": 100}, {"kind": "dialog", "speaker": "", "lines": ["[ RED corre em direcao a VIRIDIAN FOREST! ]"]}, {"kind": "teleport", "map": "viridian_forest", "x": 10, "y": 14, "dir": "up"}, {"kind": "pause", "ms": 300}, {"kind": "dialog", "speaker": "", "lines": ["[ VIRIDIAN FOREST ]", "[ Uma floresta densa ao norte de Pallet Town... ]"]}, {"kind": "move", "path": ["up", "up", "up"], "stepMs": 120}, {"kind": "dialog", "speaker": "", "lines": ["[ Uma luz rosa intensa ilumina a floresta! ]", "[ Um pequeno POKeMON flutua entre as arvores... ]", "[ Seus olhos grandes e curiosos encaram RED. ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["O-O que e isso?!", "Eu nunca vi um POKeMON assim!", "E a minha chance! POLI, prepara!"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Vai, POKe BALL!!"]}, {"kind": "battle", "enemy": {"name": "MEW", "spr": "mew", "lv": 12, "hp": 36, "maxHp": 36}, "options": {"scripted": true, "terrain": "forest", "scriptSteps": [{"type": "log", "text": "Um MEW selvagem apareceu!"}, {"type": "log", "text": "RED joga uma POKe BALL!"}, {"type": "playerMove", "move": "Poke Ball", "damage": 0}, {"type": "log", "text": "MEW criou uma BARREIRA!"}, {"type": "log", "text": "A POKe BALL foi rebatida!"}, {"type": "enemyMove", "move": "Teleport", "damage": 0}, {"type": "log", "text": "MEW usou TELEPORT!"}, {"type": "log", "text": "MEW desapareceu!"}, {"type": "end", "won": true}]}}, {"kind": "dialog", "speaker": "", "lines": ["[ A POKe BALL e rebatida por uma barreira invisivel! ]", "[ MEW inclina a cabeca curiosamente... ]", "[ ...e desaparece em um flash de luz! ]"]}, {"kind": "set", "path": "story.sawMew", "value": true}, {"kind": "dialog", "speaker": "RED", "lines": ["N-Nao! Escapou!", "Que POKeMON era aquele?! Nunca vi nada igual!", "O Professor OAK deve saber... ele estuda POKeMON raros!"]}, {"kind": "set", "path": "story.beat", "value": "ch1_oak_mew_explain"}, {"kind": "ensureTeam", "value": ["poli"]}, {"kind": "dialog", "speaker": "", "lines": ["[ RED corre de volta a Pallet Town... ]", "[ ...em direcao ao laboratorio do Professor OAK! ]"]}, {"kind": "teleport", "map": "oak_lab", "x": 5, "y": 9, "dir": "up"}], "next": "ch1_oak_mew_explain"}, {"id": "ch1_oak_mew_explain", "sourceRef": "Pokemon Adventures Vol.1 Ch.1 - VS Mew (Oak Lab scene)", "type": "cutscene", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ LABORATORIO DO PROF. OAK ]"]}, {"kind": "dialog", "speaker": "Prof. Oak", "lines": ["RED! Voce esta bem?", "Eu vi aquele brilho da janela do laboratorio!", "Voce conseguiu ver o que era?"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Professor! Era incrivel!", "Um POKeMON rosa, pequeno... flutuando no ar!", "Eu tentei capturar mas ele sumiu!"]}, {"kind": "dialog", "speaker": "Prof. Oak", "lines": ["Rosa e pequeno... seria possivel?!", "RED, o que voce viu pode ter sido MEW!", "Um POKeMON lendario que poucos ja viram!"]}, {"kind": "dialog", "speaker": "RED", "lines": ["MEW?! Lendario?!"]}, {"kind": "dialog", "speaker": "Prof. Oak", "lines": ["Sim! Dizem que MEW carrega o DNA de todos os POKeMON.", "Eu pesquiso POKeMON ha decadas...", "E voce pode ter visto algo que eu nunca consegui!"]}, {"kind": "dialog", "speaker": "Prof. Oak", "lines": ["RED, voce tem talento. Eu vejo isso.", "Quero te dar algo que vai te ajudar na sua jornada."]}, {"kind": "dialog", "speaker": "", "lines": ["[ Prof. Oak entrega um dispositivo vermelho a RED ]"]}, {"kind": "dialog", "speaker": "Prof. Oak", "lines": ["Isto e a POKeDEX - uma enciclopedia digital de POKeMON.", "Ela registra dados de todos os POKeMON que voce encontrar.", "Use-a bem, RED. E me ajude a completar essa pesquisa!"]}, {"kind": "set", "path": "story.gotPokedex", "value": true}, {"kind": "dialog", "speaker": "RED", "lines": ["Uma POKeDEX! Muito obrigado, Professor!", "Eu vou capturar todos os POKeMON e completar isso!"]}, {"kind": "dialog", "speaker": "Prof. Oak", "lines": ["Esse e o espirito! Mas cuidado la fora.", "Ha rumores de uma organizacao criminosa chamada TEAM ROCKET...", "Eles estao causando problemas por toda Kanto."]}, {"kind": "set", "path": "story.talkedToOak", "value": true}, {"kind": "set", "path": "story.beat", "value": "ch1_viridian_arrival"}, {"kind": "dialog", "speaker": "", "lines": ["[ RED agradece ao Professor e parte para sua jornada! ]", "[ Proximo destino: VIRIDIAN CITY, ao norte! ]"]}, {"kind": "teleport", "map": "viridian", "x": 10, "y": 15, "dir": "up"}, {"kind": "dialog", "speaker": "", "lines": ["[ Voce agora pode explorar livremente! ]", "[ Interaja com pessoas e objetos para continuar a historia. ]"]}], "releaseControl": true, "next": "ch1_viridian_arrival"}, {"id": "ch1_viridian_arrival", "sourceRef": "Pokemon Adventures Vol.1 Ch.2 - VS Machoke", "type": "cutscene", "actions": [{"kind": "teleport", "map": "viridian", "x": 10, "y": 15, "dir": "up"}, {"kind": "dialog", "speaker": "", "lines": ["[ VIRIDIAN CITY ]", "[ Uma cidade tranquila cercada por natureza ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Entao essa e Viridian City...", "Parece calma. Mas o Professor disse pra ter cuidado."]}, {"kind": "dialog", "speaker": "", "lines": ["[ Um homem corre em direcao a RED, desesperado! ]"]}, {"kind": "dialog", "speaker": "Morador", "lines": ["Ei, garoto! Voce e treinador?!", "Por favor, me ajuda! Um POKeMON selvagem esta atacando!", "Ali na Route 2, perto da floresta!"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Um POKeMON selvagem? Deixa comigo!", "POLI, vamos la!"]}, {"kind": "set", "path": "story.beat", "value": "ch1_viridian_forest_first"}, {"kind": "dialog", "speaker": "", "lines": ["[ RED corre em direcao a Route 2! ]"]}, {"kind": "dialog", "speaker": "", "lines": ["[ Voce agora pode explorar livremente! ]", "[ Interaja com pessoas e objetos para continuar a historia. ]"]}], "releaseControl": true, "next": "ch1_viridian_forest_first"}, {"id": "ch1_viridian_forest_first", "sourceRef": "Pokemon Adventures Vol.1 Ch.2-3 - VS Machoke/Kangaskhan", "type": "cutscene", "actions": [{"kind": "teleport", "map": "viridian_forest", "x": 10, "y": 14, "dir": "up"}, {"kind": "dialog", "speaker": "", "lines": ["[ VIRIDIAN FOREST ]"]}, {"kind": "move", "path": ["up", "up"], "stepMs": 120}, {"kind": "dialog", "speaker": "", "lines": ["[ Um BULBASAUR selvagem esta encurralado! ]", "[ Ele parece ferido e assustado! ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Ei! Um BULBASAUR!", "Ele parece machucado... o que aconteceu?"]}, {"kind": "dialog", "speaker": "", "lines": ["[ O BULBASAUR olha para RED com desconfianca... ]", "[ Mas parece sentir que ele quer ajudar. ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Calma, amigao. Eu vou te ajudar.", "POLI, usa WATER GUN pra refrescar ele!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ POLI borrifa agua gentilmente no BULBASAUR ]", "[ O BULBASAUR parece se sentir melhor! ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Isso! Esta melhor agora?", "Ei... voce quer vir comigo? Eu vou te proteger!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ BULBASAUR hesita... mas entao acena com a cabeca! ]", "[ RED capturou BULBASAUR! ]", "[ RED deu o apelido de SAUR ao BULBASAUR! ]"]}, {"kind": "set", "path": "story.gotSaur", "value": true}, {"kind": "set", "path": "story.caughtBulba", "value": true}, {"kind": "ensureTeam", "value": ["poli", "saur"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Bem-vindo ao time, SAUR!", "Agora somos tres! Vamos ficar mais fortes juntos!"]}, {"kind": "set", "path": "story.beat", "value": "ch1_pewter_arrival"}, {"kind": "dialog", "speaker": "", "lines": ["[ Com SAUR no time, RED continua para PEWTER CITY! ]"]}, {"kind": "dialog", "speaker": "", "lines": ["[ Voce agora pode explorar livremente! ]", "[ Interaja com pessoas e objetos para continuar a historia. ]"]}], "releaseControl": true, "next": "ch1_pewter_arrival"}, {"id": "ch1_pewter_arrival", "sourceRef": "Pokemon Adventures Vol.1 Ch.4-5 - VS Pikachu/Onix", "type": "cutscene", "actions": [{"kind": "teleport", "map": "pewter", "x": 10, "y": 14, "dir": "up"}, {"kind": "dialog", "speaker": "", "lines": ["[ PEWTER CITY ]", "[ A cidade das pedras, lar do GYM de tipo ROCK ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Pewter City! Aqui tem um GYM, nao e?", "Essa e minha chance de provar que sou forte!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ Enquanto RED explora a cidade... ]", "[ Ele ouve um barulho vindo de um beco! ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Huh? Que barulho e esse?"]}, {"kind": "dialog", "speaker": "", "lines": ["[ Um PIKACHU selvagem esta sendo atacado por SPEAROW! ]", "[ O pequeno PIKACHU luta bravamente, mas esta em desvantagem! ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Ei! Deixem ele em paz!", "SAUR, VINE WHIP nos SPEAROW!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ SAUR ataca com VINE WHIP! ]", "[ Os SPEAROW fogem assustados! ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Voce esta bem, pequeno?", "Uau, voce e corajoso! Lutou contra todos eles sozinho!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ O PIKACHU olha para RED com curiosidade... ]", "[ Ele parece ter gostado da coragem de RED! ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Hehe, quer vir comigo?", "Com essa sua coragem, a gente vai longe!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ PIKACHU pula no ombro de RED! ]", "[ RED capturou PIKACHU! ]", "[ RED deu o apelido de PIKA ao PIKACHU! ]"]}, {"kind": "set", "path": "story.caughtPika", "value": true}, {"kind": "set", "path": "story.autoBrock", "value": true}, {"kind": "ensureTeam", "value": ["poli", "saur", "pika"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Bem-vindo, PIKA!", "Agora sim! Com POLI, SAUR e PIKA...", "Estou pronto pra enfrentar o GYM!"]}, {"kind": "set", "path": "story.beat", "value": "ch1_brock_intro"}, {"kind": "dialog", "speaker": "", "lines": ["[ RED se dirige ao PEWTER GYM! ]"]}, {"kind": "dialog", "speaker": "", "lines": ["[ Voce agora pode explorar livremente! ]", "[ Interaja com pessoas e objetos para continuar a historia. ]"]}], "releaseControl": true, "next": "ch1_brock_intro"}, {"id": "ch1_brock_intro", "sourceRef": "Pokemon Adventures Vol.1 Ch.5 - VS Onix", "type": "cutscene", "actions": [{"kind": "teleport", "map": "pewter_gym", "x": 4, "y": 7, "dir": "up"}, {"kind": "dialog", "speaker": "", "lines": ["[ PEWTER GYM ]", "[ Lider: BROCK - Especialista em tipo ROCK ]"]}, {"kind": "dialog", "speaker": "Brock", "lines": ["...", "Entao voce e o garoto que estao falando.", "RED de Pallet Town."]}, {"kind": "dialog", "speaker": "RED", "lines": ["Voce e o BROCK? O lider do GYM?", "Eu vim pra batalhar! Estou pronto!"]}, {"kind": "dialog", "speaker": "Brock", "lines": ["Hmph. Voce tem coragem, eu admito.", "Mas coragem sem habilidade nao e nada.", "Vou te mostrar o poder das ROCHAS!"]}, {"kind": "battle", "enemy": {"name": "ONIX", "spr": "onix", "lv": 14, "hp": 35, "maxHp": 35}, "options": {"scripted": true, "music": "battle_gym", "scriptSteps": [{"type": "log", "text": "BROCK: Sou o líder do ginásio de PEWTER!"}, {"type": "log", "text": "ONIX, vamos lá!"}, {"type": "enemyMove", "move": "Rock Throw"}, {"type": "playerMove", "move": "Water Gun"}, {"type": "log", "text": "Super efetivo!"}, {"type": "enemyMove", "move": "Bind"}, {"type": "playerMove", "move": "Water Gun"}, {"type": "playerMove", "move": "Water Gun"}, {"type": "end", "won": true}]}}, {"kind": "dialog", "speaker": "Brock", "lines": ["...Impressionante.", "Voce nao e so coragem. Tem estrategia tambem.", "Voce merece isto."]}, {"kind": "dialog", "speaker": "", "lines": ["[ RED recebeu a BOULDER BADGE de BROCK! ]"]}, {"kind": "set", "path": "story.brockBattleDone", "value": true}, {"kind": "dialog", "speaker": "Brock", "lines": ["A BOULDER BADGE e sua.", "Mas RED... cuidado com a TEAM ROCKET.", "Eles estao ativos em MT. MOON, ao leste daqui."]}, {"kind": "dialog", "speaker": "RED", "lines": ["TEAM ROCKET? O Professor Oak mencionou eles...", "Obrigado pelo aviso, BROCK!"]}, {"kind": "set", "path": "story.beat", "value": "ch2_depart_pewter"}, {"kind": "dialog", "speaker": "", "lines": ["[ Com a BOULDER BADGE, RED parte para MT. MOON! ]"]}, {"kind": "dialog", "speaker": "", "lines": ["[ Voce agora pode explorar livremente! ]", "[ Interaja com pessoas e objetos para continuar a historia. ]"]}], "releaseControl": true, "next": "ch2_depart_pewter"}, {"id": "ch2_depart_pewter", "sourceRef": "Pokemon Adventures Vol.1 Ch.6 - Towards Mt. Moon", "type": "cutscene", "actions": [{"kind": "teleport", "map": "pewter", "x": 10, "y": 6, "dir": "up"}, {"kind": "dialog", "speaker": "", "lines": ["[ ROUTE 3 - Caminho para MT. MOON ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["MT. MOON fica logo a frente...", "BROCK disse que a TEAM ROCKET esta la.", "Melhor ficar atento!"]}, {"kind": "set", "path": "story.beat", "value": "ch2_mtmoon_entry"}, {"kind": "dialog", "speaker": "", "lines": ["[ RED segue em direcao a MT. MOON... ]"]}], "releaseControl": true, "next": "ch2_mtmoon_entry"}, {"id": "ch2_mtmoon_entry", "sourceRef": "Pokemon Adventures Vol.1 Ch.6-7 - Mt. Moon", "type": "cutscene", "actions": [{"kind": "teleport", "map": "mt_moon", "x": 10, "y": 14, "dir": "up"}, {"kind": "dialog", "speaker": "", "lines": ["[ MT. MOON ]", "[ Uma caverna misteriosa famosa pelos fosseis e MOON STONES ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Entao esse e o MT. MOON...", "Esta escuro aqui dentro. PIKA, ilumina o caminho!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ PIKA usa um pequeno FLASH para iluminar a caverna ]"]}, {"kind": "move", "path": ["up", "up"], "stepMs": 150}, {"kind": "dialog", "speaker": "", "lines": ["[ RED ouve vozes mais a frente... ]"]}, {"kind": "dialog", "speaker": "???", "lines": ["Rapido! Peguem todos os fosseis!", "O chefe quer esses especimes raros!"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Essas vozes... deve ser a TEAM ROCKET!", "Eu preciso impedir eles!"]}, {"kind": "set", "path": "story.beat", "value": "ch2_green_first_contact"}], "next": "ch2_green_first_contact"}, {"id": "ch2_green_first_contact", "sourceRef": "Pokemon Adventures Vol.1 Ch.7-8 - GREEN introduction", "type": "cutscene", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ De repente, uma garota aparece correndo! ]"]}, {"kind": "dialog", "speaker": "???", "lines": ["Sai da frente!!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ A garota esbarra em RED! ]", "[ Algo cai do bolso dela... ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Ei! Cuidado!", "...Huh? O que e isso que caiu?"]}, {"kind": "dialog", "speaker": "???", "lines": ["Ah! Isso e meu! Me da aqui!", "...Ei, espera. Voce e um treinador?"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Sou sim. Meu nome e RED, de Pallet Town.", "E voce, quem e?"]}, {"kind": "dialog", "speaker": "GREEN", "lines": ["...GREEN. Pode me chamar de GREEN.", "Olha, RED... essa caverna ta cheia de TEAM ROCKET.", "Se voce for esperto, vai embora agora."]}, {"kind": "set", "path": "story.metGreen", "value": true}, {"kind": "dialog", "speaker": "RED", "lines": ["Ir embora? Nem pensar!", "Eu vim aqui pra impedir eles!"]}, {"kind": "dialog", "speaker": "GREEN", "lines": ["Hmph. Voce e corajoso ou idiota?", "...Bom, faz o que quiser. Eu tenho meus proprios planos."]}, {"kind": "dialog", "speaker": "", "lines": ["[ GREEN desaparece nas sombras da caverna... ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Garota estranha...", "Mas agora preciso focar na TEAM ROCKET!"]}, {"kind": "set", "path": "story.beat", "value": "ch2_rocket_grunt_cave"}, {"kind": "dialog", "speaker": "", "lines": ["[ Voce agora pode explorar livremente! ]", "[ Interaja com pessoas e objetos para continuar a historia. ]"]}], "releaseControl": true, "next": "ch2_rocket_grunt_cave"}, {"id": "ch2_rocket_grunt_cave", "sourceRef": "Pokemon Adventures Vol.1 Ch.8-9 - VS Team Rocket", "type": "cutscene", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ RED encontra membros da TEAM ROCKET! ]"]}, {"kind": "dialog", "speaker": "Rocket Grunt", "lines": ["Huh?! Quem e esse moleque?!", "Esse lugar e territorio da TEAM ROCKET!", "Sai daqui antes que se machuque!"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Voces sao da TEAM ROCKET?", "Eu ouvi que voces estao roubando fosseis!", "Isso acaba agora!"]}, {"kind": "dialog", "speaker": "Rocket Grunt", "lines": ["Hah! Moleque atrevido!", "KOFFING, acaba com ele!"]}, {"kind": "battle", "enemy": {"name": "KOFFING", "spr": "koffing", "lv": 12, "hp": 30, "maxHp": 30}, "options": {"trainer": "Rocket Grunt", "terrain": "cave"}}, {"kind": "dialog", "speaker": "Rocket Grunt", "lines": ["Tch! Esse garoto e forte!", "Vou avisar os outros! Voce vai se arrepender!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ O Rocket Grunt foge mais para dentro da caverna! ]"]}, {"kind": "set", "path": "story.defeatedRocket1", "value": true}, {"kind": "dialog", "speaker": "RED", "lines": ["Isso! Mas ele foi avisar os outros...", "Melhor eu continuar e impedir o resto!"]}, {"kind": "set", "path": "story.beat", "value": "ch2_fossil_rumor"}], "next": "ch2_fossil_rumor"}, {"id": "ch2_fossil_rumor", "sourceRef": "Pokemon Adventures Vol.1 Ch.9 - Fossil discovery", "type": "cutscene", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ Mais a frente, RED encontra um pesquisador! ]"]}, {"kind": "dialog", "speaker": "Pesquisador", "lines": ["Oh! Voce e um treinador!", "Por favor, me ajuda! A TEAM ROCKET levou meus fosseis!", "Eram especimes raros... de POKeMON antigos!"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Fosseis de POKeMON antigos?!", "Nao se preocupe, eu vou recuperar eles!"]}, {"kind": "dialog", "speaker": "Pesquisador", "lines": ["Obrigado, garoto!", "Eles foram em direcao a saida leste... para CERULEAN CITY!", "Cuidado, o lider deles e perigoso!"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Entendido! CERULEAN CITY, la vou eu!"]}, {"kind": "set", "path": "story.beat", "value": "ch3_cerulean_arrival"}, {"kind": "dialog", "speaker": "", "lines": ["[ RED atravessa MT. MOON em direcao a CERULEAN CITY! ]"]}], "releaseControl": true, "next": "ch3_cerulean_arrival"}, {"id": "ch3_cerulean_arrival", "sourceRef": "Pokemon Adventures Vol.1 Ch.10 - Cerulean City", "type": "cutscene", "actions": [{"kind": "teleport", "map": "cerulean", "x": 10, "y": 14, "dir": "up"}, {"kind": "dialog", "speaker": "", "lines": ["[ CERULEAN CITY ]", "[ A cidade da agua, lar da lider MISTY ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Cerulean City... A TEAM ROCKET deve estar por aqui.", "Mas primeiro, preciso curar meus POKeMON."]}, {"kind": "dialog", "speaker": "", "lines": ["[ Enquanto RED caminha pela cidade... ]", "[ Uma garota de cabelos laranja corre em sua direcao! ]"]}, {"kind": "dialog", "speaker": "???", "lines": ["Ei, voce! Voce e treinador?", "Rapido, preciso de ajuda!"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Huh? O que aconteceu?"]}, {"kind": "dialog", "speaker": "MISTY", "lines": ["Meu nome e MISTY! Sou a lider do GYM daqui!", "Um GYARADOS selvagem esta atacando perto do rio!", "Ele esta fora de controle... acho que foi a TEAM ROCKET!"]}, {"kind": "dialog", "speaker": "RED", "lines": ["TEAM ROCKET de novo?!", "Eu ajudo! Vamos la!"]}, {"kind": "set", "path": "story.beat", "value": "ch3_misty_clash"}], "releaseControl": true, "next": "ch3_misty_clash"}, {"id": "ch3_misty_clash", "sourceRef": "Pokemon Adventures Vol.1 Ch.10-11 - VS Gyarados", "type": "cutscene", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ Perto do rio, um GYARADOS gigante causa destruicao! ]"]}, {"kind": "dialog", "speaker": "MISTY", "lines": ["Ali! O GYARADOS!", "Ele esta enfurecido... olha os olhos dele!"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Parece que ele esta sofrendo!", "MISTY, vamos acalmar ele juntos!"]}, {"kind": "battle", "enemy": {"name": "STARMIE", "spr": "staryu", "lv": 21, "hp": 52, "maxHp": 52}, "options": {"scripted": true, "music": "battle_gym", "scriptSteps": [{"type": "log", "text": "MISTY: Vamos ver se você aguenta a pressão!"}, {"type": "log", "text": "STARMIE, eu escolho você!"}, {"type": "enemyMove", "move": "Water Gun"}, {"type": "playerMove", "move": "Vine Whip"}, {"type": "enemyMove", "move": "Surf"}, {"type": "playerMove", "move": "Razor Leaf"}, {"type": "log", "text": "STARMIE está enfraquecendo!"}, {"type": "playerMove", "move": "Razor Leaf"}, {"type": "end", "won": true}]}}, {"kind": "dialog", "speaker": "", "lines": ["[ GYARADOS se acalma e volta para a agua! ]"]}, {"kind": "dialog", "speaker": "MISTY", "lines": ["Conseguimos! Obrigada, RED!", "Voce e muito bom! De onde voce e?"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Pallet Town! Estou em uma jornada POKeMON!", "E tambem estou perseguindo a TEAM ROCKET..."]}, {"kind": "dialog", "speaker": "MISTY", "lines": ["TEAM ROCKET... eles sao perigosos.", "Escuta, antes de ir atras deles...", "Voce devia visitar o BILL. Ele mora ao norte daqui.", "Ele e um genio de POKeMON. Pode te ajudar!"]}, {"kind": "dialog", "speaker": "RED", "lines": ["BILL? O famoso pesquisador?", "Obrigado pela dica, MISTY!"]}, {"kind": "set", "path": "story.beat", "value": "ch3_bill_event"}, {"kind": "dialog", "speaker": "", "lines": ["[ Voce agora pode explorar livremente! ]", "[ Interaja com pessoas e objetos para continuar a historia. ]"]}], "releaseControl": true, "next": "ch3_bill_event"}, {"id": "ch3_bill_event", "sourceRef": "Pokemon Adventures Vol.1 Ch.12 - Bill's accident", "type": "cutscene", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ CASA DO BILL - Norte de Cerulean City ]"]}, {"kind": "dialog", "speaker": "", "lines": ["[ RED entra na casa e encontra... um POKeMON estranho?! ]"]}, {"kind": "dialog", "speaker": "???", "lines": ["SOCORRO! POR FAVOR, ME AJUDA!", "EU SOU O BILL! Aconteceu um acidente!"]}, {"kind": "dialog", "speaker": "RED", "lines": ["V-Voce e o BILL?! Mas voce parece um POKeMON!"]}, {"kind": "dialog", "speaker": "BILL", "lines": ["Eu sei! Meu experimento de teletransporte deu errado!", "Meu DNA se misturou com um POKeMON!", "Por favor, usa o computador ali pra me reverter!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ Enquanto RED ajuda BILL... ]", "[ SAUR comeca a brilhar! ]"]}, {"kind": "evolve", "slot": "saur", "to": "IVYSAUR", "options": {"name": "SAUR", "lv": 16}}, {"kind": "dialog", "speaker": "RED", "lines": ["SAUR?! Voce esta evoluindo!", "Incrivel! SAUR evoluiu para IVYSAUR!"]}, {"kind": "dialog", "speaker": "BILL", "lines": ["OBRIGADO! Voce salvou minha vida!", "Me deixa te agradecer propriamente...", "Eu ouvi que voce esta atras da TEAM ROCKET, certo?"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Sim! Eles estao causando problemas por toda Kanto!"]}, {"kind": "dialog", "speaker": "BILL", "lines": ["Eu tenho informacoes sobre eles.", "A TEAM ROCKET esta planejando algo grande em VERMILION CITY.", "No porto, no S.S. ANNE. Voce devia investigar!"]}, {"kind": "dialog", "speaker": "RED", "lines": ["S.S. ANNE em Vermilion! Entendido!", "Obrigado, BILL!"]}, {"kind": "set", "path": "story.beat", "value": "ch4_vermilion_setup"}, {"kind": "dialog", "speaker": "", "lines": ["[ RED parte para VERMILION CITY! ]"]}, {"kind": "dialog", "speaker": "", "lines": ["[ Voce agora pode explorar livremente! ]", "[ Interaja com pessoas e objetos para continuar a historia. ]"]}], "releaseControl": true, "next": "ch4_vermilion_setup"}, {"id": "ch4_vermilion_setup", "sourceRef": "Pokemon Adventures Vol.1 Ch.13-14 - Vermilion City", "type": "cutscene", "actions": [{"kind": "teleport", "map": "vermilion", "x": 10, "y": 14, "dir": "up"}, {"kind": "dialog", "speaker": "", "lines": ["[ VERMILION CITY ]", "[ A cidade portuaria de Kanto ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Vermilion City... O porto deve ser por aqui.", "BILL disse que a TEAM ROCKET esta no S.S. ANNE..."]}, {"kind": "dialog", "speaker": "", "lines": ["[ RED ve um navio enorme no porto! ]", "[ O luxuoso S.S. ANNE! ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Aquele deve ser o S.S. ANNE!", "Mas como eu entro? Parece que precisa de convite..."]}, {"kind": "dialog", "speaker": "", "lines": ["[ Um homem se aproxima de RED ]"]}, {"kind": "dialog", "speaker": "???", "lines": ["Ei, garoto! Voce parece ser um treinador forte.", "Toma, tenho um convite extra pro S.S. ANNE.", "Estao tendo batalhas la dentro. Divirta-se!"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Serio?! Muito obrigado!", "Isso e perfeito... posso investigar por dentro!"]}, {"kind": "set", "path": "story.beat", "value": "ch4_ssanne_rocket"}], "releaseControl": true, "next": "ch4_ssanne_rocket"}, {"id": "ch4_ssanne_rocket", "sourceRef": "Pokemon Adventures Vol.1 Ch.14-15 - S.S. Anne incident", "type": "cutscene", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ S.S. ANNE - Interior do navio ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Uau, esse navio e enorme!", "Agora preciso encontrar a TEAM ROCKET..."]}, {"kind": "dialog", "speaker": "", "lines": ["[ RED explora o navio... ]", "[ No porao, ele ouve vozes suspeitas! ]"]}, {"kind": "dialog", "speaker": "Rocket Grunt", "lines": ["Rapido! Coloquem os POKeMON roubados nas gaiolas!", "O chefe LT. SURGE vai ficar satisfeito!"]}, {"kind": "dialog", "speaker": "RED", "lines": ["LT. SURGE?! O lider do GYM?!", "Ele esta com a TEAM ROCKET?!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ Os Rockets percebem RED! ]"]}, {"kind": "dialog", "speaker": "Rocket Grunt", "lines": ["Um intruso! Peguem ele!"]}, {"kind": "battle", "enemy": {"name": "RATICATE", "spr": "raticate", "lv": 18, "hp": 42, "maxHp": 42}, "options": {"trainer": "Rocket Grunt", "terrain": "indoor"}}, {"kind": "dialog", "speaker": "", "lines": ["[ RED derrota os Rockets! ]", "[ Mas de repente, uma figura imponente aparece! ]"]}, {"kind": "dialog", "speaker": "LT. SURGE", "lines": ["Entao voce e o rato que esta atrapalhando meus planos...", "Meu nome e LT. SURGE. E voce cometeu um grande erro."]}, {"kind": "dialog", "speaker": "RED", "lines": ["LT. SURGE! Voce e da TEAM ROCKET?!", "Como um lider de GYM pode fazer isso?!"]}, {"kind": "dialog", "speaker": "LT. SURGE", "lines": ["Hah! Poder e tudo nesse mundo, garoto.", "E agora, voce vai desaparecer junto com esse navio!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ LT. SURGE ativa explosivos! O navio comeca a afundar! ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["O navio esta afundando! Preciso sair daqui!", "E libertar esses POKeMON!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ RED liberta os POKeMON capturados! ]", "[ Usando POLI, ele escapa do navio! ]"]}, {"kind": "set", "path": "story.beat", "value": "ch5_surge_pressure"}], "next": "ch5_surge_pressure"}, {"id": "ch5_surge_pressure", "sourceRef": "Pokemon Adventures Vol.1 Ch.15-16 - VS Lt. Surge", "type": "cutscene", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ Porto de Vermilion - Apos o desastre ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Consegui escapar... mas LT. SURGE fugiu!", "Eu preciso derrota-lo e expor seus crimes!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ RED encontra LT. SURGE no GYM! ]"]}, {"kind": "dialog", "speaker": "LT. SURGE", "lines": ["Voce sobreviveu?! Impressionante...", "Mas aqui no meu territorio, voce nao tem chance!"]}, {"kind": "battle", "enemy": {"name": "ELECTABUZZ", "spr": "electabuzz", "lv": 25, "hp": 60, "maxHp": 60}, "options": {"trainer": "Lt. Surge", "trainerSprite": "surge", "terrain": "gym_electric", "scripted": true, "scriptSteps": [{"type": "log", "text": "LT. SURGE quer batalhar!"}, {"type": "log", "text": "SURGE enviou ELECTABUZZ!"}, {"type": "enemyMove", "move": "Thunder Punch", "damage": 18}, {"type": "log", "text": "RED usa estrategia!"}, {"type": "playerMove", "move": "Dig", "damage": 22}, {"type": "log", "text": "SAUR usa DIG para evitar eletricidade!"}, {"type": "enemyMove", "move": "Thunderbolt", "damage": 0}, {"type": "log", "text": "Errou! SAUR esta no subsolo!"}, {"type": "playerMove", "move": "Razor Leaf", "damage": 25}, {"type": "log", "text": "ELECTABUZZ foi derrotado!"}, {"type": "end", "won": true}]}}, {"kind": "dialog", "speaker": "LT. SURGE", "lines": ["Im... impossivel! Derrotado por um garoto?!", "Isso nao acabou, RED! A TEAM ROCKET e maior do que voce imagina!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ A policia chega e prende LT. SURGE! ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Acabou, SURGE. A policia vai cuidar de voce.", "Mas ele disse que a TEAM ROCKET e maior...", "Preciso descobrir quem e o verdadeiro lider!"]}, {"kind": "set", "path": "story.beat", "value": "ch6_lavender_shadow"}], "releaseControl": true, "next": "ch6_lavender_shadow"}, {"id": "ch6_lavender_shadow", "sourceRef": "Pokemon Adventures Vol.2 Ch.17-20 - Lavender Tower", "type": "cutscene", "actions": [{"kind": "teleport", "map": "lavender", "x": 10, "y": 14, "dir": "up"}, {"kind": "dialog", "speaker": "", "lines": ["[ LAVENDER TOWN ]", "[ A cidade dos espiritos... lar da POKEMON TOWER ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Lavender Town... Esse lugar me da arrepios.", "Dizem que a POKEMON TOWER e assombrada..."]}, {"kind": "dialog", "speaker": "", "lines": ["[ Uma neblina misteriosa envolve a cidade... ]", "[ Gritos vem da direcao da POKEMON TOWER! ]"]}, {"kind": "dialog", "speaker": "Morador", "lines": ["Socorro! Tem algo errado na torre!", "Espiritos estao atacando as pessoas!"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Espiritos atacando?! Isso nao e normal!", "Deve ter alguem por tras disso... TEAM ROCKET?"]}, {"kind": "dialog", "speaker": "", "lines": ["[ RED entra na POKEMON TOWER! ]", "[ O interior e gelido e cheio de sombras... ]"]}, {"kind": "dialog", "speaker": "", "lines": ["[ Um vulto aparece na frente de RED! ]"]}, {"kind": "dialog", "speaker": "???", "lines": ["Intruso... SAIA... DAQUI..."]}, {"kind": "dialog", "speaker": "RED", "lines": ["Q-Quem e voce?!", "Eu nao tenho medo! PIKA, usa FLASH!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ A luz revela... um GENGAR controlando as sombras! ]", "[ E atras dele, uma mulher de roupas escuras! ]"]}, {"kind": "dialog", "speaker": "???", "lines": ["Hmph. Voce dissipou minhas sombras.", "Meu nome e SABRINA. E voce esta no meu caminho."]}, {"kind": "dialog", "speaker": "RED", "lines": ["SABRINA?! A lider de Saffron City?!", "O que voce esta fazendo aqui?!"]}, {"kind": "dialog", "speaker": "SABRINA", "lines": ["Nao e da sua conta. Mas ja que insiste...", "Vou eliminar voce aqui mesmo."]}, {"kind": "battle", "enemy": {"name": "GENGAR", "spr": "gengar", "lv": 28, "hp": 58, "maxHp": 58}, "options": {"trainer": "Sabrina", "terrain": "tower"}}, {"kind": "dialog", "speaker": "SABRINA", "lines": ["...Voce e mais forte do que parece.", "Mas isso foi so um aperitivo. Nos veremos de novo em SAFFRON."]}, {"kind": "dialog", "speaker": "", "lines": ["[ SABRINA desaparece nas sombras! ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Ela fugiu! Mas pelo menos os espiritos pararam...", "SAFFRON CITY... Parece que e la que tudo vai acontecer!"]}, {"kind": "set", "path": "story.beat", "value": "ch7_silph_infiltration"}], "releaseControl": true, "next": "ch7_silph_infiltration"}, {"id": "ch7_silph_infiltration", "sourceRef": "Pokemon Adventures Vol.2 Ch.21-25 - Silph Co.", "type": "cutscene", "actions": [{"kind": "teleport", "map": "saffron", "x": 10, "y": 14, "dir": "up"}, {"kind": "dialog", "speaker": "", "lines": ["[ SAFFRON CITY ]", "[ O centro comercial de Kanto... e sede da SILPH CO. ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Saffron City... A SILPH CO. fica aqui.", "Se a TEAM ROCKET quer poder, esse e o lugar."]}, {"kind": "dialog", "speaker": "", "lines": ["[ A cidade esta estranhamente vazia... ]", "[ Guardas da TEAM ROCKET patrulham as ruas! ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["A cidade inteira esta tomada!", "A TEAM ROCKET ja dominou SAFFRON!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ RED se esgueira ate a SILPH CO... ]", "[ Dentro, ele encontra funcionarios em panico! ]"]}, {"kind": "dialog", "speaker": "Funcionario", "lines": ["Por favor, me ajuda!", "A TEAM ROCKET esta no ultimo andar!", "Eles querem a MASTER BALL... uma Poke Ball perfeita!"]}, {"kind": "dialog", "speaker": "RED", "lines": ["MASTER BALL?! Isso seria perigoso nas maos erradas!", "Eu vou impedir eles!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ RED sobe ate o topo da SILPH CO... ]"]}, {"kind": "battle", "enemy": {"name": "ALAKAZAM", "spr": "alakazam", "lv": 30, "hp": 60, "maxHp": 60}, "options": {"scripted": true, "music": "battle_trainer", "scriptSteps": [{"type": "log", "text": "SABRINA envia ALAKAZAM!"}, {"type": "enemyMove", "move": "Psychic"}, {"type": "playerMove", "move": "Vine Whip"}, {"type": "enemyMove", "move": "Psychic"}, {"type": "playerMove", "move": "Razor Leaf"}, {"type": "playerMove", "move": "Razor Leaf"}, {"type": "end", "won": true}]}}, {"kind": "set", "path": "story.beat", "value": "ch8_saffron_psychic"}], "next": "ch8_saffron_psychic"}, {"id": "ch8_saffron_psychic", "sourceRef": "Pokemon Adventures Vol.2 Ch.25-28 - VS Sabrina", "type": "cutscene", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ SILPH CO. - Ultimo andar ]"]}, {"kind": "dialog", "speaker": "", "lines": ["[ RED encontra SABRINA esperando por ele! ]"]}, {"kind": "dialog", "speaker": "SABRINA", "lines": ["Voce veio, como eu previ.", "Meus poderes psiquicos nunca falham."]}, {"kind": "dialog", "speaker": "RED", "lines": ["SABRINA! Onde esta a MASTER BALL?!", "E onde esta o lider da TEAM ROCKET?!"]}, {"kind": "dialog", "speaker": "SABRINA", "lines": ["Tantas perguntas... Voce vai descobrir tudo.", "Mas primeiro, precisa passar por mim!"]}, {"kind": "battle", "enemy": {"name": "ALAKAZAM", "spr": "alakazam", "lv": 35, "hp": 68, "maxHp": 68}, "options": {"trainer": "Sabrina", "trainerSprite": "sabrina", "terrain": "gym_psychic", "scripted": true, "scriptSteps": [{"type": "log", "text": "SABRINA quer batalhar!"}, {"type": "log", "text": "SABRINA enviou ALAKAZAM!"}, {"type": "enemyMove", "move": "Psybeam", "damage": 20}, {"type": "log", "text": "RED esta em apuros!"}, {"type": "log", "text": "RED troca para SAUR!"}, {"type": "playerMove", "move": "Sleep Powder", "damage": 0}, {"type": "log", "text": "ALAKAZAM dormiu!"}, {"type": "playerMove", "move": "Solar Beam", "damage": 45}, {"type": "log", "text": "Golpe critico!"}, {"type": "end", "won": true}]}}, {"kind": "dialog", "speaker": "SABRINA", "lines": ["...Impossivel. Eu nao previ essa derrota.", "Voce... e diferente dos outros."]}, {"kind": "dialog", "speaker": "", "lines": ["[ Uma voz ecoa pelo salao! ]"]}, {"kind": "dialog", "speaker": "???", "lines": ["Muito bem, SABRINA falhou.", "Mas isso nao importa. O plano ja esta em andamento."]}, {"kind": "dialog", "speaker": "RED", "lines": ["Quem esta ai?! Mostra a cara!"]}, {"kind": "dialog", "speaker": "???", "lines": ["Em breve, RED de Pallet Town. Em breve.", "Nos veremos em CINNABAR ISLAND..."]}, {"kind": "dialog", "speaker": "", "lines": ["[ A voz desaparece... ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["CINNABAR ISLAND? O que esta acontecendo la?!", "Eu preciso investigar!"]}, {"kind": "set", "path": "story.beat", "value": "ch9_final_island_setup"}], "releaseControl": true, "next": "ch9_final_island_setup"}, {"id": "ch9_final_island_setup", "sourceRef": "Pokemon Adventures Vol.2-3 - Cinnabar Island arc", "type": "cutscene", "actions": [{"kind": "teleport", "map": "cinnabar", "x": 10, "y": 14, "dir": "up"}, {"kind": "dialog", "speaker": "", "lines": ["[ CINNABAR ISLAND ]", "[ Uma ilha vulcanica com um laboratorio misterioso ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Cinnabar Island... O que a TEAM ROCKET quer aqui?", "Aquele laboratorio parece suspeito..."]}, {"kind": "dialog", "speaker": "", "lines": ["[ RED explora a ilha e encontra o POKEMON MANSION ]", "[ O lugar esta abandonado... mas ha sinais de atividade recente! ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Diarios de pesquisa? Deixa eu ler...", "'Projeto MEWTWO - Criacao de um clone de MEW'", "'O experimento foi bem sucedido, mas...'"]}, {"kind": "dialog", "speaker": "RED", "lines": ["MEWTWO?! Eles criaram um CLONE do MEW?!", "Isso e... isso e insano!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ Uma explosao ecoa do laboratorio proximo! ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["O que foi isso?! Vem do laboratorio!", "PIKA, SAUR, POLI - vamos la!"]}, {"kind": "set", "path": "story.beat", "value": "ch10_mewtwo_confront"}], "releaseControl": true, "next": "ch10_mewtwo_confront"}, {"id": "ch10_mewtwo_confront", "sourceRef": "Pokemon Adventures Vol.3 Ch.33-35 - VS Mewtwo", "type": "cutscene", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ LABORATORIO DE CINNABAR - Interior destruido ]"]}, {"kind": "dialog", "speaker": "", "lines": ["[ No centro das ruinas, uma figura imponente flutua! ]", "[ MEWTWO - O POKeMON mais poderoso do mundo! ]"]}, {"kind": "dialog", "speaker": "MEWTWO", "lines": ["...Outro humano.", "Voces me criaram. Me usaram. Me traíram.", "E agora... todos vao pagar."]}, {"kind": "dialog", "speaker": "RED", "lines": ["MEWTWO?! Voce e o clone do MEW?!", "Espera, eu nao sou da TEAM ROCKET!"]}, {"kind": "dialog", "speaker": "MEWTWO", "lines": ["Nao importa. Todos os humanos sao iguais.", "Ganancioso. Cruel. Destrutivo.", "Eu vou criar um mundo sem humanos!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ Uma voz interrompe! ]"]}, {"kind": "dialog", "speaker": "???", "lines": ["Nao tao rapido, MEWTWO.", "Voce ainda pertence a TEAM ROCKET."]}, {"kind": "dialog", "speaker": "", "lines": ["[ Um homem de terno aparece! ]"]}, {"kind": "dialog", "speaker": "GIOVANNI", "lines": ["Meu nome e GIOVANNI. Lider da TEAM ROCKET.", "E criador de MEWTWO."]}, {"kind": "dialog", "speaker": "RED", "lines": ["GIOVANNI?! Entao VOCE e o chefe deles!"]}, {"kind": "dialog", "speaker": "GIOVANNI", "lines": ["Correto. E MEWTWO vai me ajudar a conquistar o mundo.", "Ou voce prefere ser destruido, criatura?"]}, {"kind": "dialog", "speaker": "MEWTWO", "lines": ["...Eu nao sou sua ferramenta, GIOVANNI.", "E voce, garoto... voce e diferente. Eu sinto isso.", "Vamos ver se voce e digno."]}, {"kind": "dialog", "speaker": "", "lines": ["[ Diante do poder de MEWTWO... ]", "[ POLI comeca a brilhar intensamente! ]"]}, {"kind": "evolve", "slot": "poli", "to": "POLIWRATH", "options": {"name": "POLI", "lv": 35}}, {"kind": "dialog", "speaker": "RED", "lines": ["POLI! Voce tambem esta evoluindo!", "POLI evoluiu para POLIWRATH!", "Agora estamos prontos para enfrentar MEWTWO!"]}, {"kind": "battle", "enemy": {"name": "MEWTWO", "spr": "mewtwo", "lv": 70, "hp": 200, "maxHp": 200}, "options": {"scripted": true, "music": "battle_legendary", "scriptSteps": [{"type": "log", "text": "MEWTWO: Humano... você ousa me desafiar?"}, {"type": "enemyMove", "move": "Psychic"}, {"type": "log", "text": "O poder de MEWTWO é avassalador!"}, {"type": "playerMove", "move": "Shadow Ball"}, {"type": "enemyMove", "move": "Psychic"}, {"type": "playerMove", "move": "Shadow Ball"}, {"type": "log", "text": "MEWTWO está se regenerando!"}, {"type": "enemyMove", "move": "Recover"}, {"type": "playerMove", "move": "Thunderbolt"}, {"type": "enemyMove", "move": "Psychic"}, {"type": "playerMove", "move": "Thunder"}, {"type": "log", "text": "MEWTWO está enfraquecendo!"}, {"type": "playerMove", "move": "Hyper Beam"}, {"type": "end", "won": true}]}}, {"kind": "dialog", "speaker": "MEWTWO", "lines": ["...Interessante. Voce luta com o coracao.", "Talvez nem todos os humanos sejam iguais."]}, {"kind": "dialog", "speaker": "GIOVANNI", "lines": ["MEWTWO! Voce vai me obedecer!"]}, {"kind": "dialog", "speaker": "MEWTWO", "lines": ["Nao, GIOVANNI. Eu escolho meu proprio caminho.", "E voce... vai responder pelos seus crimes."]}, {"kind": "dialog", "speaker": "", "lines": ["[ MEWTWO usa seus poderes para imobilizar GIOVANNI! ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["MEWTWO, espera! O que voce vai fazer?"]}, {"kind": "dialog", "speaker": "MEWTWO", "lines": ["Eu vou embora. Procurar meu lugar no mundo.", "RED... cuide de Kanto. Eu estarei observando."]}, {"kind": "dialog", "speaker": "", "lines": ["[ MEWTWO desaparece em um flash de luz! ]", "[ GIOVANNI e preso pela policia que chegou! ]"]}, {"kind": "set", "path": "story.beat", "value": "ch13_viridian_giovanni"}], "next": "ch13_viridian_giovanni"}, {"id": "ch11_aftershock_recovery", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ POS-CRISE ]", "KANTO ainda sente o impacto dos eventos em SAFFRON.", "RED segue sem pausa para fechar as pendencias da TEAM ROCKET."]}, {"kind": "dialog", "speaker": "RED", "lines": ["Ainda nao acabou.", "Se eles se reorganizarem, tudo comeca de novo."]}, {"kind": "set", "path": "story.block_18_done", "value": true}]}, {"id": "ch12_cinnabar_research", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ CINNABAR ISLAND ]", "Documentos queimados e laboratorios vazios deixam rastros de experimentos proibidos."]}, {"kind": "dialog", "speaker": "", "lines": ["[ RED encontra relatorios incompletos, capsulas quebradas e codigos de acesso apagados. ]", "[ A assinatura da TEAM ROCKET aparece em multiplos setores. ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Eles estavam mexendo com coisas que nunca deveriam ter tocado."]}, {"kind": "battle", "enemy": {"name": "NIDOKING", "spr": "nidoking", "lv": 24, "hp": 72, "maxHp": 72}, "options": {"scripted": true, "onEnd": "only_if_win", "scriptSteps": [{"type": "log", "text": "CIENTISTA CORROMPIDO enviou NIDOKING!"}, {"type": "enemyMove", "move": "Thrash", "damage": 9}, {"type": "playerMove", "move": "Hypnosis", "damage": 0}, {"type": "playerMove", "move": "Bubble Beam", "damage": 999}, {"type": "end", "won": true}]}}, {"kind": "set", "path": "story.block_19_done", "value": true}]}, {"id": "ch13_viridian_giovanni", "sourceRef": "Pokemon Adventures Vol.3 Ch.36-38 - Giovanni's fall", "type": "cutscene", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ Semanas depois... ]", "[ A TEAM ROCKET foi desmantelada! ]", "[ GIOVANNI aguarda julgamento na prisao. ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["A TEAM ROCKET acabou... mas ainda falta uma coisa.", "Eu preciso completar minha jornada!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ RED descobre que GIOVANNI era o lider do VIRIDIAN GYM! ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["O GYM de Viridian esta sem lider agora...", "Mas eu ainda preciso das 8 BADGES pra entrar na LIGA!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ Um substituto temporario assume o GYM! ]", "[ RED conquista a EARTH BADGE! ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["8 BADGES! Agora posso ir pro INDIGO PLATEAU!", "E hora de provar que sou o melhor treinador de Kanto!"]}, {"kind": "battle", "enemy": {"name": "NIDOKING", "spr": "nidoking", "lv": 50, "hp": 130, "maxHp": 130}, "options": {"scripted": true, "music": "battle_champion", "scriptSteps": [{"type": "log", "text": "GIOVANNI: Então você chegou até aqui..."}, {"type": "log", "text": "Vou te mostrar o poder da TEAM ROCKET!"}, {"type": "enemyMove", "move": "Earthquake"}, {"type": "playerMove", "move": "Surf"}, {"type": "enemyMove", "move": "Thrash"}, {"type": "playerMove", "move": "Surf"}, {"type": "log", "text": "NIDOKING está furioso!"}, {"type": "enemyMove", "move": "Thrash"}, {"type": "playerMove", "move": "Hydro Pump"}, {"type": "end", "won": true}]}}, {"kind": "set", "path": "story.beat", "value": "ch14_indigo_opening"}], "releaseControl": true, "next": "ch14_indigo_opening"}, {"id": "ch14_indigo_opening", "sourceRef": "Pokemon Adventures Vol.3 Ch.39-40 - Pokemon League", "type": "cutscene", "actions": [{"kind": "teleport", "map": "indigo_plateau", "x": 10, "y": 14, "dir": "up"}, {"kind": "dialog", "speaker": "", "lines": ["[ INDIGO PLATEAU ]", "[ O templo da batalha POKeMON! ]"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Finalmente... o INDIGO PLATEAU!", "Aqui eu vou enfrentar a ELITE FOUR e o CAMPEAO!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ Na entrada, uma figura familiar espera RED! ]"]}, {"kind": "dialog", "speaker": "GREEN", "lines": ["Yo, RED. Demorou, hein?", "Eu ja passei pela ELITE FOUR toda."]}, {"kind": "dialog", "speaker": "RED", "lines": ["GREEN?! Voce tambem esta aqui?!", "Espera... voce ja derrotou a ELITE FOUR?!"]}, {"kind": "dialog", "speaker": "GREEN", "lines": ["Obvio. Eu sou forte, lembra?", "Mas o CAMPEAO... ele e diferente. BLUE, de Pallet Town.", "Boa sorte, RED. Voce vai precisar."]}, {"kind": "dialog", "speaker": "RED", "lines": ["BLUE e o CAMPEAO?! Meu rival de Pallet Town?!", "Isso... isso vai ser interessante!"]}, {"kind": "set", "path": "story.beat", "value": "ch15_elite_lance"}], "releaseControl": true, "next": "ch15_elite_lance"}, {"id": "ch15_elite_lance", "sourceRef": "Pokemon Adventures Vol.3 - Elite Four", "type": "cutscene", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ ELITE FOUR - Desafio Final ]"]}, {"kind": "dialog", "speaker": "", "lines": ["[ RED enfrenta LORELEI, BRUNO, AGATHA e LANCE! ]", "[ Cada batalha e mais dificil que a anterior! ]"]}, {"kind": "dialog", "speaker": "LANCE", "lines": ["Voce chegou ate aqui, RED.", "Eu sou LANCE, o ultimo membro da ELITE FOUR.", "Meus DRAGOES vao testar sua determinacao!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ Antes da batalha final contra LANCE... ]", "[ SAUR brilha mais uma vez! ]"]}, {"kind": "evolve", "slot": "saur", "to": "VENUSAUR", "options": {"name": "SAUR", "lv": 45}}, {"kind": "dialog", "speaker": "RED", "lines": ["SAUR! Voce esta evoluindo de novo!", "SAUR evoluiu para VENUSAUR!", "Com todo esse poder, vamos vencer a ELITE FOUR!"]}, {"kind": "battle", "enemy": {"name": "DRAGONITE", "spr": "dragonite", "lv": 55, "hp": 150, "maxHp": 150}, "options": {"scripted": true, "music": "battle_champion", "scriptSteps": [{"type": "log", "text": "LANCE, o Mestre dos Dragões!"}, {"type": "log", "text": "DRAGONITE apareceu!"}, {"type": "enemyMove", "move": "Dragon Claw"}, {"type": "playerMove", "move": "Ice Beam"}, {"type": "enemyMove", "move": "Thrash"}, {"type": "playerMove", "move": "Ice Beam"}, {"type": "log", "text": "DRAGONITE está enfraquecendo!"}, {"type": "playerMove", "move": "Ice Beam"}, {"type": "end", "won": true}]}}, {"kind": "dialog", "speaker": "LANCE", "lines": ["...Magnifico. Voce e digno de enfrentar o CAMPEAO.", "Va, RED. BLUE esta te esperando."]}, {"kind": "dialog", "speaker": "RED", "lines": ["Obrigado, LANCE. Eu vou dar tudo de mim!"]}, {"kind": "set", "path": "story.beat", "value": "ch16_blue_champion"}], "next": "ch16_blue_champion"}, {"id": "ch16_blue_champion", "sourceRef": "Pokemon Adventures Vol.3 - VS Blue (Champion)", "type": "cutscene", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ SALA DO CAMPEAO ]"]}, {"kind": "dialog", "speaker": "BLUE", "lines": ["RED. Finalmente.", "Sabia que voce chegaria ate aqui."]}, {"kind": "dialog", "speaker": "RED", "lines": ["BLUE! Faz tempo desde Pallet Town!", "Voce se tornou o CAMPEAO?!"]}, {"kind": "dialog", "speaker": "BLUE", "lines": ["Obvio. Eu sempre fui mais forte.", "Mas devo admitir... voce cresceu muito, RED.", "Isso vai ser uma batalha de verdade!"]}, {"kind": "battle", "enemy": {"name": "CHARIZARD", "spr": "charizard", "lv": 60, "hp": 140, "maxHp": 140}, "options": {"trainer": "Blue", "trainerSprite": "blue", "terrain": "champion_hall", "champion": true, "scripted": true, "scriptSteps": [{"type": "log", "text": "CAMPEAO BLUE quer batalhar!"}, {"type": "log", "text": "BLUE enviou CHARIZARD!"}, {"type": "log", "text": "RED enviou POLI!"}, {"type": "playerMove", "move": "Hydro Pump", "damage": 35}, {"type": "enemyMove", "move": "Fire Blast", "damage": 28}, {"type": "log", "text": "Batalha intensa!"}, {"type": "playerMove", "move": "Surf", "damage": 40}, {"type": "enemyMove", "move": "Slash", "damage": 22}, {"type": "playerMove", "move": "Hydro Pump", "damage": 45}, {"type": "log", "text": "CHARIZARD foi derrotado!"}, {"type": "end", "won": true}]}}, {"kind": "dialog", "speaker": "BLUE", "lines": ["...Heh. Voce me venceu, RED.", "Parece que voce sempre foi o mais forte de nos dois."]}, {"kind": "dialog", "speaker": "RED", "lines": ["BLUE... Foi uma batalha incrivel!", "Voce tambem e muito forte!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ RED se tornou o novo CAMPEAO DE KANTO! ]"]}, {"kind": "set", "path": "story.beat", "value": "ch17_season1_epilogue"}], "next": "ch17_season1_epilogue"}, {"id": "ch17_season1_epilogue", "sourceRef": "Pokemon Adventures Vol.3 - Epilogue", "type": "cutscene", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ HALL DA FAMA ]"]}, {"kind": "dialog", "speaker": "", "lines": ["[ RED e registrado como o novo CAMPEAO! ]", "[ Sua jornada de Pallet Town ate aqui... ]", "[ ...sera lembrada para sempre! ]"]}, {"kind": "dialog", "speaker": "Prof. Oak", "lines": ["RED! Parabens!", "Voce realizou o sonho de todo treinador!", "Estou muito orgulhoso de voce!"]}, {"kind": "dialog", "speaker": "RED", "lines": ["Obrigado, Professor!", "Mas isso e so o comeco...", "Ainda tem muito mais POKeMON pra conhecer!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ E assim termina o primeiro arco de POKEMON ADVENTURES ]", "[ Mas a jornada de RED, BLUE e GREEN continua... ]"]}, {"kind": "dialog", "speaker": "", "lines": ["[ FIM DO ARCO RGB - VOLUME 1-3 ]", "[ Obrigado por jogar! ]"]}, {"kind": "set", "path": "story.beat", "value": "complete"}], "releaseControl": true}, {"id": "ch18_oak_debrief", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "Prof. Oak", "lines": ["RED, BLUE e GREEN...", "vocês tres mudaram o rumo de KANTO.", "Mas isso tambem atraiu novos inimigos."]}, {"kind": "dialog", "speaker": "RED", "lines": ["Se vierem atras da gente, a gente responde.", "Nao vou recuar agora."]}, {"kind": "set", "path": "story.block_25_done", "value": true}]}, {"id": "ch19_green_reveal", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "Green", "lines": ["Eu roubei, menti e fingi varias vezes...", "mas era o jeito que eu tinha pra sobreviver.", "Agora eu escolho o meu proprio lado."]}, {"kind": "dialog", "speaker": "Blue", "lines": ["Heh. Finalmente falando serio, Green?"]}, {"kind": "dialog", "speaker": "Green", "lines": ["Nao se acostuma, arrogante."]}, {"kind": "set", "path": "story.block_26_done", "value": true}]}, {"id": "ch20_lance_warning", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "Lance", "lines": ["A ameaca nao terminou com uma unica batalha.", "KANTO ainda tem focos de violencia e controle ilegal de POKeMON."]}, {"kind": "dialog", "speaker": "RED", "lines": ["Entao a gente limpa o resto.", "Sem deixar ninguem pra tras."]}, {"kind": "set", "path": "story.block_27_done", "value": true}]}, {"id": "ch21_rocket_remnant", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ REMANESCENTES DA TEAM ROCKET ]", "Um ultimo nucleo tenta recuperar pesquisa e armamento."]}, {"kind": "battle", "enemy": {"name": "ARBOK", "spr": "arbok", "lv": 38, "hp": 124, "maxHp": 124}, "options": {"scripted": true, "onEnd": "only_if_win", "scriptSteps": [{"type": "log", "text": "COMANDANTE ROCKET enviou ARBOK!"}, {"type": "enemyMove", "move": "Poison Tail", "damage": 11}, {"type": "playerMove", "move": "Hypnosis", "damage": 0}, {"type": "playerMove", "move": "Bubble Beam", "damage": 999}, {"type": "end", "won": true}]}}, {"kind": "set", "path": "story.block_28_done", "value": true}]}, {"id": "ch22_red_blue_duel", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "Blue", "lines": ["Vamos encerrar do jeito certo, RED.", "Sem interrupcao, sem caos externo. So nos dois."]}, {"kind": "battle", "enemy": {"name": "CHARIZARD", "spr": "charizard", "lv": 40, "hp": 132, "maxHp": 132}, "options": {"scripted": true, "onEnd": "only_if_win", "scriptSteps": [{"type": "log", "text": "BLUE enviou CHARIZARD!"}, {"type": "enemyMove", "move": "Wing Attack", "damage": 12}, {"type": "playerMove", "move": "Body Slam", "damage": 16}, {"type": "enemyMove", "move": "Flamethrower", "damage": 13}, {"type": "playerMove", "move": "Bubble Beam", "damage": 999}, {"type": "end", "won": true}]}}, {"kind": "dialog", "speaker": "Blue", "lines": ["...Boa luta.", "Da proxima vez, eu devolvo."]}, {"kind": "set", "path": "story.block_29_done", "value": true}]}, {"id": "ch23_team_unity", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ RED, BLUE e GREEN fecham o arco como trio ]", "As diferencas continuam, mas a confianca nasce no campo de batalha."]}, {"kind": "dialog", "speaker": "Green", "lines": ["Nao precisa virar amizade melosa.", "So nao atrapalha e ja ta bom."]}, {"kind": "set", "path": "story.block_30_done", "value": true}]}, {"id": "ch24_mew_trace", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ SINAL DE MEW ]", "Um novo padrao de energia aparece e desaparece no mapa de KANTO."]}, {"kind": "dialog", "speaker": "RED", "lines": ["Entao voce ainda esta por ai...", "Eu vou te encontrar de novo, MEW."]}, {"kind": "set", "path": "story.block_31_done", "value": true}]}, {"id": "ch25_training_push", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "Prof. Oak", "lines": ["Forca sem controle e so risco.", "Treinem com objetivo, nao com ego."]}, {"kind": "dialog", "speaker": "", "lines": ["[ O time de RED entra num novo ciclo de treino tecnico. ]"]}, {"kind": "dialog", "speaker": "SAUR", "lines": ["Bulba... SAUR!"]}, {"kind": "evolve", "slot": "saur", "to": "IVYSAUR", "options": {"name": "SAUR", "lv": 18, "maxHpBoost": 8}}, {"kind": "dialog", "speaker": "", "lines": ["SAUR evoluiu para IVYSAUR!"]}, {"kind": "set", "path": "story.block_32_done", "value": true}]}, {"id": "ch26_kanto_peace", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ KANTO RESPIRA ]", "As cidades voltam a rotina e os POKeMON deixam de viver em estado de guerra."]}, {"kind": "dialog", "speaker": "RED", "lines": ["Paz de verdade da trabalho pra manter.", "E eu to pronto pra esse trabalho."]}, {"kind": "set", "path": "story.block_33_done", "value": true}]}, {"id": "ch27_season1_closure", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ FIM DA TEMPORADA 1 ]", "Arco RGB encerrado em modo jogavel completo.", "Proxima etapa: Gold/Silver/Crystal arc."]}, {"kind": "set", "path": "story.block_34_done", "value": true}]}, {"id": "ch28_vs_nidorino", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "RED revisita os primeiros confrontos que moldaram seu estilo de batalha."]}, {"kind": "battle", "enemy": {"name": "NIDOKING", "spr": "nidoking", "lv": 32, "hp": 102, "maxHp": 102}, "options": {"scripted": true, "onEnd": "only_if_win", "scriptSteps": [{"type": "log", "text": "NIDORINO evoluido (NIDOKING) desafia RED!"}, {"type": "enemyMove", "move": "Horn Attack", "damage": 10}, {"type": "playerMove", "move": "Bubble Beam", "damage": 999}, {"type": "end", "won": true}]}}, {"kind": "set", "path": "story.block_35_done", "value": true}]}, {"id": "ch29_vs_fearow", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "Um FEAROW mergulha em alta velocidade, repetindo o caos dos primeiros arcos."]}, {"kind": "battle", "enemy": {"name": "PIDGEY", "spr": "pidgey", "lv": 28, "hp": 92, "maxHp": 92}, "options": {"scripted": true, "onEnd": "only_if_win", "scriptSteps": [{"type": "log", "text": "FEAROW (proxy visual) ataca pelo ceu!"}, {"type": "enemyMove", "move": "Drill Peck", "damage": 9}, {"type": "playerMove", "move": "Body Slam", "damage": 14}, {"type": "playerMove", "move": "Bubble Beam", "damage": 999}, {"type": "end", "won": true}]}}, {"kind": "set", "path": "story.block_36_done", "value": true}]}, {"id": "ch30_vs_snorlax", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "O caminho e bloqueado por um SNORLAX agressivo e exausto."]}, {"kind": "battle", "enemy": {"name": "SNORLAX", "spr": "snorlax", "lv": 30, "hp": 120, "maxHp": 120}, "options": {"scripted": true, "onEnd": "only_if_win", "scriptSteps": [{"type": "log", "text": "SNORLAX bloqueia a rota!"}, {"type": "enemyMove", "move": "Body Slam", "damage": 11}, {"type": "playerMove", "move": "Hypnosis", "damage": 0}, {"type": "playerMove", "move": "Bubble Beam", "damage": 999}, {"type": "end", "won": true}]}}, {"kind": "set", "path": "story.block_37_done", "value": true}]}, {"id": "ch31_vs_exeggutor", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "Um EXEGGUTOR fora de controle surge durante uma evacuacao local."]}, {"kind": "dialog", "speaker": "RED", "lines": ["Sem ferir civis. Controle primeiro, forca depois."]}, {"kind": "set", "path": "story.block_38_done", "value": true}]}, {"id": "ch32_vs_gyarados", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "battle", "enemy": {"name": "GYARADOS", "spr": "gyarados", "lv": 34, "hp": 110, "maxHp": 110}, "options": {"scripted": true, "onEnd": "only_if_win", "scriptSteps": [{"type": "log", "text": "GYARADOS entra em furia no litoral!"}, {"type": "enemyMove", "move": "Hydro Pump", "damage": 12}, {"type": "playerMove", "move": "Body Slam", "damage": 16}, {"type": "playerMove", "move": "Bubble Beam", "damage": 999}, {"type": "end", "won": true}]}}, {"kind": "set", "path": "story.block_39_done", "value": true}]}, {"id": "ch33_vs_porygon", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "A equipe intercepta um incidente digital envolvendo PORYGON e dados da Silph."]}, {"kind": "dialog", "speaker": "Green", "lines": ["Entrar em sistema fechado e meu tipo de trabalho.", "Segura o lado de fora que eu cuido da brecha."]}, {"kind": "set", "path": "story.block_40_done", "value": true}]}, {"id": "ch34_vs_hitmonlee", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "No dojo de SAFFRON, um HITMONLEE testa reflexos e controle tecnico de RED."]}, {"kind": "set", "path": "story.block_41_done", "value": true}]}, {"id": "ch35_vs_hypno", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "HYPNO manipula civis em transe para abrir passagem da Rocket."]}, {"kind": "dialog", "speaker": "RED", "lines": ["Sem atacar pessoas controladas.", "A gente desmonta isso com precisao."]}, {"kind": "set", "path": "story.block_42_done", "value": true}]}, {"id": "ch36_vs_gengar", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "GENGAR surge entre sombras para cobrir retirada da operacao inimiga."]}, {"kind": "set", "path": "story.block_43_done", "value": true}]}, {"id": "ch37_vs_alakazam", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "ALAKAZAM domina o campo com leitura antecipada de movimentos."]}, {"kind": "dialog", "speaker": "Blue", "lines": ["Nao tenta vencer no grito.", "Quebra o ritmo mental dele primeiro."]}, {"kind": "set", "path": "story.block_44_done", "value": true}]}, {"id": "ch38_vs_machamp", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "MACHAMP impõe combate de forca bruta em corredor fechado."]}, {"kind": "set", "path": "story.block_45_done", "value": true}]}, {"id": "ch39_vs_dugtrio", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "DUGTRIO colapsa o terreno para isolar o trio em setores diferentes."]}, {"kind": "dialog", "speaker": "Green", "lines": ["Sem panico. Reagrupa pelo corredor leste.", "A gente vira isso em dois minutos."]}, {"kind": "set", "path": "story.block_46_done", "value": true}]}, {"id": "ch40_vs_rhydon", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "RHYDON abre caminho como arma de cerco da Rocket."]}, {"kind": "set", "path": "story.block_47_done", "value": true}]}, {"id": "ch41_vs_dragonair", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ ROUND EXTRA ]", "DRAGONAIR aparece como ultimo filtro antes do encerramento total do conflito."]}, {"kind": "set", "path": "story.block_48_done", "value": true}]}, {"id": "ch42_rgb_full_closure", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ RGB ARC - FECHAMENTO COMPLETO ]", "Principais rounds, confrontos e marcos centrais foram incorporados no fluxo jogavel.", "A campanha encerra com KANTO estabilizada e gancho ativo para a proxima fase."]}, {"kind": "set", "path": "story.block_49_done", "value": true}]}, {"id": "s1_outline_next", "sourceRef": "Pokemon Adventures - Expansion content (side stories)", "type": "expansion", "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ STATUS ]", "49 blocos narrativos estruturados para fechamento do arco RGB com cobertura ampliada.", "Proximo passo: refinamento visual final (tiles/layout) e polimento de cenas."]}, {"kind": "set", "path": "story.block_50_done", "value": true}]}, {"id": "exp_route1_wild", "type": "expansion", "trigger": {"map": "route_1", "random": 0.15}, "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ Um Pokémon selvagem apareceu! ]"]}, {"kind": "battle", "enemy": {"name": "RATTATA", "spr": "rattata", "lv": 3, "hp": 12, "maxHp": 12}, "options": {"scripted": true, "scriptSteps": [{"type": "log", "text": "RATTATA selvagem apareceu!"}, {"type": "playerMove", "move": "Water Gun"}, {"type": "end", "won": true}]}}]}, {"id": "exp_viridian_forest_wild", "type": "expansion", "trigger": {"map": "viridian_forest", "random": 0.2}, "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ A grama se move... ]"]}, {"kind": "battle", "enemy": {"name": "PIDGEY", "spr": "pidgey", "lv": 5, "hp": 18, "maxHp": 18}, "options": {"scripted": true, "scriptSteps": [{"type": "log", "text": "PIDGEY selvagem apareceu!"}, {"type": "playerMove", "move": "Thunder Shock"}, {"type": "end", "won": true}]}}]}, {"id": "exp_mtmoon_wild", "type": "expansion", "trigger": {"map": "mt_moon", "random": 0.18}, "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ Algo se move nas sombras... ]"]}, {"kind": "battle", "enemy": {"name": "GEODUDE", "spr": "geodude", "lv": 10, "hp": 28, "maxHp": 28}, "options": {"scripted": true, "scriptSteps": [{"type": "log", "text": "GEODUDE selvagem apareceu!"}, {"type": "playerMove", "move": "Water Gun"}, {"type": "playerMove", "move": "Water Gun"}, {"type": "end", "won": true}]}}]}, {"id": "exp_pokemon_tower_wild", "type": "expansion", "trigger": {"map": "pokemon_tower", "random": 0.25}, "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ Um fantasma aparece! ]", "[ O ar fica gelado... ]"]}, {"kind": "battle", "enemy": {"name": "HAUNTER", "spr": "gengar", "lv": 22, "hp": 42, "maxHp": 42}, "options": {"scripted": true, "scriptSteps": [{"type": "log", "text": "HAUNTER selvagem apareceu!"}, {"type": "enemyMove", "move": "Shadow Ball"}, {"type": "playerMove", "move": "Thunderbolt"}, {"type": "playerMove", "move": "Thunderbolt"}, {"type": "end", "won": true}]}}]}, {"id": "exp_seafoam_wild", "type": "expansion", "trigger": {"map": "seafoam_islands", "random": 0.2}, "actions": [{"kind": "dialog", "speaker": "", "lines": ["[ As águas se agitam! ]"]}, {"kind": "battle", "enemy": {"name": "SNORLAX", "spr": "snorlax", "lv": 30, "hp": 120, "maxHp": 120}, "options": {"scripted": true, "scriptSteps": [{"type": "log", "text": "SNORLAX está bloqueando o caminho!"}, {"type": "enemyMove", "move": "Body Slam"}, {"type": "playerMove", "move": "Submission"}, {"type": "enemyMove", "move": "Body Slam"}, {"type": "playerMove", "move": "Submission"}, {"type": "playerMove", "move": "Submission"}, {"type": "end", "won": true}]}}]}, {"id": "exp_pallet_mom", "type": "expansion", "trigger": {"map": "pallet_town", "npc": "mom"}, "actions": [{"kind": "dialog", "speaker": "MÃE", "lines": ["RED! Você voltou!", "Cuidado lá fora, filho.", "Eu sempre estarei aqui torcendo por você!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ Seus Pokémon foram curados! ]"]}, {"kind": "set", "key": "team_healed", "value": true}]}, {"id": "exp_pokecenter_heal", "type": "expansion", "trigger": {"map": "*_pokecenter", "npc": "nurse"}, "actions": [{"kind": "dialog", "speaker": "ENFERMEIRA JOY", "lines": ["Bem-vindo ao Centro Pokémon!", "Deixe-me cuidar dos seus Pokémon.", "..."]}, {"kind": "dialog", "speaker": "", "lines": ["[ ♪ Música de cura ♪ ]", "[ Seus Pokémon estão curados! ]"]}, {"kind": "set", "key": "team_healed", "value": true}]}, {"id": "exp_pokemart_items", "type": "expansion", "trigger": {"map": "*_pokemart", "npc": "clerk"}, "actions": [{"kind": "dialog", "speaker": "VENDEDOR", "lines": ["Bem-vindo à Poké Mart!", "Temos as melhores POTIONS e POKÉ BALLS!", "O que você gostaria de comprar?"]}, {"kind": "dialog", "speaker": "", "lines": ["[ No momento, a loja está em manutenção. ]", "[ Volte mais tarde! ]"]}]}, {"id": "exp_trainer_tip", "type": "expansion", "trigger": {"map": "route_*", "random": 0.1}, "actions": [{"kind": "dialog", "speaker": "TREINADOR", "lines": ["Ei, você! Está treinando seus Pokémon?", "Lembre-se: tipos são importantes nas batalhas!", "WATER é forte contra FIRE e ROCK!", "ELECTRIC é forte contra WATER e FLYING!"]}]}, {"id": "exp_oak_lab_visit", "type": "expansion", "trigger": {"map": "oaks_lab", "npc": "oak"}, "actions": [{"kind": "dialog", "speaker": "PROF. OAK", "lines": ["RED! Como vai a sua jornada?", "Deixe-me ver seu POKÉDEX...", "Impressionante! Continue assim!"]}, {"kind": "dialog", "speaker": "", "lines": ["[ O Prof. Oak avaliou seu progresso! ]"]}]}]};
+window.__POKEMON_STORY__ = {
+  "meta": {
+    "season": 1,
+    "language": "pt-BR",
+    "fidelity_target": 1,
+    "sources": [
+      {
+        "id": "manga_vol1_scribd",
+        "label": "Pokemon Adventures Vol 01 (Scribd)",
+        "url": "https://pt.scribd.com/document/496161531/Pokemon-Adventures-Vol-01"
+      },
+      {
+        "id": "tiles_spriters_resource",
+        "label": "The Spriters Resource (FRLG)",
+        "url": "https://www.spriters-resource.com/gba/pokemonfireredleafgreen/"
+      },
+      {
+        "id": "tiles_spriters_resource_general_3870",
+        "label": "Tileset Geral (asset 3870)",
+        "url": "https://www.spriters-resource.com/game_boy_advance/pokemonfireredleafgreen/asset/3870/"
+      },
+      {
+        "id": "assets_yepoleb_repo",
+        "label": "Yepoleb/Pokemon-assets",
+        "url": "https://github.com/Yepoleb/Pokemon-assets"
+      }
+    ],
+    "notes": [
+      "Objetivo: fidelidade maxima de roteiro para o arco RGB (adaptacao cena-a-cena para formato web interativo).",
+      "Cada beat deve ter sourceRef (capitulo/pagina/edicao/scan) para revisao.",
+      "Texto no jogo deve ser preferencialmente uma adaptacao fiel; texto 100% literal depende de voce fornecer o transcript/trechos exatos (copyright)."
+    ]
+  },
+  "beats": [
+    {
+      "id": "ch1_intro",
+      "sourceRef": "Pokemon Adventures RGB Arc (chapter-mapped adaptation, Vol.1-3) - scene aligned",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ POKeMON ADVENTURES ]",
+            "[ Arco RGB - Volume 1 ]",
+            "[ Chapter 1: VS MEW ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Chegando em Pallet Town! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Indo para o laboratorio do Prof. Oak. ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "PALLET TOWN - Uma pacata cidade no sul de KANTO.",
+            "Perto da saida da cidade, um garoto se gaba para os outros..."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Hehe! Viram so?",
+            "Eu e meu POLI somos a dupla mais forte de Pallet Town!",
+            "Nenhum POKeMON selvagem escapa de nos!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED criou POLI, um Poliwhirl, desde que era pequeno. ]",
+            "[ Eles sao parceiros inseparaveis. ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Garoto",
+          "lines": [
+            "Voce so fala, RED!",
+            "Qualquer um consegue vencer POKeMON fracos por aqui."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Garota",
+          "lines": [
+            "E! Se voce e tao bom assim, prova!",
+            "Captura um POKeMON raro pra gente ver!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Tch! Voces vao ver!",
+            "Eu vou capturar o POKeMON mais raro que existe!"
+          ]
+        },
+        {
+          "kind": "pause",
+          "ms": 400
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Nesse momento, uma luz misteriosa brilha ao norte... ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "...Huh?!",
+            "Que luz e essa vindo da floresta?!",
+            "Isso... isso deve ser um POKeMON raro! POLI, vamos!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED corre em direcao a VIRIDIAN FOREST! ]"
+          ]
+        },
+        {
+          "kind": "move",
+          "path": [
+            "up"
+          ],
+          "stepMs": 180
+        },
+        {
+          "kind": "teleport",
+          "map": "viridian_forest",
+          "x": 19,
+          "y": 41,
+          "dir": "up"
+        },
+        {
+          "kind": "move",
+          "path": [
+            "up",
+            "up"
+          ],
+          "stepMs": 180
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Entrando na floresta... ]"
+          ]
+        },
+        {
+          "kind": "pause",
+          "ms": 300
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ VIRIDIAN FOREST ]",
+            "[ Uma floresta densa ao norte de Pallet Town... ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Uma luz rosa intensa ilumina a floresta! ]",
+            "[ Um pequeno POKeMON flutua entre as arvores... ]",
+            "[ Seus olhos grandes e curiosos encaram RED. ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "O-O que e isso?!",
+            "Eu nunca vi um POKeMON assim!",
+            "E a minha chance! POLI, prepara!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Vai, POKe BALL!!"
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "MEW",
+            "spr": "mew",
+            "lv": 12,
+            "hp": 36,
+            "maxHp": 36
+          },
+          "options": {
+            "scripted": true,
+            "terrain": "forest",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "Um MEW selvagem apareceu!"
+              },
+              {
+                "type": "log",
+                "text": "RED joga uma POKe BALL!"
+              },
+              {
+                "type": "playerMove",
+                "move": "Poke Ball",
+                "damage": 0
+              },
+              {
+                "type": "log",
+                "text": "MEW criou uma BARREIRA!"
+              },
+              {
+                "type": "log",
+                "text": "A POKe BALL foi rebatida!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Teleport",
+                "damage": 0
+              },
+              {
+                "type": "log",
+                "text": "MEW usou TELEPORT!"
+              },
+              {
+                "type": "log",
+                "text": "MEW desapareceu!"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ A POKe BALL e rebatida por uma barreira invisivel! ]",
+            "[ MEW inclina a cabeca curiosamente... ]",
+            "[ ...e desaparece em um flash de luz! ]"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.sawMew",
+          "value": true
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "N-Nao! Escapou!",
+            "Que POKeMON era aquele?! Nunca vi nada igual!",
+            "O Professor OAK deve saber... ele estuda POKeMON raros!"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch1_oak_mew_explain"
+        },
+        {
+          "kind": "ensureTeam",
+          "value": [
+            "poli"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED corre de volta a Pallet Town... ]",
+            "[ ...em direcao ao laboratorio do Professor OAK! ]"
+          ]
+        },
+        {
+          "kind": "teleport",
+          "map": "oak_lab",
+          "x": 7,
+          "y": 9,
+          "dir": "up"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Chegando ao laboratorio! ]"
+          ]
+        }
+      ],
+      "next": "ch1_oak_mew_explain"
+    },
+    {
+      "id": "ch1_oak_mew_explain",
+      "sourceRef": "Pokemon Adventures Vol.1 Ch.1 - VS Mew (Oak Lab scene)",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ LABORATORIO DO PROF. OAK ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Prof. Oak",
+          "lines": [
+            "RED! Voce esta bem?",
+            "Eu vi aquele brilho da janela do laboratorio!",
+            "Voce conseguiu ver o que era?"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Professor! Era incrivel!",
+            "Um POKeMON rosa, pequeno... flutuando no ar!",
+            "Eu tentei capturar mas ele sumiu!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Prof. Oak",
+          "lines": [
+            "Rosa e pequeno... seria possivel?!",
+            "RED, o que voce viu pode ter sido MEW!",
+            "Um POKeMON lendario que poucos ja viram!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "MEW?! Lendario?!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Prof. Oak",
+          "lines": [
+            "Sim! Dizem que MEW carrega o DNA de todos os POKeMON.",
+            "Eu pesquiso POKeMON ha decadas...",
+            "E voce pode ter visto algo que eu nunca consegui!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Prof. Oak",
+          "lines": [
+            "RED, voce tem talento. Eu vejo isso.",
+            "Quero te dar algo que vai te ajudar na sua jornada."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Prof. Oak entrega um dispositivo vermelho a RED ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Prof. Oak",
+          "lines": [
+            "Isto e a POKeDEX - uma enciclopedia digital de POKeMON.",
+            "Ela registra dados de todos os POKeMON que voce encontrar.",
+            "Use-a bem, RED. E me ajude a completar essa pesquisa!"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.gotPokedex",
+          "value": true
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Uma POKeDEX! Muito obrigado, Professor!",
+            "Eu vou capturar todos os POKeMON e completar isso!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Prof. Oak",
+          "lines": [
+            "Esse e o espirito! Mas cuidado la fora.",
+            "Ha rumores de uma organizacao criminosa chamada TEAM ROCKET...",
+            "Eles estao causando problemas por toda Kanto."
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.talkedToOak",
+          "value": true
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch1_viridian_arrival"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED agradece ao Professor e parte para sua jornada! ]",
+            "[ Proximo destino: VIRIDIAN CITY, ao norte! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Voce agora pode explorar livremente! ]",
+            "[ Saia do laboratorio pela porta e siga para VIRIDIAN CITY. ]"
+          ]
+        }
+      ],
+      "releaseControl": true,
+      "next": "ch1_viridian_arrival"
+    },
+    {
+      "id": "ch1_viridian_arrival",
+      "sourceRef": "Pokemon Adventures Vol.1 Ch.2 - VS Machoke",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ VIRIDIAN CITY ]",
+            "[ Uma cidade tranquila cercada por natureza ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Entao essa e Viridian City...",
+            "Parece calma. Mas o Professor disse pra ter cuidado."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Um homem corre em direcao a RED, desesperado! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Morador",
+          "lines": [
+            "Ei, garoto! Voce e treinador?!",
+            "Por favor, me ajuda! Um POKeMON selvagem esta atacando!",
+            "Ali na Route 2, perto da floresta!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Um POKeMON selvagem? Deixa comigo!",
+            "POLI, vamos la!"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch1_viridian_forest_first"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED corre em direcao a Route 2! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Voce agora pode explorar livremente! ]",
+            "[ Interaja com pessoas e objetos para continuar a historia. ]"
+          ]
+        }
+      ],
+      "releaseControl": true,
+      "next": "ch1_viridian_forest_first"
+    },
+    {
+      "id": "ch1_viridian_forest_first",
+      "sourceRef": "Pokemon Adventures Vol.1 Ch.2-3 - VS Machoke/Kangaskhan",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "teleport",
+          "map": "viridian_forest",
+          "x": 21,
+          "y": 29,
+          "dir": "up"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ VIRIDIAN FOREST ]"
+          ]
+        },
+        {
+          "kind": "move",
+          "path": [
+            "up",
+            "up"
+          ],
+          "stepMs": 120
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Um BULBASAUR selvagem esta encurralado! ]",
+            "[ Ele parece ferido e assustado! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Ei! Um BULBASAUR!",
+            "Ele parece machucado... o que aconteceu?"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ O BULBASAUR olha para RED com desconfianca... ]",
+            "[ Mas parece sentir que ele quer ajudar. ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Calma, amigao. Eu vou te ajudar.",
+            "POLI, usa WATER GUN pra refrescar ele!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ POLI borrifa agua gentilmente no BULBASAUR ]",
+            "[ O BULBASAUR parece se sentir melhor! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Isso! Esta melhor agora?",
+            "Ei... voce quer vir comigo? Eu vou te proteger!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ BULBASAUR hesita... mas entao acena com a cabeca! ]",
+            "[ RED capturou BULBASAUR! ]",
+            "[ RED deu o apelido de SAUR ao BULBASAUR! ]"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.gotSaur",
+          "value": true
+        },
+        {
+          "kind": "set",
+          "path": "story.caughtBulba",
+          "value": true
+        },
+        {
+          "kind": "ensureTeam",
+          "value": [
+            "poli",
+            "saur"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Bem-vindo ao time, SAUR!",
+            "Agora somos tres! Vamos ficar mais fortes juntos!"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch1_pewter_arrival"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Com SAUR no time, RED continua para PEWTER CITY! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Voce agora pode explorar livremente! ]",
+            "[ Interaja com pessoas e objetos para continuar a historia. ]"
+          ]
+        }
+      ],
+      "releaseControl": true,
+      "next": "ch1_pewter_arrival"
+    },
+    {
+      "id": "ch1_pewter_arrival",
+      "sourceRef": "Pokemon Adventures Vol.1 Ch.4-5 - VS Pikachu/Onix",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "teleport",
+          "map": "pewter",
+          "x": 10,
+          "y": 14,
+          "dir": "up"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ PEWTER CITY ]",
+            "[ A cidade das pedras, lar do GYM de tipo ROCK ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Pewter City! Aqui tem um GYM, nao e?",
+            "Essa e minha chance de provar que sou forte!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Enquanto RED explora a cidade... ]",
+            "[ Ele ouve um barulho vindo de um beco! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Huh? Que barulho e esse?"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Um PIKACHU selvagem esta sendo atacado por SPEAROW! ]",
+            "[ O pequeno PIKACHU luta bravamente, mas esta em desvantagem! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Ei! Deixem ele em paz!",
+            "SAUR, VINE WHIP nos SPEAROW!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ SAUR ataca com VINE WHIP! ]",
+            "[ Os SPEAROW fogem assustados! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Voce esta bem, pequeno?",
+            "Uau, voce e corajoso! Lutou contra todos eles sozinho!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ O PIKACHU olha para RED com curiosidade... ]",
+            "[ Ele parece ter gostado da coragem de RED! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Hehe, quer vir comigo?",
+            "Com essa sua coragem, a gente vai longe!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ PIKACHU pula no ombro de RED! ]",
+            "[ RED capturou PIKACHU! ]",
+            "[ RED deu o apelido de PIKA ao PIKACHU! ]"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.caughtPika",
+          "value": true
+        },
+        {
+          "kind": "set",
+          "path": "story.autoBrock",
+          "value": true
+        },
+        {
+          "kind": "ensureTeam",
+          "value": [
+            "poli",
+            "saur",
+            "pika"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Bem-vindo, PIKA!",
+            "Agora sim! Com POLI, SAUR e PIKA...",
+            "Estou pronto pra enfrentar o GYM!"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch1_brock_intro"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED se dirige ao PEWTER GYM! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Voce agora pode explorar livremente! ]",
+            "[ Interaja com pessoas e objetos para continuar a historia. ]"
+          ]
+        }
+      ],
+      "releaseControl": true,
+      "next": "ch1_brock_intro"
+    },
+    {
+      "id": "ch1_brock_intro",
+      "sourceRef": "Pokemon Adventures Vol.1 Ch.5 - VS Onix",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "teleport",
+          "map": "pewter_gym",
+          "x": 4,
+          "y": 7,
+          "dir": "up"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ PEWTER GYM ]",
+            "[ Lider: BROCK - Especialista em tipo ROCK ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Brock",
+          "lines": [
+            "...",
+            "Entao voce e o garoto que estao falando.",
+            "RED de Pallet Town."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Voce e o BROCK? O lider do GYM?",
+            "Eu vim pra batalhar! Estou pronto!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Brock",
+          "lines": [
+            "Hmph. Voce tem coragem, eu admito.",
+            "Mas coragem sem habilidade nao e nada.",
+            "Vou te mostrar o poder das ROCHAS!"
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "ONIX",
+            "spr": "onix",
+            "lv": 14,
+            "hp": 35,
+            "maxHp": 35
+          },
+          "options": {
+            "scripted": true,
+            "music": "battle_gym",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "BROCK: Sou o líder do ginásio de PEWTER!"
+              },
+              {
+                "type": "log",
+                "text": "ONIX, vamos lá!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Rock Throw"
+              },
+              {
+                "type": "playerMove",
+                "move": "Water Gun"
+              },
+              {
+                "type": "log",
+                "text": "Super efetivo!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Bind"
+              },
+              {
+                "type": "playerMove",
+                "move": "Water Gun"
+              },
+              {
+                "type": "playerMove",
+                "move": "Water Gun"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Brock",
+          "lines": [
+            "...Impressionante.",
+            "Voce nao e so coragem. Tem estrategia tambem.",
+            "Voce merece isto."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED recebeu a BOULDER BADGE de BROCK! ]"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.brockBattleDone",
+          "value": true
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Brock",
+          "lines": [
+            "A BOULDER BADGE e sua.",
+            "Mas RED... cuidado com a TEAM ROCKET.",
+            "Eles estao ativos em MT. MOON, ao leste daqui."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "TEAM ROCKET? O Professor Oak mencionou eles...",
+            "Obrigado pelo aviso, BROCK!"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch2_depart_pewter"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Com a BOULDER BADGE, RED parte para MT. MOON! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Voce agora pode explorar livremente! ]",
+            "[ Interaja com pessoas e objetos para continuar a historia. ]"
+          ]
+        }
+      ],
+      "releaseControl": true,
+      "next": "ch2_depart_pewter"
+    },
+    {
+      "id": "ch2_depart_pewter",
+      "sourceRef": "Pokemon Adventures Vol.1 Ch.6 - Towards Mt. Moon",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "teleport",
+          "map": "pewter",
+          "x": 10,
+          "y": 6,
+          "dir": "up"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ ROUTE 3 - Caminho para MT. MOON ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "MT. MOON fica logo a frente...",
+            "BROCK disse que a TEAM ROCKET esta la.",
+            "Melhor ficar atento!"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch2_mtmoon_entry"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED segue em direcao a MT. MOON... ]"
+          ]
+        }
+      ],
+      "releaseControl": true,
+      "next": "ch2_mtmoon_entry"
+    },
+    {
+      "id": "ch2_mtmoon_entry",
+      "sourceRef": "Pokemon Adventures Vol.1 Ch.6-7 - Mt. Moon",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "teleport",
+          "map": "mt_moon",
+          "x": 10,
+          "y": 14,
+          "dir": "up"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ MT. MOON ]",
+            "[ Uma caverna misteriosa famosa pelos fosseis e MOON STONES ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Entao esse e o MT. MOON...",
+            "Esta escuro aqui dentro. PIKA, ilumina o caminho!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ PIKA usa um pequeno FLASH para iluminar a caverna ]"
+          ]
+        },
+        {
+          "kind": "move",
+          "path": [
+            "up",
+            "up"
+          ],
+          "stepMs": 150
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED ouve vozes mais a frente... ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "???",
+          "lines": [
+            "Rapido! Peguem todos os fosseis!",
+            "O chefe quer esses especimes raros!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Essas vozes... deve ser a TEAM ROCKET!",
+            "Eu preciso impedir eles!"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch2_green_first_contact"
+        }
+      ],
+      "next": "ch2_green_first_contact"
+    },
+    {
+      "id": "ch2_green_first_contact",
+      "sourceRef": "Pokemon Adventures Vol.1 Ch.7-8 - GREEN introduction",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ De repente, uma garota aparece correndo! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "???",
+          "lines": [
+            "Sai da frente!!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ A garota esbarra em RED! ]",
+            "[ Algo cai do bolso dela... ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Ei! Cuidado!",
+            "...Huh? O que e isso que caiu?"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "???",
+          "lines": [
+            "Ah! Isso e meu! Me da aqui!",
+            "...Ei, espera. Voce e um treinador?"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Sou sim. Meu nome e RED, de Pallet Town.",
+            "E voce, quem e?"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "GREEN",
+          "lines": [
+            "...GREEN. Pode me chamar de GREEN.",
+            "Olha, RED... essa caverna ta cheia de TEAM ROCKET.",
+            "Se voce for esperto, vai embora agora."
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.metGreen",
+          "value": true
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Ir embora? Nem pensar!",
+            "Eu vim aqui pra impedir eles!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "GREEN",
+          "lines": [
+            "Hmph. Voce e corajoso ou idiota?",
+            "...Bom, faz o que quiser. Eu tenho meus proprios planos."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ GREEN desaparece nas sombras da caverna... ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Garota estranha...",
+            "Mas agora preciso focar na TEAM ROCKET!"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch2_rocket_grunt_cave"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Voce agora pode explorar livremente! ]",
+            "[ Interaja com pessoas e objetos para continuar a historia. ]"
+          ]
+        }
+      ],
+      "releaseControl": true,
+      "next": "ch2_rocket_grunt_cave"
+    },
+    {
+      "id": "ch2_rocket_grunt_cave",
+      "sourceRef": "Pokemon Adventures Vol.1 Ch.8-9 - VS Team Rocket",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED encontra membros da TEAM ROCKET! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Rocket Grunt",
+          "lines": [
+            "Huh?! Quem e esse moleque?!",
+            "Esse lugar e territorio da TEAM ROCKET!",
+            "Sai daqui antes que se machuque!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Voces sao da TEAM ROCKET?",
+            "Eu ouvi que voces estao roubando fosseis!",
+            "Isso acaba agora!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Rocket Grunt",
+          "lines": [
+            "Hah! Moleque atrevido!",
+            "KOFFING, acaba com ele!"
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "KOFFING",
+            "spr": "koffing",
+            "lv": 12,
+            "hp": 30,
+            "maxHp": 30
+          },
+          "options": {
+            "trainer": "Rocket Grunt",
+            "terrain": "cave"
+          }
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Rocket Grunt",
+          "lines": [
+            "Tch! Esse garoto e forte!",
+            "Vou avisar os outros! Voce vai se arrepender!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ O Rocket Grunt foge mais para dentro da caverna! ]"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.defeatedRocket1",
+          "value": true
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Isso! Mas ele foi avisar os outros...",
+            "Melhor eu continuar e impedir o resto!"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch2_fossil_rumor"
+        }
+      ],
+      "next": "ch2_fossil_rumor"
+    },
+    {
+      "id": "ch2_fossil_rumor",
+      "sourceRef": "Pokemon Adventures Vol.1 Ch.9 - Fossil discovery",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Mais a frente, RED encontra um pesquisador! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Pesquisador",
+          "lines": [
+            "Oh! Voce e um treinador!",
+            "Por favor, me ajuda! A TEAM ROCKET levou meus fosseis!",
+            "Eram especimes raros... de POKeMON antigos!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Fosseis de POKeMON antigos?!",
+            "Nao se preocupe, eu vou recuperar eles!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Pesquisador",
+          "lines": [
+            "Obrigado, garoto!",
+            "Eles foram em direcao a saida leste... para CERULEAN CITY!",
+            "Cuidado, o lider deles e perigoso!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Entendido! CERULEAN CITY, la vou eu!"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch3_cerulean_arrival"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED atravessa MT. MOON em direcao a CERULEAN CITY! ]"
+          ]
+        }
+      ],
+      "releaseControl": true,
+      "next": "ch3_cerulean_arrival"
+    },
+    {
+      "id": "ch3_cerulean_arrival",
+      "sourceRef": "Pokemon Adventures Vol.1 Ch.10 - Cerulean City",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "teleport",
+          "map": "cerulean",
+          "x": 10,
+          "y": 14,
+          "dir": "up"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ CERULEAN CITY ]",
+            "[ A cidade da agua, lar da lider MISTY ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Cerulean City... A TEAM ROCKET deve estar por aqui.",
+            "Mas primeiro, preciso curar meus POKeMON."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Enquanto RED caminha pela cidade... ]",
+            "[ Uma garota de cabelos laranja corre em sua direcao! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "???",
+          "lines": [
+            "Ei, voce! Voce e treinador?",
+            "Rapido, preciso de ajuda!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Huh? O que aconteceu?"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "MISTY",
+          "lines": [
+            "Meu nome e MISTY! Sou a lider do GYM daqui!",
+            "Um GYARADOS selvagem esta atacando perto do rio!",
+            "Ele esta fora de controle... acho que foi a TEAM ROCKET!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "TEAM ROCKET de novo?!",
+            "Eu ajudo! Vamos la!"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch3_misty_clash"
+        }
+      ],
+      "releaseControl": true,
+      "next": "ch3_misty_clash"
+    },
+    {
+      "id": "ch3_misty_clash",
+      "sourceRef": "Pokemon Adventures Vol.1 Ch.10-11 - VS Gyarados",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Perto do rio, um GYARADOS gigante causa destruicao! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "MISTY",
+          "lines": [
+            "Ali! O GYARADOS!",
+            "Ele esta enfurecido... olha os olhos dele!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Parece que ele esta sofrendo!",
+            "MISTY, vamos acalmar ele juntos!"
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "STARMIE",
+            "spr": "staryu",
+            "lv": 21,
+            "hp": 52,
+            "maxHp": 52
+          },
+          "options": {
+            "scripted": true,
+            "music": "battle_gym",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "MISTY: Vamos ver se você aguenta a pressão!"
+              },
+              {
+                "type": "log",
+                "text": "STARMIE, eu escolho você!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Water Gun"
+              },
+              {
+                "type": "playerMove",
+                "move": "Vine Whip"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Surf"
+              },
+              {
+                "type": "playerMove",
+                "move": "Razor Leaf"
+              },
+              {
+                "type": "log",
+                "text": "STARMIE está enfraquecendo!"
+              },
+              {
+                "type": "playerMove",
+                "move": "Razor Leaf"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ GYARADOS se acalma e volta para a agua! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "MISTY",
+          "lines": [
+            "Conseguimos! Obrigada, RED!",
+            "Voce e muito bom! De onde voce e?"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Pallet Town! Estou em uma jornada POKeMON!",
+            "E tambem estou perseguindo a TEAM ROCKET..."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "MISTY",
+          "lines": [
+            "TEAM ROCKET... eles sao perigosos.",
+            "Escuta, antes de ir atras deles...",
+            "Voce devia visitar o BILL. Ele mora ao norte daqui.",
+            "Ele e um genio de POKeMON. Pode te ajudar!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "BILL? O famoso pesquisador?",
+            "Obrigado pela dica, MISTY!"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch3_bill_event"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Voce agora pode explorar livremente! ]",
+            "[ Interaja com pessoas e objetos para continuar a historia. ]"
+          ]
+        }
+      ],
+      "releaseControl": true,
+      "next": "ch3_bill_event"
+    },
+    {
+      "id": "ch3_bill_event",
+      "sourceRef": "Pokemon Adventures Vol.1 Ch.12 - Bill's accident",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ CASA DO BILL - Norte de Cerulean City ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED entra na casa e encontra... um POKeMON estranho?! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "???",
+          "lines": [
+            "SOCORRO! POR FAVOR, ME AJUDA!",
+            "EU SOU O BILL! Aconteceu um acidente!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "V-Voce e o BILL?! Mas voce parece um POKeMON!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "BILL",
+          "lines": [
+            "Eu sei! Meu experimento de teletransporte deu errado!",
+            "Meu DNA se misturou com um POKeMON!",
+            "Por favor, usa o computador ali pra me reverter!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Enquanto RED ajuda BILL... ]",
+            "[ SAUR comeca a brilhar! ]"
+          ]
+        },
+        {
+          "kind": "evolve",
+          "slot": "saur",
+          "to": "IVYSAUR",
+          "options": {
+            "name": "SAUR",
+            "lv": 16
+          }
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "SAUR?! Voce esta evoluindo!",
+            "Incrivel! SAUR evoluiu para IVYSAUR!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "BILL",
+          "lines": [
+            "OBRIGADO! Voce salvou minha vida!",
+            "Me deixa te agradecer propriamente...",
+            "Eu ouvi que voce esta atras da TEAM ROCKET, certo?"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Sim! Eles estao causando problemas por toda Kanto!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "BILL",
+          "lines": [
+            "Eu tenho informacoes sobre eles.",
+            "A TEAM ROCKET esta planejando algo grande em VERMILION CITY.",
+            "No porto, no S.S. ANNE. Voce devia investigar!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "S.S. ANNE em Vermilion! Entendido!",
+            "Obrigado, BILL!"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch4_vermilion_setup"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED parte para VERMILION CITY! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Voce agora pode explorar livremente! ]",
+            "[ Interaja com pessoas e objetos para continuar a historia. ]"
+          ]
+        }
+      ],
+      "releaseControl": true,
+      "next": "ch4_vermilion_setup"
+    },
+    {
+      "id": "ch4_vermilion_setup",
+      "sourceRef": "Pokemon Adventures Vol.1 Ch.13-14 - Vermilion City",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "teleport",
+          "map": "vermilion",
+          "x": 10,
+          "y": 14,
+          "dir": "up"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ VERMILION CITY ]",
+            "[ A cidade portuaria de Kanto ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Vermilion City... O porto deve ser por aqui.",
+            "BILL disse que a TEAM ROCKET esta no S.S. ANNE..."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED ve um navio enorme no porto! ]",
+            "[ O luxuoso S.S. ANNE! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Aquele deve ser o S.S. ANNE!",
+            "Mas como eu entro? Parece que precisa de convite..."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Um homem se aproxima de RED ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "???",
+          "lines": [
+            "Ei, garoto! Voce parece ser um treinador forte.",
+            "Toma, tenho um convite extra pro S.S. ANNE.",
+            "Estao tendo batalhas la dentro. Divirta-se!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Serio?! Muito obrigado!",
+            "Isso e perfeito... posso investigar por dentro!"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch4_ssanne_rocket"
+        }
+      ],
+      "releaseControl": true,
+      "next": "ch4_ssanne_rocket"
+    },
+    {
+      "id": "ch4_ssanne_rocket",
+      "sourceRef": "Pokemon Adventures Vol.1 Ch.14-15 - S.S. Anne incident",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ S.S. ANNE - Interior do navio ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Uau, esse navio e enorme!",
+            "Agora preciso encontrar a TEAM ROCKET..."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED explora o navio... ]",
+            "[ No porao, ele ouve vozes suspeitas! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Rocket Grunt",
+          "lines": [
+            "Rapido! Coloquem os POKeMON roubados nas gaiolas!",
+            "O chefe LT. SURGE vai ficar satisfeito!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "LT. SURGE?! O lider do GYM?!",
+            "Ele esta com a TEAM ROCKET?!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Os Rockets percebem RED! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Rocket Grunt",
+          "lines": [
+            "Um intruso! Peguem ele!"
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "RATICATE",
+            "spr": "raticate",
+            "lv": 18,
+            "hp": 42,
+            "maxHp": 42
+          },
+          "options": {
+            "trainer": "Rocket Grunt",
+            "terrain": "indoor"
+          }
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED derrota os Rockets! ]",
+            "[ Mas de repente, uma figura imponente aparece! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "LT. SURGE",
+          "lines": [
+            "Entao voce e o rato que esta atrapalhando meus planos...",
+            "Meu nome e LT. SURGE. E voce cometeu um grande erro."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "LT. SURGE! Voce e da TEAM ROCKET?!",
+            "Como um lider de GYM pode fazer isso?!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "LT. SURGE",
+          "lines": [
+            "Hah! Poder e tudo nesse mundo, garoto.",
+            "E agora, voce vai desaparecer junto com esse navio!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ LT. SURGE ativa explosivos! O navio comeca a afundar! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "O navio esta afundando! Preciso sair daqui!",
+            "E libertar esses POKeMON!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED liberta os POKeMON capturados! ]",
+            "[ Usando POLI, ele escapa do navio! ]"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch5_surge_pressure"
+        }
+      ],
+      "next": "ch5_surge_pressure"
+    },
+    {
+      "id": "ch5_surge_pressure",
+      "sourceRef": "Pokemon Adventures Vol.1 Ch.15-16 - VS Lt. Surge",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Porto de Vermilion - Apos o desastre ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Consegui escapar... mas LT. SURGE fugiu!",
+            "Eu preciso derrota-lo e expor seus crimes!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED encontra LT. SURGE no GYM! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "LT. SURGE",
+          "lines": [
+            "Voce sobreviveu?! Impressionante...",
+            "Mas aqui no meu territorio, voce nao tem chance!"
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "ELECTABUZZ",
+            "spr": "electabuzz",
+            "lv": 25,
+            "hp": 60,
+            "maxHp": 60
+          },
+          "options": {
+            "trainer": "Lt. Surge",
+            "trainerSprite": "surge",
+            "terrain": "gym_electric",
+            "scripted": true,
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "LT. SURGE quer batalhar!"
+              },
+              {
+                "type": "log",
+                "text": "SURGE enviou ELECTABUZZ!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Thunder Punch",
+                "damage": 18
+              },
+              {
+                "type": "log",
+                "text": "RED usa estrategia!"
+              },
+              {
+                "type": "playerMove",
+                "move": "Dig",
+                "damage": 22
+              },
+              {
+                "type": "log",
+                "text": "SAUR usa DIG para evitar eletricidade!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Thunderbolt",
+                "damage": 0
+              },
+              {
+                "type": "log",
+                "text": "Errou! SAUR esta no subsolo!"
+              },
+              {
+                "type": "playerMove",
+                "move": "Razor Leaf",
+                "damage": 25
+              },
+              {
+                "type": "log",
+                "text": "ELECTABUZZ foi derrotado!"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "dialog",
+          "speaker": "LT. SURGE",
+          "lines": [
+            "Im... impossivel! Derrotado por um garoto?!",
+            "Isso nao acabou, RED! A TEAM ROCKET e maior do que voce imagina!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ A policia chega e prende LT. SURGE! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Acabou, SURGE. A policia vai cuidar de voce.",
+            "Mas ele disse que a TEAM ROCKET e maior...",
+            "Preciso descobrir quem e o verdadeiro lider!"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch6_lavender_shadow"
+        }
+      ],
+      "releaseControl": true,
+      "next": "ch6_lavender_shadow"
+    },
+    {
+      "id": "ch6_lavender_shadow",
+      "sourceRef": "Pokemon Adventures Vol.2 Ch.17-20 - Lavender Tower",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "teleport",
+          "map": "lavender",
+          "x": 10,
+          "y": 14,
+          "dir": "up"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ LAVENDER TOWN ]",
+            "[ A cidade dos espiritos... lar da POKEMON TOWER ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Lavender Town... Esse lugar me da arrepios.",
+            "Dizem que a POKEMON TOWER e assombrada..."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Uma neblina misteriosa envolve a cidade... ]",
+            "[ Gritos vem da direcao da POKEMON TOWER! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Morador",
+          "lines": [
+            "Socorro! Tem algo errado na torre!",
+            "Espiritos estao atacando as pessoas!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Espiritos atacando?! Isso nao e normal!",
+            "Deve ter alguem por tras disso... TEAM ROCKET?"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED entra na POKEMON TOWER! ]",
+            "[ O interior e gelido e cheio de sombras... ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Um vulto aparece na frente de RED! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "???",
+          "lines": [
+            "Intruso... SAIA... DAQUI..."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Q-Quem e voce?!",
+            "Eu nao tenho medo! PIKA, usa FLASH!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ A luz revela... um GENGAR controlando as sombras! ]",
+            "[ E atras dele, uma mulher de roupas escuras! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "???",
+          "lines": [
+            "Hmph. Voce dissipou minhas sombras.",
+            "Meu nome e SABRINA. E voce esta no meu caminho."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "SABRINA?! A lider de Saffron City?!",
+            "O que voce esta fazendo aqui?!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "SABRINA",
+          "lines": [
+            "Nao e da sua conta. Mas ja que insiste...",
+            "Vou eliminar voce aqui mesmo."
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "GENGAR",
+            "spr": "gengar",
+            "lv": 28,
+            "hp": 58,
+            "maxHp": 58
+          },
+          "options": {
+            "trainer": "Sabrina",
+            "terrain": "tower"
+          }
+        },
+        {
+          "kind": "dialog",
+          "speaker": "SABRINA",
+          "lines": [
+            "...Voce e mais forte do que parece.",
+            "Mas isso foi so um aperitivo. Nos veremos de novo em SAFFRON."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ SABRINA desaparece nas sombras! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Ela fugiu! Mas pelo menos os espiritos pararam...",
+            "SAFFRON CITY... Parece que e la que tudo vai acontecer!"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch7_silph_infiltration"
+        }
+      ],
+      "releaseControl": true,
+      "next": "ch7_silph_infiltration"
+    },
+    {
+      "id": "ch7_silph_infiltration",
+      "sourceRef": "Pokemon Adventures Vol.2 Ch.21-25 - Silph Co.",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "teleport",
+          "map": "saffron",
+          "x": 10,
+          "y": 14,
+          "dir": "up"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ SAFFRON CITY ]",
+            "[ O centro comercial de Kanto... e sede da SILPH CO. ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Saffron City... A SILPH CO. fica aqui.",
+            "Se a TEAM ROCKET quer poder, esse e o lugar."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ A cidade esta estranhamente vazia... ]",
+            "[ Guardas da TEAM ROCKET patrulham as ruas! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "A cidade inteira esta tomada!",
+            "A TEAM ROCKET ja dominou SAFFRON!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED se esgueira ate a SILPH CO... ]",
+            "[ Dentro, ele encontra funcionarios em panico! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Funcionario",
+          "lines": [
+            "Por favor, me ajuda!",
+            "A TEAM ROCKET esta no ultimo andar!",
+            "Eles querem a MASTER BALL... uma Poke Ball perfeita!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "MASTER BALL?! Isso seria perigoso nas maos erradas!",
+            "Eu vou impedir eles!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED sobe ate o topo da SILPH CO... ]"
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "ALAKAZAM",
+            "spr": "alakazam",
+            "lv": 30,
+            "hp": 60,
+            "maxHp": 60
+          },
+          "options": {
+            "scripted": true,
+            "music": "battle_trainer",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "SABRINA envia ALAKAZAM!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Psychic"
+              },
+              {
+                "type": "playerMove",
+                "move": "Vine Whip"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Psychic"
+              },
+              {
+                "type": "playerMove",
+                "move": "Razor Leaf"
+              },
+              {
+                "type": "playerMove",
+                "move": "Razor Leaf"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch8_saffron_psychic"
+        }
+      ],
+      "next": "ch8_saffron_psychic"
+    },
+    {
+      "id": "ch8_saffron_psychic",
+      "sourceRef": "Pokemon Adventures Vol.2 Ch.25-28 - VS Sabrina",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ SILPH CO. - Ultimo andar ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED encontra SABRINA esperando por ele! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "SABRINA",
+          "lines": [
+            "Voce veio, como eu previ.",
+            "Meus poderes psiquicos nunca falham."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "SABRINA! Onde esta a MASTER BALL?!",
+            "E onde esta o lider da TEAM ROCKET?!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "SABRINA",
+          "lines": [
+            "Tantas perguntas... Voce vai descobrir tudo.",
+            "Mas primeiro, precisa passar por mim!"
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "ALAKAZAM",
+            "spr": "alakazam",
+            "lv": 35,
+            "hp": 68,
+            "maxHp": 68
+          },
+          "options": {
+            "trainer": "Sabrina",
+            "trainerSprite": "sabrina",
+            "terrain": "gym_psychic",
+            "scripted": true,
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "SABRINA quer batalhar!"
+              },
+              {
+                "type": "log",
+                "text": "SABRINA enviou ALAKAZAM!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Psybeam",
+                "damage": 20
+              },
+              {
+                "type": "log",
+                "text": "RED esta em apuros!"
+              },
+              {
+                "type": "log",
+                "text": "RED troca para SAUR!"
+              },
+              {
+                "type": "playerMove",
+                "move": "Sleep Powder",
+                "damage": 0
+              },
+              {
+                "type": "log",
+                "text": "ALAKAZAM dormiu!"
+              },
+              {
+                "type": "playerMove",
+                "move": "Solar Beam",
+                "damage": 45
+              },
+              {
+                "type": "log",
+                "text": "Golpe critico!"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "dialog",
+          "speaker": "SABRINA",
+          "lines": [
+            "...Impossivel. Eu nao previ essa derrota.",
+            "Voce... e diferente dos outros."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Uma voz ecoa pelo salao! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "???",
+          "lines": [
+            "Muito bem, SABRINA falhou.",
+            "Mas isso nao importa. O plano ja esta em andamento."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Quem esta ai?! Mostra a cara!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "???",
+          "lines": [
+            "Em breve, RED de Pallet Town. Em breve.",
+            "Nos veremos em CINNABAR ISLAND..."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ A voz desaparece... ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "CINNABAR ISLAND? O que esta acontecendo la?!",
+            "Eu preciso investigar!"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch9_final_island_setup"
+        }
+      ],
+      "releaseControl": true,
+      "next": "ch9_final_island_setup"
+    },
+    {
+      "id": "ch9_final_island_setup",
+      "sourceRef": "Pokemon Adventures Vol.2-3 - Cinnabar Island arc",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "teleport",
+          "map": "cinnabar",
+          "x": 10,
+          "y": 14,
+          "dir": "up"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ CINNABAR ISLAND ]",
+            "[ Uma ilha vulcanica com um laboratorio misterioso ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Cinnabar Island... O que a TEAM ROCKET quer aqui?",
+            "Aquele laboratorio parece suspeito..."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED explora a ilha e encontra o POKEMON MANSION ]",
+            "[ O lugar esta abandonado... mas ha sinais de atividade recente! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Diarios de pesquisa? Deixa eu ler...",
+            "'Projeto MEWTWO - Criacao de um clone de MEW'",
+            "'O experimento foi bem sucedido, mas...'"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "MEWTWO?! Eles criaram um CLONE do MEW?!",
+            "Isso e... isso e insano!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Uma explosao ecoa do laboratorio proximo! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "O que foi isso?! Vem do laboratorio!",
+            "PIKA, SAUR, POLI - vamos la!"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch10_mewtwo_confront"
+        }
+      ],
+      "releaseControl": true,
+      "next": "ch10_mewtwo_confront"
+    },
+    {
+      "id": "ch10_mewtwo_confront",
+      "sourceRef": "Pokemon Adventures Vol.3 Ch.33-35 - VS Mewtwo",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ LABORATORIO DE CINNABAR - Interior destruido ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ No centro das ruinas, uma figura imponente flutua! ]",
+            "[ MEWTWO - O POKeMON mais poderoso do mundo! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "MEWTWO",
+          "lines": [
+            "...Outro humano.",
+            "Voces me criaram. Me usaram. Me traíram.",
+            "E agora... todos vao pagar."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "MEWTWO?! Voce e o clone do MEW?!",
+            "Espera, eu nao sou da TEAM ROCKET!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "MEWTWO",
+          "lines": [
+            "Nao importa. Todos os humanos sao iguais.",
+            "Ganancioso. Cruel. Destrutivo.",
+            "Eu vou criar um mundo sem humanos!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Uma voz interrompe! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "???",
+          "lines": [
+            "Nao tao rapido, MEWTWO.",
+            "Voce ainda pertence a TEAM ROCKET."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Um homem de terno aparece! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "GIOVANNI",
+          "lines": [
+            "Meu nome e GIOVANNI. Lider da TEAM ROCKET.",
+            "E criador de MEWTWO."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "GIOVANNI?! Entao VOCE e o chefe deles!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "GIOVANNI",
+          "lines": [
+            "Correto. E MEWTWO vai me ajudar a conquistar o mundo.",
+            "Ou voce prefere ser destruido, criatura?"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "MEWTWO",
+          "lines": [
+            "...Eu nao sou sua ferramenta, GIOVANNI.",
+            "E voce, garoto... voce e diferente. Eu sinto isso.",
+            "Vamos ver se voce e digno."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Diante do poder de MEWTWO... ]",
+            "[ POLI comeca a brilhar intensamente! ]"
+          ]
+        },
+        {
+          "kind": "evolve",
+          "slot": "poli",
+          "to": "POLIWRATH",
+          "options": {
+            "name": "POLI",
+            "lv": 35
+          }
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "POLI! Voce tambem esta evoluindo!",
+            "POLI evoluiu para POLIWRATH!",
+            "Agora estamos prontos para enfrentar MEWTWO!"
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "MEWTWO",
+            "spr": "mewtwo",
+            "lv": 70,
+            "hp": 200,
+            "maxHp": 200
+          },
+          "options": {
+            "scripted": true,
+            "music": "battle_legendary",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "MEWTWO: Humano... você ousa me desafiar?"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Psychic"
+              },
+              {
+                "type": "log",
+                "text": "O poder de MEWTWO é avassalador!"
+              },
+              {
+                "type": "playerMove",
+                "move": "Shadow Ball"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Psychic"
+              },
+              {
+                "type": "playerMove",
+                "move": "Shadow Ball"
+              },
+              {
+                "type": "log",
+                "text": "MEWTWO está se regenerando!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Recover"
+              },
+              {
+                "type": "playerMove",
+                "move": "Thunderbolt"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Psychic"
+              },
+              {
+                "type": "playerMove",
+                "move": "Thunder"
+              },
+              {
+                "type": "log",
+                "text": "MEWTWO está enfraquecendo!"
+              },
+              {
+                "type": "playerMove",
+                "move": "Hyper Beam"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "dialog",
+          "speaker": "MEWTWO",
+          "lines": [
+            "...Interessante. Voce luta com o coracao.",
+            "Talvez nem todos os humanos sejam iguais."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "GIOVANNI",
+          "lines": [
+            "MEWTWO! Voce vai me obedecer!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "MEWTWO",
+          "lines": [
+            "Nao, GIOVANNI. Eu escolho meu proprio caminho.",
+            "E voce... vai responder pelos seus crimes."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ MEWTWO usa seus poderes para imobilizar GIOVANNI! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "MEWTWO, espera! O que voce vai fazer?"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "MEWTWO",
+          "lines": [
+            "Eu vou embora. Procurar meu lugar no mundo.",
+            "RED... cuide de Kanto. Eu estarei observando."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ MEWTWO desaparece em um flash de luz! ]",
+            "[ GIOVANNI e preso pela policia que chegou! ]"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch13_viridian_giovanni"
+        }
+      ],
+      "next": "ch13_viridian_giovanni"
+    },
+    {
+      "id": "ch11_aftershock_recovery",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ POS-CRISE ]",
+            "KANTO ainda sente o impacto dos eventos em SAFFRON.",
+            "RED segue sem pausa para fechar as pendencias da TEAM ROCKET."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Ainda nao acabou.",
+            "Se eles se reorganizarem, tudo comeca de novo."
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.block_18_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch12_cinnabar_research",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ CINNABAR ISLAND ]",
+            "Documentos queimados e laboratorios vazios deixam rastros de experimentos proibidos."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED encontra relatorios incompletos, capsulas quebradas e codigos de acesso apagados. ]",
+            "[ A assinatura da TEAM ROCKET aparece em multiplos setores. ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Eles estavam mexendo com coisas que nunca deveriam ter tocado."
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "NIDOKING",
+            "spr": "nidoking",
+            "lv": 24,
+            "hp": 72,
+            "maxHp": 72
+          },
+          "options": {
+            "scripted": true,
+            "onEnd": "only_if_win",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "CIENTISTA CORROMPIDO enviou NIDOKING!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Thrash",
+                "damage": 9
+              },
+              {
+                "type": "playerMove",
+                "move": "Hypnosis",
+                "damage": 0
+              },
+              {
+                "type": "playerMove",
+                "move": "Bubble Beam",
+                "damage": 999
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "set",
+          "path": "story.block_19_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch13_viridian_giovanni",
+      "sourceRef": "Pokemon Adventures Vol.3 Ch.36-38 - Giovanni's fall",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Semanas depois... ]",
+            "[ A TEAM ROCKET foi desmantelada! ]",
+            "[ GIOVANNI aguarda julgamento na prisao. ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "A TEAM ROCKET acabou... mas ainda falta uma coisa.",
+            "Eu preciso completar minha jornada!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED descobre que GIOVANNI era o lider do VIRIDIAN GYM! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "O GYM de Viridian esta sem lider agora...",
+            "Mas eu ainda preciso das 8 BADGES pra entrar na LIGA!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Um substituto temporario assume o GYM! ]",
+            "[ RED conquista a EARTH BADGE! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "8 BADGES! Agora posso ir pro INDIGO PLATEAU!",
+            "E hora de provar que sou o melhor treinador de Kanto!"
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "NIDOKING",
+            "spr": "nidoking",
+            "lv": 50,
+            "hp": 130,
+            "maxHp": 130
+          },
+          "options": {
+            "scripted": true,
+            "music": "battle_champion",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "GIOVANNI: Então você chegou até aqui..."
+              },
+              {
+                "type": "log",
+                "text": "Vou te mostrar o poder da TEAM ROCKET!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Earthquake"
+              },
+              {
+                "type": "playerMove",
+                "move": "Surf"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Thrash"
+              },
+              {
+                "type": "playerMove",
+                "move": "Surf"
+              },
+              {
+                "type": "log",
+                "text": "NIDOKING está furioso!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Thrash"
+              },
+              {
+                "type": "playerMove",
+                "move": "Hydro Pump"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch14_indigo_opening"
+        }
+      ],
+      "releaseControl": true,
+      "next": "ch14_indigo_opening"
+    },
+    {
+      "id": "ch14_indigo_opening",
+      "sourceRef": "Pokemon Adventures Vol.3 Ch.39-40 - Pokemon League",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "teleport",
+          "map": "indigo_plateau",
+          "x": 10,
+          "y": 14,
+          "dir": "up"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ INDIGO PLATEAU ]",
+            "[ O templo da batalha POKeMON! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Finalmente... o INDIGO PLATEAU!",
+            "Aqui eu vou enfrentar a ELITE FOUR e o CAMPEAO!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Na entrada, uma figura familiar espera RED! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "GREEN",
+          "lines": [
+            "Yo, RED. Demorou, hein?",
+            "Eu ja passei pela ELITE FOUR toda."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "GREEN?! Voce tambem esta aqui?!",
+            "Espera... voce ja derrotou a ELITE FOUR?!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "GREEN",
+          "lines": [
+            "Obvio. Eu sou forte, lembra?",
+            "Mas o CAMPEAO... ele e diferente. BLUE, de Pallet Town.",
+            "Boa sorte, RED. Voce vai precisar."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "BLUE e o CAMPEAO?! Meu rival de Pallet Town?!",
+            "Isso... isso vai ser interessante!"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch15_elite_lance"
+        }
+      ],
+      "releaseControl": true,
+      "next": "ch15_elite_lance"
+    },
+    {
+      "id": "ch15_elite_lance",
+      "sourceRef": "Pokemon Adventures Vol.3 - Elite Four",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ ELITE FOUR - Desafio Final ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED enfrenta LORELEI, BRUNO, AGATHA e LANCE! ]",
+            "[ Cada batalha e mais dificil que a anterior! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "LANCE",
+          "lines": [
+            "Voce chegou ate aqui, RED.",
+            "Eu sou LANCE, o ultimo membro da ELITE FOUR.",
+            "Meus DRAGOES vao testar sua determinacao!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Antes da batalha final contra LANCE... ]",
+            "[ SAUR brilha mais uma vez! ]"
+          ]
+        },
+        {
+          "kind": "evolve",
+          "slot": "saur",
+          "to": "VENUSAUR",
+          "options": {
+            "name": "SAUR",
+            "lv": 45
+          }
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "SAUR! Voce esta evoluindo de novo!",
+            "SAUR evoluiu para VENUSAUR!",
+            "Com todo esse poder, vamos vencer a ELITE FOUR!"
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "DRAGONITE",
+            "spr": "dragonite",
+            "lv": 55,
+            "hp": 150,
+            "maxHp": 150
+          },
+          "options": {
+            "scripted": true,
+            "music": "battle_champion",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "LANCE, o Mestre dos Dragões!"
+              },
+              {
+                "type": "log",
+                "text": "DRAGONITE apareceu!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Dragon Claw"
+              },
+              {
+                "type": "playerMove",
+                "move": "Ice Beam"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Thrash"
+              },
+              {
+                "type": "playerMove",
+                "move": "Ice Beam"
+              },
+              {
+                "type": "log",
+                "text": "DRAGONITE está enfraquecendo!"
+              },
+              {
+                "type": "playerMove",
+                "move": "Ice Beam"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "dialog",
+          "speaker": "LANCE",
+          "lines": [
+            "...Magnifico. Voce e digno de enfrentar o CAMPEAO.",
+            "Va, RED. BLUE esta te esperando."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Obrigado, LANCE. Eu vou dar tudo de mim!"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch16_blue_champion"
+        }
+      ],
+      "next": "ch16_blue_champion"
+    },
+    {
+      "id": "ch16_blue_champion",
+      "sourceRef": "Pokemon Adventures Vol.3 - VS Blue (Champion)",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ SALA DO CAMPEAO ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "BLUE",
+          "lines": [
+            "RED. Finalmente.",
+            "Sabia que voce chegaria ate aqui."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "BLUE! Faz tempo desde Pallet Town!",
+            "Voce se tornou o CAMPEAO?!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "BLUE",
+          "lines": [
+            "Obvio. Eu sempre fui mais forte.",
+            "Mas devo admitir... voce cresceu muito, RED.",
+            "Isso vai ser uma batalha de verdade!"
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "CHARIZARD",
+            "spr": "charizard",
+            "lv": 60,
+            "hp": 140,
+            "maxHp": 140
+          },
+          "options": {
+            "trainer": "Blue",
+            "trainerSprite": "blue",
+            "terrain": "champion_hall",
+            "champion": true,
+            "scripted": true,
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "CAMPEAO BLUE quer batalhar!"
+              },
+              {
+                "type": "log",
+                "text": "BLUE enviou CHARIZARD!"
+              },
+              {
+                "type": "log",
+                "text": "RED enviou POLI!"
+              },
+              {
+                "type": "playerMove",
+                "move": "Hydro Pump",
+                "damage": 35
+              },
+              {
+                "type": "enemyMove",
+                "move": "Fire Blast",
+                "damage": 28
+              },
+              {
+                "type": "log",
+                "text": "Batalha intensa!"
+              },
+              {
+                "type": "playerMove",
+                "move": "Surf",
+                "damage": 40
+              },
+              {
+                "type": "enemyMove",
+                "move": "Slash",
+                "damage": 22
+              },
+              {
+                "type": "playerMove",
+                "move": "Hydro Pump",
+                "damage": 45
+              },
+              {
+                "type": "log",
+                "text": "CHARIZARD foi derrotado!"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "dialog",
+          "speaker": "BLUE",
+          "lines": [
+            "...Heh. Voce me venceu, RED.",
+            "Parece que voce sempre foi o mais forte de nos dois."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "BLUE... Foi uma batalha incrivel!",
+            "Voce tambem e muito forte!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED se tornou o novo CAMPEAO DE KANTO! ]"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "ch17_season1_epilogue"
+        }
+      ],
+      "next": "ch17_season1_epilogue"
+    },
+    {
+      "id": "ch17_season1_epilogue",
+      "sourceRef": "Pokemon Adventures Vol.3 - Epilogue",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ HALL DA FAMA ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED e registrado como o novo CAMPEAO! ]",
+            "[ Sua jornada de Pallet Town ate aqui... ]",
+            "[ ...sera lembrada para sempre! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Prof. Oak",
+          "lines": [
+            "RED! Parabens!",
+            "Voce realizou o sonho de todo treinador!",
+            "Estou muito orgulhoso de voce!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Obrigado, Professor!",
+            "Mas isso e so o comeco...",
+            "Ainda tem muito mais POKeMON pra conhecer!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ E assim termina o primeiro arco de POKEMON ADVENTURES ]",
+            "[ Mas a jornada de RED, BLUE e GREEN continua... ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ FIM DO ARCO RGB - VOLUME 1-3 ]",
+            "[ Obrigado por jogar! ]"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.beat",
+          "value": "complete"
+        }
+      ],
+      "releaseControl": true
+    },
+    {
+      "id": "ch18_oak_debrief",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "Prof. Oak",
+          "lines": [
+            "RED, BLUE e GREEN...",
+            "vocês tres mudaram o rumo de KANTO.",
+            "Mas isso tambem atraiu novos inimigos."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Se vierem atras da gente, a gente responde.",
+            "Nao vou recuar agora."
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.block_25_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch19_green_reveal",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "Green",
+          "lines": [
+            "Eu roubei, menti e fingi varias vezes...",
+            "mas era o jeito que eu tinha pra sobreviver.",
+            "Agora eu escolho o meu proprio lado."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Blue",
+          "lines": [
+            "Heh. Finalmente falando serio, Green?"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Green",
+          "lines": [
+            "Nao se acostuma, arrogante."
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.block_26_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch20_lance_warning",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "Lance",
+          "lines": [
+            "A ameaca nao terminou com uma unica batalha.",
+            "KANTO ainda tem focos de violencia e controle ilegal de POKeMON."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Entao a gente limpa o resto.",
+            "Sem deixar ninguem pra tras."
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.block_27_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch21_rocket_remnant",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ REMANESCENTES DA TEAM ROCKET ]",
+            "Um ultimo nucleo tenta recuperar pesquisa e armamento."
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "ARBOK",
+            "spr": "arbok",
+            "lv": 38,
+            "hp": 124,
+            "maxHp": 124
+          },
+          "options": {
+            "scripted": true,
+            "onEnd": "only_if_win",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "COMANDANTE ROCKET enviou ARBOK!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Poison Tail",
+                "damage": 11
+              },
+              {
+                "type": "playerMove",
+                "move": "Hypnosis",
+                "damage": 0
+              },
+              {
+                "type": "playerMove",
+                "move": "Bubble Beam",
+                "damage": 999
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "set",
+          "path": "story.block_28_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch22_red_blue_duel",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "Blue",
+          "lines": [
+            "Vamos encerrar do jeito certo, RED.",
+            "Sem interrupcao, sem caos externo. So nos dois."
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "CHARIZARD",
+            "spr": "charizard",
+            "lv": 40,
+            "hp": 132,
+            "maxHp": 132
+          },
+          "options": {
+            "scripted": true,
+            "onEnd": "only_if_win",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "BLUE enviou CHARIZARD!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Wing Attack",
+                "damage": 12
+              },
+              {
+                "type": "playerMove",
+                "move": "Body Slam",
+                "damage": 16
+              },
+              {
+                "type": "enemyMove",
+                "move": "Flamethrower",
+                "damage": 13
+              },
+              {
+                "type": "playerMove",
+                "move": "Bubble Beam",
+                "damage": 999
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Blue",
+          "lines": [
+            "...Boa luta.",
+            "Da proxima vez, eu devolvo."
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.block_29_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch23_team_unity",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RED, BLUE e GREEN fecham o arco como trio ]",
+            "As diferencas continuam, mas a confianca nasce no campo de batalha."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Green",
+          "lines": [
+            "Nao precisa virar amizade melosa.",
+            "So nao atrapalha e ja ta bom."
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.block_30_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch24_mew_trace",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ SINAL DE MEW ]",
+            "Um novo padrao de energia aparece e desaparece no mapa de KANTO."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Entao voce ainda esta por ai...",
+            "Eu vou te encontrar de novo, MEW."
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.block_31_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch25_training_push",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "Prof. Oak",
+          "lines": [
+            "Forca sem controle e so risco.",
+            "Treinem com objetivo, nao com ego."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ O time de RED entra num novo ciclo de treino tecnico. ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "SAUR",
+          "lines": [
+            "Bulba... SAUR!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ SAUR consolida o novo estagio apos treino intenso. ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "SAUR evoluiu para IVYSAUR!"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.block_32_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch26_kanto_peace",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ KANTO RESPIRA ]",
+            "As cidades voltam a rotina e os POKeMON deixam de viver em estado de guerra."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Paz de verdade da trabalho pra manter.",
+            "E eu to pronto pra esse trabalho."
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.block_33_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch27_season1_closure",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ FIM DA TEMPORADA 1 ]",
+            "Arco RGB encerrado em modo jogavel completo.",
+            "Proxima etapa: Gold/Silver/Crystal arc."
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.block_34_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch28_vs_nidorino",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ ROUND EXTRA ]",
+            "RED revisita os primeiros confrontos que moldaram seu estilo de batalha."
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "NIDOKING",
+            "spr": "nidoking",
+            "lv": 32,
+            "hp": 102,
+            "maxHp": 102
+          },
+          "options": {
+            "scripted": true,
+            "onEnd": "only_if_win",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "NIDORINO evoluido (NIDOKING) desafia RED!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Horn Attack",
+                "damage": 10
+              },
+              {
+                "type": "playerMove",
+                "move": "Bubble Beam",
+                "damage": 999
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "set",
+          "path": "story.block_35_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch29_vs_fearow",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ ROUND EXTRA ]",
+            "Um FEAROW mergulha em alta velocidade, repetindo o caos dos primeiros arcos."
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "PIDGEY",
+            "spr": "pidgey",
+            "lv": 28,
+            "hp": 92,
+            "maxHp": 92
+          },
+          "options": {
+            "scripted": true,
+            "onEnd": "only_if_win",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "FEAROW (proxy visual) ataca pelo ceu!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Drill Peck",
+                "damage": 9
+              },
+              {
+                "type": "playerMove",
+                "move": "Body Slam",
+                "damage": 14
+              },
+              {
+                "type": "playerMove",
+                "move": "Bubble Beam",
+                "damage": 999
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "set",
+          "path": "story.block_36_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch30_vs_snorlax",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ ROUND EXTRA ]",
+            "O caminho e bloqueado por um SNORLAX agressivo e exausto."
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "SNORLAX",
+            "spr": "snorlax",
+            "lv": 30,
+            "hp": 120,
+            "maxHp": 120
+          },
+          "options": {
+            "scripted": true,
+            "onEnd": "only_if_win",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "SNORLAX bloqueia a rota!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Body Slam",
+                "damage": 11
+              },
+              {
+                "type": "playerMove",
+                "move": "Hypnosis",
+                "damage": 0
+              },
+              {
+                "type": "playerMove",
+                "move": "Bubble Beam",
+                "damage": 999
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "set",
+          "path": "story.block_37_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch31_vs_exeggutor",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ ROUND EXTRA ]",
+            "Um EXEGGUTOR fora de controle surge durante uma evacuacao local."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Sem ferir civis. Controle primeiro, forca depois."
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.block_38_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch32_vs_gyarados",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "GYARADOS",
+            "spr": "gyarados",
+            "lv": 34,
+            "hp": 110,
+            "maxHp": 110
+          },
+          "options": {
+            "scripted": true,
+            "onEnd": "only_if_win",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "GYARADOS entra em furia no litoral!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Hydro Pump",
+                "damage": 12
+              },
+              {
+                "type": "playerMove",
+                "move": "Body Slam",
+                "damage": 16
+              },
+              {
+                "type": "playerMove",
+                "move": "Bubble Beam",
+                "damage": 999
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "set",
+          "path": "story.block_39_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch33_vs_porygon",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ ROUND EXTRA ]",
+            "A equipe intercepta um incidente digital envolvendo PORYGON e dados da Silph."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Green",
+          "lines": [
+            "Entrar em sistema fechado e meu tipo de trabalho.",
+            "Segura o lado de fora que eu cuido da brecha."
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.block_40_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch34_vs_hitmonlee",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ ROUND EXTRA ]",
+            "No dojo de SAFFRON, um HITMONLEE testa reflexos e controle tecnico de RED."
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.block_41_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch35_vs_hypno",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ ROUND EXTRA ]",
+            "HYPNO manipula civis em transe para abrir passagem da Rocket."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Sem atacar pessoas controladas.",
+            "A gente desmonta isso com precisao."
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.block_42_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch36_vs_gengar",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ ROUND EXTRA ]",
+            "GENGAR surge entre sombras para cobrir retirada da operacao inimiga."
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.block_43_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch37_vs_alakazam",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ ROUND EXTRA ]",
+            "ALAKAZAM domina o campo com leitura antecipada de movimentos."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Blue",
+          "lines": [
+            "Nao tenta vencer no grito.",
+            "Quebra o ritmo mental dele primeiro."
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.block_44_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch38_vs_machamp",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ ROUND EXTRA ]",
+            "MACHAMP impõe combate de forca bruta em corredor fechado."
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.block_45_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch39_vs_dugtrio",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ ROUND EXTRA ]",
+            "DUGTRIO colapsa o terreno para isolar o trio em setores diferentes."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Green",
+          "lines": [
+            "Sem panico. Reagrupa pelo corredor leste.",
+            "A gente vira isso em dois minutos."
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.block_46_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch40_vs_rhydon",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ ROUND EXTRA ]",
+            "RHYDON abre caminho como arma de cerco da Rocket."
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.block_47_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch41_vs_dragonair",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ ROUND EXTRA ]",
+            "DRAGONAIR aparece como ultimo filtro antes do encerramento total do conflito."
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.block_48_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch42_rgb_full_closure",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ RGB ARC - FECHAMENTO COMPLETO ]",
+            "Principais rounds, confrontos e marcos centrais foram incorporados no fluxo jogavel.",
+            "A campanha encerra com KANTO estabilizada e gancho ativo para a proxima fase."
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.block_49_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "s1_outline_next",
+      "sourceRef": "Pokemon Adventures - Expansion content (side stories)",
+      "type": "expansion",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ STATUS ]",
+            "49 blocos narrativos estruturados para fechamento do arco RGB com cobertura ampliada.",
+            "Proximo passo: refinamento visual final (tiles/layout) e polimento de cenas."
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.block_50_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch43_erika_alliance",
+      "sourceRef": "Pokemon Adventures RGB Arc - celadon/rocket pressure transition (adapted)",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ CELADON / ALIANCA TATICA ]",
+            "ERIKA aceita apoiar RED apos os incidentes da TEAM ROCKET."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Erika",
+          "lines": [
+            "A forca bruta nao basta, RED.",
+            "Controle, leitura e estrategia vencem guerras."
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "VILEPLUME",
+            "spr": "vileplume",
+            "lv": 47,
+            "hp": 150,
+            "maxHp": 150
+          },
+          "options": {
+            "scripted": true,
+            "terrain": "grass",
+            "trainerName": "Erika",
+            "trainerSprite": "trainerErika",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "Lider ERIKA desafia voce!"
+              },
+              {
+                "type": "playerMove",
+                "move": "Flamethrower"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Petal Dance"
+              },
+              {
+                "type": "playerMove",
+                "move": "Slash"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "set",
+          "path": "story.block_51_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch44_koga_counterattack",
+      "sourceRef": "Pokemon Adventures RGB Arc - fuchsia operation (adapted)",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ FUCHSIA / CONTRA-ATAQUE ]",
+            "KOGA testa a prontidao de RED contra venenos e armadilhas."
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "WEEZING",
+            "spr": "weezing",
+            "lv": 50,
+            "hp": 166,
+            "maxHp": 166
+          },
+          "options": {
+            "scripted": true,
+            "terrain": "building",
+            "trainerName": "Koga",
+            "trainerSprite": "trainerKoga",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "Lider KOGA envia WEEZING!"
+              },
+              {
+                "type": "playerMove",
+                "move": "Psychic"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Shadow Ball"
+              },
+              {
+                "type": "playerMove",
+                "move": "Surf"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "set",
+          "path": "story.block_52_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch45_blaine_cinnabar_test",
+      "sourceRef": "Pokemon Adventures RGB Arc - cinnabar lab/gym pressure (adapted)",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "Blaine",
+          "lines": [
+            "CINNABAR nao perdoa hesitacao.",
+            "Mostre decisao sob calor extremo!"
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "MAGMAR",
+            "spr": "magmar",
+            "lv": 53,
+            "hp": 176,
+            "maxHp": 176
+          },
+          "options": {
+            "scripted": true,
+            "terrain": "building",
+            "trainerName": "Blaine",
+            "trainerSprite": "trainerBlaine",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "Lider BLAINE envia MAGMAR!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Fire Blast"
+              },
+              {
+                "type": "playerMove",
+                "move": "Surf"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Slash"
+              },
+              {
+                "type": "playerMove",
+                "move": "Hydro Pump"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "set",
+          "path": "story.block_53_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch46_powerplant_zapdos",
+      "sourceRef": "Pokemon Adventures RGB Arc - legendary birds pursuit (adapted)",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ USINA ABANDONADA ]",
+            "Uma descarga colossal corta o ceu: ZAPDOS desperta."
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "ZAPDOS",
+            "spr": "zapdos",
+            "lv": 55,
+            "hp": 190,
+            "maxHp": 190
+          },
+          "options": {
+            "scripted": true,
+            "terrain": "mountain",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "ZAPDOS selvagem apareceu!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Thunder"
+              },
+              {
+                "type": "playerMove",
+                "move": "Ice Beam"
+              },
+              {
+                "type": "playerMove",
+                "move": "Hyper Beam"
+              },
+              {
+                "type": "log",
+                "text": "RED consegue conter ZAPDOS!"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "set",
+          "path": "story.caughtZapdos",
+          "value": true
+        },
+        {
+          "kind": "set",
+          "path": "story.block_54_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch47_seafoam_articuno",
+      "sourceRef": "Pokemon Adventures RGB Arc - seafoam sequence (adapted)",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ SEAFOAM ISLANDS ]",
+            "A temperatura despenca. ARTICUNO guarda o nucleo gelido."
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "ARTICUNO",
+            "spr": "articuno",
+            "lv": 56,
+            "hp": 194,
+            "maxHp": 194
+          },
+          "options": {
+            "scripted": true,
+            "terrain": "water",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "ARTICUNO selvagem apareceu!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Ice Beam"
+              },
+              {
+                "type": "playerMove",
+                "move": "Thunderbolt"
+              },
+              {
+                "type": "playerMove",
+                "move": "Hyper Beam"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "set",
+          "path": "story.caughtArticuno",
+          "value": true
+        },
+        {
+          "kind": "set",
+          "path": "story.block_55_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch48_victoryroad_moltres",
+      "sourceRef": "Pokemon Adventures RGB Arc - victory road escalation (adapted)",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ VICTORY ROAD ]",
+            "As chamas fecham a passagem. MOLTRES avanca!"
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "MOLTRES",
+            "spr": "moltres",
+            "lv": 57,
+            "hp": 198,
+            "maxHp": 198
+          },
+          "options": {
+            "scripted": true,
+            "terrain": "mountain",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "MOLTRES selvagem apareceu!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Fire Blast"
+              },
+              {
+                "type": "playerMove",
+                "move": "Surf"
+              },
+              {
+                "type": "playerMove",
+                "move": "Hydro Pump"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "set",
+          "path": "story.caughtMoltres",
+          "value": true
+        },
+        {
+          "kind": "set",
+          "path": "story.block_56_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch49_psyduck_rescue",
+      "sourceRef": "Pokemon Adventures RGB Arc - rescue/interlude adaptation",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ INTERLUDIO ]",
+            "RED encontra PSYDUCK ferido entre os destrocos."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Calma... voce vai ficar bem.",
+            "POLI, cobertura!"
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "MUK",
+            "spr": "muk",
+            "lv": 52,
+            "hp": 172,
+            "maxHp": 172
+          },
+          "options": {
+            "scripted": true,
+            "terrain": "building",
+            "trainerName": "Team Rocket",
+            "trainerSprite": "trainerRocket",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "Grunt da TEAM ROCKET envia MUK!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Body Slam"
+              },
+              {
+                "type": "playerMove",
+                "move": "Psychic"
+              },
+              {
+                "type": "playerMove",
+                "move": "Surf"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "set",
+          "path": "story.savedPsyduck",
+          "value": true
+        },
+        {
+          "kind": "set",
+          "path": "story.block_57_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch50_rgb_true_epilogue",
+      "sourceRef": "Pokemon Adventures RGB Arc - closure adaptation",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ EPILOGO RGB - FECHAMENTO ]",
+            "KANTO permanece de pe. RED, GREEN e BLUE seguem por rotas diferentes...",
+            "...mas o proximo confronto ja se desenha no horizonte."
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.block_58_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "exp_route1_wild",
+      "type": "expansion",
+      "trigger": {
+        "map": "route_1",
+        "random": 0.15
+      },
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Um Pokémon selvagem apareceu! ]"
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "RATTATA",
+            "spr": "rattata",
+            "lv": 3,
+            "hp": 12,
+            "maxHp": 12
+          },
+          "options": {
+            "scripted": true,
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "RATTATA selvagem apareceu!"
+              },
+              {
+                "type": "playerMove",
+                "move": "Water Gun"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "exp_viridian_forest_wild",
+      "type": "expansion",
+      "trigger": {
+        "map": "viridian_forest",
+        "random": 0.2
+      },
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ A grama se move... ]"
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "PIDGEY",
+            "spr": "pidgey",
+            "lv": 5,
+            "hp": 18,
+            "maxHp": 18
+          },
+          "options": {
+            "scripted": true,
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "PIDGEY selvagem apareceu!"
+              },
+              {
+                "type": "playerMove",
+                "move": "Thunder Shock"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "exp_mtmoon_wild",
+      "type": "expansion",
+      "trigger": {
+        "map": "mt_moon",
+        "random": 0.18
+      },
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Algo se move nas sombras... ]"
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "GEODUDE",
+            "spr": "geodude",
+            "lv": 10,
+            "hp": 28,
+            "maxHp": 28
+          },
+          "options": {
+            "scripted": true,
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "GEODUDE selvagem apareceu!"
+              },
+              {
+                "type": "playerMove",
+                "move": "Water Gun"
+              },
+              {
+                "type": "playerMove",
+                "move": "Water Gun"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "exp_pokemon_tower_wild",
+      "type": "expansion",
+      "trigger": {
+        "map": "pokemon_tower",
+        "random": 0.25
+      },
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Um fantasma aparece! ]",
+            "[ O ar fica gelado... ]"
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "HAUNTER",
+            "spr": "gengar",
+            "lv": 22,
+            "hp": 42,
+            "maxHp": 42
+          },
+          "options": {
+            "scripted": true,
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "HAUNTER selvagem apareceu!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Shadow Ball"
+              },
+              {
+                "type": "playerMove",
+                "move": "Thunderbolt"
+              },
+              {
+                "type": "playerMove",
+                "move": "Thunderbolt"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "exp_seafoam_wild",
+      "type": "expansion",
+      "trigger": {
+        "map": "seafoam_islands",
+        "random": 0.2
+      },
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ As águas se agitam! ]"
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "SNORLAX",
+            "spr": "snorlax",
+            "lv": 30,
+            "hp": 120,
+            "maxHp": 120
+          },
+          "options": {
+            "scripted": true,
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "SNORLAX está bloqueando o caminho!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Body Slam"
+              },
+              {
+                "type": "playerMove",
+                "move": "Submission"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Body Slam"
+              },
+              {
+                "type": "playerMove",
+                "move": "Submission"
+              },
+              {
+                "type": "playerMove",
+                "move": "Submission"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "exp_pallet_mom",
+      "type": "expansion",
+      "trigger": {
+        "map": "pallet_town",
+        "npc": "mom"
+      },
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "MÃE",
+          "lines": [
+            "RED! Você voltou!",
+            "Cuidado lá fora, filho.",
+            "Eu sempre estarei aqui torcendo por você!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Seus Pokémon foram curados! ]"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.team_healed",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "exp_pokecenter_heal",
+      "type": "expansion",
+      "trigger": {
+        "map": "*_pokecenter",
+        "npc": "nurse"
+      },
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "ENFERMEIRA JOY",
+          "lines": [
+            "Bem-vindo ao Centro Pokémon!",
+            "Deixe-me cuidar dos seus Pokémon.",
+            "..."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ ♪ Música de cura ♪ ]",
+            "[ Seus Pokémon estão curados! ]"
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.team_healed",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "exp_pokemart_items",
+      "type": "expansion",
+      "trigger": {
+        "map": "*_pokemart",
+        "npc": "clerk"
+      },
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "VENDEDOR",
+          "lines": [
+            "Bem-vindo à Poké Mart!",
+            "Temos as melhores POTIONS e POKÉ BALLS!",
+            "O que você gostaria de comprar?"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ No momento, a loja está em manutenção. ]",
+            "[ Volte mais tarde! ]"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "exp_trainer_tip",
+      "type": "expansion",
+      "trigger": {
+        "map": "route_*",
+        "random": 0.1
+      },
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "TREINADOR",
+          "lines": [
+            "Ei, você! Está treinando seus Pokémon?",
+            "Lembre-se: tipos são importantes nas batalhas!",
+            "WATER é forte contra FIRE e ROCK!",
+            "ELECTRIC é forte contra WATER e FLYING!"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "exp_oak_lab_visit",
+      "type": "expansion",
+      "trigger": {
+        "map": "oaks_lab",
+        "npc": "oak"
+      },
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "PROF. OAK",
+          "lines": [
+            "RED! Como vai a sua jornada?",
+            "Deixe-me ver seu POKÉDEX...",
+            "Impressionante! Continue assim!"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ O Prof. Oak avaliou seu progresso! ]"
+          ]
+        }
+      ]
+    }
+  ]
+};

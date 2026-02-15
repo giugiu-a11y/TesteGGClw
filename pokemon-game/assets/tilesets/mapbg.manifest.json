@@ -4,8 +4,13 @@
     "pallet_town": {
       "url": "./assets/tilesets/cities/3873_city_pallet_town.png",
       "ts": 16,
-      "px": 0,
-      "py": 16
+      "px": 8,
+      "py": 24,
+      "solidRects": [
+        { "x": 2, "y": 2, "w": 5, "h": 4 },
+        { "x": 12, "y": 2, "w": 5, "h": 4 },
+        { "x": 6, "y": 8, "w": 7, "h": 4 }
+      ]
     },
     "route1": {
       "url": "./assets/tilesets/missing_tiles/05_map_route_1.png",
@@ -19,6 +24,13 @@
       "px": 8,
       "py": 24
     },
+    "viridian_pokecenter": {
+      "url": "./assets/tilesets/cities/3874_city_viridian.png",
+      "ts": 16,
+      "px": 784,
+      "py": 24,
+      "fixed": true
+    },
     "route2": {
       "url": "./assets/tilesets/cities/3876_city_map_3876.png",
       "ts": 16,
@@ -26,10 +38,10 @@
       "py": 24
     },
     "viridian_forest": {
-      "url": "./assets/tilesets/missing_tiles/02_map_route_10.png",
+      "url": "./assets/tilesets/missing_tiles/14_map_route_2_gate.png",
       "ts": 16,
       "px": 8,
-      "py": 24
+      "py": 200
     },
     "pewter": {
       "url": "./assets/tilesets/cities/3875_city_pewter.png",
