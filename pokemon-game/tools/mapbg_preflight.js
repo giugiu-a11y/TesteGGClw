@@ -77,8 +77,8 @@ for (const [mapId, conf] of Object.entries(mapbg)) {
   }
 
   const ts = Number.isFinite(conf.ts) ? conf.ts : 16;
-  if (ts <= 0) {
-    pushIssue(`${mapId}: invalid ts ${conf.ts}`);
+  if (ts !== 16) {
+    pushIssue(`${mapId}: ts must be 16 for collision/render parity (got ${conf.ts})`);
     continue;
   }
 

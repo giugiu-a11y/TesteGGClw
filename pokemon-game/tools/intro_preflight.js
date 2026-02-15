@@ -91,9 +91,9 @@ function checkBeat(id, initial) {
 const s0 = checkBeat('ch1_intro', {map: 'pallet_town', x: 9, y: 13});
 if (s0.map !== 'oak_lab') fail(`ch1_intro should end in oak_lab, got ${s0.map}`);
 
-const s1 = checkBeat('ch1_oak_mew_explain', {map: 'oak_lab', x: 5, y: 9});
-if (s1.map !== 'viridian') fail(`ch1_oak_mew_explain should end in viridian, got ${s1.map}`);
+const s1 = checkBeat('ch1_oak_mew_explain', {map: 'oak_lab', x: 7, y: 9});
+if (s1.map !== 'oak_lab') fail(`ch1_oak_mew_explain should keep player in oak_lab, got ${s1.map}`);
 
-checkBeat('ch1_viridian_arrival', {map: 'viridian', x: 9, y: 16});
+checkBeat('ch1_viridian_arrival', {map: 'viridian', x: 19, y: 33});
 
 console.log('[intro-preflight] OK');

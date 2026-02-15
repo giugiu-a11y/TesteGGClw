@@ -2,7 +2,7 @@
   "meta": {
     "season": 1,
     "language": "pt-BR",
-    "fidelity_target": 1.0,
+    "fidelity_target": 1,
     "sources": [
       {
         "id": "manga_vol1_scribd",
@@ -47,11 +47,18 @@
           ]
         },
         {
-          "kind": "teleport",
-          "map": "pallet_town",
-          "x": 9,
-          "y": 15,
-          "dir": "up"
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Chegando em Pallet Town! ]"
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Indo para o laboratorio do Prof. Oak. ]"
+          ]
         },
         {
           "kind": "dialog",
@@ -79,10 +86,6 @@
           ]
         },
         {
-          "kind": "face",
-          "dir": "right"
-        },
-        {
           "kind": "dialog",
           "speaker": "Garoto",
           "lines": [
@@ -91,20 +94,12 @@
           ]
         },
         {
-          "kind": "face",
-          "dir": "left"
-        },
-        {
           "kind": "dialog",
           "speaker": "Garota",
           "lines": [
             "E! Se voce e tao bom assim, prova!",
             "Captura um POKeMON raro pra gente ver!"
           ]
-        },
-        {
-          "kind": "face",
-          "dir": "up"
         },
         {
           "kind": "dialog",
@@ -135,14 +130,6 @@
           ]
         },
         {
-          "kind": "move",
-          "path": [
-            "up",
-            "up"
-          ],
-          "stepMs": 100
-        },
-        {
           "kind": "dialog",
           "speaker": "",
           "lines": [
@@ -150,11 +137,33 @@
           ]
         },
         {
+          "kind": "move",
+          "path": [
+            "up"
+          ],
+          "stepMs": 180
+        },
+        {
           "kind": "teleport",
           "map": "viridian_forest",
-          "x": 10,
-          "y": 14,
+          "x": 19,
+          "y": 41,
           "dir": "up"
+        },
+        {
+          "kind": "move",
+          "path": [
+            "up",
+            "up"
+          ],
+          "stepMs": 180
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Entrando na floresta... ]"
+          ]
         },
         {
           "kind": "pause",
@@ -167,15 +176,6 @@
             "[ VIRIDIAN FOREST ]",
             "[ Uma floresta densa ao norte de Pallet Town... ]"
           ]
-        },
-        {
-          "kind": "move",
-          "path": [
-            "up",
-            "up",
-            "up"
-          ],
-          "stepMs": 120
         },
         {
           "kind": "dialog",
@@ -301,9 +301,16 @@
         {
           "kind": "teleport",
           "map": "oak_lab",
-          "x": 5,
+          "x": 7,
           "y": 9,
           "dir": "up"
+        },
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ Chegando ao laboratorio! ]"
+          ]
         }
       ],
       "next": "ch1_oak_mew_explain"
@@ -428,18 +435,11 @@
           ]
         },
         {
-          "kind": "teleport",
-          "map": "viridian",
-          "x": 10,
-          "y": 15,
-          "dir": "up"
-        },
-        {
           "kind": "dialog",
           "speaker": "",
           "lines": [
             "[ Voce agora pode explorar livremente! ]",
-            "[ Interaja com pessoas e objetos para continuar a historia. ]"
+            "[ Saia do laboratorio pela porta e siga para VIRIDIAN CITY. ]"
           ]
         }
       ],
@@ -451,13 +451,6 @@
       "sourceRef": "Pokemon Adventures Vol.1 Ch.2 - VS Machoke",
       "type": "cutscene",
       "actions": [
-        {
-          "kind": "teleport",
-          "map": "viridian",
-          "x": 10,
-          "y": 15,
-          "dir": "up"
-        },
         {
           "kind": "dialog",
           "speaker": "",
@@ -530,8 +523,8 @@
         {
           "kind": "teleport",
           "map": "viridian_forest",
-          "x": 10,
-          "y": 14,
+          "x": 21,
+          "y": 29,
           "dir": "up"
         },
         {
@@ -3756,14 +3749,11 @@
           ]
         },
         {
-          "kind": "evolve",
-          "slot": "saur",
-          "to": "IVYSAUR",
-          "options": {
-            "name": "SAUR",
-            "lv": 18,
-            "maxHpBoost": 8
-          }
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ SAUR consolida o novo estagio apos treino intenso. ]"
+          ]
         },
         {
           "kind": "dialog",
@@ -4333,6 +4323,471 @@
       ]
     },
     {
+      "id": "ch43_erika_alliance",
+      "sourceRef": "Pokemon Adventures RGB Arc - celadon/rocket pressure transition (adapted)",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ CELADON / ALIANCA TATICA ]",
+            "ERIKA aceita apoiar RED apos os incidentes da TEAM ROCKET."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "Erika",
+          "lines": [
+            "A forca bruta nao basta, RED.",
+            "Controle, leitura e estrategia vencem guerras."
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "VILEPLUME",
+            "spr": "vileplume",
+            "lv": 47,
+            "hp": 150,
+            "maxHp": 150
+          },
+          "options": {
+            "scripted": true,
+            "terrain": "grass",
+            "trainerName": "Erika",
+            "trainerSprite": "trainerErika",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "Lider ERIKA desafia voce!"
+              },
+              {
+                "type": "playerMove",
+                "move": "Flamethrower"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Petal Dance"
+              },
+              {
+                "type": "playerMove",
+                "move": "Slash"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "set",
+          "path": "story.block_51_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch44_koga_counterattack",
+      "sourceRef": "Pokemon Adventures RGB Arc - fuchsia operation (adapted)",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ FUCHSIA / CONTRA-ATAQUE ]",
+            "KOGA testa a prontidao de RED contra venenos e armadilhas."
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "WEEZING",
+            "spr": "weezing",
+            "lv": 50,
+            "hp": 166,
+            "maxHp": 166
+          },
+          "options": {
+            "scripted": true,
+            "terrain": "building",
+            "trainerName": "Koga",
+            "trainerSprite": "trainerKoga",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "Lider KOGA envia WEEZING!"
+              },
+              {
+                "type": "playerMove",
+                "move": "Psychic"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Shadow Ball"
+              },
+              {
+                "type": "playerMove",
+                "move": "Surf"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "set",
+          "path": "story.block_52_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch45_blaine_cinnabar_test",
+      "sourceRef": "Pokemon Adventures RGB Arc - cinnabar lab/gym pressure (adapted)",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "Blaine",
+          "lines": [
+            "CINNABAR nao perdoa hesitacao.",
+            "Mostre decisao sob calor extremo!"
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "MAGMAR",
+            "spr": "magmar",
+            "lv": 53,
+            "hp": 176,
+            "maxHp": 176
+          },
+          "options": {
+            "scripted": true,
+            "terrain": "building",
+            "trainerName": "Blaine",
+            "trainerSprite": "trainerBlaine",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "Lider BLAINE envia MAGMAR!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Fire Blast"
+              },
+              {
+                "type": "playerMove",
+                "move": "Surf"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Slash"
+              },
+              {
+                "type": "playerMove",
+                "move": "Hydro Pump"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "set",
+          "path": "story.block_53_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch46_powerplant_zapdos",
+      "sourceRef": "Pokemon Adventures RGB Arc - legendary birds pursuit (adapted)",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ USINA ABANDONADA ]",
+            "Uma descarga colossal corta o ceu: ZAPDOS desperta."
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "ZAPDOS",
+            "spr": "zapdos",
+            "lv": 55,
+            "hp": 190,
+            "maxHp": 190
+          },
+          "options": {
+            "scripted": true,
+            "terrain": "mountain",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "ZAPDOS selvagem apareceu!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Thunder"
+              },
+              {
+                "type": "playerMove",
+                "move": "Ice Beam"
+              },
+              {
+                "type": "playerMove",
+                "move": "Hyper Beam"
+              },
+              {
+                "type": "log",
+                "text": "RED consegue conter ZAPDOS!"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "set",
+          "path": "story.caughtZapdos",
+          "value": true
+        },
+        {
+          "kind": "set",
+          "path": "story.block_54_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch47_seafoam_articuno",
+      "sourceRef": "Pokemon Adventures RGB Arc - seafoam sequence (adapted)",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ SEAFOAM ISLANDS ]",
+            "A temperatura despenca. ARTICUNO guarda o nucleo gelido."
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "ARTICUNO",
+            "spr": "articuno",
+            "lv": 56,
+            "hp": 194,
+            "maxHp": 194
+          },
+          "options": {
+            "scripted": true,
+            "terrain": "water",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "ARTICUNO selvagem apareceu!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Ice Beam"
+              },
+              {
+                "type": "playerMove",
+                "move": "Thunderbolt"
+              },
+              {
+                "type": "playerMove",
+                "move": "Hyper Beam"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "set",
+          "path": "story.caughtArticuno",
+          "value": true
+        },
+        {
+          "kind": "set",
+          "path": "story.block_55_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch48_victoryroad_moltres",
+      "sourceRef": "Pokemon Adventures RGB Arc - victory road escalation (adapted)",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ VICTORY ROAD ]",
+            "As chamas fecham a passagem. MOLTRES avanca!"
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "MOLTRES",
+            "spr": "moltres",
+            "lv": 57,
+            "hp": 198,
+            "maxHp": 198
+          },
+          "options": {
+            "scripted": true,
+            "terrain": "mountain",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "MOLTRES selvagem apareceu!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Fire Blast"
+              },
+              {
+                "type": "playerMove",
+                "move": "Surf"
+              },
+              {
+                "type": "playerMove",
+                "move": "Hydro Pump"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "set",
+          "path": "story.caughtMoltres",
+          "value": true
+        },
+        {
+          "kind": "set",
+          "path": "story.block_56_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch49_psyduck_rescue",
+      "sourceRef": "Pokemon Adventures RGB Arc - rescue/interlude adaptation",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ INTERLUDIO ]",
+            "RED encontra PSYDUCK ferido entre os destrocos."
+          ]
+        },
+        {
+          "kind": "dialog",
+          "speaker": "RED",
+          "lines": [
+            "Calma... voce vai ficar bem.",
+            "POLI, cobertura!"
+          ]
+        },
+        {
+          "kind": "battle",
+          "enemy": {
+            "name": "MUK",
+            "spr": "muk",
+            "lv": 52,
+            "hp": 172,
+            "maxHp": 172
+          },
+          "options": {
+            "scripted": true,
+            "terrain": "building",
+            "trainerName": "Team Rocket",
+            "trainerSprite": "trainerRocket",
+            "scriptSteps": [
+              {
+                "type": "log",
+                "text": "Grunt da TEAM ROCKET envia MUK!"
+              },
+              {
+                "type": "enemyMove",
+                "move": "Body Slam"
+              },
+              {
+                "type": "playerMove",
+                "move": "Psychic"
+              },
+              {
+                "type": "playerMove",
+                "move": "Surf"
+              },
+              {
+                "type": "end",
+                "won": true
+              }
+            ]
+          }
+        },
+        {
+          "kind": "set",
+          "path": "story.savedPsyduck",
+          "value": true
+        },
+        {
+          "kind": "set",
+          "path": "story.block_57_done",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "ch50_rgb_true_epilogue",
+      "sourceRef": "Pokemon Adventures RGB Arc - closure adaptation",
+      "type": "cutscene",
+      "actions": [
+        {
+          "kind": "dialog",
+          "speaker": "",
+          "lines": [
+            "[ EPILOGO RGB - FECHAMENTO ]",
+            "KANTO permanece de pe. RED, GREEN e BLUE seguem por rotas diferentes...",
+            "...mas o proximo confronto ja se desenha no horizonte."
+          ]
+        },
+        {
+          "kind": "set",
+          "path": "story.block_58_done",
+          "value": true
+        }
+      ]
+    },
+    {
       "id": "exp_route1_wild",
       "type": "expansion",
       "trigger": {
@@ -4607,7 +5062,7 @@
         },
         {
           "kind": "set",
-          "key": "team_healed",
+          "path": "story.team_healed",
           "value": true
         }
       ]
@@ -4639,7 +5094,7 @@
         },
         {
           "kind": "set",
-          "key": "team_healed",
+          "path": "story.team_healed",
           "value": true
         }
       ]

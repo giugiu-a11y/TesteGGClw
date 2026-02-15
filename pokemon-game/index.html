@@ -66,6 +66,7 @@
             font-size: 16px;
             border-radius: 6px;
             cursor: pointer;
+            touch-action: none;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
@@ -84,6 +85,7 @@
             font-size: 12px; font-weight: bold;
             border: 3px solid;
             cursor: pointer;
+            touch-action: none;
             font-family: inherit;
         }
         
@@ -556,18 +558,17 @@
     
     <div class="controls">
         <div class="dpad">
-            <button class="up" ontouchstart="startMove('up')" ontouchend="stopMove()" ontouchcancel="stopMove()" onmousedown="startMove('up')" onmouseup="stopMove()" onmouseleave="stopMove()">▲</button>
-            <button class="left" ontouchstart="startMove('left')" ontouchend="stopMove()" ontouchcancel="stopMove()" onmousedown="startMove('left')" onmouseup="stopMove()" onmouseleave="stopMove()">◄</button>
-            <button class="right" ontouchstart="startMove('right')" ontouchend="stopMove()" ontouchcancel="stopMove()" onmousedown="startMove('right')" onmouseup="stopMove()" onmouseleave="stopMove()">►</button>
-            <button class="down" ontouchstart="startMove('down')" ontouchend="stopMove()" ontouchcancel="stopMove()" onmousedown="startMove('down')" onmouseup="stopMove()" onmouseleave="stopMove()">▼</button>
+            <button class="up" onpointerdown="onDpadDown(event,'up')" onpointerup="onDpadUp(event)" onpointercancel="onDpadUp(event)" onpointerleave="onDpadUp(event)">▲</button>
+            <button class="left" onpointerdown="onDpadDown(event,'left')" onpointerup="onDpadUp(event)" onpointercancel="onDpadUp(event)" onpointerleave="onDpadUp(event)">◄</button>
+            <button class="right" onpointerdown="onDpadDown(event,'right')" onpointerup="onDpadUp(event)" onpointercancel="onDpadUp(event)" onpointerleave="onDpadUp(event)">►</button>
+            <button class="down" onpointerdown="onDpadDown(event,'down')" onpointerup="onDpadUp(event)" onpointercancel="onDpadUp(event)" onpointerleave="onDpadUp(event)">▼</button>
         </div>
         <div class="action-buttons">
             <button class="btn-b"
-                onmousedown="setRunPressed(true)"
-                onmouseup="setRunPressed(false)"
-                onmouseleave="setRunPressed(false)"
-                ontouchstart="setRunPressed(true)"
-                ontouchend="setRunPressed(false)"
+                onpointerdown="onRunDown(event)"
+                onpointerup="onRunUp(event)"
+                onpointercancel="onRunUp(event)"
+                onpointerleave="onRunUp(event)"
                 onclick="handleB(event)">B</button>
             <button class="btn-a" onclick="handleA()">A</button>
         </div>
@@ -650,6 +651,7 @@
         oak: './assets/tilesets/characters/prof_oak.png',
         mom: './assets/tilesets/characters/mom.png',
         girl: './assets/tilesets/characters/lass.png',
+        boy: './assets/tilesets/characters/boy.png',
         green: './assets/tilesets/characters/green_normal.png',
         pikachuOW: './assets/tilesets/characters/pikachu.png',
         pikachuBattle: './assets/tilesets/pokemon_sprites/pikachu_front.png',
@@ -688,13 +690,26 @@
         electabuzz: './assets/tilesets/pokemon_sprites/125_electabuzz_front.png',
         dragonite: './assets/tilesets/pokemon_sprites/149_dragonite_front.png',
         mewtwo: './assets/tilesets/pokemon_sprites/150_mewtwo_front.png',
+        vileplume: './assets/tilesets/pokemon_sprites/vileplume_front.png',
+        weezing: './assets/tilesets/pokemon_sprites/weezing_front.png',
+        magmar: './assets/tilesets/pokemon_sprites/magmar_front.png',
+        articuno: './assets/tilesets/pokemon_sprites/articuno_front.png',
+        zapdos: './assets/tilesets/pokemon_sprites/zapdos_front.png',
+        moltres: './assets/tilesets/pokemon_sprites/moltres_front.png',
+        psyduck: './assets/tilesets/pokemon_sprites/psyduck_front.png',
+        golduck: './assets/tilesets/pokemon_sprites/golduck_front.png',
+        muk: './assets/tilesets/pokemon_sprites/muk_front.png',
+        pidgeot: './assets/tilesets/pokemon_sprites/pidgeot_front.png',
         pikachu: './assets/tilesets/pokemon_sprites/pikachu_front.png',
         trainerBlue: './assets/tilesets/trainers/rival_early_front_pic.png',
         trainerBrock: './assets/tilesets/trainers/leader_brock_front_pic.png',
         trainerRocket: './assets/tilesets/trainers/rocket_grunt_m_front_pic.png',
         trainerGiovanni: './assets/tilesets/trainers/leader_giovanni_front_pic.png',
         trainerLance: './assets/tilesets/trainers/elite_four_lance_front_pic.png',
-        trainerOak: './assets/tilesets/trainers/professor_oak_front_pic.png'
+        trainerOak: './assets/tilesets/trainers/professor_oak_front_pic.png',
+        trainerErika: './assets/tilesets/trainers/leader_erika_front_pic.png',
+        trainerKoga: './assets/tilesets/trainers/leader_koga_front_pic.png',
+        trainerBlaine: './assets/tilesets/trainers/leader_blaine_front_pic.png'
     };
     const REQUIRED_SPRITE_KEYS = new Set(Object.keys(DEFAULT_SPRITE_URLS));
 
@@ -726,9 +741,17 @@
     const prebuiltMapBg = {};
     const DEFAULT_PREBUILT_MAP_BG_CONFIG = {
         // Uses ripped map sheets as visual background while preserving collision/warps from engine maps.
-        pallet_town: {url: './assets/tilesets/cities/3873_city_pallet_town.png', ts: 16, px: 8, py: 24},
+        pallet_town: {
+            url: './assets/tilesets/cities/3873_city_pallet_town.png', ts: 16, px: 8, py: 24,
+            solidRects: [
+                {x: 2, y: 2, w: 5, h: 4},
+                {x: 12, y: 2, w: 5, h: 4},
+                {x: 6, y: 8, w: 7, h: 4}
+            ]
+        },
         route1: {url: './assets/tilesets/missing_tiles/05_map_route_1.png', ts: 16, px: 8, py: 24},
         viridian: {url: './assets/tilesets/cities/3874_city_viridian.png', ts: 16, px: 8, py: 24},
+        viridian_pokecenter: {url: './assets/tilesets/cities/3874_city_viridian.png', ts: 16, px: 784, py: 24, fixed: true},
         pewter: {url: './assets/tilesets/cities/3875_city_pewter.png', ts: 16, px: 8, py: 24},
         route2: {url: './assets/tilesets/cities/3876_city_map_3876.png', ts: 16, px: 8, py: 24},
         route3: {url: './assets/tilesets/cities/3878_city_map_3878.png', ts: 16, px: 8, py: 24},
@@ -737,7 +760,7 @@
         lavender: {url: './assets/tilesets/manual_environmental/environmental_4.png', ts: 16, ox: 0, oy: 0},
         fuchsia: {url: './assets/tilesets/missing_tiles/19_map_route_11_gate.png', ts: 16, px: 8, py: 24},
         cinnabar: {url: './assets/tilesets/manual_environmental/one_island.png', ts: 16, ox: 0, oy: 0},
-        viridian_forest: {url: './assets/tilesets/missing_tiles/02_map_route_10.png', ts: 16, px: 8, py: 24},
+        viridian_forest: {url: './assets/tilesets/missing_tiles/14_map_route_2_gate.png', ts: 16, px: 8, py: 200},
         // Reuse city sheets that already include the matching interiors/gym panels.
         viridian_gym: {url: './assets/tilesets/cities/3874_city_viridian.png', ts: 16, px: 1008, py: 24, fixed: true},
         pewter_gym: {url: './assets/tilesets/cities/3875_city_pewter.png', ts: 16, px: 696, py: 408, fixed: true},
@@ -751,16 +774,15 @@
     };
     let PREBUILT_MAP_BG_CONFIG = {...DEFAULT_PREBUILT_MAP_BG_CONFIG};
     // Story controls:
-    // - autocutmove=1 (default): scripted scene walk enabled.
+    // - autocutmove=1 (default): scripted cutscene walk enabled.
     // - autodialog=0 (default): dialog advances on user tap/A, not automatically.
-    // Cutscene auto-walk: enabled by default for intro/story flow.
-    // Disable with ?autocutmove=0 if causing issues on specific devices.
+    // Disable cutscene walk only for debugging with ?autocutmove=0.
     const AUTO_CUTSCENE_MOVE = qs('autocutmove', '1') === '1';
     const AUTO_DIALOG_ADVANCE = qs('autodialog', '0') === '1';
     const DEFAULT_SCENE_BACKDROP = './assets/tilesets/missing_tiles/05_map_route_1.png';
     const DEFAULT_SCENE_BACKDROP_RULES = [
         {match: 'pallet|oak|ch1_intro|ch1_oak', url: './assets/tilesets/cities/3873_city_pallet_town.png'},
-        {match: 'viridian_forest|forest|bug', url: './assets/tilesets/missing_tiles/02_map_route_10.png'},
+        {match: 'viridian_forest|forest|bug', url: './assets/tilesets/missing_tiles/14_map_route_2_gate.png'},
         {match: 'viridian|giovanni', url: './assets/tilesets/cities/3874_city_viridian.png'},
         {match: 'pewter|brock|museum|fossil', url: './assets/tilesets/cities/3875_city_pewter.png'},
         {match: 'mtmoon|moon|cave', url: './assets/tilesets/manual_environmental/mt_moon.png'},
@@ -780,6 +802,7 @@
         pallet_town: 'Pallet Town',
         route1: 'Route 1',
         viridian: 'Viridian City',
+        viridian_pokecenter: 'Viridian Pokemon Center',
         route2: 'Route 2',
         viridian_forest: 'Viridian Forest',
         pewter: 'Pewter City',
@@ -813,8 +836,102 @@
         'pewter', 'route3', 'mt_moon', 'cerulean', 'vermilion',
         'lavender', 'saffron', 'silph_lobby', 'fuchsia', 'cinnabar',
         'viridian_gym', 'indigo_plateau', 'pewter_gym',
-        'player_house', 'rival_house', 'oak_lab'
+        'player_house', 'rival_house', 'oak_lab', 'viridian_pokecenter'
     ]);
+
+    // FireRed-like map border connections (complement warps for route/city continuity).
+    // min/max apply to the orthogonal coordinate on the source edge.
+    const DEFAULT_MAP_CONNECTIONS = {
+        pallet_town: { south: {to: 'route1', min: 9, max: 10} },
+        route1: {
+            north: {to: 'viridian', min: 8, max: 11},
+            south: {to: 'pallet_town', min: 8, max: 11}
+        },
+        viridian: {
+            north: {to: 'route2', min: 19, max: 22},
+            south: {to: 'route1', min: 19, max: 22},
+            east: {to: 'viridian_forest', min: 22, max: 24}
+        },
+        viridian_forest: {
+            west: {to: 'viridian', min: 20, max: 30}
+        },
+        route2: {
+            north: {to: 'pewter', min: 19, max: 22},
+            south: {to: 'viridian', min: 19, max: 22}
+        },
+        pewter: {
+            south: {to: 'route2', min: 9, max: 10},
+            east: {to: 'route3', min: 8, max: 9}
+        },
+        route3: {
+            west: {to: 'pewter', min: 8, max: 9},
+            east: {to: 'mt_moon', min: 8, max: 9}
+        },
+        mt_moon: {
+            west: {to: 'route3', min: 8, max: 9},
+            east: {to: 'cerulean', min: 8, max: 9}
+        },
+        cerulean: {
+            west: {to: 'mt_moon', min: 10, max: 11},
+            east: {to: 'vermilion', min: 10, max: 11}
+        },
+        vermilion: {
+            west: {to: 'cerulean', min: 10, max: 11},
+            east: {to: 'lavender', min: 10, max: 11}
+        },
+        lavender: {
+            west: {to: 'vermilion', min: 10, max: 11},
+            east: {to: 'saffron', min: 10, max: 11}
+        },
+        saffron: {
+            west: {to: 'lavender', min: 10, max: 11},
+            north: {to: 'fuchsia', min: 10, max: 11}
+        },
+        fuchsia: {
+            north: {to: 'saffron', min: 10, max: 11},
+            south: {to: 'cinnabar', min: 10, max: 11}
+        },
+        cinnabar: {
+            north: {to: 'fuchsia', min: 10, max: 11},
+            south: {to: 'indigo_plateau', min: 10, max: 11}
+        },
+        indigo_plateau: {
+            north: {to: 'cinnabar', min: 10, max: 11}
+        }
+    };
+    let MAP_CONNECTIONS = JSON.parse(JSON.stringify(DEFAULT_MAP_CONNECTIONS));
+    const DEFAULT_MAP_SCRIPTS = {};
+    let MAP_SCRIPTS = {};
+    const DEFAULT_METATILE_BEHAVIORS = {
+        GRASS: {walk: true, encounter: 'none', surface: 'grass'},
+        GRASS_ALT: {walk: true, encounter: 'none', surface: 'grass'},
+        PATH: {walk: true, encounter: 'none', surface: 'path'},
+        PATH_ALT: {walk: true, encounter: 'none', surface: 'path'},
+        FLOWER: {walk: true, encounter: 'none', surface: 'grass'},
+        SIGN: {walk: true, encounter: 'none', surface: 'path', interact: 'sign'},
+        DOOR: {walk: true, encounter: 'none', surface: 'path', interact: 'door'},
+        WARP: {walk: true, encounter: 'none', surface: 'path', warp: true},
+        TALL_GRASS: {walk: true, encounter: 'land', surface: 'grass'},
+        WATER: {walk: false, encounter: 'water', surface: 'water'},
+        TREE: {walk: false, encounter: 'none', surface: 'tree'},
+        FENCE: {walk: false, encounter: 'none', surface: 'fence'},
+        LEDGE: {walk: false, encounter: 'none', surface: 'ledge'},
+        HOUSE_RED: {walk: false, encounter: 'none', surface: 'building'},
+        HOUSE_BLUE: {walk: false, encounter: 'none', surface: 'building'},
+        LAB: {walk: false, encounter: 'none', surface: 'building'},
+        ROOF_RED: {walk: false, encounter: 'none', surface: 'roof'},
+        ROOF_BLUE: {walk: false, encounter: 'none', surface: 'roof'},
+        ROOF_LAB: {walk: false, encounter: 'none', surface: 'roof'},
+        WALL: {walk: false, encounter: 'none', surface: 'wall'},
+        WINDOW: {walk: false, encounter: 'none', surface: 'wall'},
+        FLOOR_IN: {walk: true, encounter: 'none', surface: 'indoor'},
+        WALL_IN: {walk: false, encounter: 'none', surface: 'indoor_wall'},
+        TABLE: {walk: false, encounter: 'none', surface: 'furniture'},
+        SHELF: {walk: false, encounter: 'none', surface: 'furniture'},
+        NPC: {walk: false, encounter: 'none', surface: 'entity'}
+    };
+    let METATILE_BEHAVIORS = {};
+    let METATILE_BEHAVIORS_BY_ID = {};
     // By default, prefer prebuilt visual sheets for fidelity.
     // Keep this set empty unless a specific map needs emergency tile-only rendering.
     const ALWAYS_TILE_RENDER_MAPS = new Set([]);
@@ -854,6 +971,38 @@
         T.HOUSE_RED, T.HOUSE_BLUE, T.LAB, T.FENCE, T.NPC,
         T.WALL_IN, T.TABLE, T.SHELF, T.WALL, T.WINDOW
     ];
+    const CITY_STRICT_WALKABLE = new Set([
+        T.PATH, T.PATH_ALT, T.GRASS, T.GRASS_ALT, T.FLOWER, T.SIGN, T.WARP, T.DOOR
+    ]);
+    const ROUTE_STRICT_WALKABLE = new Set([
+        T.PATH, T.PATH_ALT, T.GRASS, T.GRASS_ALT, T.TALL_GRASS, T.FLOWER, T.SIGN, T.WARP, T.DOOR
+    ]);
+    const FOREST_STRICT_WALKABLE = new Set([
+        T.PATH, T.PATH_ALT, T.GRASS, T.GRASS_ALT, T.TALL_GRASS, T.FLOWER, T.SIGN, T.WARP, T.DOOR
+    ]);
+    const INTERIOR_STRICT_WALKABLE = new Set([T.FLOOR_IN, T.WARP, T.SIGN, T.DOOR]);
+    const CAVE_STRICT_WALKABLE = new Set([T.PATH, T.PATH_ALT, T.FLOOR_IN, T.WARP, T.SIGN, T.DOOR]);
+    const STRICT_CITY_MAPS = new Set([
+        'pallet_town', 'viridian', 'pewter', 'cerulean', 'vermilion',
+        'lavender', 'saffron', 'fuchsia', 'cinnabar', 'indigo_plateau'
+    ]);
+    const STRICT_ROUTE_MAPS = new Set(['route1', 'route2', 'route3']);
+    const STRICT_FOREST_MAPS = new Set(['viridian_forest']);
+    const STRICT_INTERIOR_MAPS = new Set([
+        'player_house', 'rival_house', 'oak_lab', 'viridian_pokecenter', 'pewter_gym', 'viridian_gym', 'silph_lobby'
+    ]);
+    const STRICT_CAVE_MAPS = new Set(['mt_moon']);
+
+    function strictWalkableSetForMap(mapId) {
+        if (STRICT_CITY_MAPS.has(mapId)) return CITY_STRICT_WALKABLE;
+        if (STRICT_ROUTE_MAPS.has(mapId)) return ROUTE_STRICT_WALKABLE;
+        if (STRICT_FOREST_MAPS.has(mapId)) return FOREST_STRICT_WALKABLE;
+        if (STRICT_INTERIOR_MAPS.has(mapId)) return INTERIOR_STRICT_WALKABLE;
+        if (STRICT_CAVE_MAPS.has(mapId)) return CAVE_STRICT_WALKABLE;
+        return null;
+    }
+    METATILE_BEHAVIORS = sanitizeMetatileBehaviors(DEFAULT_METATILE_BEHAVIORS);
+    rebuildMetatileBehaviorById();
     
     // ==================== MAPS ====================
     const MAPS = {
@@ -883,9 +1032,10 @@
                 for (let x = 2; x <= 17; x++) m[8 * w + x] = T.PATH;
 
                 // Player house (left), rival house (right), Oak lab (south-center).
-                for (let y = 3; y <= 5; y++) for (let x = 3; x <= 5; x++) m[y * w + x] = T.HOUSE_RED;
-                for (let y = 3; y <= 5; y++) for (let x = 13; x <= 15; x++) m[y * w + x] = T.HOUSE_BLUE;
-                for (let y = 9; y <= 11; y++) for (let x = 7; x <= 11; x++) m[y * w + x] = T.LAB;
+                // Footprints are sized to match prebuilt visuals and avoid roof-walk exploits.
+                for (let y = 2; y <= 5; y++) for (let x = 2; x <= 6; x++) m[y * w + x] = T.HOUSE_RED;
+                for (let y = 2; y <= 5; y++) for (let x = 12; x <= 16; x++) m[y * w + x] = T.HOUSE_BLUE;
+                for (let y = 8; y <= 11; y++) for (let x = 6; x <= 12; x++) m[y * w + x] = T.LAB;
 
                 // Building entrances as warp tiles.
                 m[6 * w + 4] = T.WARP;
@@ -898,18 +1048,25 @@
                 m[2 * w + 17] = T.FLOWER;
                 m[14 * w + 3] = T.FLOWER;
                 m[14 * w + 16] = T.FLOWER;
-                for (let x = 6; x <= 12; x++) m[10 * w + x] = T.FENCE;
-
+                for (let x = 2; x <= 5; x++) m[14 * w + x] = T.FENCE;
                 return m;
             })(),
             warps: [
-                {x:4,y:6,to:'player_house',tx:3,ty:6},
-                {x:14,y:6,to:'rival_house',tx:3,ty:6},
-                {x:9,y:12,to:'oak_lab',tx:5,ty:10},
+                {x:4,y:6,to:'player_house',tx:7,ty:9},
+                {x:14,y:6,to:'rival_house',tx:7,ty:9},
+                {x:9,y:12,to:'oak_lab',tx:7,ty:9},
                 {x:9,y:17,to:'route1',tx:9,ty:23},
                 {x:10,y:17,to:'route1',tx:10,ty:23}
             ],
             npcs: [
+                {x:8,y:14,name:'Garoto',sprite:'boy',dialog:[
+                    'Voce so fala, RED!',
+                    'Qualquer um consegue vencer POKeMON fracos por aqui.'
+                ]},
+                {x:11,y:14,name:'Garota',sprite:'girl',dialog:[
+                    'Se e tao bom, prova!',
+                    'Captura um POKeMON raro para a gente ver!'
+                ]},
                 {x:15,y:10,name:'Girl',sprite:'girl',dialog:[
                     'Bem-vindo a PALLET TOWN!',
                     'Ouviu o boato? Dizem que viram uma luz estranha na floresta!',
@@ -932,8 +1089,8 @@
                 for (let y = 0; y < 25; y++) {
                     for (let x = 0; x < 20; x++) {
                         if (x === 0 || x === 19) m.push(T.TREE);
-                        else if (y === 24 && (x === 9 || x === 10)) m.push(T.WARP);
-                        else if (y === 0 && (x === 9 || x === 10)) m.push(T.WARP);
+                        else if (y === 24 && x >= 8 && x <= 11) m.push(T.WARP);
+                        else if (y === 0 && x >= 8 && x <= 11) m.push(T.WARP);
                         else if (x === 9 || x === 10) m.push(T.PATH);
                         else if ((y >= 4 && y <= 9 && (x <= 6 || x >= 13)) || (y >= 14 && y <= 18 && (x <= 5 || x >= 14))) m.push(T.TALL_GRASS);
                         else m.push(T.GRASS);
@@ -942,51 +1099,112 @@
                 return m;
             })(),
             warps: [
-                {x:9,y:0,to:'viridian',tx:9,ty:16},
-                {x:10,y:0,to:'viridian',tx:10,ty:16},
+                {x:8,y:0,to:'viridian',tx:19,ty:33},
+                {x:9,y:0,to:'viridian',tx:19,ty:33},
+                {x:10,y:0,to:'viridian',tx:21,ty:33},
+                {x:11,y:0,to:'viridian',tx:21,ty:33},
+                {x:8,y:24,to:'pallet_town',tx:9,ty:16},
                 {x:9,y:24,to:'pallet_town',tx:9,ty:16},
-                {x:10,y:24,to:'pallet_town',tx:10,ty:16}
+                {x:10,y:24,to:'pallet_town',tx:10,ty:16},
+                {x:11,y:24,to:'pallet_town',tx:10,ty:16}
             ],
             npcs: [],
             enc: {pokemon:[{name:'RATTATA',spr:'rattata',lv:[2,4],rate:55},{name:'PIDGEY',spr:'pidgey',lv:[2,5],rate:45}],rate:12}
         },
 
-        // Minimal Viridian City (static layout, story-first; no RNG required)
+        // Viridian City (upscaled x2 to match prebuilt map proportions and collision paths).
         viridian: {
-            w: 20, h: 18,
+            w: 40, h: 36,
             data: (() => {
-                const w = 20, h = 18;
-                const m = new Array(w * h).fill(T.GRASS);
-                for (let y = 0; y < h; y++) {
-                    for (let x = 0; x < w; x++) {
-                        if (x === 0 || x === w - 1 || y === 0 || y === h - 1) m[y * w + x] = T.TREE;
+                const bw = 20, bh = 18, f = 2;
+                const base = new Array(bw * bh).fill(T.GRASS);
+                // Broad road network: keep traversal fluid and avoid false blocks.
+                for (let y = 0; y < bh; y++) for (let x = 9; x <= 10; x++) base[y * bw + x] = T.PATH;
+                for (let x = 1; x < bw; x++) {
+                    base[10 * bw + x] = T.PATH;
+                    base[16 * bw + x] = T.PATH;
+                }
+                for (let x = 9; x < bw; x++) base[3 * bw + x] = T.PATH;
+                for (let y = 3; y <= 11; y++) base[y * bw + 11] = T.PATH;
+                for (let y = 3; y <= 11; y++) base[y * bw + 16] = T.PATH;
+
+                // Mountains/cliffs (west).
+                for (let y = 0; y <= 8; y++) for (let x = 0; x <= 3; x++) base[y * bw + x] = T.WALL;
+                for (let y = 11; y <= 16; y++) for (let x = 0; x <= 2; x++) base[y * bw + x] = T.WALL;
+
+                // Forest block.
+                for (let y = 2; y <= 8; y++) for (let x = 4; x <= 8; x++) base[y * bw + x] = T.TREE;
+                for (let y = 1; y <= 2; y++) for (let x = 12; x <= 18; x++) base[y * bw + x] = T.TREE;
+                for (let y = 15; y <= 16; y++) for (let x = 4; x <= 6; x++) base[y * bw + x] = T.TREE;
+                for (let y = 0; y < bh; y++) base[y * bw + 19] = T.TREE;
+                for (let x = 0; x < bw; x++) base[17 * bw + x] = T.TREE;
+                for (let x = 8; x <= 11; x++) base[17 * bw + x] = T.PATH;
+
+                // Buildings.
+                for (let y = 3; y <= 5; y++) for (let x = 16; x <= 19; x++) base[y * bw + x] = T.LAB;
+                for (let y = 4; y <= 6; y++) for (let x = 12; x <= 15; x++) base[y * bw + x] = T.HOUSE_BLUE;
+                for (let y = 8; y <= 10; y++) for (let x = 12; x <= 15; x++) base[y * bw + x] = T.HOUSE_BLUE;
+                for (let y = 8; y <= 10; y++) for (let x = 17; x <= 19; x++) base[y * bw + x] = T.LAB;
+                for (let y = 12; y <= 14; y++) for (let x = 12; x <= 15; x++) base[y * bw + x] = T.HOUSE_RED;
+
+                // Pond.
+                for (let y = 13; y <= 15; y++) for (let x = 6; x <= 8; x++) base[y * bw + x] = T.WATER;
+
+                // Open exits/doors (warp tiles).
+                base[6 * bw + 17] = T.WARP;                    // top-right house
+                base[11 * bw + 13] = T.WARP;                   // middle house
+                base[14 * bw + 13] = T.WARP;                   // pokemon center
+                base[11 * bw + 19] = T.WARP;                                    // east gate (aligned row)
+                for (let x = 8; x <= 11; x++) base[0 * bw + x] = T.WARP;       // north exit
+                for (let x = 8; x <= 11; x++) base[17 * bw + x] = T.WARP;      // south exit
+
+                // Town sign.
+                base[9 * bw + 10] = T.SIGN;
+
+                const w = bw * f, h = bh * f;
+                const m = new Array(w * h);
+                for (let by = 0; by < bh; by++) {
+                    for (let bx = 0; bx < bw; bx++) {
+                        const t = base[by * bw + bx];
+                        for (let oy = 0; oy < f; oy++) {
+                            for (let ox = 0; ox < f; ox++) {
+                                m[(by * f + oy) * w + (bx * f + ox)] = t;
+                            }
+                        }
                     }
                 }
-                // Main road (south <-> north)
-                for (let y = 1; y < h - 1; y++) {
-                    m[y * w + 9] = T.PATH;
-                    m[y * w + 10] = T.PATH;
-                }
-                // Plaza
-                for (let y = 6; y <= 9; y++) for (let x = 6; x <= 13; x++) m[y * w + x] = T.PATH;
-                // WARP tiles
-                m[0 * w + 9] = T.WARP; m[0 * w + 10] = T.WARP;
-                m[(h - 1) * w + 9] = T.WARP; m[(h - 1) * w + 10] = T.WARP;
-                // Forest gate (east)
-                m[8 * w + (w - 1)] = T.WARP;
-                // Simple sign
-                m[10 * w + 8] = T.SIGN;
                 return m;
             })(),
-            warps: [
-                {x:9,y:17,to:'route1',tx:9,ty:1},
-                {x:10,y:17,to:'route1',tx:10,ty:1},
-                {x:9,y:0,to:'route2',tx:9,ty:23},
-                {x:10,y:0,to:'route2',tx:10,ty:23},
-                {x:19,y:8,to:'viridian_forest',tx:2,ty:12},
-            ],
+            warps: (() => {
+                const f = 2;
+                const targetScale = {viridian: 2, route2: 2, viridian_forest: 2};
+                const base = [
+                    {x:8,y:17,to:'route1',tx:9,ty:1},
+                    {x:9,y:17,to:'route1',tx:9,ty:1},
+                    {x:10,y:17,to:'route1',tx:10,ty:1},
+                    {x:11,y:17,to:'route1',tx:10,ty:1},
+                    {x:8,y:0,to:'route2',tx:9,ty:23},
+                    {x:9,y:0,to:'route2',tx:9,ty:23},
+                    {x:10,y:0,to:'route2',tx:10,ty:23},
+                    {x:11,y:0,to:'route2',tx:10,ty:23},
+                    {x:19,y:11,to:'viridian_forest',tx:2,ty:12},
+                    {x:13,y:14,to:'viridian_pokecenter',tx:7,ty:9}
+                ];
+                const out = [];
+                for (const w of base) {
+                    const tf = targetScale[w.to] || 1;
+                    const tx = tf > 1 ? (w.tx * tf + 1) : w.tx;
+                    const ty = tf > 1 ? (w.ty * tf + 1) : w.ty;
+                    for (let oy = 0; oy < f; oy++) {
+                        for (let ox = 0; ox < f; ox++) {
+                            out.push({x: w.x * f + ox, y: w.y * f + oy, to: w.to, tx, ty});
+                        }
+                    }
+                }
+                return out;
+            })(),
             npcs: [
-                {x:10,y:8,name:'Girl',sprite:'girl',dialog:[
+                {x:21,y:17,name:'Girl',sprite:'girl',dialog:[
                     'VIRIDIAN CITY...',
                     'Dizem que o GINASIO esta fechado.',
                     'E que a floresta esta... estranha.'
@@ -997,36 +1215,72 @@
 
         // Route 2: Viridian -> Pewter (no RNG when storyLock=true)
         route2: {
-            w: 20, h: 25,
+            w: 40, h: 50,
             data: (() => {
-                const w = 20, h = 25;
-                const m = new Array(w * h).fill(T.GRASS);
-                for (let y = 0; y < h; y++) {
-                    for (let x = 0; x < w; x++) {
-                        if (x === 0 || x === w - 1) m[y * w + x] = T.TREE;
-                        else if (y === 0 || y === h - 1) m[y * w + x] = T.TREE;
+                const bw = 20, bh = 25, f = 2;
+                const base = new Array(bw * bh).fill(T.GRASS);
+                for (let y = 0; y < bh; y++) {
+                    for (let x = 0; x < bw; x++) {
+                        if (x === 0 || x === bw - 1) base[y * bw + x] = T.TREE;
+                        else if (y === 0 || y === bh - 1) base[y * bw + x] = T.TREE;
                     }
                 }
                 // Path
-                for (let y = 1; y < h - 1; y++) {
-                    m[y * w + 9] = T.PATH;
-                    m[y * w + 10] = T.PATH;
+                for (let y = 1; y < bh - 1; y++) {
+                    base[y * bw + 9] = T.PATH;
+                    base[y * bw + 10] = T.PATH;
                 }
                 // Tall grass patches
-                for (let y = 6; y <= 10; y++) for (let x = 3; x <= 6; x++) m[y * w + x] = T.TALL_GRASS;
-                for (let y = 13; y <= 17; y++) for (let x = 13; x <= 16; x++) m[y * w + x] = T.TALL_GRASS;
+                for (let y = 6; y <= 10; y++) for (let x = 3; x <= 6; x++) base[y * bw + x] = T.TALL_GRASS;
+                for (let y = 13; y <= 17; y++) for (let x = 13; x <= 16; x++) base[y * bw + x] = T.TALL_GRASS;
 
                 // Warps
-                m[(h - 1) * w + 9] = T.WARP; m[(h - 1) * w + 10] = T.WARP;
-                m[0 * w + 9] = T.WARP; m[0 * w + 10] = T.WARP;
+                base[(bh - 1) * bw + 8] = T.WARP; base[(bh - 1) * bw + 9] = T.WARP; base[(bh - 1) * bw + 10] = T.WARP; base[(bh - 1) * bw + 11] = T.WARP;
+                base[0 * bw + 8] = T.WARP; base[0 * bw + 9] = T.WARP; base[0 * bw + 10] = T.WARP; base[0 * bw + 11] = T.WARP;
+                base[16 * bw + 9] = T.WARP; base[16 * bw + 10] = T.WARP; // Route 2 <-> Viridian Forest gate
+
+                const w = bw * f, h = bh * f;
+                const m = new Array(w * h);
+                for (let by = 0; by < bh; by++) {
+                    for (let bx = 0; bx < bw; bx++) {
+                        const t = base[by * bw + bx];
+                        for (let oy = 0; oy < f; oy++) {
+                            for (let ox = 0; ox < f; ox++) {
+                                m[(by * f + oy) * w + (bx * f + ox)] = t;
+                            }
+                        }
+                    }
+                }
                 return m;
             })(),
-            warps: [
-                {x:9,y:24,to:'viridian',tx:9,ty:1},
-                {x:10,y:24,to:'viridian',tx:10,ty:1},
-                {x:9,y:0,to:'pewter',tx:9,ty:16},
-                {x:10,y:0,to:'pewter',tx:10,ty:16},
-            ],
+            warps: (() => {
+                const f = 2;
+                const targetScale = {viridian: 2, route2: 2, viridian_forest: 2};
+                const base = [
+                    {x:8,y:24,to:'viridian',tx:9,ty:1},
+                    {x:9,y:24,to:'viridian',tx:9,ty:1},
+                    {x:10,y:24,to:'viridian',tx:10,ty:1},
+                    {x:11,y:24,to:'viridian',tx:10,ty:1},
+                    {x:8,y:0,to:'pewter',tx:9,ty:16},
+                    {x:9,y:0,to:'pewter',tx:9,ty:16},
+                    {x:10,y:0,to:'pewter',tx:10,ty:16},
+                    {x:11,y:0,to:'pewter',tx:10,ty:16},
+                    {x:9,y:16,to:'viridian_forest',tx:9,ty:23},
+                    {x:10,y:16,to:'viridian_forest',tx:10,ty:23},
+                ];
+                const out = [];
+                for (const w of base) {
+                    const tf = targetScale[w.to] || 1;
+                    const tx = tf > 1 ? (w.tx * tf + 1) : w.tx;
+                    const ty = tf > 1 ? (w.ty * tf + 1) : w.ty;
+                    for (let oy = 0; oy < f; oy++) {
+                        for (let ox = 0; ox < f; ox++) {
+                            out.push({x: w.x * f + ox, y: w.y * f + oy, to: w.to, tx, ty});
+                        }
+                    }
+                }
+                return out;
+            })(),
             npcs: [],
             enc: {pokemon:[{name:'RATTATA',spr:'rattata',lv:[3,5],rate:50},{name:'PIDGEY',spr:'pidgey',lv:[3,6],rate:50}],rate:10}
         },
@@ -1048,6 +1302,7 @@
                 // Pewter Gym
                 for (let y = 3; y <= 5; y++) for (let x = 8; x <= 11; x++) m[y * w + x] = T.LAB;
                 m[6 * w + 9] = T.WARP;
+                m[6 * w + 10] = T.WARP;
                 // North exit to Route 3
                 m[0 * w + 9] = T.WARP; m[0 * w + 10] = T.WARP;
                 // Warps (south back to route2)
@@ -1057,9 +1312,10 @@
                 return m;
             })(),
             warps: [
-                {x:9,y:17,to:'route2',tx:9,ty:1},
-                {x:10,y:17,to:'route2',tx:10,ty:1},
+                {x:9,y:17,to:'route2',tx:19,ty:3},
+                {x:10,y:17,to:'route2',tx:21,ty:3},
                 {x:9,y:6,to:'pewter_gym',tx:5,ty:9},
+                {x:10,y:6,to:'pewter_gym',tx:6,ty:9},
                 {x:9,y:0,to:'route3',tx:1,ty:8},
                 {x:10,y:0,to:'route3',tx:1,ty:9}
             ],
@@ -1294,8 +1550,8 @@
             warps: [
                 {x:10,y:0,to:'fuchsia',tx:10,ty:16},
                 {x:11,y:0,to:'fuchsia',tx:11,ty:16},
-                {x:10,y:17,to:'indigo_plateau',tx:10,ty:1},
-                {x:11,y:17,to:'indigo_plateau',tx:11,ty:1}
+                {x:10,y:17,to:'indigo_plateau',tx:10,ty:2},
+                {x:11,y:17,to:'indigo_plateau',tx:11,ty:2}
             ],
             npcs: [],
             enc: null
@@ -1359,6 +1615,7 @@
                 }
                 // Exit
                 m[9 * w + 5] = T.WARP;
+                m[9 * w + 6] = T.WARP;
                 // Rock-like props / arena
                 m[3 * w + 3] = T.TABLE;
                 m[3 * w + 8] = T.TABLE;
@@ -1368,35 +1625,86 @@
                 m[1 * w + 9] = T.SHELF;
                 return m;
             })(),
-            warps: [{x:5,y:9,to:'pewter',tx:9,ty:7}],
+            warps: [
+                {x:5,y:9,to:'pewter',tx:9,ty:7},
+                {x:6,y:9,to:'pewter',tx:10,ty:7}
+            ],
             npcs: [{x:5,y:2,name:'Brock',sprite:'brock',dialog:['...']}],
             enc: null
         },
         
         viridian_forest: {
-            w: 20,
-            h: 25,
+            w: 40,
+            h: 50,
             data: (() => {
-                let m = [];
-                for (let y = 0; y < 25; y++) {
-                    for (let x = 0; x < 20; x++) {
-                        // Map boundaries: trees (with a gate back to Viridian)
-                        if (x === 1 && y === 12) m.push(T.WARP); // Gate tile to Viridian
-                        else if (x === 0 || x === 19) m.push(T.TREE);
-                        // Exit south (back towards Pallet via Route 1)
-                        else if (y === 24 && (x === 9 || x === 10)) m.push(T.WARP);
-                        // Paths and grass
-                        else if (x === 9 || x === 10) m.push(T.PATH); // Main path
-                        else m.push(T.TALL_GRASS); // Lots of tall grass (deterministic)
+                const bw = 20, bh = 25, f = 2;
+                const base = new Array(bw * bh).fill(T.TREE);
+
+                // Central traversable spine.
+                for (let y = 1; y <= 23; y++) {
+                    for (let x = 8; x <= 11; x++) base[y * bw + x] = T.TALL_GRASS;
+                    base[y * bw + 9] = T.PATH;
+                    base[y * bw + 10] = T.PATH;
+                }
+
+                // Viridian gate corridor (west) and route2 exit (south).
+                for (let x = 1; x <= 10; x++) {
+                    base[12 * bw + x] = T.PATH;
+                    base[13 * bw + x] = T.PATH;
+                }
+                for (let y = 19; y <= 23; y++) {
+                    base[y * bw + 8] = T.PATH;
+                    base[y * bw + 9] = T.PATH;
+                    base[y * bw + 10] = T.PATH;
+                    base[y * bw + 11] = T.PATH;
+                }
+
+                // Fence posts at choke points (keep center lane open).
+                base[6 * bw + 8] = T.FENCE;
+                base[6 * bw + 11] = T.FENCE;
+                base[17 * bw + 8] = T.FENCE;
+                base[17 * bw + 11] = T.FENCE;
+
+                // Warp tiles.
+                base[12 * bw + 1] = T.WARP; // Gate back to Viridian
+                base[24 * bw + 9] = T.WARP; // South exit to Route 2
+                base[24 * bw + 10] = T.WARP;
+
+                const w = bw * f, h = bh * f;
+                const m = new Array(w * h);
+                for (let by = 0; by < bh; by++) {
+                    for (let bx = 0; bx < bw; bx++) {
+                        const t = base[by * bw + bx];
+                        for (let oy = 0; oy < f; oy++) {
+                            for (let ox = 0; ox < f; ox++) {
+                                m[(by * f + oy) * w + (bx * f + ox)] = t;
+                            }
+                        }
                     }
                 }
                 return m;
             })(),
-            warps: [
-                {x:1, y:12, to: 'viridian', tx: 18, ty: 8},       // Gate back to Viridian
-                {x:9, y:24, to: 'route2', tx: 9, ty: 16},         // South exit to Route 2
-                {x:10, y:24, to: 'route2', tx: 10, ty: 16}
-            ],
+            warps: (() => {
+                const f = 2;
+                const targetScale = {viridian: 2, route2: 2, viridian_forest: 2};
+                const base = [
+                    {x:1, y:12, to: 'viridian', tx: 16, ty: 11},      // Gate back to Viridian
+                    {x:9, y:24, to: 'route2', tx: 9, ty: 16},         // South exit to Route 2
+                    {x:10, y:24, to: 'route2', tx: 10, ty: 16}
+                ];
+                const out = [];
+                for (const w of base) {
+                    const tf = targetScale[w.to] || 1;
+                    const tx = tf > 1 ? (w.tx * tf + 1) : w.tx;
+                    const ty = tf > 1 ? (w.ty * tf + 1) : w.ty;
+                    for (let oy = 0; oy < f; oy++) {
+                        for (let ox = 0; ox < f; ox++) {
+                            out.push({x: w.x * f + ox, y: w.y * f + oy, to: w.to, tx, ty});
+                        }
+                    }
+                }
+                return out;
+            })(),
             npcs: [], // No NPCs initially in Viridian Forest for chapter 2
             // Encounters for Chapter 2: VS Bulbasaur
             enc: {
@@ -1409,70 +1717,257 @@
             }
         },
         player_house: {
-            w: 8, h: 8,
+            w: 15, h: 11,
             data: (() => {
-                const w = 8, h = 8;
+                const w = 15, h = 11;
                 const m = new Array(w * h).fill(T.FLOOR_IN);
                 for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
                     if (x === 0 || y === 0 || x === w - 1 || y === h - 1) m[y * w + x] = T.WALL_IN;
                 }
-                m[6 * w + 3] = T.WARP; // door
-                // Simple furniture
-                m[3 * w + 3] = T.TABLE;
-                m[2 * w + 6] = T.SHELF;
+                m[10 * w + 7] = T.WARP; // door
+                m[10 * w + 8] = T.WARP;
+                // Furniture / stairs blocking.
+                for (let x = 5; x <= 7; x++) for (let y = 4; y <= 5; y++) m[y * w + x] = T.TABLE;
+                for (let x = 2; x <= 4; x++) m[2 * w + x] = T.SHELF;
+                for (let y = 1; y <= 4; y++) for (let x = 11; x <= 13; x++) m[y * w + x] = T.TABLE;
                 return m;
             })(),
-            warps: [{x:3,y:6,to:'pallet_town',tx:4,ty:6}],
-            npcs: [{x:5,y:3,name:'Mom',sprite:'mom',dialog:['RED! Go see Professor OAK!','He has something for you!']}],
+            warps: [
+                {x:7,y:10,to:'pallet_town',tx:4,ty:6},
+                {x:8,y:10,to:'pallet_town',tx:4,ty:6}
+            ],
+            npcs: [{x:10,y:6,name:'Mom',sprite:'mom',dialog:['RED! Go see Professor OAK!','He has something for you!']}],
             enc: null
         },
         
         rival_house: {
-            w: 8, h: 8,
+            w: 15, h: 11,
             data: (() => {
-                const w = 8, h = 8;
+                const w = 15, h = 11;
                 const m = new Array(w * h).fill(T.FLOOR_IN);
                 for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
                     if (x === 0 || y === 0 || x === w - 1 || y === h - 1) m[y * w + x] = T.WALL_IN;
                 }
-                m[6 * w + 3] = T.WARP; // door
-                m[3 * w + 3] = T.TABLE;
-                m[2 * w + 6] = T.SHELF;
+                m[10 * w + 7] = T.WARP; // door
+                m[10 * w + 8] = T.WARP;
+                for (let x = 3; x <= 5; x++) for (let y = 2; y <= 3; y++) m[y * w + x] = T.TABLE;
+                for (let x = 10; x <= 12; x++) for (let y = 2; y <= 3; y++) m[y * w + x] = T.TABLE;
+                for (let x = 2; x <= 4; x++) m[8 * w + x] = T.SHELF;
                 return m;
             })(),
-            warps: [{x:3,y:6,to:'pallet_town',tx:14,ty:6}],
-            npcs: [{x:2,y:3,name:'Daisy',sprite:'girl',dialog:['Looking for BLUE?','He went to grandpa\'s lab.']}],
+            warps: [
+                {x:7,y:10,to:'pallet_town',tx:14,ty:6},
+                {x:8,y:10,to:'pallet_town',tx:14,ty:6}
+            ],
+            npcs: [{x:6,y:6,name:'Daisy',sprite:'girl',dialog:['Looking for BLUE?','He went to grandpa\'s lab.']}],
             enc: null
         },
         
         oak_lab: {
-            w: 10, h: 12,
+            w: 15, h: 11,
             data: (() => {
-                const w = 10, h = 12;
+                const w = 15, h = 11;
                 const m = new Array(w * h).fill(T.FLOOR_IN);
                 for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
                     if (x === 0 || y === 0 || x === w - 1 || y === h - 1) m[y * w + x] = T.WALL_IN;
                 }
-                m[11 * w + 4] = T.WARP;
-                m[11 * w + 5] = T.WARP;
-                // Lab props (clear center aisle).
-                m[2 * w + 2] = T.SHELF;
-                m[2 * w + 7] = T.SHELF;
-                m[5 * w + 2] = T.TABLE;
-                m[5 * w + 7] = T.TABLE;
-                m[8 * w + 2] = T.TABLE;
-                m[8 * w + 7] = T.TABLE;
+                m[10 * w + 7] = T.WARP;
+                m[10 * w + 8] = T.WARP;
+                // Lab props (leave clear center lane for cutscenes).
+                for (let x = 2; x <= 5; x++) m[2 * w + x] = T.SHELF;
+                for (let x = 9; x <= 12; x++) m[2 * w + x] = T.SHELF;
+                for (let x = 2; x <= 5; x++) m[8 * w + x] = T.SHELF;
+                for (let x = 9; x <= 12; x++) m[8 * w + x] = T.SHELF;
+                for (let x = 4; x <= 5; x++) for (let y = 4; y <= 5; y++) m[y * w + x] = T.TABLE;
+                for (let x = 10; x <= 12; x++) for (let y = 4; y <= 5; y++) m[y * w + x] = T.TABLE;
                 return m;
             })(),
-            warps: [{x:4,y:11,to:'pallet_town',tx:9,ty:12},{x:5,y:11,to:'pallet_town',tx:9,ty:12}],
-            npcs: [{x:5,y:5,name:'Prof. Oak',sprite:'oak',
+            warps: [
+                {x:7,y:10,to:'pallet_town',tx:9,ty:12},
+                {x:8,y:10,to:'pallet_town',tx:9,ty:12}
+            ],
+            npcs: [{x:8,y:6,name:'Prof. Oak',sprite:'oak',
                 // Dynamic dialog based on story state (set in getOakDialog)
                 dialog: null
             }],
             enc: null,
             special: 'get_poli'  // Changed from get_pikachu to get_poli (manga accurate!)
+        },
+
+        viridian_pokecenter: {
+            w: 15, h: 11,
+            data: (() => {
+                const w = 15, h = 11;
+                const m = new Array(w * h).fill(T.FLOOR_IN);
+                for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+                    if (x === 0 || y === 0 || x === w - 1 || y === h - 1) m[y * w + x] = T.WALL_IN;
+                }
+                for (let x = 5; x <= 9; x++) m[2 * w + x] = T.TABLE;     // counter
+                for (let x = 2; x <= 4; x++) m[7 * w + x] = T.SHELF;      // shelf
+                for (let x = 10; x <= 12; x++) m[7 * w + x] = T.SHELF;    // shelf
+                m[10 * w + 7] = T.WARP; // door
+                m[10 * w + 8] = T.WARP;
+                return m;
+            })(),
+            warps: [
+                {x:7, y:10, to:'viridian', tx:27, ty:33},
+                {x:8, y:10, to:'viridian', tx:27, ty:33}
+            ],
+            npcs: [
+                {x:7,y:4,name:'Nurse Joy',sprite:'girl',dialog:[
+                    'Bem-vindo ao Centro Pokemon!',
+                    'Seus Pokemon estao em forma para continuar a aventura.'
+                ]}
+            ],
+            enc: null
         }
     };
+
+    function isTileWalkableForMap(mapId, tile) {
+        const behavior = METATILE_BEHAVIORS_BY_ID && METATILE_BEHAVIORS_BY_ID[tile];
+        if (behavior && typeof behavior.walk === 'boolean') {
+            if (!behavior.walk) return false;
+        } else if (SOLID.includes(tile)) {
+            return false;
+        }
+        const strict = strictWalkableSetForMap(mapId);
+        if (strict && !strict.has(tile)) return false;
+        return true;
+    }
+
+    function findNearestWalkableTile(mapId, sx, sy, maxRadius = 24) {
+        const map = MAPS[mapId];
+        if (!map) return null;
+        const inside = (x, y) => x >= 0 && y >= 0 && x < map.w && y < map.h;
+        const walkableAt = (x, y) => inside(x, y) && isTileWalkableForMap(mapId, map.data[y * map.w + x]);
+        if (walkableAt(sx, sy)) return {x: sx, y: sy};
+        for (let r = 1; r <= maxRadius; r++) {
+            for (let dy = -r; dy <= r; dy++) {
+                for (let dx = -r; dx <= r; dx++) {
+                    if (Math.abs(dx) + Math.abs(dy) > r) continue;
+                    const x = sx + dx;
+                    const y = sy + dy;
+                    if (walkableAt(x, y)) return {x, y};
+                }
+            }
+        }
+        return null;
+    }
+
+    function mapPathTileFor(mapId) {
+        if (STRICT_INTERIOR_MAPS.has(mapId)) return T.FLOOR_IN;
+        return T.PATH;
+    }
+
+    function setTile(mapId, x, y, tile) {
+        const map = MAPS[mapId];
+        if (!map) return;
+        if (x < 0 || y < 0 || x >= map.w || y >= map.h) return;
+        map.data[y * map.w + x] = tile;
+    }
+
+    function carvePath(mapId, fromX, fromY, toX, toY) {
+        const map = MAPS[mapId];
+        if (!map) return;
+        const pathTile = mapPathTileFor(mapId);
+        let x = fromX;
+        let y = fromY;
+        const sx = x <= toX ? 1 : -1;
+        const sy = y <= toY ? 1 : -1;
+        while (x !== toX) {
+            if (!(x === fromX && y === fromY)) setTile(mapId, x, y, pathTile);
+            x += sx;
+        }
+        while (y !== toY) {
+            if (!(x === fromX && y === fromY)) setTile(mapId, x, y, pathTile);
+            y += sy;
+        }
+        if (!(x === toX && y === toY)) setTile(mapId, x, y, pathTile);
+    }
+
+    function firstWalkableTileInMap(mapId) {
+        const map = MAPS[mapId];
+        if (!map) return null;
+        for (let y = 0; y < map.h; y++) {
+            for (let x = 0; x < map.w; x++) {
+                if (isTileWalkableForMap(mapId, map.data[y * map.w + x])) return {x, y};
+            }
+        }
+        return null;
+    }
+
+    function normalizeMapTopology() {
+        for (const [mapId, map] of Object.entries(MAPS)) {
+            if (!map) continue;
+            const pathTile = mapPathTileFor(mapId);
+            let seed = firstWalkableTileInMap(mapId);
+            if (!seed) {
+                // Force at least one walkable seed tile.
+                const sx = Math.floor(map.w / 2);
+                const sy = Math.floor(map.h / 2);
+                setTile(mapId, sx, sy, pathTile);
+                seed = {x: sx, y: sy};
+            }
+
+            // Normalize warp destinations to nearest walkable tile.
+            for (const w of (map.warps || [])) {
+                if (!w || typeof w.to !== 'string' || !MAPS[w.to]) continue;
+                const dst = MAPS[w.to];
+                if (!Number.isInteger(w.tx) || !Number.isInteger(w.ty)) continue;
+                if (w.tx < 0 || w.ty < 0 || w.tx >= dst.w || w.ty >= dst.h ||
+                    !isTileWalkableForMap(w.to, dst.data[w.ty * dst.w + w.tx])) {
+                    const near = findNearestWalkableTile(w.to, Math.max(0, Math.min(dst.w - 1, w.tx)), Math.max(0, Math.min(dst.h - 1, w.ty)));
+                    if (near) {
+                        w.tx = near.x;
+                        w.ty = near.y;
+                    }
+                }
+            }
+
+            // Ensure every warp source is walkable and connected.
+            for (const w of (map.warps || [])) {
+                if (!w || !Number.isInteger(w.x) || !Number.isInteger(w.y)) continue;
+                if (w.x < 0 || w.y < 0 || w.x >= map.w || w.y >= map.h) continue;
+                setTile(mapId, w.x, w.y, T.WARP);
+                if (seed) {
+                    carvePath(mapId, seed.x, seed.y, w.x, w.y);
+                    seed = {x: w.x, y: w.y};
+                }
+            }
+
+            // Normalize NPC positions once globally (scene load still has a safety pass).
+            if (Array.isArray(map.npcs)) {
+                for (const npc of map.npcs) {
+                    if (!npc || !Number.isInteger(npc.x) || !Number.isInteger(npc.y)) continue;
+                    if (npc.x < 0 || npc.y < 0 || npc.x >= map.w || npc.y >= map.h ||
+                        !isTileWalkableForMap(mapId, map.data[npc.y * map.w + npc.x])) {
+                        const near = findNearestWalkableTile(mapId, Math.max(0, Math.min(map.w - 1, npc.x)), Math.max(0, Math.min(map.h - 1, npc.y)));
+                        if (near) {
+                            npc.x = near.x;
+                            npc.y = near.y;
+                        }
+                    }
+                    if (seed && Number.isInteger(npc.x) && Number.isInteger(npc.y)) {
+                        carvePath(mapId, seed.x, seed.y, npc.x, npc.y);
+                    }
+                }
+            }
+        }
+    }
+
+    normalizeMapTopology();
+
+    function buildMapRuntimeLayers(mapId) {
+        const map = MAPS[mapId];
+        if (!map) return null;
+        // Keep explicit layer vocabulary aligned with classic tile RPG engines.
+        const ground = map.data;
+        const obstacle = currentCollisionGrid;
+        const overlay = PREBUILT_MAP_BG_CONFIG && PREBUILT_MAP_BG_CONFIG[mapId] ? PREBUILT_MAP_BG_CONFIG[mapId] : null;
+        const collision = currentCollisionGrid;
+        const triggers = map.warps || [];
+        return {ground, obstacle, overlay, collision, triggers};
+    }
     
     // ==================== POKEMON DATA & BATTLE SYSTEM ====================
     const POKEMON_STATS = {
@@ -1504,6 +1999,16 @@
         ARBOK:     { baseStats: [85, 69, 65, 79, 80], type: ['POISON'] },
         NIDOKING:  { baseStats: [102, 77, 85, 75, 85], type: ['POISON', 'GROUND'] },
         SNORLAX:   { baseStats: [160, 65, 65, 110, 30], type: ['NORMAL'] },
+        VILEPLUME: { baseStats: [80, 85, 110, 90, 50], type: ['GRASS', 'POISON'] },
+        WEEZING:   { baseStats: [90, 120, 85, 70, 60], type: ['POISON'] },
+        MAGMAR:    { baseStats: [95, 57, 100, 85, 93], type: ['FIRE'] },
+        ARTICUNO:  { baseStats: [85, 100, 95, 125, 85], type: ['ICE', 'FLYING'] },
+        ZAPDOS:    { baseStats: [90, 85, 125, 90, 100], type: ['ELECTRIC', 'FLYING'] },
+        MOLTRES:   { baseStats: [100, 90, 125, 85, 90], type: ['FIRE', 'FLYING'] },
+        PSYDUCK:   { baseStats: [52, 48, 65, 50, 55], type: ['WATER'] },
+        GOLDUCK:   { baseStats: [82, 78, 95, 80, 85], type: ['WATER'] },
+        MUK:       { baseStats: [105, 75, 65, 100, 50], type: ['POISON'] },
+        PIDGEOT:   { baseStats: [80, 75, 70, 70, 101], type: ['NORMAL', 'FLYING'] },
         LAPRAS:    { baseStats: [85, 80, 85, 95, 60], type: ['WATER', 'ICE'] },
         AERODACTYL:{ baseStats: [105, 65, 60, 75, 130], type: ['ROCK', 'FLYING'] },
     };
@@ -1599,6 +2104,32 @@
     }
 
     // ==================== GAME STATE ====================
+    const MODE = Object.freeze({
+        WORLD: 'WORLD',
+        DIALOG: 'DIALOG',
+        MENU: 'MENU',
+        SCRIPT: 'SCRIPT',
+        AUTOPILOT: 'AUTOPILOT',
+        LOADING: 'LOADING'
+    });
+    let currentMode = MODE.LOADING;
+    function setMode(mode) {
+        if (!mode || typeof mode !== 'string') return;
+        currentMode = mode;
+    }
+    function modeIs(mode) {
+        return currentMode === mode;
+    }
+    function syncModeFromRuntime() {
+        if (inBattle) return setMode(MODE.AUTOPILOT);
+        if (dialog) return setMode(MODE.DIALOG);
+        if (cutsceneLock || !!activeBeatId || storyMoveActive) return setMode(MODE.SCRIPT);
+        return setMode(MODE.WORLD);
+    }
+    const Runtime = {
+        activeLoops: 0
+    };
+
     let GS = {
         px: 9, py: 13, dir: 'down',
         map: 'pallet_town',
@@ -1645,10 +2176,12 @@
     let renderRafId = 0;
     let storyMoveTimer = 0;
     let storyMoveToken = 0;
+    let storyMoveActive = false;
     let currentCollisionMapId = '';
     let currentCollisionGrid = null;
     let currentCollisionW = 0;
     let currentCollisionH = 0;
+    let currentCollisionHash = '';
     const DIALOG_PORTRAIT_SPEAKER_MAP = {
         'BULBASAUR': 'bulbasaur',
         'SAUR': 'bulbasaur',
@@ -1675,6 +2208,7 @@
             clearTimeout(storyMoveTimer);
             storyMoveTimer = 0;
         }
+        storyMoveActive = false;
     }
 
     function hideRuntimeOverlays() {
@@ -1752,10 +2286,14 @@
         if (activeBeatId && !cutsceneLock && !dialog && !inBattle) {
             activeBeatId = null;
         }
+        syncModeFromRuntime();
     }
 
     const SceneManager = {
         currentScene: null,
+        getCurrentScene() {
+            return this.currentScene;
+        },
         clearRenderLayer() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = '#000';
@@ -1782,6 +2320,14 @@
             this.currentScene = mapId;
             this.clearRenderLayer();
             loadCollisionGrid(mapId);
+            buildMapRuntimeLayers(mapId);
+        },
+        swapScene(nextSceneId, opts = {}) {
+            const preserveFlow = !!opts.preserveFlow;
+            setMode(MODE.LOADING);
+            if (this.currentScene) this.unloadScene({preserveFlow});
+            this.loadScene(nextSceneId);
+            syncModeFromRuntime();
         }
     };
 
@@ -1812,9 +2358,12 @@
         }
         const total = map.w * map.h;
         const grid = new Uint8Array(total);
+        const strictWalkable = strictWalkableSetForMap(mapId);
         for (let i = 0; i < total; i++) {
             const tile = map.data[i];
-            grid[i] = SOLID.includes(tile) ? 1 : 0;
+            let blocked = SOLID.includes(tile);
+            if (!blocked && strictWalkable && !strictWalkable.has(tile)) blocked = true;
+            grid[i] = blocked ? 1 : 0;
         }
 
         // Optional per-map collision overrides from mapbg manifest (tile coordinates).
@@ -1839,6 +2388,36 @@
         currentCollisionGrid = grid;
         currentCollisionW = map.w;
         currentCollisionH = map.h;
+        currentCollisionHash = `${mapId}:${map.w}x${map.h}:${Array.from(grid).reduce((a,b)=>a+b,0)}`;
+
+        // Keep NPCs aligned with strict collision policy to avoid spawning on blocked visuals.
+        if (Array.isArray(map.npcs)) {
+            for (const npc of map.npcs) {
+                if (!npc || typeof npc.x !== 'number' || typeof npc.y !== 'number') continue;
+                if (npc.x < 0 || npc.y < 0 || npc.x >= map.w || npc.y >= map.h) continue;
+                const idx = npc.y * map.w + npc.x;
+                if (!grid[idx]) continue;
+                let relocated = false;
+                for (let r = 1; r <= 12 && !relocated; r++) {
+                    for (let dy = -r; dy <= r && !relocated; dy++) {
+                        for (let dx = -r; dx <= r; dx++) {
+                            if (Math.abs(dx) + Math.abs(dy) > r) continue;
+                            const nx = npc.x + dx;
+                            const ny = npc.y + dy;
+                            if (nx < 0 || ny < 0 || nx >= map.w || ny >= map.h) continue;
+                            const nidx = ny * map.w + nx;
+                            if (grid[nidx]) continue;
+                            const occupied = map.npcs.some(o => o !== npc && o && o.x === nx && o.y === ny);
+                            if (occupied) continue;
+                            npc.x = nx;
+                            npc.y = ny;
+                            relocated = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     async function loadStory(force = false) {
@@ -1947,14 +2526,17 @@
         const dirs = Array.isArray(path) ? path.filter(Boolean) : [];
         const delay = Math.max(40, Number(stepMs) || 120);
         const token = ++storyMoveToken;
+        storyMoveActive = dirs.length > 0;
         let i = 0;
         function step() {
             if (token !== storyMoveToken) {
                 storyMoveTimer = 0;
+                storyMoveActive = false;
                 return;
             }
             if (i >= dirs.length) {
                 storyMoveTimer = 0;
+                storyMoveActive = false;
                 if (typeof onDone === 'function') onDone();
                 return;
             }
@@ -1968,10 +2550,174 @@
                 GS.dir = d;
                 GS.px = nx;
                 GS.py = ny;
+                // Keep scripted movement aligned with world traversal rules.
+                checkWarp();
+                checkMapScriptTrigger({allowDuringScript: true});
+            } else if (tryMapConnectionStep(d, nx, ny)) {
+                GS.dir = d;
+                checkMapScriptTrigger({allowDuringScript: true});
             }
             storyMoveTimer = setTimeout(step, delay);
         }
         step();
+    }
+
+    function isBlockedForStoryPath(mapId, x, y, ignoreNpc = true) {
+        const map = MAPS[mapId];
+        if (!map || x < 0 || y < 0 || x >= map.w || y >= map.h) return true;
+        const idx = y * map.w + x;
+        const tile = map.data[idx];
+        if (!isTileWalkableForMap(mapId, tile)) return true;
+        const conf = PREBUILT_MAP_BG_CONFIG && PREBUILT_MAP_BG_CONFIG[mapId];
+        const rects = conf && Array.isArray(conf.solidRects) ? conf.solidRects : [];
+        for (const r of rects) {
+            const rx = Number(r && r.x);
+            const ry = Number(r && r.y);
+            const rw = Number(r && r.w);
+            const rh = Number(r && r.h);
+            if (!Number.isFinite(rx) || !Number.isFinite(ry) || !Number.isFinite(rw) || !Number.isFinite(rh)) continue;
+            if (x >= rx && x < rx + rw && y >= ry && y < ry + rh) return true;
+        }
+        if (!ignoreNpc && Array.isArray(map.npcs)) {
+            for (const npc of map.npcs) {
+                if (npc && npc.x === x && npc.y === y) return true;
+            }
+        }
+        return false;
+    }
+
+    function findStoryPath(mapId, sx, sy, tx, ty, maxSteps = 256) {
+        const map = MAPS[mapId];
+        if (!map) return null;
+        if (sx === tx && sy === ty) return [];
+        if (isBlockedForStoryPath(mapId, sx, sy, true)) return null;
+        if (isBlockedForStoryPath(mapId, tx, ty, true)) return null;
+        const total = map.w * map.h;
+        const seen = new Uint8Array(total);
+        const prev = new Int32Array(total);
+        const pdir = new Array(total).fill('');
+        prev.fill(-1);
+        const start = sy * map.w + sx;
+        const goal = ty * map.w + tx;
+        const q = [start];
+        seen[start] = 1;
+        const dirs = [
+            {d: 'up', dx: 0, dy: -1},
+            {d: 'down', dx: 0, dy: 1},
+            {d: 'left', dx: -1, dy: 0},
+            {d: 'right', dx: 1, dy: 0}
+        ];
+        for (let i = 0; i < q.length; i++) {
+            const cur = q[i];
+            if (cur === goal) break;
+            const cx = cur % map.w;
+            const cy = Math.floor(cur / map.w);
+            for (const ent of dirs) {
+                const nx = cx + ent.dx;
+                const ny = cy + ent.dy;
+                if (nx < 0 || ny < 0 || nx >= map.w || ny >= map.h) continue;
+                const nidx = ny * map.w + nx;
+                if (seen[nidx]) continue;
+                if (isBlockedForStoryPath(mapId, nx, ny, true)) continue;
+                seen[nidx] = 1;
+                prev[nidx] = cur;
+                pdir[nidx] = ent.d;
+                q.push(nidx);
+                if (q.length > total) break;
+            }
+            if (q.length > total) break;
+        }
+        if (!seen[goal]) return null;
+        const out = [];
+        let cur = goal;
+        while (cur !== start) {
+            out.push(pdir[cur]);
+            cur = prev[cur];
+            if (cur < 0) return null;
+            if (out.length > maxSteps) return null;
+        }
+        out.reverse();
+        return out;
+    }
+
+    function findWarpRouteToMap(fromMapId, toMapId, sx, sy) {
+        const map = MAPS[fromMapId];
+        if (!map || !Array.isArray(map.warps)) return null;
+        let best = null;
+        for (const w of map.warps) {
+            if (!w || w.to !== toMapId) continue;
+            const p = findStoryPath(fromMapId, sx, sy, w.x, w.y, 220);
+            if (!p) continue;
+            if (!best || p.length < best.path.length) best = {warp: w, path: p};
+        }
+        return best;
+    }
+
+    function findMapRouteByWarps(fromMapId, toMapId, maxHops = 16) {
+        if (!MAPS[fromMapId] || !MAPS[toMapId]) return null;
+        if (fromMapId === toMapId) return [fromMapId];
+        const q = [fromMapId];
+        const prev = {[fromMapId]: null};
+        for (let i = 0; i < q.length; i++) {
+            const cur = q[i];
+            if (cur === toMapId) break;
+            const warps = MAPS[cur] && Array.isArray(MAPS[cur].warps) ? MAPS[cur].warps : [];
+            for (const w of warps) {
+                if (!w || !w.to || !MAPS[w.to]) continue;
+                if (prev[w.to] !== undefined) continue;
+                prev[w.to] = cur;
+                q.push(w.to);
+                if (q.length > maxHops * 8) break;
+            }
+            if (q.length > maxHops * 8) break;
+        }
+        if (prev[toMapId] === undefined) return null;
+        const path = [];
+        let cur = toMapId;
+        while (cur) {
+            path.push(cur);
+            cur = prev[cur];
+            if (path.length > maxHops + 1) return null;
+        }
+        path.reverse();
+        return path;
+    }
+
+    function runWarpTraversalToMap(targetMap, targetX, targetY, stepMs, onDone, onFail) {
+        const mapRoute = findMapRouteByWarps(GS.map, targetMap, 16);
+        if (!mapRoute || mapRoute.length < 2) {
+            if (typeof onFail === 'function') onFail();
+            return;
+        }
+        const delay = Math.max(40, Number(stepMs) || 120);
+        let hop = 0;
+        function runHop() {
+            if (GS.map === targetMap || hop >= mapRoute.length - 1) {
+                if (typeof onDone === 'function') onDone();
+                return;
+            }
+            const curMap = mapRoute[hop];
+            const nextMap = mapRoute[hop + 1];
+            if (GS.map !== curMap) {
+                if (typeof onFail === 'function') onFail();
+                return;
+            }
+            const candidate = findWarpRouteToMap(curMap, nextMap, GS.px, GS.py);
+            if (!candidate || !Array.isArray(candidate.path) || candidate.path.length === 0) {
+                if (typeof onFail === 'function') onFail();
+                return;
+            }
+            runMovePath(candidate.path, delay, () => {
+                // runMovePath applies checkWarp() every step; validate we reached next hop map.
+                if (GS.map !== nextMap) {
+                    if (typeof onFail === 'function') onFail();
+                    return;
+                }
+                hop++;
+                runHop();
+            });
+        }
+        runHop();
     }
 
     function runActions(actions, idx = 0, onDone = null) {
@@ -1985,6 +2731,52 @@
         if (!a || typeof a !== 'object') return runActions(list, idx + 1, onDone);
 
         try {
+            // FireRed-like script aliases to keep story data-driven.
+            if (a.kind === 'lock') {
+                cutsceneLock = true;
+                setMode(MODE.SCRIPT);
+                return runActions(list, idx + 1, onDone);
+            }
+            if (a.kind === 'release') {
+                cutsceneLock = false;
+                syncModeFromRuntime();
+                return runActions(list, idx + 1, onDone);
+            }
+            if (a.kind === 'setFlag') {
+                const flag = String(a.flag || a.path || '').trim();
+                if (flag) {
+                    if (!GS.story || typeof GS.story !== 'object') GS.story = {};
+                    GS.story[flag] = (a.value === undefined) ? true : !!a.value;
+                    scheduleSave('story-flag');
+                }
+                return runActions(list, idx + 1, onDone);
+            }
+            if (a.kind === 'message') {
+                const lines = Array.isArray(a.lines) ? a.lines : [a.text || '...'];
+                showDialog(a.speaker || '', lines, () => runActions(list, idx + 1, onDone));
+                return;
+            }
+            if (a.kind === 'applyMovement') {
+                const path = Array.isArray(a.path) ? a.path : [];
+                runMovePath(path, a.stepMs || a.speed || 120, () => {
+                    scheduleSave('story-move');
+                    runActions(list, idx + 1, onDone);
+                });
+                return;
+            }
+            if (a.kind === 'warp') {
+                const cloned = {
+                    kind: 'teleport',
+                    map: a.map,
+                    x: a.x,
+                    y: a.y,
+                    dir: a.dir,
+                    stepMs: a.stepMs,
+                    forceTeleport: !!a.forceTeleport
+                };
+                list.splice(idx, 1, cloned);
+                return runActions(list, idx, onDone);
+            }
             if (a.kind === 'dialog') {
                 showDialog(a.speaker || '', Array.isArray(a.lines) ? a.lines : ['...'], () => runActions(list, idx + 1, onDone));
                 return;
@@ -2005,10 +2797,8 @@
             }
         if (a.kind === 'move') {
             if (!AUTO_CUTSCENE_MOVE) {
-                // Skip forced auto-walk by default to avoid perceived input-loss/auto-run on iPad.
-                const dirs = Array.isArray(a.path) ? a.path : [];
-                if (dirs.length) GS.dir = String(dirs[dirs.length - 1]);
-                setTimeout(() => runActions(list, idx + 1, onDone), Math.max(40, Number(a.stepMs) || 120));
+                // Skip forced auto-walk by default to avoid perceived input-loss/auto-run.
+                setTimeout(() => runActions(list, idx + 1, onDone), 0);
                 return;
             }
             runMovePath(a.path, a.stepMs, () => {
@@ -2018,6 +2808,63 @@
             return;
         }
             if (a.kind === 'teleport') {
+                const targetMap = (a.map && MAPS[a.map]) ? a.map : GS.map;
+                const targetX = Number.isInteger(a.x) ? a.x : GS.px;
+                const targetY = Number.isInteger(a.y) ? a.y : GS.py;
+                // Prefer real map traversal via existing warp links (FireRed-like flow).
+                if (
+                    AUTO_CUTSCENE_MOVE &&
+                    targetMap !== GS.map &&
+                    !a.forceTeleport
+                ) {
+                    runWarpTraversalToMap(
+                        targetMap,
+                        targetX,
+                        targetY,
+                        a.stepMs || 120,
+                        () => {
+                            if (GS.map === targetMap) {
+                                const inMapPath = findStoryPath(GS.map, GS.px, GS.py, targetX, targetY, 220);
+                                if (inMapPath && inMapPath.length > 0) {
+                                    runMovePath(inMapPath, a.stepMs || 120, () => {
+                                        if (a.dir) GS.dir = String(a.dir);
+                                        ensureWalkablePlayerPosition();
+                                        onMapEnter(GS.map, {preserveFlow: true});
+                                        scheduleSave('story-teleport-warp');
+                                        runActions(list, idx + 1, onDone);
+                                    });
+                                    return;
+                                }
+                                if (a.dir) GS.dir = String(a.dir);
+                                ensureWalkablePlayerPosition();
+                                onMapEnter(GS.map, {preserveFlow: true});
+                                scheduleSave('story-teleport-warp');
+                                runActions(list, idx + 1, onDone);
+                                return;
+                            }
+                            // Safety fallback (unexpected route end).
+                            GS.map = targetMap;
+                            GS.px = targetX;
+                            GS.py = targetY;
+                            if (a.dir) GS.dir = String(a.dir);
+                            onMapEnter(GS.map, {preserveFlow: true});
+                            ensureWalkablePlayerPosition();
+                            scheduleSave('story-teleport-fallback');
+                            runActions(list, idx + 1, onDone);
+                        },
+                        () => {
+                            GS.map = targetMap;
+                            GS.px = targetX;
+                            GS.py = targetY;
+                            if (a.dir) GS.dir = String(a.dir);
+                            onMapEnter(GS.map, {preserveFlow: true});
+                            ensureWalkablePlayerPosition();
+                            scheduleSave('story-teleport-fallback');
+                            runActions(list, idx + 1, onDone);
+                        }
+                    );
+                    return;
+                }
                 if (a.map && MAPS[a.map]) GS.map = a.map;
                 if (typeof a.x === 'number') GS.px = a.x;
                 if (typeof a.y === 'number') GS.py = a.y;
@@ -2081,6 +2928,7 @@
         const beat = getBeat(id);
         if (!beat) return false;
         // Prevent residual movement timers from carrying into cutscenes.
+        resetInputRuntimeState();
         stopMove();
         cancelStoryMove();
         const beatBg = beatBackdropFor(id);
@@ -2092,18 +2940,20 @@
             setSceneBackdrop('');
         }
         cutsceneLock = true;
+        setMode(MODE.SCRIPT);
         activeBeatId = id;
         GS.story.beat = id;
         runActions(beat.actions, 0, () => {
             cancelStoryMove();
             if (activeBeatId === id) activeBeatId = null;
             cutsceneLock = false;
+            syncModeFromRuntime();
             scheduleSave('beat');
             // Ensure intro always chains into Oak's lab beat even if map-enter hook timing is missed.
             if (id === 'ch1_intro' && GS.story && GS.story.sawMew && !GS.story.gotSaur) {
                 if (GS.map !== 'oak_lab') {
                     GS.map = 'oak_lab';
-                    GS.px = 5;
+                    GS.px = 7;
                     GS.py = 9;
                     GS.dir = 'up';
                     ensureWalkablePlayerPosition();
@@ -2296,6 +3146,9 @@
         if (n.includes('brock')) return 'trainerBrock';
         if (n.includes('rocket') || n.includes('grunt')) return 'trainerRocket';
         if (n.includes('giovanni')) return 'trainerGiovanni';
+        if (n.includes('erika')) return 'trainerErika';
+        if (n.includes('koga')) return 'trainerKoga';
+        if (n.includes('blaine')) return 'trainerBlaine';
         if (n.includes('lance')) return 'trainerLance';
         if (n.includes('oak')) return 'trainerOak';
         return '';
@@ -2307,6 +3160,9 @@
         if (id.includes('brock')) return {name: 'Brock', sprite: 'trainerBrock'};
         if (id.includes('rocket')) return {name: 'Team Rocket', sprite: 'trainerRocket'};
         if (id.includes('giovanni')) return {name: 'Giovanni', sprite: 'trainerGiovanni'};
+        if (id.includes('erika')) return {name: 'Erika', sprite: 'trainerErika'};
+        if (id.includes('koga')) return {name: 'Koga', sprite: 'trainerKoga'};
+        if (id.includes('blaine')) return {name: 'Blaine', sprite: 'trainerBlaine'};
         if (id.includes('lance')) return {name: 'Lance', sprite: 'trainerLance'};
         if (id.includes('blue') || id.includes('champion') || id.includes('duel')) return {name: 'Blue', sprite: 'trainerBlue'};
         if (id.includes('oak')) return {name: 'Prof. Oak', sprite: 'trainerOak'};
@@ -2408,6 +3264,242 @@
         }
         portraitEl.src = SPRITE_URLS[trainerKey];
         portraitEl.style.display = 'block';
+    }
+
+    function sanitizeMapConnections(raw) {
+        if (!raw || typeof raw !== 'object') return {};
+        const out = {};
+        for (const [mapId, edges] of Object.entries(raw)) {
+            if (!MAPS[mapId] || !edges || typeof edges !== 'object') continue;
+            const entry = {};
+            for (const dir of ['north', 'south', 'east', 'west']) {
+                const c = edges[dir];
+                if (!c || typeof c !== 'object') continue;
+                if (!c.to || !MAPS[c.to]) continue;
+                const clean = {to: c.to};
+                if (Number.isInteger(c.min)) clean.min = c.min;
+                if (Number.isInteger(c.max)) clean.max = c.max;
+                entry[dir] = clean;
+            }
+            if (Object.keys(entry).length) out[mapId] = entry;
+        }
+        return out;
+    }
+
+    async function tryLoadMapHeadersManifest() {
+        try {
+            const res = await fetch('./assets/data/map_headers.json', {cache: 'no-store'});
+            if (!res.ok) return false;
+            const parsed = await res.json();
+            const incoming = parsed && typeof parsed === 'object' ? parsed.connections : null;
+            if (!incoming || typeof incoming !== 'object') return false;
+            const clean = sanitizeMapConnections(incoming);
+            MAP_CONNECTIONS = {...DEFAULT_MAP_CONNECTIONS, ...clean};
+            return true;
+        } catch {
+            MAP_CONNECTIONS = JSON.parse(JSON.stringify(DEFAULT_MAP_CONNECTIONS));
+            return false;
+        }
+    }
+
+    function sanitizeMapEvents(raw) {
+        if (!raw || typeof raw !== 'object') return {};
+        const out = {};
+        for (const [mapId, def] of Object.entries(raw)) {
+            if (!MAPS[mapId] || !def || typeof def !== 'object') continue;
+            const clean = {};
+            if (Array.isArray(def.warps)) {
+                clean.warps = def.warps
+                    .filter(w => w && Number.isInteger(w.x) && Number.isInteger(w.y) && Number.isInteger(w.tx) && Number.isInteger(w.ty) && typeof w.to === 'string' && !!MAPS[w.to])
+                    .map(w => ({x: w.x, y: w.y, to: w.to, tx: w.tx, ty: w.ty}));
+            }
+            if (Array.isArray(def.npcs)) {
+                clean.npcs = def.npcs
+                    .filter(n => n && Number.isInteger(n.x) && Number.isInteger(n.y))
+                    .map(n => ({
+                        x: n.x,
+                        y: n.y,
+                        name: typeof n.name === 'string' ? n.name : 'NPC',
+                        sprite: typeof n.sprite === 'string' ? n.sprite : 'girl',
+                        dialog: Array.isArray(n.dialog) ? n.dialog.map(v => String(v)) : ['...']
+                    }));
+            }
+            if (def.enc && typeof def.enc === 'object') {
+                const e = {};
+                if (Array.isArray(def.enc.pokemon)) {
+                    e.pokemon = def.enc.pokemon
+                        .filter(p => p && typeof p.name === 'string' && typeof p.spr === 'string' && Array.isArray(p.lv) && p.lv.length === 2)
+                        .map(p => ({name: p.name, spr: p.spr, lv: [Number(p.lv[0]) || 1, Number(p.lv[1]) || 1], rate: Number(p.rate) || 0}));
+                }
+                if (Number.isFinite(def.enc.rate)) e.rate = Number(def.enc.rate);
+                clean.enc = e;
+            }
+            out[mapId] = clean;
+        }
+        return out;
+    }
+
+    function sanitizeMapBgConfig(raw) {
+        if (!raw || typeof raw !== 'object') return {};
+        const out = {};
+        for (const [mapId, conf] of Object.entries(raw)) {
+            if (!MAPS[mapId] || !conf || typeof conf !== 'object') continue;
+            if (typeof conf.url !== 'string' || !conf.url.trim()) continue;
+            const clean = {
+                url: String(conf.url).trim(),
+                ts: TILE
+            };
+            if (Number.isFinite(conf.ox)) clean.ox = Math.floor(conf.ox);
+            if (Number.isFinite(conf.oy)) clean.oy = Math.floor(conf.oy);
+            if (Number.isFinite(conf.px)) clean.px = Math.max(0, Math.floor(conf.px));
+            if (Number.isFinite(conf.py)) clean.py = Math.max(0, Math.floor(conf.py));
+            if (conf.fixed === true) clean.fixed = true;
+            if (Array.isArray(conf.solidRects)) {
+                clean.solidRects = conf.solidRects
+                    .filter(r => r && Number.isFinite(r.x) && Number.isFinite(r.y) && Number.isFinite(r.w) && Number.isFinite(r.h))
+                    .map(r => ({
+                        x: Math.floor(r.x),
+                        y: Math.floor(r.y),
+                        w: Math.max(1, Math.floor(r.w)),
+                        h: Math.max(1, Math.floor(r.h))
+                    }));
+            }
+            out[mapId] = clean;
+        }
+        return out;
+    }
+
+    function applyMapEventsOverrides(overrides) {
+        if (!overrides || typeof overrides !== 'object') return;
+        for (const [mapId, def] of Object.entries(overrides)) {
+            const map = MAPS[mapId];
+            if (!map || !def || typeof def !== 'object') continue;
+            if (Array.isArray(def.warps)) map.warps = def.warps;
+            if (Array.isArray(def.npcs)) map.npcs = def.npcs;
+            if (def.enc && typeof def.enc === 'object') map.enc = def.enc;
+        }
+    }
+
+    function sanitizeMapScripts(raw) {
+        if (!raw || typeof raw !== 'object') return {};
+        const out = {};
+        for (const [mapId, arr] of Object.entries(raw)) {
+            if (!MAPS[mapId] || !Array.isArray(arr)) continue;
+            const clean = [];
+            for (const t of arr) {
+                if (!t || !Number.isInteger(t.x) || !Number.isInteger(t.y)) continue;
+                const id = typeof t.id === 'string' && t.id.trim() ? t.id.trim() : `${mapId}_${t.x}_${t.y}_${clean.length}`;
+                const item = {
+                    id,
+                    x: t.x,
+                    y: t.y,
+                    once: t.once !== false
+                };
+                if (typeof t.requireFlag === 'string' && t.requireFlag.trim()) item.requireFlag = t.requireFlag.trim();
+                if (typeof t.setFlag === 'string' && t.setFlag.trim()) item.setFlag = t.setFlag.trim();
+                if (typeof t.beat === 'string' && t.beat.trim()) item.beat = t.beat.trim();
+                if (Array.isArray(t.actions)) item.actions = t.actions;
+                if (t.allowDuringScript === true) item.allowDuringScript = true;
+                clean.push(item);
+            }
+            if (clean.length) out[mapId] = clean;
+        }
+        return out;
+    }
+
+    function sanitizeMetatileBehaviors(raw) {
+        const allowedEncounter = new Set(['none', 'land', 'water']);
+        const source = (raw && typeof raw === 'object') ? raw : {};
+        const merged = {...DEFAULT_METATILE_BEHAVIORS, ...source};
+        const out = {};
+        for (const [key, val] of Object.entries(merged)) {
+            if (!Object.prototype.hasOwnProperty.call(T, key)) continue;
+            const clean = {};
+            if (val && typeof val === 'object') {
+                if (typeof val.walk === 'boolean') clean.walk = val.walk;
+                if (typeof val.warp === 'boolean') clean.warp = val.warp;
+                if (typeof val.interact === 'string' && val.interact.trim()) clean.interact = val.interact.trim();
+                if (typeof val.surface === 'string' && val.surface.trim()) clean.surface = val.surface.trim();
+                if (typeof val.encounter === 'string' && allowedEncounter.has(val.encounter)) clean.encounter = val.encounter;
+            }
+            if (typeof clean.walk !== 'boolean') clean.walk = !SOLID.includes(T[key]);
+            if (!clean.encounter) clean.encounter = 'none';
+            out[key] = clean;
+        }
+        return out;
+    }
+
+    function rebuildMetatileBehaviorById() {
+        METATILE_BEHAVIORS_BY_ID = {};
+        for (const [name, behavior] of Object.entries(METATILE_BEHAVIORS || {})) {
+            if (!Object.prototype.hasOwnProperty.call(T, name)) continue;
+            METATILE_BEHAVIORS_BY_ID[T[name]] = behavior;
+        }
+    }
+
+    function tileBehaviorAt(mapId, x, y) {
+        const map = MAPS[mapId];
+        if (!map || x < 0 || y < 0 || x >= map.w || y >= map.h) return null;
+        const tile = map.data[y * map.w + x];
+        return METATILE_BEHAVIORS_BY_ID[tile] || null;
+    }
+
+    async function tryLoadMetatileBehaviorManifest() {
+        try {
+            const res = await fetch('./assets/data/metatile_behaviors.json', {cache: 'no-store'});
+            if (!res.ok) {
+                METATILE_BEHAVIORS = sanitizeMetatileBehaviors(DEFAULT_METATILE_BEHAVIORS);
+                rebuildMetatileBehaviorById();
+                return false;
+            }
+            const parsed = await res.json();
+            const incoming = parsed && typeof parsed === 'object' ? parsed.tiles : null;
+            METATILE_BEHAVIORS = sanitizeMetatileBehaviors(incoming);
+            rebuildMetatileBehaviorById();
+            return true;
+        } catch {
+            METATILE_BEHAVIORS = sanitizeMetatileBehaviors(DEFAULT_METATILE_BEHAVIORS);
+            rebuildMetatileBehaviorById();
+            return false;
+        }
+    }
+
+    async function tryLoadMapScriptsManifest() {
+        try {
+            const res = await fetch('./assets/data/map_scripts.json', {cache: 'no-store'});
+            if (!res.ok) {
+                MAP_SCRIPTS = {...DEFAULT_MAP_SCRIPTS};
+                return false;
+            }
+            const parsed = await res.json();
+            const incoming = parsed && typeof parsed === 'object' ? parsed.maps : null;
+            if (!incoming || typeof incoming !== 'object') {
+                MAP_SCRIPTS = {...DEFAULT_MAP_SCRIPTS};
+                return false;
+            }
+            MAP_SCRIPTS = sanitizeMapScripts(incoming);
+            return true;
+        } catch {
+            MAP_SCRIPTS = {...DEFAULT_MAP_SCRIPTS};
+            return false;
+        }
+    }
+
+    async function tryLoadMapEventsManifest() {
+        try {
+            const res = await fetch('./assets/data/map_events.json', {cache: 'no-store'});
+            if (!res.ok) return false;
+            const parsed = await res.json();
+            const incoming = parsed && typeof parsed === 'object' ? parsed.maps : null;
+            if (!incoming || typeof incoming !== 'object') return false;
+            const clean = sanitizeMapEvents(incoming);
+            applyMapEventsOverrides(clean);
+            // Events may alter warps/NPC positions; re-normalize topology after load.
+            normalizeMapTopology();
+            return true;
+        } catch {
+            return false;
+        }
     }
 
     async function tryLoadExternalSpriteConfig() {
@@ -2523,6 +3615,15 @@
         // Load story in parallel; do not block asset loading.
         loadStory();
 
+        // Optional data-driven map headers (FireRed-like connections).
+        await tryLoadMapHeadersManifest();
+        // Optional data-driven map events (warps/NPCs/encounters).
+        await tryLoadMapEventsManifest();
+        // Optional data-driven map scripts (coord/tile triggers).
+        await tryLoadMapScriptsManifest();
+        // Optional FireRed-style metatile behavior table (walk/surface/encounter/warp).
+        await tryLoadMetatileBehaviorManifest();
+
         // Optional prebuilt map backgrounds (for user-imported city/cave sheets).
         if (qs('mapbg', '1') !== '0') {
             try {
@@ -2530,7 +3631,8 @@
                 const manifest = await manifestRes.json();
                 const fromFile = manifest && typeof manifest === 'object' ? manifest.mapbg : null;
                 if (fromFile && typeof fromFile === 'object') {
-                    PREBUILT_MAP_BG_CONFIG = fromFile;
+                    const clean = sanitizeMapBgConfig(fromFile);
+                    PREBUILT_MAP_BG_CONFIG = {...DEFAULT_PREBUILT_MAP_BG_CONFIG, ...clean};
                 }
             } catch {
                 PREBUILT_MAP_BG_CONFIG = {...DEFAULT_PREBUILT_MAP_BG_CONFIG};
@@ -2849,12 +3951,20 @@
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        const camX = Math.floor(GS.px - VW / 2);
-        const camY = Math.floor(GS.py - VH / 2);
         const forceTileRender = ALWAYS_TILE_RENDER_MAPS.has(GS.map);
         const mapBgEntry = (PREBUILT_SKIP_MAPS.has(GS.map) || forceTileRender) ? null : prebuiltMapBg[GS.map];
         const overlayMode = cutsceneLock && hasSceneBackdrop();
         const hasMapBg = !!mapBgEntry && !overlayMode;
+        let camX = Math.floor(GS.px - VW / 2);
+        let camY = Math.floor(GS.py - VH / 2);
+        const maxCamX = Math.max(0, map.w - VW);
+        const maxCamY = Math.max(0, map.h - VH);
+        camX = Math.max(0, Math.min(maxCamX, camX));
+        camY = Math.max(0, Math.min(maxCamY, camY));
+        if (hasMapBg && mapBgEntry.fixed) {
+            camX = 0;
+            camY = 0;
+        }
         if (!hasMapBg && STYLE_LOCK_CORE_MAPS.has(GS.map) && qs('stylelock', '1') !== '0') {
             dbg(`stylelock: missing mapbg for ${GS.map}; using atlas fallback`);
         }
@@ -2925,8 +4035,8 @@
         const psy = GS.py - camY;
         drawSprite(sprites.red, psx, psy, animFrame, GS.dir);
         
-        // Only animate when moving (not standing still)
-        if (moveDir || storyMoveTimer) {
+        // Animate both manual movement and scripted cutscene movement.
+        if (moveDir || storyMoveActive) {
             animFrame = (animFrame + 0.15) % 4;
         } else {
             animFrame = 0; // Standing still = first frame
@@ -2936,6 +4046,7 @@
     function stopRenderLoop() {
         renderLoopActive = false;
         renderLoopToken++;
+        Runtime.activeLoops = 0;
         if (renderRafId) {
             cancelAnimationFrame(renderRafId);
             renderRafId = 0;
@@ -2945,6 +4056,7 @@
     function startRenderLoop() {
         if (renderLoopActive) return;
         renderLoopActive = true;
+        Runtime.activeLoops = 1;
         const token = ++renderLoopToken;
         const tick = () => {
             if (!renderLoopActive || token !== renderLoopToken) return;
@@ -3004,6 +4116,112 @@
         const map = MAPS[GS.map];
         return isWalkableOnMap(map, x, y, false);
     }
+
+    function tryMapConnectionStep(dir, nx, ny) {
+        const srcMap = MAPS[GS.map];
+        if (!srcMap) return false;
+        const connSet = MAP_CONNECTIONS[GS.map];
+        if (!connSet) return false;
+        const conn = connSet[dir];
+        if (!conn || !conn.to || !MAPS[conn.to]) return false;
+
+        if (dir === 'up' && ny >= 0) return false;
+        if (dir === 'down' && ny < srcMap.h) return false;
+        if (dir === 'left' && nx >= 0) return false;
+        if (dir === 'right' && nx < srcMap.w) return false;
+
+        const orth = (dir === 'up' || dir === 'down') ? GS.px : GS.py;
+        if (Number.isInteger(conn.min) && orth < conn.min) return false;
+        if (Number.isInteger(conn.max) && orth > conn.max) return false;
+
+        const dstMapId = conn.to;
+        const dstMap = MAPS[dstMapId];
+        const srcOrthMax = (dir === 'up' || dir === 'down') ? Math.max(1, srcMap.w - 1) : Math.max(1, srcMap.h - 1);
+        const dstOrthMax = (dir === 'up' || dir === 'down') ? Math.max(1, dstMap.w - 1) : Math.max(1, dstMap.h - 1);
+        const ratio = orth / srcOrthMax;
+        const scaledOrth = Math.max(0, Math.min(dstOrthMax, Math.round(ratio * dstOrthMax)));
+
+        let tx = 1, ty = 1;
+        if (dir === 'up') {
+            tx = scaledOrth;
+            ty = Math.max(0, dstMap.h - 2);
+        } else if (dir === 'down') {
+            tx = scaledOrth;
+            ty = 1;
+        } else if (dir === 'left') {
+            tx = Math.max(0, dstMap.w - 2);
+            ty = scaledOrth;
+        } else if (dir === 'right') {
+            tx = 1;
+            ty = scaledOrth;
+        }
+
+        GS.map = dstMapId;
+        GS.px = tx;
+        GS.py = ty;
+        GS.dir = dir;
+        ensureWalkablePlayerPosition();
+        onMapEnter(GS.map, {preserveFlow: false});
+        scheduleSave('edge-connection');
+        return true;
+    }
+
+    function isMapScriptDone(id) {
+        if (!GS.story || typeof GS.story !== 'object') return false;
+        const done = GS.story.mapScriptDone;
+        return !!(done && typeof done === 'object' && done[id]);
+    }
+
+    function markMapScriptDone(id) {
+        if (!GS.story || typeof GS.story !== 'object') GS.story = {};
+        if (!GS.story.mapScriptDone || typeof GS.story.mapScriptDone !== 'object') GS.story.mapScriptDone = {};
+        GS.story.mapScriptDone[id] = true;
+    }
+
+    function runMapScriptTrigger(trigger) {
+        if (!trigger || typeof trigger !== 'object') return false;
+        if (trigger.setFlag) {
+            if (!GS.story || typeof GS.story !== 'object') GS.story = {};
+            GS.story[trigger.setFlag] = true;
+        }
+        if (trigger.once !== false) markMapScriptDone(trigger.id);
+        if (trigger.beat) {
+            const ok = playBeat(trigger.beat);
+            if (!ok && trigger.once !== false) {
+                if (GS.story && GS.story.mapScriptDone) delete GS.story.mapScriptDone[trigger.id];
+            }
+            scheduleSave('map-script-beat');
+            return ok;
+        }
+        if (Array.isArray(trigger.actions) && trigger.actions.length) {
+            if (activeBeatId || dialog || inBattle) return false;
+            cutsceneLock = true;
+            setMode(MODE.SCRIPT);
+            runActions(trigger.actions, 0, () => {
+                cutsceneLock = false;
+                syncModeFromRuntime();
+                scheduleSave('map-script-actions');
+            });
+            return true;
+        }
+        return false;
+    }
+
+    function checkMapScriptTrigger(opts = {}) {
+        const mapId = GS.map;
+        const list = MAP_SCRIPTS && MAP_SCRIPTS[mapId];
+        if (!Array.isArray(list) || !list.length) return false;
+        if (inBattle || dialog) return false;
+        if (activeBeatId && !opts.allowDuringScript) return false;
+        for (const t of list) {
+            if (!t || t.x !== GS.px || t.y !== GS.py) continue;
+            if (t.once !== false && isMapScriptDone(t.id)) continue;
+            if (t.requireFlag && (!GS.story || !GS.story[t.requireFlag])) continue;
+            if (activeBeatId && !t.allowDuringScript && !opts.allowDuringScript) continue;
+            return runMapScriptTrigger(t);
+        }
+        return false;
+    }
     
     function move(dir) {
         // Self-heal stuck flags before movement gate checks.
@@ -3017,18 +4235,61 @@
         else if (dir === 'down') ny++;
         else if (dir === 'left') nx--;
         else if (dir === 'right') nx++;
+
+        if (tryMapConnectionStep(dir, nx, ny)) return;
         
         if (canMove(nx, ny)) {
             GS.dir = dir;
             GS.px = nx; GS.py = ny;
             checkWarp();
             checkEncounter();
+            if (encounterCooldown > 0) encounterCooldown--;
+            checkMapScriptTrigger();
             scheduleSave('move');
         }
     }
     
     let runPressed = false;
     function setRunPressed(v) { runPressed = !!v; }
+    let dpadPointerId = null;
+    let runPointerId = null;
+    function resetInputRuntimeState() {
+        stopMove();
+        dpadPointerId = null;
+        runPointerId = null;
+        setRunPressed(false);
+        dirPressed.up = dirPressed.down = dirPressed.left = dirPressed.right = false;
+        dirOrder.length = 0;
+    }
+    function onDpadDown(ev, dir) {
+        if (ev && typeof ev.preventDefault === 'function') ev.preventDefault();
+        if (ev && typeof ev.stopPropagation === 'function') ev.stopPropagation();
+        if (ev && Number.isInteger(ev.pointerId)) {
+            if (dpadPointerId !== null && dpadPointerId !== ev.pointerId) return;
+            dpadPointerId = ev.pointerId;
+        }
+        startMove(dir);
+    }
+    function onDpadUp(ev) {
+        if (ev && typeof ev.preventDefault === 'function') ev.preventDefault();
+        if (ev && typeof ev.stopPropagation === 'function') ev.stopPropagation();
+        if (ev && Number.isInteger(ev.pointerId) && dpadPointerId !== null && dpadPointerId !== ev.pointerId) return;
+        dpadPointerId = null;
+        stopMove();
+    }
+    function onRunDown(ev) {
+        if (ev && typeof ev.preventDefault === 'function') ev.preventDefault();
+        if (ev && typeof ev.stopPropagation === 'function') ev.stopPropagation();
+        if (ev && Number.isInteger(ev.pointerId)) runPointerId = ev.pointerId;
+        setRunPressed(true);
+    }
+    function onRunUp(ev) {
+        if (ev && typeof ev.preventDefault === 'function') ev.preventDefault();
+        if (ev && typeof ev.stopPropagation === 'function') ev.stopPropagation();
+        if (ev && Number.isInteger(ev.pointerId) && runPointerId !== null && runPointerId !== ev.pointerId) return;
+        runPointerId = null;
+        setRunPressed(false);
+    }
     function moveStepMs() { return runPressed ? 85 : 145; }
     function startMove(dir) {
         // Runtime self-heal for rare iPad/tap race conditions where dialog/cutscene flags stick.
@@ -3239,19 +4500,45 @@
         if (mapId === 'indigo_plateau' && GS.story.block_49_done && !GS.story.block_50_done) {
             return playBeat('s1_outline_next');
         }
+        if (mapId === 'indigo_plateau' && GS.story.block_50_done && !GS.story.block_51_done) {
+            return playBeat('ch43_erika_alliance');
+        }
+        if (mapId === 'indigo_plateau' && GS.story.block_51_done && !GS.story.block_52_done) {
+            return playBeat('ch44_koga_counterattack');
+        }
+        if (mapId === 'indigo_plateau' && GS.story.block_52_done && !GS.story.block_53_done) {
+            return playBeat('ch45_blaine_cinnabar_test');
+        }
+        if (mapId === 'indigo_plateau' && GS.story.block_53_done && !GS.story.block_54_done) {
+            return playBeat('ch46_powerplant_zapdos');
+        }
+        if (mapId === 'indigo_plateau' && GS.story.block_54_done && !GS.story.block_55_done) {
+            return playBeat('ch47_seafoam_articuno');
+        }
+        if (mapId === 'indigo_plateau' && GS.story.block_55_done && !GS.story.block_56_done) {
+            return playBeat('ch48_victoryroad_moltres');
+        }
+        if (mapId === 'indigo_plateau' && GS.story.block_56_done && !GS.story.block_57_done) {
+            return playBeat('ch49_psyduck_rescue');
+        }
+        if (mapId === 'indigo_plateau' && GS.story.block_57_done && !GS.story.block_58_done) {
+            return playBeat('ch50_rgb_true_epilogue');
+        }
         return false;
     }
 
     function onMapEnter(mapId, opts = {}) {
         const preserveFlow = !!opts.preserveFlow;
+        setMode(MODE.LOADING);
+        resetInputRuntimeState();
         stopMove();
         const changed = SceneManager.currentScene !== mapId;
         if (changed) {
-            SceneManager.unloadScene({preserveFlow});
-            SceneManager.loadScene(mapId);
+            SceneManager.swapScene(mapId, {preserveFlow});
         } else {
             SceneManager.clearRenderLayer();
             loadCollisionGrid(mapId);
+            buildMapRuntimeLayers(mapId);
         }
         // Lightweight, non-breaking story hooks. Real season script will live in beats/flags.
         if (!GS.story) GS.story = {};
@@ -3259,6 +4546,7 @@
         clearOrphanRuntimeLocks();
         setSceneBackdrop('');
         showMapBanner(mapId);
+        syncModeFromRuntime();
         if (mapId === 'pewter_gym' && GS.story.autoBrock && GS.story.caughtPika && !GS.story.brockBattleDone) {
             GS.story.autoBrock = false;
             scheduleSave('story-auto-brock');
@@ -3277,6 +4565,7 @@
         setTimeout(async () => {
             await ensureStoryLoaded();
             tryAutoStoryBeat();
+            checkMapScriptTrigger({allowDuringScript: true});
         }, 260);
     }
     
@@ -3287,7 +4576,30 @@
         storyLock: true,
         // When true and storyLock is false, allow tall grass RNG encounters.
         randomEncounters: true,
+        // Resolve wild encounters in quick scripted flow by default.
+        autopilotEncounters: true,
+        // FireRed-like cooldown after each encounter to avoid immediate retrigger loops.
+        encounterCooldownSteps: 6,
     };
+    let encounterCooldown = 0;
+
+    function runAutopilotEncounter(enemy) {
+        if (!enemy || typeof enemy !== 'object') return;
+        setMode(MODE.AUTOPILOT);
+        startBattle(enemy, {
+            scripted: true,
+            scriptSteps: [
+                {type: 'log', text: `Um ${enemy.name} selvagem apareceu!`},
+                {type: 'playerMove', move: 'Water Gun'},
+                {type: 'enemyMove', move: 'Tackle'},
+                {type: 'playerMove', move: 'Water Gun'},
+                {type: 'end', won: true}
+            ],
+            onEnd: () => {
+                syncModeFromRuntime();
+            }
+        });
+    }
 
     function checkEncounter() {
         const map = MAPS[GS.map];
@@ -3295,8 +4607,9 @@
         if (!map || !map.enc || !GS.story.gotSaur || GS.team.length === 0) return;
         if (GAME_MODE.storyLock) return; // manga-driven only
         if (!GAME_MODE.randomEncounters) return;
-        const tile = map.data[GS.py * map.w + GS.px];
-        if (tile !== T.TALL_GRASS) return;
+        if (encounterCooldown > 0) return;
+        const behavior = tileBehaviorAt(GS.map, GS.px, GS.py);
+        if (!behavior || behavior.encounter !== 'land') return;
         if (Math.random() * 100 < map.enc.rate) {
             const roll = Math.random() * 100;
             let cum = 0;
@@ -3304,7 +4617,10 @@
                 cum += p.rate;
                 if (roll < cum) {
                     const lv = p.lv[0] + Math.floor(Math.random() * (p.lv[1] - p.lv[0] + 1));
-                    startBattle({name: p.name, spr: p.spr, lv, hp: 10 + lv * 2, maxHp: 10 + lv * 2});
+                    const enemy = {name: p.name, spr: p.spr, lv, hp: 10 + lv * 2, maxHp: 10 + lv * 2};
+                    encounterCooldown = Math.max(0, Number(GAME_MODE.encounterCooldownSteps) || 0);
+                    if (GAME_MODE.autopilotEncounters) runAutopilotEncounter(enemy);
+                    else startBattle(enemy);
                     return;
                 }
             }
@@ -3441,6 +4757,7 @@
     
     function startBattle(enemy, opts = {}) {
         inBattle = true;
+        setMode(MODE.AUTOPILOT);
         const active = getActivePokemon();
         battle = {
             enemy,
@@ -3619,6 +4936,7 @@
             const onEnd = battle && battle.onEnd ? battle.onEnd : null;
             const wonFinal = won;
             battle = null;
+            syncModeFromRuntime();
             saveGame();
             if (onEnd) onEnd(wonFinal);
         }, 2000);
@@ -3636,6 +4954,7 @@
                 document.getElementById('battleScreen').style.display = 'none';
                 inBattle = false;
                 battle = null;
+                syncModeFromRuntime();
             }, 1000);
         } else {
             document.getElementById('battleLog').textContent = 'Nao da para fugir!';
@@ -3665,10 +4984,12 @@
     // ==================== DIALOG ====================
     function showDialog(speaker, texts, cb) {
         actionProgressAt = Date.now();
+        resetInputRuntimeState();
         stopMove();
         const lines = Array.isArray(texts) ? texts : [texts];
         dialogQ = lines.map(v => String(v ?? '...'));
         dialog = {speaker, cb};
+        setMode(MODE.DIALOG);
         nextDialog();
     }
     
@@ -3685,6 +5006,8 @@
             document.getElementById('dialogBox').style.display = 'none';
             document.getElementById('tapOverlay').style.display = 'none';
             dialogQ = [];
+            resetInputRuntimeState();
+            syncModeFromRuntime();
             return;
         }
         if (dialogQ.length === 0) {
@@ -3712,6 +5035,8 @@
                     cutsceneLock = false;
                 }
             }
+            resetInputRuntimeState();
+            syncModeFromRuntime();
             return;
         }
         const box = document.getElementById('dialogBox');
@@ -4114,6 +5439,8 @@
     });
     window.addEventListener('blur', () => {
         stopMove();
+        dpadPointerId = null;
+        runPointerId = null;
         setRunPressed(false);
         dirPressed.up = dirPressed.down = dirPressed.left = dirPressed.right = false;
         dirOrder.length = 0;
@@ -4126,6 +5453,8 @@
     window.addEventListener('touchcancel', stopMove, {capture: true, passive: true});
     window.addEventListener('pagehide', () => {
         stopMove();
+        dpadPointerId = null;
+        runPointerId = null;
         setRunPressed(false);
         dirPressed.up = dirPressed.down = dirPressed.left = dirPressed.right = false;
         dirOrder.length = 0;
@@ -4133,6 +5462,8 @@
     document.addEventListener('visibilitychange', () => {
         if (document.visibilityState !== 'visible') {
             stopMove();
+            dpadPointerId = null;
+            runPointerId = null;
             setRunPressed(false);
             dirPressed.up = dirPressed.down = dirPressed.left = dirPressed.right = false;
             dirOrder.length = 0;
@@ -4155,7 +5486,7 @@
     
     // Autosave every 30 seconds
     setInterval(() => {
-        if (!inBattle && !inDialog && GS.map) {
+        if (!inBattle && !dialog && GS.map) {
             showSaveIndicator('saving');
             saveGame();
             setTimeout(() => showSaveIndicator('saved'), 300);
@@ -4228,7 +5559,7 @@
     
     // Add P key listener for team menu
     document.addEventListener('keydown', (e) => {
-        if (e.key.toLowerCase() === 'p' && !inBattle && !inDialog) {
+        if (e.key.toLowerCase() === 'p' && !inBattle && !dialog) {
             const menu = document.getElementById('teamMenu');
             if (menu.style.display === 'block') {
                 closeTeamMenu();
@@ -4242,6 +5573,7 @@
     const SAVE_KEY = 'pokemon_adv';
     const SAVE_BAK_KEY = 'pokemon_adv_bak';
     const SAVE_META_KEY = 'pokemon_adv_meta';
+    const SAVE_SCHEMA_VERSION = 2;
     let saveQueued = false;
 
     function readStorage(key) {
@@ -4266,8 +5598,17 @@
         }, 80);
     }
 
+    function buildSaveEnvelope(reason = 'manual') {
+        return {
+            schemaVersion: SAVE_SCHEMA_VERSION,
+            at: Date.now(),
+            reason,
+            gs: GS
+        };
+    }
+
     function saveGame(reason = 'manual') {
-        const payload = JSON.stringify(GS);
+        const payload = JSON.stringify(buildSaveEnvelope(reason));
         const prev = readStorage(SAVE_KEY);
         if (prev) writeStorage(SAVE_BAK_KEY, prev);
         if (writeStorage(SAVE_KEY, payload)) {
@@ -4290,6 +5631,7 @@
         if (typeof gs.story.visitedPewter !== 'boolean') gs.story.visitedPewter = false;
         if (typeof gs.story.caughtPika !== 'boolean') gs.story.caughtPika = false;
         if (typeof gs.story.brockBattleDone !== 'boolean') gs.story.brockBattleDone = false;
+        if (!gs.story.mapScriptDone || typeof gs.story.mapScriptDone !== 'object') gs.story.mapScriptDone = {};
         if (!Array.isArray(gs.team)) gs.team = [];
         if (!gs.items) gs.items = {potion: 0, pokeball: 0};
         if (!gs.poli) gs.poli = {name: 'POLI', species: 'POLIWHIRL', hp: 28, maxHp: 28, lv: 8, exp: 0};
@@ -4298,19 +5640,27 @@
         return gs;
     }
     function loadGame() {
+        setMode(MODE.LOADING);
         const primary = readStorage(SAVE_KEY);
         const backup = readStorage(SAVE_BAK_KEY);
         let loaded = null;
         if (primary) {
-            try { loaded = JSON.parse(primary); } catch {}
+            try {
+                const parsed = JSON.parse(primary);
+                loaded = parsed && typeof parsed === 'object' && parsed.gs ? parsed.gs : parsed;
+            } catch {}
         }
         if (!loaded && backup) {
-            try { loaded = JSON.parse(backup); } catch {}
+            try {
+                const parsed = JSON.parse(backup);
+                loaded = parsed && typeof parsed === 'object' && parsed.gs ? parsed.gs : parsed;
+            } catch {}
         }
         if (loaded) {
             SceneManager.unloadScene({preserveFlow: false});
             stopRenderLoop();
             GS = migrateSave(loaded);
+            encounterCooldown = 0;
             ensureWalkablePlayerPosition();
             // Defensive reset for stale runtime flags from previous sessions.
             dialog = null;
@@ -4329,11 +5679,13 @@
             onMapEnter(GS.map, {preserveFlow: false});
             scheduleSave('load-repair');
             startRenderLoop();
+            syncModeFromRuntime();
         }
         else alert('No save found!');
     }
     
     function startNewGame() {
+        setMode(MODE.LOADING);
         SceneManager.unloadScene({preserveFlow: false});
         stopRenderLoop();
         // Hard reset runtime state to avoid post-cutscene soft-locks.
@@ -4367,6 +5719,7 @@
                 metGreen: false,      // Met Green (the thief girl)
                 caughtPika: false,    // Pewter rescue arc
                 brockBattleDone: false,
+                mapScriptDone: {},
             },
             // MANGA ACCURATE: Red already has POLI before the story starts!
             // Poli was Red's first Pokemon that he raised from a Poliwag
@@ -4378,6 +5731,7 @@
             items: {potion: 3, pokeball: 5},
             badges: 0
         };
+        encounterCooldown = 0;
         ensureWalkablePlayerPosition();
         showMapBanner(GS.map);
         
@@ -4397,6 +5751,7 @@
         }, 500);
         scheduleSave('new-game');
         startRenderLoop();
+        syncModeFromRuntime();
     }
 
     function applyStartupQueryFlags() {

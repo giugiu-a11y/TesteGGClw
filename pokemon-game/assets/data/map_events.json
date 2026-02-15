@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "maps": {
+    "pallet_town": {
+      "warps": [
+        {"x": 4, "y": 6, "to": "player_house", "tx": 7, "ty": 9},
+        {"x": 14, "y": 6, "to": "rival_house", "tx": 7, "ty": 9},
+        {"x": 9, "y": 12, "to": "oak_lab", "tx": 7, "ty": 9},
+        {"x": 9, "y": 17, "to": "route1", "tx": 9, "ty": 23},
+        {"x": 10, "y": 17, "to": "route1", "tx": 10, "ty": 23}
+      ],
+      "npcs": [
+        {"x": 8, "y": 14, "name": "Garoto", "sprite": "boy", "dialog": ["Voce so fala, RED!", "Qualquer um consegue vencer POKeMON fracos por aqui."]},
+        {"x": 11, "y": 14, "name": "Garota", "sprite": "girl", "dialog": ["Se e tao bom, prova!", "Captura um POKeMON raro para a gente ver!"]},
+        {"x": 15, "y": 10, "name": "Girl", "sprite": "girl", "dialog": ["Bem-vindo a PALLET TOWN!", "Ouviu o boato? Dizem que viram uma luz estranha na floresta!", "O Professor OAK esta investigando isso no laboratorio..."]},
+        {"x": 13, "y": 7, "name": "Blue", "sprite": "blue", "dialog": ["...Ah. Voce, RED.", "O velho falou de um POKeMON raro avistado por aqui.", "Nao ache que vai chegar antes de mim.", "Eu sempre estou um passo a frente. Ate mais."]}
+      ]
+    },
+    "viridian_pokecenter": {
+      "warps": [
+        {"x": 7, "y": 10, "to": "viridian", "tx": 27, "ty": 33},
+        {"x": 8, "y": 10, "to": "viridian", "tx": 27, "ty": 33}
+      ],
+      "npcs": [
+        {"x": 7, "y": 4, "name": "Nurse Joy", "sprite": "girl", "dialog": ["Bem-vindo ao Centro Pokemon!", "Seus Pokemon estao em forma para continuar a aventura."]}
+      ]
+    },
+    "pewter_gym": {
+      "warps": [
+        {"x": 5, "y": 9, "to": "pewter", "tx": 9, "ty": 7},
+        {"x": 6, "y": 9, "to": "pewter", "tx": 10, "ty": 7}
+      ],
+      "npcs": [
+        {"x": 5, "y": 2, "name": "Brock", "sprite": "brock", "dialog": ["..."]}
+      ]
+    }
+  }
+}
